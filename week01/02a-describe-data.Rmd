@@ -1,0 +1,512 @@
+---
+title: "Describing Data"
+author: "Dr. Mine Dogucu"
+output: 
+  xaringan::moon_reader:
+    css: ["slide-style.css"]
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+
+---
+
+class: title-slide
+
+```{r echo = FALSE, message=FALSE}
+library(openintro)
+library(tidyverse)
+library(janitor)
+```
+
+<br>
+<br>
+.right-panel[ 
+<br>
+
+# `r rmarkdown::metadata$title`
+
+## `r rmarkdown::metadata$author`
+
+]
+
+---
+
+class: middle
+
+## Reminder
+
+- Close all apps on your computer other than zoom.  
+- Open slides for this session from the cluster website (https://uci-dshs.netlify.app/). 
+
+
+---
+
+class: middle
+
+## Review Questions
+
+
+
+1. What R functions have we seen so far? 
+
+--
+
+2. How many panes have we used so far in RStudio? What does each pane do?
+
+--
+
+3. Street addresses of hospital patients is a factor. Correct or incorrect?
+
+--
+
+4. County of residence of hospital patients in California is a factor. Correct or incorrect?
+
+---
+
+class: middle
+
+## Outline
+
+
+1. Describing Categorical Data 
+
+2. Describing Numerical Data 
+
+<hr>
+
+- We will only summarize a single variable at a time but later we will talk about relationship between two variables.
+- First we will summarize data with numbers and later we will summarize it with visuals.
+
+---
+
+
+class: middle
+
+## Summarizing Categorical Data
+
+Categorical data are often summarized with a frequency table.
+
+__Counts__ or __proportions__ are used to summarize categorical variables. 
+
+.center[
+
+<table align = "center">
+<thead>
+  <th> </th>
+  <th>TRUE </th>
+  <th> FALSE </th>
+  <th> Total Count </th>
+
+</thead>
+
+<tr>
+<td>fruity </td>
+<td> 47</td>
+<td> 38</td>
+<td> 85</td>
+
+
+</tr>
+
+</table>
+
+<br>
+
+<table align = "center" >
+<thead>
+  <th> </th>
+  <th>TRUE </th>
+  <th> FALSE </th>
+  <th> Total Proportion </th>
+
+</thead>
+
+<tr>
+<td>fruity </td>
+<td> 0.5529412</td>
+<td> 0.4470588</td>
+<td> 1</td>
+
+
+</tr>
+
+</table>
+
+]
+
+---
+
+class: middle
+
+
+## Summarizing Numerical Data
+
+Consider the following data which represents the number of hours slept for 10 people who were surveyed.
+
+.center[
+<table>
+
+<tr>
+
+<td> 7 </td>
+<td> 7.5 </td>
+<td> 8 </td>
+<td> 5.5 </td>
+<td> 10 </td>
+<td> 7.2 </td>
+<td> 7 </td>
+<td> 8 </td>
+<td> 9 </td>
+<td> 8 </td>
+
+
+</tr>
+
+
+
+
+</table>
+
+]
+---
+
+class: middle
+
+## Mean
+
+$$\bar x = \frac{7+7.5+8+5.5+10+7.2+7+8+9+8}{10} = 7.72$$
+
+The mean is calculated by summing the observed values and then dividing by the number of observations.
+
+.formula[
+$$\bar x = \frac{x_1 + x_2+.... x_n}{n}$$
+]
+
+where $\bar x$ represents the mean of observed values, $x_1$, $x_2$, ... $x_n$ represent the n observed values.
+
+---
+
+class: middle
+
+## Median
+
+If all the observations are listed from smallest to largest (or vice versa), the median is the observation that falls in the middle. 
+
+.center[
+
+<table>
+
+<tr>
+
+<td> 5.5 </td>
+<td> 7 </td>
+<td> 7 </td>
+<td> 7.2 </td>
+<td> 7.5 </td>
+<td> 8 </td>
+<td> 8 </td>
+<td> 8 </td>
+<td> 9 </td>
+<td> 10 </td>
+
+
+</tr>
+
+
+</table>
+
+]
+
+In this case, we have two numbers in the middle 7.5 and 8. The average of these numbers would be the median. In this case, the median is 7.75. 
+
+$$\frac{7.5 + 8}{2} = 7.75$$
+
+--
+
+Median is also the 50th percentile indicating that 50% of the data fall below this value.
+
+---
+
+class: middle
+
+## Q1, Q3, and Interquartile Range
+
+First quartile (Q1) is the point at which 25% of the data fall below of. 
+
+Third quartile (Q3) is the point at which 75% of the data fall below of. 
+
+Q1 and Q3 can be considered 25th and 75th percentiles respectively. 
+
+.formula[Interquartile Range (IQR) = Q3 - Q1] which represents the middle 50% of the data.
+
+---
+
+class: middle
+
+## In Breakout Rooms: Question 1
+
+Consider the mean, median, Q1, and Q3 of everyone's height in this cluster. 
+You don't need to know the exact values.
+LeBron James decides to join our cluster. 
+How would the mean, median, Q1, and Q3 change if at all?
+
+---
+
+class: middle
+
+## In Breakout Rooms: Question 2
+
+Actually LeBron James does not join but Peter Dinklage is joining. 
+How would the mean, median, Q1, and Q3 of heights change if at all?
+
+---
+
+## In Breakout Rooms: Question 3
+
+Consider Dr. Dogucu teaching three classes. 
+All of these classes have 5 students. 
+Below are exam results from these classes. 
+
+Class 1: 80 80 80 80 80  
+Class 2: 76 78 80 82 84  
+Class 3: 60 70 80 90 100  
+
+All of these classes have a mean of 80 points. 
+Do you think the mean describes these classes well? 
+Can you think of any other way to describe (in words not in numbers) how these classes differ?
+
+---
+
+class: middle center
+
+#### Standard deviation and Variance
+
+
+<table align = "center">
+<thead>
+
+<th>x<sub>i</sub> </th> <th>  x<sub>i</sub> - x&#772 </th> <th> (x<sub>i</sub> - x&#772) <sup>2</sup></th>
+</thead>
+
+<tr> 
+<td>5.5 </td> <td> 5.5-7.72 = -2.22 hr</td> <td> (-2.2 hr)<sup>2</sup> = 4.9284 hr <sup>2</sup> </td>
+</tr>
+
+<tr> 
+<td>7 </td> <td> 7-7.72 = -0.72 hr</td> <td> (-0.72 hr)<sup>2</sup> = 0.5184 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>7 </td> <td> 7-7.72 = -0.72 hr</td> <td> (-0.72 hr)<sup>2</sup> = 0.5184 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>7.2 </td> <td> 7.2-7.72 = -0.52 hr</td> <td> (-0.52 hr)<sup>2</sup> = 0.2704 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>7.5 </td> <td> 7.5-7.72 = -0.22 hr</td> <td> (-0.22 hr)<sup>2</sup> = 0.0484 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>8 </td> <td> 8-7.72 = 0.28 hr</td> <td> (0.28 hr)<sup>2</sup> = 0.0784 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>8 </td>  <td> 8-7.72 = 0.28 hr</td> <td> (0.28 hr)<sup>2</sup> = 0.0784 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>8 </td> <td> 8-7.72 = 0.28 hr</td> <td> (0.28 hr)<sup>2</sup> = 0.0784 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>9 </td> <td> 9-7.72 = 1.28 hr</td> <td> (1.28 hr)<sup>2</sup> = 1.6384 hr <sup>2</sup></td>
+</tr>
+
+<tr> 
+<td>10 </td> <td> 10-7.72 = 2.28 hr</td> <td> (2.28 hr)<sup>2</sup> = 5.1984 hr <sup>2</sup></td>
+</tr>
+
+</table>
+
+
+---
+
+## Total distance from the mean
+
+
+$\Sigma_{i = 1}^{n} (x_i - \bar x )^2 =$
+
+$4.9284 + 0.5184 + 0.5184 + 0.2704 + 0.0484 +$ 
+$0.0784 + 0.0784 + 0.0784+ 1.6384 + 5.1984 = 13.356 \text{ hr}^2$
+
+Note that $n$ represents the number of observations which means $n = 10$.
+
+---
+
+
+## Sample variance
+
+<br>    
+.formula[
+
+$$s^2 = \frac{\Sigma_{i = 1}^{n} (x_i - \bar x )^2}{n-1}$$ 
+
+]
+
+<br>
+
+$$s^2= \frac{13.356}{10-1} = 1.484\text{ hr}^2$$
+
+---
+
+## Sample standard deviation
+
+<br>
+.formula[
+$$s = \sqrt{\frac{\Sigma_{i = 1}^{n} (x_i - \bar x )^2}{n-1}}$$
+]
+
+<br>
+$$s= \sqrt{1.484} = 1.218195 \text{ hr}$$
+
+
+---
+
+class: center middle inverse
+
+.font150[Numerical Summaries in R]
+
+---
+
+```{r}
+glimpse(ncbirths)
+```
+
+---
+
+class: middle
+
+## Outline
+
+- Describing categorical data using R
+
+
+- Describing numerical data using R
+
+
+---
+
+class: middle
+
+
+## Summarizing Categorical Data
+
+__Counts__ or __proportions__ are used to summarize categorical variables. 
+
+
+
+---
+
+## Counts in R
+
+```{r}
+count(ncbirths, premie)
+```
+
+There are 846 babies who are `full term` and 152 who are `premie`. 
+
+---
+
+## Proportions in R
+
+
+```{r}
+tabyl(ncbirths, premie)
+```
+
+
+---
+
+## Mean in R
+
+```{r}
+summarize(ncbirths, mean(weight))
+```
+
+---
+
+## Median in R
+
+```{r}
+summarize(ncbirths, median(weight))
+```
+
+
+---
+
+## Quartiles
+
+You can specify quartiles (Q3)
+
+```{r}
+summarize(ncbirths, quantile(weight, 0.75))
+```
+
+Recall that 75% of the data is below Q3. Thus the 0.75 quantile in the R code.
+
+---
+
+## Standard Deviation and Variance
+
+```{r}
+summarize(ncbirths, sd(weight))
+```
+
+```{r}
+summarize(ncbirths, var(weight))
+```
+
+---
+
+class: middle
+
+We have seen multiple summary statistics. 
+The `summarize()` function can support all of them at once.
+
+```{r}
+summarize(ncbirths, mean(weight), median(weight), 
+          sd(weight), var(weight))
+```
+
+---
+
+class: middle
+
+We can also define variable names for the summary statistics that get printed out (e.g. `mean_weight`).
+
+```{r}
+summarize(ncbirths, mean_weight = mean(weight), 
+          med_weight = median(weight), 
+          sd_weight = sd(weight), 
+          var_weight = var(weight))
+```
+
+---
+
+## Missing Data (NA)
+
+```{r error=TRUE}
+summarize(ncbirths, mean(visits))
+```
+
+--
+
+```{r error=TRUE}
+summarize(ncbirths, mean(visits, na.rm = TRUE))
+```

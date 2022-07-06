@@ -1,0 +1,366 @@
+---
+title: "Interpreting Data Visualizations"
+author: "Dr. Mine Dogucu"
+output: 
+  xaringan::moon_reader:
+    css: ["slide-style.css"]
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+
+---
+
+class: title-slide
+
+```{r echo = FALSE, message=FALSE}
+library(openintro)
+library(tidyverse)
+library(gganimate)
+library(fGarch)
+theme_set(theme_bw(base_size = 18))
+```
+
+<br>
+<br>
+.right-panel[ 
+<br>
+
+# `r rmarkdown::metadata$title`
+
+## `r rmarkdown::metadata$author`
+
+]
+
+---
+
+class: middle
+
+## Reminder
+
+- Close all apps on your computer other than zoom.  
+- Open slides for this session from the cluster website (https://uci-dshs.netlify.app/). 
+
+
+---
+
+```{r echo = FALSE, message=FALSE}
+library(openintro)
+library(tidyverse)
+babies <- babies %>% 
+  mutate(smoke = as.logical(smoke),
+         parity = as.logical(parity))
+
+xaringanExtra::use_panelset()
+theme_set(theme_gray(base_size = 20))
+```
+
+class: middle
+
+[Limbo Lines: Dead Here, Alive There](https://pudding.cool/2018/02/death/)
+
+[Anxiety: It Gets Worse, Then It Gets Better](https://www.instagram.com/p/B4U81DJlqTG/)
+
+[The Wealth & Health of Nations](https://observablehq.com/@mbostock/the-wealth-health-of-nations)
+
+---
+
+class: middle
+
+Data Visualizations
+
+- are graphical representations of data
+
+--
+
+- use different colors, shapes, and the coordinate system to summarize data
+
+--
+
+- tell a story
+
+--
+
+- are useful for exploring data
+
+
+
+
+---
+
+class:inverse middle
+
+.font75[Visuals with a Single Categorical Variable]
+
+---
+
+## Bar plot
+
+.pull-left[
+
+```{r echo=FALSE, fig.align='center', fig.height=5}
+ggplot(babies, aes(x = smoke)) +
+  geom_bar() +
+  ylab("Count") +
+  xlab("Smoker Status of Mothers")
+```
+
+]
+
+.pull-right[
+
+```{r echo=FALSE, fig.align='center', fig.height=5}
+ggplot(babies, aes(x = smoke, y = ..prop.., group = 1)) +
+  geom_bar() +
+  ylab("Proportion") +
+  xlab("Smoker Status of Mothers") 
+```
+]
+
+---
+
+class:inverse middle
+
+.font75[Visuals with a Single Numeric Variable]
+
+---
+
+## Box plot
+
+.pull-left[
+
+```{r echo=FALSE, fig.align='center', fig.height=5}
+ggplot(babies, aes(y = bwt)) +
+  geom_boxplot() +
+  scale_x_discrete() +
+  ylab("Birth Weight") +
+  xlab("") 
+```
+
+
+]
+
+.pull-right[
+
+- The horizontal line inside the box represents the median.
+- The box itself represents the middle 50% of the data with Q3 on the upper end and Q1 on the lower end. 
+- Whiskers extend from the box. They can extend up to 1.5 IQR away from the box (i.e. away from Q1 and Q3). 
+- The points are potential outliers that represent babies with really low or high birth weight.
+
+]
+
+---
+
+## Histogram
+
+.pull-left[
+
+Bin width = 5 ounces
+
+```{r echo=FALSE, fig.align='center', fig.height=5, warning=FALSE}
+ggplot(babies, aes(x = bwt)) +
+  geom_histogram(color = "white", binwidth = 5) +
+  ylab("Count") +
+  xlab("Birth Weight of Babies") 
+```
+
+]
+
+.pull-right[
+
+Bin width = 20 ounces
+
+
+```{r echo=FALSE, fig.align='center', fig.height=5, warning=FALSE}
+ggplot(babies, aes(x = bwt)) +
+  geom_histogram(color = "white", binwidth = 20) +
+  ylab("Count") +
+  xlab("Birth Weight of Babies")
+```
+
+]
+
+---
+
+class: middle
+
+[Exploring Histograms Interactively](http://tinlizzie.org/histograms/)
+
+---
+
+class: middle center
+
+[There is no "best" number of bins](https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width)
+
+---
+
+
+## Fun fact
+
+__histo__ comes from the Greek word _histos_ that literally means "anything set up right".
+
+__gram__: comes from the Greek word _gramma_ which means "that which is drawn".
+
+.footnote[Online Etymology Dictionary]
+
+---
+
+## Histogram vs. Boxplot
+
+.pull-left[
+
+```{r echo = FALSE, message=FALSE, warning=FALSE, fig.height=5, cache = TRUE}
+set.seed(12345)
+symmetric <- rnorm(n = 10000, mean = 0, sd = 1)
+right_skewed <- rsnorm(n = 10000, mean = 0, sd = 1, xi = 20)
+left_skewed <- rsnorm(n = 10000, mean = 0, sd = 1, xi = -20)
+type <- c(
+  rep("left-skewed", 10000),
+  rep("symmetric", 10000),
+  rep("right-skewed", 10000)
+)
+x <- c(left_skewed,
+       symmetric,
+       right_skewed)
+data <- tibble(x = x,
+                  type = type)
+data %>% 
+  ggplot(aes(x = x)) +
+  geom_histogram() +
+  transition_states(type,
+                    transition_length = 1,
+                    state_length = 10) +
+  labs(title = 'Distribution: {closest_state}',
+       x = 'observations')
+```
+
+Tail tells the tale.
+
+]
+
+
+.pull-right[
+```{r echo = FALSE, fig.height=5, cache = TRUE, message = FALSE}
+data %>% 
+  ggplot(aes(x = 1, y = x)) +
+  geom_boxplot() +
+    theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) +
+  transition_states(type,
+                    transition_length = 1,
+                    state_length = 10) +
+  labs(title = 'Distribution: {closest_state}',
+       y = "observations")
+```
+
+]
+
+---
+
+class: middle
+
+## In Breakout Rooms
+
+Discuss:
+
+- In right-skewed distributions mean > median, true or false?
+- In left-skewed distributions mean > median, true or false?
+
+---
+
+class: inverse middle center
+
+.font75[Visuals with Two Categorical Variables]
+
+---
+
+## Standardized Bar Plot
+
+```{r echo=FALSE, fig.align='center', fig.height=4}
+ggplot(data = babies,
+       aes(x = smoke, 
+           fill = parity)) + 
+  geom_bar(position = "fill") +
+  ylab("Proportion") +
+  xlab("Mother's Smoker Status")
+```
+
+---
+
+## Dodged Bar Plot
+
+```{r echo=FALSE, fig.align='center', fig.height=4}
+ggplot(data = babies,
+       aes(x = smoke, 
+           fill = parity)) + 
+  geom_bar(position = "dodge")
+```
+
+
+
+---
+
+class: middle inverse
+
+.font75[Visuals with a single numerical and single categorical variable.]
+
+
+
+---
+
+## Side-by-side box plots
+
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(babies,
+       aes(x = smoke,
+           y = bwt))  +
+  geom_boxplot() +
+  labs(x = "Smoker Status of Mother",
+       y = "Birth weight (ounces)")
+```
+
+---
+
+class: inverse middle
+
+.font75[Visuals with Two Numerical Variables]
+
+
+---
+
+## Scatter plots
+
+```{r echo = FALSE, fig.height=5, fig.align='center', warning=FALSE}
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt))  +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth weight (ounces)") 
+```
+
+Length of gestation can **possibly** eXplain a baby's birth weight. 
+Gestation is the eXplanatory variable and is shown on the x-axis.
+Birth weight is the response variable and is shown on the y-axis.
+
+---
+
+## Linear Relationship
+
+```{r echo = FALSE, fig.height=4, fig.align='center', warning=FALSE, message=FALSE}
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt))  +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth weight (ounces)") +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+In Week 3, we will start statistical modeling during which we will numerically define the relationship between gestation and birth weight. 
+For now we can say that this relationship is positive and moderate.
+
