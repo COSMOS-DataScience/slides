@@ -111,8 +111,8 @@ class:middle center
 |-------------|--------
 | Week 1      |Exploring Data 
 | Week 2      |Probability, Inference, and Statistical Modeling
-| Week 3      |Capstone project
-| Week 4      |Capstone Project
+| Week 3      |Capstone project -- Data Analysis
+| Week 4      |Capstone Project -- Presentation
 
 
 
