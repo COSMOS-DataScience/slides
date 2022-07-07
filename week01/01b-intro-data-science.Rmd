@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Data Science"
-author: "Babak Shahbaba <br> Dr. Sam Behseta <br> Dr. Mine Dogucu"
+author: "Babak Shahbaba <br> Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]
@@ -49,7 +49,7 @@ library(titanic)
 
 ```{r echo = FALSE, message=FALSE}
 
-alzheimer_data <- read.csv('data/nacc_data_processed.csv') %>% 
+alzheimer_data <- read.csv('data/alzheimer_data.csv') %>% 
   select(id, diagnosis, age, educ, female, height, weight) %>% 
   mutate(diagnosis = as.factor(diagnosis), female = as.factor(female))
 
@@ -280,5 +280,16 @@ class: middle
 
 
 
+---
+
+class: middle center
+
+## Data Cycle
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/data-cycle.png')
+```
+
+.footnote[Image from Grolemund, G., & Wickham, H. (2018). R for data science (CC BY-NC-ND 3.0).]
 
 

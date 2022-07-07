@@ -1,6 +1,6 @@
 ---
 title: "Describing Data"
-author: "Babak Shahbaba <br> Dr. Sam Behseta <br> Dr. Mine Dogucu"
+author: "Babak Shahbaba <br> Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]
@@ -39,31 +39,9 @@ class: middle
 
 ## Reminder
 
-- Close all apps on your computer other than zoom.  
-- Open slides for this session from the cluster website (https://uci-dshs.netlify.app/). 
+- Close all apps on your computer other than RStudio.  
+- Open slides for this session from the cluster website (https://cosmos-datascience.netlify.app). 
 
-
----
-
-class: middle
-
-## Review Questions
-
-
-
-1. What R functions have we seen so far? 
-
---
-
-2. How many panes have we used so far in RStudio? What does each pane do?
-
---
-
-3. Street addresses of hospital patients is a factor. Correct or incorrect?
-
---
-
-4. County of residence of hospital patients in California is a factor. Correct or incorrect?
 
 ---
 

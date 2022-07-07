@@ -118,26 +118,33 @@ class:middle center
 
 ---
 
+class:middle center
+
+| Lab        | Topic |
+|-------------|--------|
+| Day 1 Morning     |Introduction to R, R Markdown, and Data 
+| Day 1 Afternoon     |Describing Data with Numbers and Visuals        
+| Day 2 Morning      |Data Wrangling        
+| Day 2 Afternoon     |Dealing with Data Frames       
+
+
+
+---
+
+class: center middle
+
+<a href="https://science.sciencemag.org/content/347/6228/1314.long" style="font-size: 50px;">What is the question?</a>
+
+
+---
+
 class: middle center
 
 ## Projects
 
 ```{r echo=FALSE, out.width="50%"}
-knitr::include_graphics("img/pregnant.jpeg")
+knitr::include_graphics("img/Alzheimer.png")
 ```
-
----
-
-class:middle center
-
-
-| Time        | Topics |
-|-------------|--------|
-| 1st weekend |        |
-| 2nd weekend |Derive research questions for the projects individually        |
-| 3rd weekend |Explore the projects dataset in groups        |
-| 4th weekend |Present findings of the project        |
-
 
 ---
 
