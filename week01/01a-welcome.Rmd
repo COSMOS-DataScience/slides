@@ -116,28 +116,48 @@ class:middle center
 
 
 
+
+
+---
+
+class:middle center
+
+| Lab        | Topic |
+|-------------|--------|
+|Day 1 Morning      |Introduction to R, R Markdown, and Data 
+|Day 1 Afternoon     |Data Wrangling
+|Day 2 Morning      |Describing Data with Numbers and Visuals                
+|Day 2 Afternoon     |Dealing with Data Frames       
+
+
+---
+
+class: middle center
+
+## Data Cycle
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('img/data-cycle.png')
+```
+
+.footnote[Image from Grolemund, G., & Wickham, H. (2018). R for data science (CC BY-NC-ND 3.0).]
+
+---
+
+class: center middle
+
+<a href="https://science.sciencemag.org/content/347/6228/1314.long" style="font-size: 50px;">What is the question?</a>
+
+
 ---
 
 class: middle center
 
 ## Projects
 
-```{r echo=FALSE, out.width="50%"}
-knitr::include_graphics("img/pregnant.jpeg")
+```{r echo=FALSE, out.width="70%"}
+knitr::include_graphics("img/alzheimer.png")
 ```
-
----
-
-class:middle center
-
-
-| Time        | Topics |
-|-------------|--------|
-| 1st weekend |        |
-| 2nd weekend |Derive research questions for the projects individually        |
-| 3rd weekend |Explore the projects dataset in groups        |
-| 4th weekend |Present findings of the project        |
-
 
 ---
 
@@ -164,6 +184,7 @@ class: middle
 ## Attendance and Participation
 
 You are expected to attend all activities of the COSMOS program and actively participate.
+
 Please arrive on time.
 
 
@@ -203,7 +224,7 @@ knitr::include_graphics("img/thephysicsgirl.png")
 
 class: middle center
 
-Move your body, stretch, go out (if it is safe) during breaks.
+Move your body, stretch, go outside during breaks.
 
 .pull-left[
 
