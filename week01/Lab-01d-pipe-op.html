@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Review</title>
+    <title>The Pipe Operator</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="04d-review_files/header-attrs-2.9/header-attrs.js"></script>
+    <script src="Lab-01d-pipe-op_files/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -16,50 +16,224 @@ class: title-slide
 
 
 
-
 &lt;br&gt;
 &lt;br&gt;
 .right-panel[ 
 
-# Review
+# The Pipe Operator
 ## Dr. Mine Dogucu
+]
+
+---
+
+class: inverse middle
+
+.font50[Three solutions to a single problem]
+
+---
+
+class: middle
+
+What is the average of 4, 8, 16 approximately?
+
+---
+
+class: middle
+
+1.What is the average of **4, 8, 16** approximately?
+
+---
+
+class: middle
+
+2.What is the **average** of 4, 8, 16 approximately?
+
+---
+
+class: middle
+
+3.What is the average of 4, 8, 16 **approximately**?
+
+---
+
+class: middle inverse
+
+.font50[Solution 1: Functions within Functions]
+
+---
+
+
+```r
+c(4, 8, 16)
+```
+
+```
+## [1]  4  8 16
+```
+
+--
+
+&lt;hr&gt;
+
+
+```r
+mean(c(4, 8, 16))
+```
+
+```
+## [1] 9.333333
+```
+
+--
+
+&lt;hr&gt;
+
+
+```r
+round(mean(c(4, 8, 16)))
+```
+
+```
+## [1] 9
+```
+
+---
+
+class: middle
+
+**Problem with writing functions within functions**
+
+Things will get messy and more difficult to read and debug as we deal with more complex operations on data.
+
+---
+
+class: middle inverse
+
+.font50[Solution 2: Creating Objects]
+
+---
+
+class: middle
+
+
+```r
+numbers &lt;- c(4, 8, 16)
+numbers
+```
+
+```
+## [1]  4  8 16
+```
+
+--
+
+&lt;hr&gt;
+
+
+```r
+avg_number &lt;- mean(numbers)
+avg_number
+```
+
+```
+## [1] 9.333333
+```
+
+--
+
+&lt;hr&gt;
+
+
+```r
+round(avg_number)
+```
+
+```
+## [1] 9
+```
+
+---
+
+class: middle
+
+**Problem with creating many objects**
+
+We will end up with too many objects in `Environment`. 
+
+---
+
+class: middle inverse
+
+.font50[Solution 3: The (forward) Pipe Operator %&gt;% ]
+
+---
+
+class: middle
+
+.font75[Shortcut: &lt;br&gt;Ctrl (Command) + Shift + M]
+
+---
+class: middle
+
+.pull-left[
+
+```r
+c(4, 8, 16) %&gt;% 
+  mean() %&gt;% 
+  round()
+```
+
+```
+## [1] 9
+```
+]
+
+.pull-right[
+
+Combine 4, 8, and 16 `and then`  
+Take the mean   `and then`  
+Round the output
+
 ]
 
 
 ---
 
-class:middle center
+class: middle
 
-| Day        | Topic |
-|-------------|--------|
-| Day 1      |Introduction to R, R Markdown, and Data 
-| Day 2      |Describing Data with Numbers and Visuals        
-| Day 3      |Data Wrangling        
-| Day 4      |Dealing with Data Frames       
-
+The output of the first function is the first argument of the second function.
 
 ---
 
-class: middle center
+Do you recall composite functions such as `\(f \circ g(x)\)`?
 
-## Data Cycle
+--
 
-&lt;img src="img/data-cycle.png" width="100%" /&gt;
+Now we have `\(f \circ g \circ h (x)\)` or `round(mean(c(4, 8, 16)))`
 
-.footnote[Image from Grolemund, G., &amp; Wickham, H. (2018). R for data science (CC BY-NC-ND 3.0).]
+--
 
----
-
-class: center middle
-
-&lt;a href="https://science.sciencemag.org/content/347/6228/1314.long" style="font-size: 50px;"&gt;What is the question?&lt;/a&gt;
-
----
-
-class: center middle
+.pull-left[
 
 
-&lt;a href="https://archive.ics.uci.edu/ml/datasets.php" style="font-size: 50px;"&gt;UCI Machine Learning Repository&lt;/a&gt;
+```r
+h(x) %&gt;% 
+  g() %&gt;% 
+  f()
+```
+
+]
+
+.pull-right[
+
+
+```r
+c(4, 8, 16) %&gt;% 
+  mean() %&gt;% 
+  round()
+```
+
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -108,6 +282,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

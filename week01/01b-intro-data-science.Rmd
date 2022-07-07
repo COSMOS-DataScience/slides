@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Data Science"
-author: "Babak Shahbaba"
+author: "Babak Shahbaba & Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]
@@ -57,7 +57,7 @@ alzheimer_data <- read.csv('data/nacc_data_processed.csv') %>%
 
 - Data-intensive studies have led to a new paradigm in scientific research. 
 
-- Within this new paradigm, there are many new challenges involving analysis of big data due to large-scale scientific studies, routine use of digital sensors, and intensive computer simulations.
+- Within this new paradigm, however, there are many new challenges involving analysis of big data due to large-scale scientific studies, routine use of digital sensors, and intensive computer simulations.
 
 - To tackle these emerging challenges, the field of __data science__ brings together _statistics, computer science_, and _mathematics_ to solve data intensive problems.
 
