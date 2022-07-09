@@ -108,6 +108,36 @@ my_age <- 2022 - birth_year
 My_age
 ```
 
+
+
+---
+
+## Variables in R
+
+`character`: takes string values (e.g. a person's name, address)
+
+--
+
+`integer`: integer (single precision)  
+
+--
+
+`double`: floating decimal (double precision) 
+
+--
+
+`numeric`: integer or double  
+
+--
+
+`factor`: categorical variables with different levels  
+
+--
+
+`logical`: TRUE (1), FALSE (0)  
+
+
+
 ---
 
 
