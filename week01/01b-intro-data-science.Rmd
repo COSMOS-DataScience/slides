@@ -46,7 +46,7 @@ library(titanic)
 ---
 
 
-## Data Science 
+## What is data science 
 
 ```{r echo = FALSE, message=FALSE}
 
@@ -95,7 +95,7 @@ problem.
 
 ---
 
-## Alzheimer's Data
+## Alzheimer's data
 
 ```{r echo=FALSE, out.width='90%', fig.align='center'}
 knitr::include_graphics('img/AlzheimerData.png')
