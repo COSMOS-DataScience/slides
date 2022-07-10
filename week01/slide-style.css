@@ -1,7 +1,7 @@
 /*Title slide*/
 
 .title-slide {
-  background-image: url(img/cosmos-uci-dshs.png);
+  background-image: url(img/cosmos-uci-dsbs.png);
   background-position: 10% 60%;
   background-size: 30%;
   background-color:  #fefaf3;
@@ -26,7 +26,7 @@
 
 /*Logo*/
 .remark-slide-content:not(.title-slide){
-  background-image: url(img/cosmos-uci-dshs.png);
+  background-image: url(img/cosmos-uci-dsbs.png);
   background-position: 1% 99%;
   background-size: 80px;
 }
