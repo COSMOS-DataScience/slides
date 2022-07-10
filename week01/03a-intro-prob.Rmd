@@ -33,9 +33,8 @@ library(fabricerin)
 
 ---
 
-class: middle
 
-### Introduction
+## Introduction
  - We have used plots and summary statistics to learn about the distribution of different variables in the observed data and to investigate their relationships. 
  
  - We now want to **generalize** our findings to the entire population of interest. 
@@ -49,7 +48,7 @@ class: middle
  
 ---
  
-### Some Commonly Used Genetic Terms
+## Some Commonly Used Genetic Terms
 
 - Throughout this lecture, we will use the following concepts from genetics:  
 
@@ -69,7 +68,7 @@ class: middle
 
 ---
 
-### Random phenomena and their sample space
+## Random phenomena and their sample space
 
 - A phenomenon is called random if its outcome (value) cannot be determined with certainty before it occurs. 
 
@@ -84,7 +83,7 @@ $$\begin{array}{l@{\quad}l}
 \end{array}$$
 ---
 
-### Probability
+## Probability
 
 - To each possible outcome in the sample space, we assign a probability $P$, which represents how certain we are about the occurrence of the corresponding outcome. 
 
@@ -101,7 +100,7 @@ outcomes.
   
 ---
 
-### Random events
+## Random events
 
 - An **event** is a subset of the sample space $S$. 
 
@@ -120,7 +119,7 @@ individual outcomes included in that event.
 
 ---
 
-### Example
+## Example
 
 - As a running example, we consider a bi-allelic gene A with
 two alleles $A$ and $a$. 
@@ -137,7 +136,7 @@ knitr::include_graphics('img/vennGene1.png')
 
 ---
 
-### Example
+## Example
 - We can define four events as follows:
 $$\begin{array}{l@{\quad}l}
 \text{The homozygous event:} & HM = \{\mathit{AA}, \mathit{aa}\}, \\
@@ -157,7 +156,7 @@ P(D) & = & 0.09.
 $$
 ---
 
-### Complement
+## Complement
 - For any event $E$, we define its **complement**, $E^c$, as the set
 of all outcomes that are in the sample space $S$ but not in $E$.
 
@@ -175,7 +174,7 @@ $$P\bigl(E^{c}\bigr) = 1- P(E).$$
 
 ---
 
-### Union
+## Union
 
 - For two events $E_{1}$ and $E_{2}$ in a sample space $S$, we define
 their **union** $E_{1}\cup E_{2}$ as the set of all outcomes that
@@ -196,7 +195,7 @@ probabilities of those outcomes.
 ---
 
 
-### Intersection
+## Intersection
 
 - For two events $E_{1}$ and $E_{2}$ in a sample space $S$, we define their **intersection** $E_{1} \cap E_{2}$ as the set of outcomes that are in **both** events. 
 
@@ -212,7 +211,7 @@ probabilities of those outcomes.
 
 ---
 
-### Joint vs. marginal probability
+## Joint vs. marginal probability
 - We refer to the probability of the intersection of two events, $P(E_{1} \cap E_{2})$, as their **joint probability**. 
 
 - In contrast, we refer to probabilities $P(E_{1})$ and $P(E_{2})$ as the **marginal probabilities** of events $E_{1}$ and $E_{2}$.
@@ -224,7 +223,7 @@ $$P(E_{1} \cup E_{2}) = P(E_{1}) + P(E_{2}) - P(E_{1} \cap E_{2}).$$
 
 ---
 
-### Joint vs. marginal probability
+## Joint vs. marginal probability
 
 - For example, the union of the heterozygous and the no-disease events is
 $$\begin{eqnarray*}
@@ -234,7 +233,7 @@ P(HM  \cup ND)  &=&  P(HM ) + P(ND) - P(HM  \cap ND) \\
 
 ---
 
-### Disjoint events
+## Disjoint events
 - Two events are called **disjoint** or **mutually exclusive** if they never occur together: if we know that one of them has occurred, we can conclude that the other event has not occurred. 
 
 - Disjoint events have no
@@ -245,7 +244,7 @@ elements (outcomes) in common, and their intersection is the empty set.
 
 ---
 
-### Disjoint events
+## Disjoint events
 
 - For two disjoint events $E_{1}$ and $E_{2}$, the probability of their
 intersection (i.e., their joint probability) is zero: 
@@ -257,7 +256,7 @@ $$P(E_1 \cup E_2 \cup ... \cup E_n) = P(E_1) + P(E_2) + ... + P(E_n)$$
 
 ---
 
-### Partition
+## Partition
 
 - When two or more events are disjoint and their union is the sample
 space $S$, we say that the events form a **partition** of the
@@ -269,7 +268,7 @@ space.
 
 ---
 
-### Conditional probability
+## Conditional probability
 
 - Ver often, we need to discuss possible changes in the
 probability of one event based on our knowledge regarding the
@@ -289,7 +288,7 @@ by the marginal probability of the event on which we are conditioning.
 
 ---
 
-### The law of total probability
+## The law of total probability
 
 - By rearranging the equation for conditional probabilities, we have
 $$P(E_{1} \cap E_{2}) = P(E_{1}|E_{2})P(E_{2}).$$
@@ -302,7 +301,7 @@ knitr::include_graphics('img/generalPartition.png')
 
 ---
 
-### The law of total probability
+## The law of total probability
 
 - Using the above equation, we have
 $$P(A)  =  P(A|B_{1})P(B_{1}) + \cdots + P(A|B_{K})P(B_{K}).$$
@@ -312,7 +311,7 @@ $$P(A)  =  P(A|B_{1})P(B_{1}) + \cdots + P(A|B_{K})P(B_{K}).$$
 
 ---
 
-### Independent events
+## Independent events
 
 - Two events $E_{1}$ and $E_{2}$ are **independent** if our
 knowledge of the occurrence of one event does not change the
@@ -327,7 +326,7 @@ P(E_{2}|E_{1}) & = & P(E_{2}).
 
 ---
 
-### Independent events
+## Independent events
 
 - When two events $E_{1}$ and $E_{2}$ are independent, the probability
 that $E_{1}$ and $E_{2}$ occur simultaneously, i.e., their joint
@@ -341,7 +340,7 @@ $$P(E_{1} \cup E_{2}) = P(E_{1}) + P(E_{2}) - P(E_{1}) \times P(E_{2}).$$
 
 ---
 
-### Bayes' theorem
+## Bayes' theorem
 
 - Sometimes, we know the conditional
 probability of $E_{1}$ given $E_{2}$, but we are interested in the
@@ -362,7 +361,7 @@ $P(C|SM)$.
 
 ---
 
-### Bayes' theorem
+## Bayes' theorem
 
 - In general, for two events $E_1$ and $E_2$, the following equation
 shows the relationship between $P(E_{2}|E_{1})$ and $P(E_{1}|E_{2})$:
@@ -372,7 +371,7 @@ $$P(E_{2}|E_{1})  =  \frac{P(E_{1}|E_{2})P(E_{2})}{P(E_{1})}.$$
 
 ---
 
-### Bayes' theorem
+## Bayes' theorem
 
 - For the above example, 
 $$P(C|SM)  =  \frac{P(SM|C)P(C) }{P(SM)} = \frac{ 0.4 \times 0.001}{0.25} = 0.0016.$$
@@ -382,86 +381,275 @@ $$P(C|SM)  =  \frac{P(SM|C)P(C) }{P(SM)} = \frac{ 0.4 \times 0.001}{0.25} = 0.00
 
 
 
----
 
-### A more  general form of Bayes' theorem
-
-- Suppose a set of $K$ events $B_1, B_2, \ldots, B_K$ form a partition of the sample space. We can write the Bayes' theorem for each of the partitioning events as follows: 
-$$\begin{eqnarray*}
-P(B_{i}|A) & = & \frac{ P(A|B_{i})P(B_{i})  }{P(A)}
-\end{eqnarray*}$$
-
-- Here, $B_{i}$ is one of the partitioning events and $A$ is an event in the sample space. Using the law of total probability, we have
-$$\begin{eqnarray*}
-P(A) = \sum^{K}_{k=1}P(A|B_k)P(B_k)
-\end{eqnarray*}$$
 
 ---
 
-### A more  general form of Bayes' theorem
+## Random Variables
 
-- Therefore, we can write the general form of Bayes' theorem as 
-$$\begin{eqnarray}
-P(B_{i}|A) & = & \frac{ P(A|B_{i})P(B_{i})  }{\sum^{K}_{k=1}P(A|B_k)P(B_k)}
-\end{eqnarray}$$
+- We now discuss random variables and their probability distributions.
 
-- We will use this general form in analysis of diagnostic tests discussed below. 
+- Formally, a **random variable** $X$ assigns a
+numerical value to each possible outcome (and event) of a random
+phenomenon. 
+
+- For instance, we can define $X$ for possible genotypes
+of a bi-allelic gene **A** as follows:
+$$X = \left\{ \begin{array}{l@{\quad}l}
+0 &  \mbox{for genotype } \mathit{AA}, \\
+1 &  \mbox{for genotype } \mathit{Aa}, \\
+2 &  \mbox{for genotype } \mathit{aa}.
+\end{array} \right.$$
+
+
+
+
 ---
 
-### Diagnostic tests
+## Random Variables
+
+- After we define a random variable, we can find the probabilities for
+its possible values based on the probabilities specified for its underlying
+random phenomenon. This way, instead of talking about the probabilities
+for different outcomes and events, we can talk about the probability of
+different values for a random variable. 
+
+- For example, suppose $P({AA}) = 0.49$, $P({Aa}) = 0.42$, and $P({aa}) = 0.09$. 
+
+- Then, we can say that $P(X=0) = 0.49$, i.e., $X$ is equal
+to $0$ with probability of 0.49. 
+
+- Note that the total probability for the random variable is still 1 and all the probability rules we discussed still hold. 
 
 
-- Diagnostic tests provide an interesting example of Bayes' theorem. 
-- The following figure from Baldi and Utts (2015) summarizes a typical screening process: 
-```{r, echo=FALSE,out.width='55%',fig.align='center'}
-knitr::include_graphics('img/baldiUtts3.png')
+
+---
+
+## Random Variables
+
+
+- The probability distribution of a random variable specifies its
+possible values (i.e., its range) and their corresponding
+probabilities.
+
+- For the random variable $X$ defined based on genotypes, the
+probability distribution can be simply specified as follows:
+
+$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
+0.49 &  \mbox{for } x=0, \\
+0.42 &  \mbox{for } x=1, \\
+0.09 &  \mbox{for } x=2.
+\end{array} \right.$$
+
+- Here, $x$ denotes a specific value (i.e., 0, 1, or 2) of the random variable.
+
+
+---
+
+
+## Discrete vs. continuous random variables
+
+- We divide the random variables into two major groups: **discrete** and
+**continuous**. 
+
+- Discrete random variables can take a countable set of
+values.
+
+- These variables can be categorical (nominal or ordinal), such
+as genotype, or counts, such as the number of patients visiting an emergency room per day, 
+
+- Continuous random variables, for example BMI, can take an uncountable number of possible
+values.
+
+- For any two possible values of this random variable, we can always find another
+value between them. 
+
+---
+
+## Probability distribution
+
+- The probability distribution of a random variable provides the required
+information to find the probability of its possible values.
+
+- The probability distributions discussed here are characterized by one or more
+**parameters**.
+
+- The parameters of probability distributions we assume for random variables are usually unknown.
+
+---
+
+## Discrete probability distributions
+
+- For discrete random variables, the probability distribution is fully
+defined by its **probability mass function** (pmf). 
+
+- This is a function that specifies the probability of each possible value within the
+range of random variable. 
+
+- For the genotype example, the pmf of the
+random variable $X$ is
+
+$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
+0.49 &  \mbox{for } x=0, \\
+0.42 &  \mbox{for } x=1, \\
+0.09 &  \mbox{for } x=2.
+\end{array} \right.$$
+
+
+---
+
+## Bernoulli distribution
+
+- Binary random variables (e.g., healthy/diseased) are abundant in scientific studies. 
+- The binary random variable $X$ with possible values 0 and 1 has a **Bernoulli** 
+
+- For example,  
+$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
+0.2 &  \mbox{for } x=0, \\
+0.8 &  \mbox{for } x=1.
+\end{array} \right.$$
+
+
+
+---
+
+## Binomial distribution
+
+- A sequence of binary random variables $X_{1}, X_{2}, \ldots, X_{n}$ is called **Bernoulli trials** if they all have the same Bernoulli distribution and  are independent. 
+
+- The random variable $Y$ representing the number of times the outcome of interest occurs in $n$ Bernoulli trials (i.e., the sum of Bernoulli trials) has a **Binomial** distribution 
+
+- The pmf of a binomial distribution specifies the probability of each possible value (integers from 0 through $n$) of the random variable.
+
+
+---
+
+## Continuous probability distributions
+
+- For discrete random variables, the pmf provides the probability of each
+possible value. 
+
+- For continuous random variables, the number of possible
+values is uncountable, and the probability of any specific value is
+zero. 
+
+- For these variables, we are usually interested in the probability that the value of
+the random variable is within a specific interval from $x_{1}$ to
+$x_{2}$; we show this probability as $P(x_{1} < X \le x_{2})$. 
+
+
+---
+
+## Probability density function
+
+- For continuous random variables, we use **probability density functions** (pdf) to specify the distribution. Using the pdf, we can obtain the probability of any interval. 
+
+```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center',fig.cap='Probability density function for BMI'}
+knitr::include_graphics('img/densityNormalBMI.png')
+```
+
+
+
+---
+
+## Probability density function
+
+- The total area under the probability density curve is 1. 
+
+- The curve (and its corresponding function) gives the probability of the random variable falling within an interval. 
+
+- This probability is equal to the area under the probability density curve over the interval.
+```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center'}
+knitr::include_graphics('img/densityShaded2530.png')
+```
+
+
+---
+
+## Lower tail probability
+- the probability of observing
+values less than or equal to a specific value $x$, is called the lower
+tail probability and is denoted as $P(X \le x)$. 
+
+```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center'}
+knitr::include_graphics('img/densityShaded18.png')
 ```
 
 ---
 
-### Diagnostic tests
+## Upper tail probability
 
-- We can summarize different scenarios as follows:
+- The probability of observing values greater than $x$, $P(X > x)$, is called the upper tail probability and is found by
+measuring the area under the curve to the right of $x$. 
 
-```{r, echo=FALSE,out.width='80%',fig.align='center'}
-knitr::include_graphics('img/SensitivitySpecificity.png')
+```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center'}
+knitr::include_graphics('img/densityShaded30.png')
 ```
 
 ---
 
-### Diagnostic tests
+## Probability of intervals
 
-- Based on this table, we have
+- The probability of any interval from $x_{1}$ to $x_{2}$, where $x_{1} < x_{2}$, can be obtained using the corresponding lower tail probabilities for these two points as follows:
+$$\begin{equation*}
+P(x_1 < X \le x_2) = P(X \le x_2) - P(X \le x_1).
+\end{equation*}$$
 
-$$\begin{eqnarray*}
-\textrm{Sensitivity} & = & P(\textrm{Positive} | \textrm{Disease} )\\
-\textrm{Specificity} & = & P(\textrm{Negative} | \textrm{No Disease})\\
-\textrm{Positive Predictive Value (PPV)} & = & P(\textrm{Disease} | \textrm{Positive})
-\end{eqnarray*}$$
-- Using the general form of Bayes' theorem, we have:
-$$\begin{eqnarray*}
-\textrm{PPV} & = & \frac{\textrm{sensitivity} \times \textrm{prevalence}  }{\textrm{sensitivity} \times \textrm{prevalence}  +  \textrm{(1- specificity)} \times \textrm{(1- prevalence)} }
-\end{eqnarray*}$$
-where *prevalence* is the overall probability of the disease in the population: $P(Disease)$ 
+- For example, the probability of a BMI between 25 and 30 is
+$$\begin{equation*}
+P(25 < X \le 30) = P(X \le 30) - P(X \le 25).
+\end{equation*}$$
+
 
 ---
 
-### Diagnostic tests
+## Normal distribution
 
-- The following plot is used to obtain the value of PPV. 
+- Consider the probability distribution function and its corresponding probability density curve we assumed for BMI in the above example. 
 
-```{r, echo=FALSE,out.width='50%',fig.align='center'}
-knitr::include_graphics('img/fp_tp.png')
+- This distribution is known as **normal** distribution, which is one of the most widely used distributions for continuous random variables. 
+
+- Random variables with this distribution (or very close to it) occur often in nature.
+
+---
+
+## Normal distribution
+
+- A **normal distribution** and its corresponding pdf are fully specified by the mean and variance: $N$(mean, variance) . 
+
+- $N(0, 1)$ is called the **standard normal distribution**.
+```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center'}
+knitr::include_graphics('img/simpNormalDensity.png')
+```
+
+
+---
+
+## The 68-95-99.7% rule
+
+
+- The 68--95--99.7% rule for normal distributions specifies that
+
+  + 68% of values fall within 1 standard deviation of the mean
+
+  + 95% of values fall within 2 standard deviations of the mean
+
+  + 99.7% of values fall within 3 standard deviations of the mean
+
+
+---
+
+## Normal Distribution
+
+```{r, echo=FALSE,out.width='40%',out.height='30%',fig.show='hold',fig.align='center'}
+knitr::include_graphics("img/normal68.png")
 ```
 
 ---
 
-### Diagnostic tests
+## Normal Distribution
 
-- In the above figure, the following abbreviations are used: $S$ for sample space, $H$ for healthy, $D$ for diseased, $T^-$ for negative test result, $T^+$ for positive test result. 
+```{r, echo=FALSE,out.width='40%',out.height='49%',fig.show='hold',fig.align='center'}
+knitr::include_graphics("img/normal95.png")
+```
 
-- The shaded area to the right of vertical line is the true positive $TP$, the shaded area to the left of the vertical line is the false negative $FN$, the unshaded area to the left of the vertical line is the true negative $TN$, and the unshaded area to the right of the vertical line is the false negative $FN$ for the test.
-
-- Therefore, the general form of Bayes' theorm can be written as follows:
-
-$$P(D|T^{+})  =  \frac{ P(T^{+}|D)P(D)}{P(T^{+}|D)P(D) + P(T^{+} | H)P(H)} $$
