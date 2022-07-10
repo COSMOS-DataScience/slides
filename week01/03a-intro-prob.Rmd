@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Probability"
-author: "Dr. Babak Shahbaba"
+author: "Babak Shahbaba"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]
