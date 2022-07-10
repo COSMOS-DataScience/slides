@@ -107,25 +107,12 @@ class: middle
 
 class:middle center
 
-| Time        | Topics 
+| Lectures        | Topics 
 |-------------|--------
-| Week 1      |Exploring Data 
-| Week 2      |Probability, Inference, and Statistical Modeling
-| Week 3      |Capstone project
+| Week 1      |Exploring Data, Probability 
+| Week 2      |Statistical Inference, Modeling
+| Week 3      |Capstone Project
 | Week 4      |Capstone Project
-
-
-
----
-
-class:middle center
-
-| Lab        | Topic |
-|-------------|--------|
-| Day 1 Morning     |Introduction to R, R Markdown, and Data 
-| Day 1 Afternoon     |Describing Data with Numbers and Visuals        
-| Day 2 Morning      |Data Wrangling        
-| Day 2 Afternoon     |Dealing with Data Frames       
 
 
 
@@ -140,7 +127,7 @@ class: center middle
 
 class: middle center
 
-## Projects
+## Capstone project
 
 ```{r echo=FALSE, out.width="50%"}
 knitr::include_graphics("img/Alzheimer.png")
@@ -171,6 +158,7 @@ class: middle
 ## Attendance and Participation
 
 You are expected to attend all activities of the COSMOS program and actively participate.
+
 Please arrive on time.
 
 
@@ -273,24 +261,11 @@ knitr::include_graphics("img/closed-windows.jpeg")
 
 class: middle 
 
-.pull-left[
-
 Keep your files organized.   
 
-We use numbers (e.g. `01`, `02`) to indicate the day of the program.  
+For example, in our GitHub page, we use numbers (e.g. `01`, `02`) to indicate the day of the program.  
 
 We use letters (e.g. `a`, `b`) to indicate the sequence of lectures/labs in a given day.
-
-]
-
-.pull-right[
-
-```{r echo=FALSE, out.width="70%", fig.align="center"}
-knitr::include_graphics("img/create-dir.png")
-```
-
-]
-
 
 
 
