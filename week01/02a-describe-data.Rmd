@@ -495,9 +495,9 @@ the minimum observed value.
 - To visualize the five-number summary, the range and the IQR, we often
 use a __boxplot__ (a.k.a. _box and whisker_ plot).
 
-<center>
-<img src="img/illustBoxplot.png" width="35%"/> 
-</center>
+```{r echo=FALSE, out.width='40%', fig.align='center'}
+knitr::include_graphics('img/illustBoxplot.png')
+```
 
 ---
 ## Five-number summary and boxplot
