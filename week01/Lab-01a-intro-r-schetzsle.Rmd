@@ -73,7 +73,7 @@ class: center
   <source src="screencast/01a-hello-world.mp4" type="video/mp4">
 </video>
 
-*Created by Dr. Mine Dogucu
+.footnote[Created by Dr. Mine Dogucu]
 
 ---
 

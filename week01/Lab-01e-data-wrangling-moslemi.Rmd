@@ -1,5 +1,5 @@
 ---
-title: "Data Wrangling"
+title: "Data Wrangling in R"
 author: "Zahra Moslemi"
 output: 
   xaringan::moon_reader:
