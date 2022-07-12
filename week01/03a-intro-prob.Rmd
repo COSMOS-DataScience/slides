@@ -668,7 +668,6 @@ knitr::include_graphics('img/simpNormalDensity.png')
 
 ## The 68-95-99.7% rule
 
-
 - The 68--95--99.7% rule for normal distributions specifies that
 
   + 68% of values fall within 1 standard deviation of the mean
