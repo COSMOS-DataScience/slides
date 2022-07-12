@@ -495,10 +495,8 @@ the minimum observed value.
 
 To visualize the five-number summary, the range and the IQR, we often
 use a __boxplot__ (a.k.a. _box and whisker_ plot).
-
-
 <center>
-<img width="45%" src="img/illustBoxplot.png"/>
+<img width="45%" src="img/Boxplot.png"/>
 </center>
 
 
