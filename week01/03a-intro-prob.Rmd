@@ -467,7 +467,7 @@ value between them.
 
 ---
 
-## Probability distribution
+## Probability distributions
 
 - The probability distribution of a random variable provides the required
 information to find the probability of its possible values.
