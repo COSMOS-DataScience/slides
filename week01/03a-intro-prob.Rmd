@@ -499,10 +499,29 @@ $$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
 
 ---
 
+## Discrete uniform distribution
+
+- One of the most straightforward, yet useful distributions, is the one that assigns the same probability, regardless of the value. 
+
+- For that reason, it is called __uniform probability distribution__. 
+
+- A _discrete_ uniform distribution can be written as follow
+
+$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
+\frac{1}{k}  & x=1,...,k  \\
+0 & \mbox{otherwise} \\
+\end{array} \right.$$
+
+
+
+---
+
 ## Bernoulli distribution
 
 - Binary random variables (e.g., healthy/diseased) are abundant in scientific studies. 
-- The binary random variable $X$ with possible values 0 and 1 has a **Bernoulli** 
+- The binary random variable $X$ with possible values 0 and 1 has a **Bernoulli** distribution. 
+
+- We usually denote $P(X=1) = \theta$, which means $P(X=0) = 1 - \theta$, where $0 \le \theta \le 1$.
 
 - For example,  
 $$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
@@ -604,6 +623,25 @@ P(25 < X \le 30) = P(X \le 30) - P(X \le 25).
 
 ---
 
+## Continuous Uniform Distribution
+
+- We previously saw discrete uniform distribution; we now discuss its continuous version. 
+
+- Let $a$ and $b$ be two real numbers, so that $a<b$. The following the pdf of a __continuous uniform distribution__: 
+
+$$f(x) = \left\{ \begin{array}{l@{\quad}l}
+\frac{1}{b-a}  & a<x<b  \\
+0 & \mbox{otherwise} \\
+\end{array} \right.$$
+
+
+```{r, echo=FALSE,out.width='50%',out.height='60%',fig.align='center'}
+knitr::include_graphics('img/cont_unif_dist.png')
+```
+
+
+---
+
 ## Normal distribution
 
 - Consider the probability distribution function and its corresponding probability density curve we assumed for BMI in the above example. 
@@ -616,7 +654,9 @@ P(25 < X \le 30) = P(X \le 30) - P(X \le 25).
 
 ## Normal distribution
 
-- A **normal distribution** and its corresponding pdf are fully specified by the mean and variance: $N$(mean, variance) . 
+- A **normal distribution** and its corresponding pdf are fully specified by the mean (usually denoted as $\mu$) and variance (usually denoted as $\sigma^2$): 
+
+$$N(\mu, \sigma^2)$$ 
 
 - $N(0, 1)$ is called the **standard normal distribution**.
 ```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center'}
