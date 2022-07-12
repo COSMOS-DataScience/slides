@@ -80,10 +80,10 @@ age <- c(6,9,15)
 data.frame(age_kid = age)
 
 # Bad
-data.frame(age_kid=Age)
+data.frame(Age_kid=age)
 ```
 
--[The tidyverse style guide](https://www.cosmos.uci.edu/welcome-to-your-new-website/cluster-1-data-science-in-health-sciences/)
+-[The tidyverse style guide](https://style.tidyverse.org/)
 ---
 class: inverse middle
 .font50[The Pipe Operator]

@@ -304,7 +304,7 @@ glimpse(arthritis)
 ```{r}
 arthritis <-
   arthritis %>% 
-  mutate(days_from_dx = 360*yrs_from_dx)
+  mutate(days_from_dx = 365*yrs_from_dx)
 
 colnames(arthritis)
 ```
