@@ -473,7 +473,7 @@ value between them.
 information to find the probability of its possible values.
 
 - The probability distributions discussed here are characterized by one or more
-**parameters**.
+__parameters__.
 
 - The parameters of probability distributions we assume for random variables are usually unknown.
 
@@ -684,6 +684,7 @@ knitr::include_graphics('img/simpNormalDensity.png')
 ```{r, echo=FALSE,out.width='40%',out.height='30%',fig.show='hold',fig.align='center'}
 knitr::include_graphics("img/normal68.png")
 ```
+
 
 ---
 
