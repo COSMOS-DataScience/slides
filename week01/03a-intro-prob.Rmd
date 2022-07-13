@@ -699,7 +699,7 @@ knitr::include_graphics("img/normal95.png")
 
 ## Student's t-distribution
 
-- Another continuous probability distribution that is used very often in
+Another continuous probability distribution that is used very often in
 statistics is the __Student's__ $t$-__distribution__ or
 simply the $t$-distribution.
 
