@@ -513,7 +513,6 @@ $$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
 \end{array} \right.$$
 
 
-
 ---
 
 ## Bernoulli distribution
@@ -521,7 +520,7 @@ $$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
 - Binary random variables (e.g., healthy/diseased) are abundant in scientific studies. 
 - The binary random variable $X$ with possible values 0 and 1 has a **Bernoulli** distribution. 
 
-- We usually denote $P(X=1) = \theta$, which means $P(X=0) = 1 - \theta$, where $0 \le \theta \le 1$.
+- We denote $P(X=1) = \mu$, which mean $P(X=0) = 1 - \mu$, where $0 \le \mu \le 1$ is the mean (rate) of the random variable.
 
 - For example,  
 $$P(X=x) = \left\{ \begin{array}{l@{\quad}l}

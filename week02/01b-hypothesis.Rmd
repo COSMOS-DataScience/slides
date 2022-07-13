@@ -1,6 +1,6 @@
 ---
 title: "Hypothesis Testing"
-author: "Dr. Babak Shahbaba"
+author: "Babak Shahbaba"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]

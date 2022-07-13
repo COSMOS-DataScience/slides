@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Evaluating Relationships</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Babak Shahbaba" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="slide-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide
+
+
+
+&lt;br&gt;
+&lt;br&gt;
+.right-panel[ 
+&lt;br&gt;
+
+# Evaluating Relationships
+
+### Babak Shahbaba
+
+]
+
+
+---
+
+### Objective
+
+- We now discuss hypothesis testing regarding possible relationships between two variables. 
+
+- We first focus on problems where we are investigating the relationship between one binary categorical variable (e.g., gender) and one numerical variable (e.g., body temperature).  
+
+- Later, we discuss the relationship between two categorical variables (e.g., treatment and survival status).
+
+---
+
+### Relationship Between a Numerical Variable and a Binary Variable
+
+- In these situations, the binary variable typically represents two different groups or two different experimental conditions. 
+
+- We treat the binary variable (factor) as the explanatory variable in our analysis. 
+
+- The numerical variable, on the other hand, is regarded as the response (target) variable (e.g., body temperature).
+
+---
+
+### Two sample t-test
+
+
+- In general, we can denote the means of the two groups as `\(\mu_{1}\)` and
+`\(\mu_{2}\)`. 
+
+- The null hypothesis indicates that the population means are equal,
+`\(H_{0}: \mu_{1} = \mu_{2}\)`. 
+
+- In contrast, the alternative hypothesis is one the following:
+`$$\begin{array}[t]{l@{\quad}p{6.7cm}}
+H_{A}: \mu_{1} &gt; \mu_{2} \\
+H_{A}: \mu_{1} &lt; \mu_{2}   \\
+H_{A}: \mu_{1} \ne \mu_{2}  \\
+\end{array}$$`
+
+---
+
+### Two sample t-test
+
+
+- We can also express these hypotheses in terms of the
+*difference* in the means: 
+`$$\begin{array}[t]{l@{\quad}p{6.7cm}}
+H_{A}: \mu_{1}  - \mu_{2} &gt; 0 \\
+H_{A}: \mu_{1} - \mu_{2} &lt; 0  \\
+H_{A}: \mu_{1} - \mu_{2} \ne 0  \\
+\end{array}$$`
+
+- Then the corresponding null hypothesis is that there is no difference
+in the population means, `$$H_{0}: \mu_{1} - \mu_{2} = 0$$`
+
+
+---
+
+### Two sample t-test
+
+
+- Previously, we used the sample mean `\(\bar{X}\)` to perform statistical
+inference regarding the population mean `\(\mu\)`. 
+
+- To evaluate our
+hypothesis regarding the difference between two means, `\(\mu_{1} - \mu_{2}\)`, it is reasonable to examine the difference between the sample
+means, `\(\bar{X}_{1} - \bar{X}_{2}\)`, as our test statistic. 
+
+- For this, we can simply use the `t.test()` function in R.
+
+---
+
+### Paired t-test
+
+- While we hope that the two samples taken from the population are
+comparable except for the characteristic that defines the grouping,
+this is not guaranteed in general. 
+
+- To mitigate the influence of other important factors (e.g., age) that are not the focus
+of our study, we sometimes **pair** (match) each individual in one group with an
+individual in the other group so that the paired individuals are very
+similar to each other except for the variable that defines the
+grouping. 
+
+- For example, we might recruit twins and assign one of them to the treatment group and the other one to the placebo group.
+
+- Sometimes, the subjects in the two groups are the same individuals under two different conditions. 
+
+
+---
+
+### Paired t-test
+
+- When the individuals in the two groups are paired, we use the **paired**
+`\(t\)`-test to take the pairing of the observations between the two
+groups into account.
+
+- Using the difference, `\(D\)`, between the paired observations, the
+hypothesis testing problem reduces to a single sample `\(t\)`-test problem.
+
+
+---
+
+### Relationship between two categorical variables
+
+- We will discuss Pearson's `\(\boldsymbol{\chi}^{\mathbf{2}}\)`
+(chi-squared) test for testing hypotheses regarding the relationship between two categorical
+variables. 
+
+- Pearson's `\(\chi^{2}\)` test uses a test statistic, which we
+denote as `\(Q\)`, to measure the discrepancy between the observed data and
+what we expect to observe under the null hypothesis (i.e., assuming the null
+hypothesis is true).
+
+- The null hypothesis in this case states that the two variables are independent. 
+
+- Recall that for two independent random variables, the joint
+probability is equal to the product of their individual probabilities.
+
+
+---
+
+### Relationship between two categorical variables
+
+- As discussed before, we can use contingency tables to find the observed frequencies for different combinations of categories of the two variables. 
+
+- We denote the **observed** frequency in row `\(i\)` and column `\(j\)` as `\(O_{ij}\)`.
+
+- Using the independence rule, we can find the **expected** frequencies under the null hypothesis. 
+
+
+---
+
+### Pearson's `\(\chi^{2}\)` Test of Independence
+
+- We denote the expected frequency in row `\(i\)` and column `\(j\)` as `\(E_{ij}\)`.
+
+- Pearson's `\(\chi^{2}\)` test summarizes the differences between the expected
+frequencies (under the null hypothesis) and the observed frequencies
+over all cells of the contingency table,
+
+`$$\begin{equation*}
+Q =  \sum_{i} \sum_{j} \frac{(O_{ij} - E_{ij})^{2}}{E_{ij}}.
+\end{equation*}$$`
+
+
+
+---
+
+### Smoking and low birthweight babies
+
+- We can create observed and expected contingency tables, and find the observed significance level. 
+
+&lt;img src="img/SmokingVsBirthweight.png" width="70%" height="40%" style="display: block; margin: auto;" /&gt;
+
+- Then Pearson's test statistic is 
+`$$\begin{eqnarray*}
+Q &amp;=&amp; \frac{(O_{11} - E_{11} )^2}{E_{11}} + \frac{(O_{12} - E_{12} )^2}{E_{12}} + \frac{(O_{21} - E_{21})^2}{E_{21}}  + \frac{(E_{22} - E_{22})^2}{E_{22}} \\
+q &amp;=&amp; \frac{(86 - 79.1 )^2}{79.1} + \frac{(29 - 35.9 )^2}{35.9} + \frac{(44 - 50.9)^2}{50.9}  + \frac{(30 - 23.1)^2}{23.1} = 4.9
+\end{eqnarray*}$$`
+
+
+---
+
+### Chi-squared Distribution
+
+- For `\(I\times J\)` contingency tables (i.e., `\(I\)` rows and `\(J\)`
+columns), the `\(Q\)` statistic has approximately the `\(\chi^2\)` distribution
+with `\((I-1)\times(J-1)\)` degrees of freedom under the null.
+
+
+&lt;img src="img/chisqPDF.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Pearson's `\(\chi^{2}\)` Test of Independence
+
+- To obtain the p-value, we find the upper tail probability of the observed value of `\(Q\)` denoted as `\(q\)`. 
+
+- For the above example, because the table has `\(I=2\)` rows and `\(J=2\)` columns, the approximate null distribution is `\(\chi^{2}\)` with `\((2-1)\times (2-1) = 1\)` degrees of freedom. 
+
+- Consequently, the observed `\(p\)`-value is the upper tail probability of 4.9 using `\(\chi^2(1)\)` distribution.
+
+
+---
+
+### Pearson's `\(\chi^{2}\)` Test of Independence
+
+&lt;img src="img/pValX2_birthwt.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### Pearson's `\(\chi^{2}\)` Test of Independence
+
+- For this example, `\(p\)`-value = 0.027.
+
+```r
+pchisq(4.9, df=1, lower.tail = FALSE)
+```
+
+```
+## [1] 0.0268567
+```
+
+- In practice, we simply use the `chisq.test()` in R.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "pygments",
+"highlightLines": true,
+"highlightLanguage": "r"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
