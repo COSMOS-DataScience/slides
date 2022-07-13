@@ -694,3 +694,16 @@ knitr::include_graphics("img/normal68.png")
 knitr::include_graphics("img/normal95.png")
 ```
 
+
+---
+
+## Student's t-distribution
+
+- Another continuous probability distribution that is used very often in
+statistics is the __Student's__ $t$-__distribution__ or
+simply the $t$-distribution.
+
+
+```{r, echo=FALSE,out.width='35%',out.height='35%',fig.show='hold',fig.align='center'}
+knitr::include_graphics("img/standNormT.png")
+```
