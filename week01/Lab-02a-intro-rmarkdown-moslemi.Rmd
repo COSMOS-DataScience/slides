@@ -112,7 +112,14 @@ knitr::include_graphics('img/chunk.png')
 ```
 
 ---
+##YAML
 
+- Title
+- Subtitle
+- Author
+- Date
+- Table of content
+---
 ##Inline Code
 To embed R code in a line of text, surround the code with a pair of backticks and the letter r, like this.
 
@@ -139,13 +146,11 @@ $$\\[0.05in]$$
 **`r cyl_prcnt`** percent of cars in our dataset have 4 cylinders. 
 
 
-
-
-```{r echo=FALSE, out.width='60%'}
+```{r echo=FALSE, out.width='50%'}
 knitr::include_graphics('img/inline.png')
 ```
 
-
+-[mtcars data dictionary](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html)
 
 ---
 class: middle center
