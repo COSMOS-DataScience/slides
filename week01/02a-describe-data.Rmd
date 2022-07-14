@@ -258,7 +258,7 @@ knitr::include_graphics('img/illustData1.png')
 
 ```{r echo=FALSE, out.width='45%', fig.align='center'}
 ggplot(alzheimer_data, aes(age)) +
-  geom_histogram(bins=10)
+  geom_histogram(binwidth = 10)
 ```
 
 

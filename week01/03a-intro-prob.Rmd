@@ -51,21 +51,25 @@ library(fabricerin)
  
 ## Some commonly used genetic terms
 
-- Throughout this lecture, we will use the following concepts from genetics:  
+- `Gene` is a segment of double-stranded DNA, which itself is made of a sequence of four different nucleotides: A, G, T, C. 
+  
+- `Single Nucleotide Polymorphisms (SNPs)` are a common type of genetic variation when single nucleotide is replaced by another one.
+  
+- `Alleles` are the alternate forms of a gene ares (for examaple, $T$ and $G$, or in general denoted as $A$ vs. $a$).
+  
+- `Genotype` (i.e., genetic makeup) of an individual for a bi-allelic gene __A__ can take one of the three possible forms: $AA$, $aa$, or $Aa$.
+  
+- `Homozygous`: $AA$, $aa$ vs. Heterozygous: $Aa$.
 
-  - Gene
+---
+ 
+## Some commonly used genetic terms
 
-  - Single Nucleotide Polymorphisms (SNPs)
-
-  - Alleles
-
-  - Genotype
-
-  - Homozygous vs. heterozygous
-
-  - Phenotype
-
-  - Recessive vs. dominant
+- `Phenotype` is an observable trait (e.g., eye color, disease status) due to genetic factors and/or environmental factors.
+  
+- `Recessive` alleles produce their trait only when both homologous chromosomes carry that specific variant. 
+  
+- `Dominant` alleles produce their traits when they appear on at least one of the homologous chromosomes. 
 
 ---
 
