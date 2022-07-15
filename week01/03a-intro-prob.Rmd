@@ -55,11 +55,11 @@ library(fabricerin)
   
 - `Single Nucleotide Polymorphisms (SNPs)` are a common type of genetic variation when single nucleotide is replaced by another one.
   
-- `Alleles` are the alternate forms of a gene ares (for examaple, $T$ and $G$, or in general denoted as $A$ vs. $a$).
+- `Alleles` are the alternate forms of a gene ares (for example, $T$ vs. $G$, or in general denoted as $A$ vs. $a$).
   
 - `Genotype` (i.e., genetic makeup) of an individual for a bi-allelic gene __A__ can take one of the three possible forms: $AA$, $aa$, or $Aa$.
   
-- `Homozygous`: $AA$, $aa$ vs. Heterozygous: $Aa$.
+- `Homozygous`: $AA$, $aa$; $\quad$  `Heterozygous`: $Aa$.
 
 ---
  
@@ -75,11 +75,11 @@ library(fabricerin)
 
 ## Random phenomena and their sample space
 
-- A phenomenon is called random if its outcome (value) cannot be determined with certainty before it occurs. 
+- A phenomenon is called __random__ if its outcome (value) cannot be determined with certainty before it occurs. 
 
 - For example, coin tossing and genotypes  are random phenomena.
 
-- The collection of all possible outcomes $S$ is called the sample space. 
+- The collection of all possible outcomes $S$ is called the __sample space__. 
 $$\begin{array}{l@{\quad}l}
 \text{Coin tossing:}  & S=\{H, T\}, \\
 \text{Die rolling:} &  S=\{1, 2, 3, 4, 5, 6\}, \\
@@ -126,7 +126,7 @@ individual outcomes included in that event.
 
 ## Example
 
-- As a running example, we consider a bi-allelic gene A with
+- As a running example, we consider a bi-allelic gene __A__ with
 two alleles $A$ and $a$. 
 
 - We assume that allele $a$ is recessive and
@@ -244,7 +244,7 @@ P(HM  \cup ND)  &=&  P(HM ) + P(ND) - P(HM  \cap ND) \\
 - Disjoint events have no
 elements (outcomes) in common, and their intersection is the empty set.
 
-- For the above example, if a person is heterozygous, we know that he does not have the disease so the two events $HT$ and $ND$ are disjoint. 
+- For the above example, if a person is heterozygous, we know that he does not have the disease so the two events $HT$ and $D$ are disjoint. 
 
 
 ---
