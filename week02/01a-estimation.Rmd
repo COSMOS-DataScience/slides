@@ -220,8 +220,8 @@ as a range (interval) of possible values for the unknown parameter.
 
 - Suppose that $\sigma^2 = 15^2$ and sample size is $n=100$.
 
-- Following the \emph{68--95--99.7\%} rule, with 0.95 probability, the
-value of~$\bar{X}$ is within 2 standard deviations from its mean, $\mu$,
+- Following the __68--95--99.7%__ rule, with 0.95 probability, the
+value of $\bar{X}$ is within 2 standard deviations from its mean, $\mu$,
 $$\begin{equation*}
 \mu- 2\times1.5 \le\bar{X} \le\mu+ 2 \times1.5.
 \end{equation*}$$
