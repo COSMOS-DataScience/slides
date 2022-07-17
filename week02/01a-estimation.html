@@ -4,7 +4,7 @@
     <title>Estimation</title>
     <meta charset="utf-8" />
     <meta name="author" content="Babak Shahbaba" />
-    <script src="libs/header-attrs-2.13/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -99,6 +99,24 @@ $$
 
 ## Law of Large Numbers (LLN)
 
+- The __Law of Large Numbers (LLN)__ indicates that (under some
+general conditions such as independence of observations) the sample
+mean converges to the population mean, `\(\bar{X}_{n} \to\mu\)`, as the sample size `\(n\)` increases, `\(n \to\infty\)`. 
+
+- Informally, this means that the difference between the sample mean and the population mean tends to become smaller and smaller as we increase the sample size. 
+
+- The Law of Large Numbers provides a theoretical
+justification for the use of sample mean as an estimator for the
+population mean.
+
+- The Law of Large Numbers is true regardless of the underlying
+distribution of the random variable. 
+
+
+---
+
+## Law of Large Numbers (LLN)
+
 Suppose the true population mean for normal body temperature is 98.4F. 
 
 &lt;img src="img/lln.png" width="40%" style="display: block; margin: auto;" /&gt;
@@ -174,7 +192,9 @@ $$
 - We start by assuming that the random variable of interest, `\(X\)`, has a
 normal `\(N(\mu, \sigma^{2})\)` distribution. 
 
-- Further, we assume that the population variance `\(\sigma^{2}\)` is known, so the only parameter we want to estimate is `\(\mu\)`. 
+- Further, we assume that the population variance `\(\sigma^{2}\)` is known, so the only parameter we want to estimate is `\(\mu\)`.
+
+- In this case:
 `$$\begin{equation*}
 \bar{X}  \sim N\bigl(\mu, \sigma^{2}/n\bigr).
 \end{equation*}$$`
@@ -213,7 +233,7 @@ as a range (interval) of possible values for the unknown parameter.
 
 - Suppose that `\(\sigma^2 = 15^2\)` and sample size is `\(n=100\)`.
 
-- Following the __68--95--99.7%__ rule, with 0.95 probability, the
+- Following the __68-95-99.7%__ rule, with 0.95 probability, the
 value of `\(\bar{X}\)` is within 2 standard deviations from its mean, `\(\mu\)`,
 `$$\begin{equation*}
 \mu- 2\times1.5 \le\bar{X} \le\mu+ 2 \times1.5.
@@ -245,12 +265,11 @@ the interval `\([\bar{X} - 3, \bar{X} + 3]\)`.
 ---
 
 ## Confidence intervals for the population mean}
-- In reality, however, we usually have only one sample of `\(n\)`
+- In reality, we usually have only one sample of `\(n\)`
 observations, one sample mean `\(\bar{x}\)`, and one interval `\([\bar{x} - 3, \ \bar{x} + 3]\)` for the population mean `\(\mu\)`. 
 
 - For the blood pressure example, suppose that
-we have a sample of `\(n=100\)` people and that the sample mean is $\bar
-{x}=123$. Therefore, we have one interval as follows:
+we have a sample of `\(n=100\)` people and that the sample mean is `\(\bar{x}=123\)`. Therefore, we have one interval as follows:
 `$$\begin{equation*}
 [123 - 3, 123 + 3] = [120, 126].
 \end{equation*}$$`
@@ -274,10 +293,23 @@ obtained as follows:
 \bigl[\bar{x} - 3 \times\sigma/ \sqrt{n},\ \bar{x} + 3 \times\sigma/\sqrt{n}\,\bigr]
 \end{equation*}$$`
 
-- Some times we can afford to be less confident, e.g., 68%:
+- Sometimes we can afford to be less confident, e.g., 68%:
 `$$\begin{equation*}
 \bigl[\bar{x} - 1 \times\sigma/ \sqrt{n},\ \bar{x} + 1 \times\sigma/\sqrt{n}\,\bigr]
 \end{equation*}$$`
+
+
+---
+
+## `\(z\)`-critical value
+
+- In general, the confidence interval for the population mean at
+`\(c\)` confidence level is
+`\begin{eqnarray*}
+[\bar{x} - z_{crit}\times \sigma / \sqrt{n}, \ \bar{x}  + z_{crit} \times \sigma / \sqrt{n}]
+\end{eqnarray*}`
+
+&lt;img src="img/zExplained.png" width="30%" style="display: block; margin: auto;" /&gt;
 
 
 ---
