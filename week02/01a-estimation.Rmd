@@ -381,7 +381,6 @@ $$\begin{equation*}
 - So far, we have assumed that the random variable has normal distribution, so the sampling distribution of $\bar{X}$ is normal too.
 
 - If the random variable is not normally distributed, the sampling distribution of $\bar{X}$ can be considered as _approximately_ normal using (under certain conditions) the __central limit theorem (CLT)__:
-
 _If the random variable $X$ has the population mean $\mu$ and the population variance $\sigma^{2}$, then the sampling distribution of $\bar{X}$ is approximately normal with mean $\mu$ and variance $\sigma^{2}/n$._
 
 - Note that CLT is true regarding the underlying distribution of $X$ so we can use it for random variables with Bernoulli and Binomial distributions too.
@@ -405,9 +404,9 @@ _If the random variable $X$ has the population mean $\mu$ and the population var
 
 - Since estimating the population variance does not introduce an additional source of uncertainty to our analysis, so we do not need to use a $t$-distribution instead of the standard normal distribution.
 
-- Given the sample proportion $p$, the 95% confidence interval for the population proportion is obtained as follows:
+- Given the sample proportion $p$, the confidence interval for the population proportion is obtained as follows:
 \begin{equation*}
-[p - 2 \times \mathit{SE}, p + 2 \times \mathit{SE}],
+[p - z_{crit} \times \mathit{SE}, p + z_{crit} \times \mathit{SE}],
 \end{equation*}
 where
 $$\begin{equation*}
