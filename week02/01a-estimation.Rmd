@@ -311,10 +311,16 @@ $$\begin{equation*}
 ## $z$-critical value
 
 - In general, the confidence interval for the population mean at
-$c$ confidence level is
+$c$ (e.g., 0.8) confidence level is
 \begin{eqnarray*}
 [\bar{x} - z_{crit}\times \sigma / \sqrt{n}, \ \bar{x}  + z_{crit} \times \sigma / \sqrt{n}]
 \end{eqnarray*}
+
+
+---
+
+## $z$-critical value
+- We calculated $z_{crit}$ by finding the $(1+c)/2$ quantile from the standard normal distribution. 
 
 ```{r, echo=FALSE,out.width='30%',fig.align='center'}
 knitr::include_graphics('img/zExplained.png')
