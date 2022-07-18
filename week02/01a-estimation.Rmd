@@ -283,7 +283,13 @@ $$\begin{equation*}
 
 - We refer to this interval as our 95% __confidence interval__ for the population mean $\mu$.
 
+---
 
+## Interpretation of confidence interval
+
+```{r, echo=FALSE,out.width='40%',fig.align='center'}
+knitr::include_graphics('img/CI_SBP.png')
+```
 
 ---
 
