@@ -60,7 +60,7 @@ class: middle
 
 ### Null and alternative hypotheses
 
-- Consider the body temperature example, where we want to examine the null hypothesis $$H_{0}: \mu = 98.6$$ against the alternative hypothesis $$H_A: \mu < 98.6$$. 
+- Consider the body temperature example, where we want to examine the null hypothesis $$H_{0}: \mu = 98.6$$ against the alternative hypothesis $$H_A: \mu < 98.6$$
 
 - To start, suppose that $\sigma^{2} = 1$ is known.
 
@@ -78,7 +78,7 @@ hypothesis using some statistics.
 - We use statistics to evaluate our
 hypotheses. 
 
-- We refer to them as *test statistics*. 
+- We refer to them as __test statistics__. 
 
 - For a statistic to be considered as a test statistic, its sampling
 distribution must be fully known (exactly or approximately) under the
@@ -126,7 +126,7 @@ is $\bar{x} = 98.4$.
 ### Hypothesis testing for the population mean
 
 - To evaluate the null hypothesis $H_{0}: \mu = 98.6$
-versus the alternative $H_{A}: \mu < 98.6$, we use the lower tail
+versus the alternative $H_{A}: \mu < 98.6$ we use the lower tail
 probability of this value from the null distribution. 
 
 ```{r, echo=FALSE,out.width='30%',out.height='60%',fig.align='center'}
@@ -139,7 +139,7 @@ knitr::include_graphics('img/pValLower.png')
 
 ### Observed significance level
 
-- The *observed significance level* for a test is the probability of values
+- The __observed significance level__ for a test is the probability of values
 as or more extreme than the observed value, based on the null
 distribution in the direction supporting the alternative hypothesis. 
 
@@ -174,15 +174,51 @@ $P(H_{0} | \bar{X} = \bar{x})$.
 ### One-sided vs. two-sided hypothesis testing
 
 
-- The alternative hypothesis $H_{A}: \mu < 98.6$ or $H_{A}: \mu > 98.6$ are called *one-sided* alternatives. 
+- The alternative hypothesis $H_{A}: \mu < 98.6$ or $H_{A}: \mu > 98.6$ are called **one-sided** alternatives. 
 
 - For these hypotheses, $p_{\mathrm{obs}} = P( \bar{X} \le \bar{x} | H_0)$ and $p_{\mathrm{obs}} = P(\bar{X} \ge \bar{x}| H_0)$ respectively.
 
-- In contrast, the alternative hypothesis $H_{A}: \mu \ne 98.6$ is *two-sided*. 
+- In contrast, the alternative hypothesis $H_{A}: \mu \ne 98.6$ is **two-sided**. 
 
 - For the above three alternatives, the null hypothesis is the same, $H_{0}: \mu = 98.6$
 
 - In this case, $p_{\mathrm{obs}} = 2 \times P(\bar{X} \geq |\bar{x}| | H_0)$.
+
+
+
+
+---
+
+### Hypothesis testing for population proportion
+
+
+- For a binary random variable $X$ with possible values 0 and 1, we are
+typically interested in evaluating hypotheses regarding the population
+proportion of the outcome of interest, denoted as $X=1$. 
+ 
+- The population proportion is the same as the population mean for such binary variables.
+
+- If the sample size is large enough, we can assume that the population proportion is approximately normal according to CLT. 
+
+- So we follow the same procedure as described above. 
+
+
+---
+
+### Hypothesis testing for population proportion
+
+- Note that for binary random variables, population variance is
+$$\sigma^{2}=\mu(1-\mu)$$ 
+
+- Therefore, by setting $\mu=\mu_{0}$ according
+to the null hypothesis, we also specify the population variance as
+$$\sigma^{2} = \mu_{0}(1-\mu_{0})$$
+
+- If we assume that the null hypothesis is true, we have
+$$\begin{equation*}
+\bar{p}| H_{0}  \sim  N\bigl(\mu_{0},  \mu_{0}(1-\mu_{0})/n\bigr).
+\end{equation*}$$
+
 
 ---
 
@@ -225,39 +261,5 @@ $$\begin{array}{l@{\quad}l}
 
 - Here, $T$ has a $t$-distribution with $n-1$ degrees of freedom, and $t$
 is our observed $t$-score. 
-
-
----
-
-### Hypothesis testing for population proportion
-
-
-- For a binary random variable $X$ with possible values 0 and 1, we are
-typically interested in evaluating hypotheses regarding the population
-proportion of the outcome of interest, denoted as $X=1$. 
- 
-- The population proportion is the same as the population mean for such binary variables.
-
-- So we follow the same procedure as described above. 
-
-- More specifically, we use the $z$-test for hypothesis testing. 
-
-
----
-
-### Hypothesis testing for population proportion
-
-- Note that we do not use
-$t$-test, because for binary random variable, population variance is
-$\sigma^{2}=\mu(1-\mu)$. 
-
-- Therefore, by setting $\mu=\mu_{0}$ according
-to the null hypothesis, we also specify the population variance as
-$\sigma^{2} = \mu_{0}(1-\mu_{0})$.
-
-- If we assume that the null hypothesis is true, we have
-$$\begin{equation*}
-\bar{p}| H_{0}  \sim  N\bigl(\mu_{0},  \mu_{0}(1-\mu_{0})/n\bigr).
-\end{equation*}$$
 
 
