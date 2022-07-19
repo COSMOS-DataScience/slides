@@ -1,0 +1,308 @@
+---
+title: "Parameter Estimation Practice in R"
+author: "Brian Schetzsle"
+output: 
+  xaringan::moon_reader:
+    css: ["slide-style.css"]
+    lib_dir: libs
+    seal: false
+    nature:
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+
+---
+
+class: title-slide
+
+```{r echo = FALSE}
+library(fabricerin)
+```
+
+<br>
+<br>
+.right-panel[ 
+<br>
+
+# `r rmarkdown::metadata$title`
+
+### `r rmarkdown::metadata$author`
+
+]
+
+---
+
+class: middle
+
+## Reminder
+
+- Close all apps on your computer other than zoom.  
+- Open slides for this session from the cluster website (https://uci-dshs.netlify.app/). 
+- We will be working with the capstone project [data](https://github.com/COSMOS-DataScience/slides/blob/main/data/alzheimer_data.csv).
+
+---
+
+## Conditional Statements in R
+
+```{r eval = FALSE}
+if(condition){
+  print("Fantastic!")
+} else {
+  print("OOPS!")
+}
+```
+
+```{r eval = FALSE}
+ifelse(condition, yes = "Fantastic!", no = "OOPS!" )
+```
+
+```{r eval = FALSE}
+case_when(
+  condition ~ "Fantastic!",
+  TRUE ~ "OOPS!"
+)
+```
+
+---
+
+## Loops
+
+```{r eval = FALSE}
+for(i in 1:10){
+  print(i)
+}
+```
+
+```{r eval = FALSE}
+i <- 1
+while(i <= 10){
+  print(i)
+  i <- i + 1
+}
+```
+
+```{r eval = FALSE}
+apply(data, MARGIN = 2, FUN = mean)
+```
+
+---
+
+## Creating Functions
+
+```{r eval = FALSE}
+my_function <- function(input){
+  if(input == TRUE){
+    return("Fantastic!")
+  }
+  else{
+    return("OOPS!")
+  }
+}
+```
+
+---
+
+## Loading the Data
+
+-- Now let's get into statistical inference and hypothesis testing
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+
+data <- read_csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/main/data/alzheimer_data.csv")
+
+attach(data)
+
+n = nrow(data)
+```
+
+---
+
+## Loading the Data
+
+```{r}
+glimpse(data)
+```
+
+---
+
+## Estimating Popluation Mean of a Continuous Variable
+
+- Estimate the height of older American adults using the Alzheimer's data.
+
+```{r}
+mean(height)
+```
+- The math behind this code:
+
+$$
+\overline{\text{height}} = \frac{1}{n} \sum_{i=1}^n \text{height}_i
+$$
+- We use $\overline{\text{height}}$ as an estimate of the average population height.
+
+---
+
+## Confidence Interval for the Mean of a Continuous Variable
+
+- Assume height is normally distributed with unknown mean but known variance $\sigma^2=16$, i.e.
+
+$$
+\text{height}_i \sim N(\mu, 16)
+$$
+
+---
+
+## Confidence Interval for the Mean of a Continuous Variable
+
+- The resulting 95% confidence interval for the average height in the population (assuming we know the population variance) is
+
+```{r}
+c(mean(height) - 
+    qnorm(1 - (1 - 0.95) / 2) * sqrt(16 / n), 
+  mean(height) + 
+    qnorm(1 - (1 - 0.95) / 2) * sqrt(16 / n))
+```
+
+---
+
+## Confidence Interval for the Mean of a Continuous Variable
+
+- The math behind this code:
+
+$$
+\begin{aligned}
+&\left[ \overline{\text{height}} - 1.96 *\sqrt{\frac{16}{n}},\quad  \overline{\text{height}} + 1.96 *\sqrt{\frac{16}{n}}\right] \\\\
+= &\left[ 65.72 - 2*0.077, \quad 65.72 + 2*0.077\right] \\\\
+= &\left[ 65.57, \quad 65.87 \right]
+\end{aligned}
+$$
+
+---
+
+## Confidence Interval for the Mean of a Continuous Variable
+
+- Now assume we do not know either the population mean or the population variance
+
+- You must estimate both from your sample
+
+- The resulting 95% confidence interval is:
+
+```{r}
+c(mean(height) - 
+    qt(1 - (1 - 0.95) / 2, n) * sqrt(var(height) / n),
+  mean(height) + 
+    qt(1 - (1 - 0.95) / 2, n) * sqrt(var(height) / n))
+```
+
+---
+
+## Confidence Interval for the Mean of a Continuous Variable
+
+- The math behind this code:
+
+$$
+\begin{aligned}
+&\left[ \overline{\text{height}} - 1.96 * \sqrt{\frac{var(\text{height})}{n}},\quad  \overline{\text{height}} + 1.96 * \sqrt{\frac{var(\text{height})}{n}}\right] \\\\
+= &\left[ 65.7 - 1.96*0.074, \quad 65.7 + 1.96*0.074\right] \\\\
+= &\left[ 65.58, \quad 65.87 \right]
+\end{aligned}
+$$
+
+---
+
+
+## Estimating Population Proportion
+
+- Estimate the proportion of older Americans who are female using the Alzheimer's data.
+
+```{r}
+mean(female)
+```
+
+- The math behind this code:
+
+$$
+\begin{aligned}
+\overline{\text{female}} = \frac{1}{n} \sum_{i=1}^n \text{female}_i
+\end{aligned}
+$$
+
+- We use $\overline{\text{female}}$ as an estimate of the proportion of females in the population, $p_\text{female}$.
+
+---
+
+## Confidence Interval for Proportion
+
+- We assume that the variable __female__ follows a $\text{bernoulli}(p_{\text{female}})$ distribution
+
+- The 95% confidence interval for $p_\text{female}$ is:
+
+```{r}
+c(mean(female) - qnorm(0.975) * sqrt(var(female) / n),
+  mean(female) + qnorm(0.975) * sqrt(var(female) / n))
+```
+
+---
+
+## Confidence Interval for Proportion
+
+- The math behind the code:
+
+$$
+\begin{aligned}
+&\left[ \overline{\text{female}} - 1.96*\sqrt{\frac{var(\text{female})}{n}},\quad  \overline{\text{female}} + 1.96*\sqrt{\frac{var(\text{female})}{n}}\right] \\\\
+= &\left[ 0.57 - 1.96*0.01, \quad 0.57 + 1.96*0.01\right] \\\\
+= &\left[ 0.56, \quad 0.59 \right]
+\end{aligned}
+$$
+
+---
+
+## Hypothesis Testing
+
+- Test the hypothesis that the proportion of females in the population is less than 57%
+
+- If $\bar{x}$ is our observed proportion and $\bar{X}$ is the sample proportion in a theoretical sample of n=2700, we are trying to find:
+
+$$
+P(\bar{X} \geq \bar{x} | H_0)
+$$
+
+
+---
+
+## Hypothesis Testing
+
+- There is a function in R that will perform this test
+
+
+---
+
+## Hypothesis Testing
+
+```{r}
+prop.test(sum(female), n=2700, p=0.57, 
+          alternative = "less")
+```
+
+---
+
+## Hypothesis Testing
+
+- We now want to test a hypothesis about the population mean of a continuous variable
+
+- Let $H_0$: the population mean csfvol is not equal to 350
+
+- We use a t-test because we don't know the variance
+
+---
+
+## Hypothesis Testing
+
+- There is a function in R that will perform this test
+
+```{r}
+t.test(data$csfvol, mu=350, 
+       alternative="two.sided", conf.level=0.95)
+```
