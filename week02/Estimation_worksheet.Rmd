@@ -1,0 +1,192 @@
+---
+title: "Untitled"
+author: "Brian Schetzsle"
+date: "7/18/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+data <- read_csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/main/data/alzheimer_data.csv")
+attach(data)
+n = nrow(data)
+```
+
+We will start with a quick summary of conditional statement. A conditional statement executes code if a condition is met. This can be done in a variety of ways:
+
+```{r}
+condition <- TRUE
+
+if(condition){
+  print("Fantastic!")
+} else {
+  print("OOPS!")
+}
+```
+
+```{r}
+condition <- FALSE
+
+if(condition){
+  print("Fantastic!")
+} else {
+  print("OOPS!")
+}
+```
+
+This can also be done in one line of code:
+
+```{r}
+condition = TRUE
+
+ifelse(condition, "Fantastic!", "OOPS!")
+```
+
+You can use conditional statements on vectors of data, for instance turning the diagnosis variable, which takes values __0__, __1__, and __2__ into a vector of __TRUE__ and __FALSE__:
+
+```{r}
+diagnosis
+
+ifelse(diagnosis == 0, TRUE, FALSE)
+```
+
+You can get a vector of __TRUE__ and __FALSE__ in even less code:
+
+```{r}
+diagnosis == 0
+```
+
+Now we will do a summary of loops. We start with a simple __for loop__, which will likely be sufficient for your capstone project. It loops over the items in an array, executing a block of code for each element in that array. The code does not need to reference the indexing variable. For instance, the following just prints __a__ ten times.
+
+```{r}
+for(i in 1:10){
+  print("a")
+}
+```
+
+Or you can have the code depend on your indexing variable:
+
+```{r}
+for(i in 1:10){
+  print(i * 2)
+}
+```
+
+You can create a loop that continues until a condition is no longer satisfied. This is useful in situations where you don't know how many iterations your loop should go through. The following will print out numbers in order until a randomly select number between 1 and 10 is equal to 10:
+
+```{r}
+i = 1
+while(sample(1:10, 1) != 10){
+  print(i)
+  i <- i + 1
+}
+```
+
+You can also use __apply()__ to apply a function to each element in an array (not a vector, but the distinction is unclear). If you say "I want to use a function on every collumn or every row of my data" then this is the function to use. The following will calculate the mean for two columns simultaneously.
+
+```{r}
+data %>% 
+  select(age, educ) %>% 
+apply(2, mean)
+```
+
+Now we will explore user-definied functions. Functions are useful for executing chunks of code that may depend on different conditions. They take an input, do some stuff and then generate an output.
+
+```{r}
+my_function <- function(input){
+  if(input == TRUE){
+    return("Fantastic!")
+  }
+  else{
+    return("OOPS!")
+  }
+}
+
+my_function(FALSE)
+```
+
+```{r}
+my_function <- function(data, column){
+  data %>% 
+    ggplot(aes(x = column)) +
+    geom_histogram(bins = 10, color = "white", fill = "darkred")
+}
+
+my_function(data, column = height)
+my_function(data, column = age)
+```
+
+Finally, let's talk quickly about QQ-plots as a diagnostic tool to determine how reasonable an assumption of normality is. If a variable comes from a normal distribtuion then a plot of values against their theoretical quantiles should be on a diagnoal line. A normality assumption on the distribution of heights seems reasonable:
+
+```{r}
+data %>% 
+  pull(height) %>% 
+  qqnorm()
+```
+
+The distribution of __csfvol__ looks a little screwed up at the ends
+
+```{r}
+data %>% 
+  pull(csfvol) %>% 
+  qqnorm()
+```
+
+We can attempt to resolve this using a logarithmic transformation:
+
+```{r}
+data %>% 
+  pull(csfvol) %>% 
+  log %>% 
+  qqnorm
+```
+
+
+
+
+Now we can move forward with statistical inference and hypothesis testing. Calculate the 95% confidence interval of height, assuming it is normally distributed and we know the variance to be 16:
+
+```{r}
+c(mean(height) - 
+    qnorm(1 - (1 - 0.95) / 2) * sqrt(16 / n), 
+  mean(height) + 
+    qnorm(1 - (1 - 0.95) / 2) * sqrt(16 / n))
+```
+
+Now assume we don't know the variance:
+
+```{r}
+c(mean(height) - 
+    qt(1 - (1 - 0.95) / 2, n) * sqrt(16 / n), 
+  mean(height) + 
+    qt(1 - (1 - 0.95) / 2, n) * sqrt(16 / n))
+```
+
+Now we do some hypothesis testing. Start with a proportion. Test whether the proportion of females is less than 57%:
+
+```{r}
+prop.test(sum(female), n=2700, p=0.57, 
+          alternative = "less")
+```
+
+Now test whether the mean csfvol is different from 350
+
+```{r}
+t.test(data$csfvol, mu=350, 
+       alternative="two.sided", conf.level=0.95)
+```
+
+Sam had some activities involving hypothesis testing. Test the hypothesis that less than 45% of subjects in the population are diagnosed with Alzheimer's:
+
+```{r}
+
+
+```
+
+Construct a 95% Confidence Interval for the proportion of subjects in the population who would be diagnosed with Alzheimer's:
+
+```{r}
+
+
+```
