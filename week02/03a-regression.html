@@ -27,6 +27,21 @@ class: title-slide
 ]
 
 
+
+
+&lt;style type="text/css"&gt;
+
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 20px
+}
+&lt;/style&gt;
+
 ---
 
 ### Introduction
@@ -177,10 +192,10 @@ sample size.
 ### One Numerical Explanatory Variable
 
 
-- Among all possible lines we can pass through the data, we choose the one with the smallest sum of squared residuals. The resulting line is called the **least-squares regression line**.
+- Among all possible lines we can pass through the data, we choose the one with the smallest sum of squared residuals, called the **least-squares regression line**.
 
 
-&lt;img src="img/bpSaltLines.png" width="33%" height="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/bpSaltLines.png" width="35%" height="40%" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -207,6 +222,30 @@ lm(BP ~ salt, data=saltBP)
 ##     128.616        1.197
 ```
 
+
+---
+
+### Statistical inference using regression models
+
+- We can use the function `lm()` or `glm()` in R to find the least-squares regression line. 
+
+
+```r
+glm(BP ~ salt, data=saltBP)
+```
+
+```
+## 
+## Call:  glm(formula = BP ~ salt, data = saltBP)
+## 
+## Coefficients:
+## (Intercept)         salt  
+##     128.616        1.197  
+## 
+## Degrees of Freedom: 24 Total (i.e. Null);  23 Residual
+## Null Deviance:	    584.8 
+## Residual Deviance: 173.4 	AIC: 125.4
+```
 
 ---
 
@@ -257,80 +296,53 @@ response variable (i.e., blood pressure) for all individuals in the target popul
 
 ### Confidence interval
 
-- The slope of the regression line plays an important role in evaluating the relationship between the response variable and explanatory variable(s).
 
-- We can find the confidence interval for the population regression coefficient, `\(\beta\)`, as follows:
+```r
+lm_res &lt;- glm(BP ~ salt, data=saltBP)
+confint(lm_res)
+```
 
-`$$\begin{equation*}
-[b - t_{\mathrm{crit}} \times \mathit{SE}_{b}, b + t_{\mathrm{crit}} \times \mathit{SE}_{b}].
-\end{equation*}$$`
-
----
-
-### Confidence interval
-
-- For simple (i.e., one predictor) linear regression models, `\(\mathit{SE}_{b}\)` is obtained as follows:
-
-`$$\begin{equation*}
-\label{eq:seb3}
-\mathit{SE}_{b}  =
-\frac{\sqrt{\mathit{RSS}/(n-2)}}{\sqrt{\sum_{i} (x_{i} - \bar{x})^2}}.
-\end{equation*}$$`
-
-- The corresponding `\(t_{\mathrm{crit}}\)` is obtained from the `\(t\)`-distribution with `\({n-2}\)` degrees of freedom.
+```
+##                   2.5 %     97.5 %
+## (Intercept) 126.4567292 130.776065
+## salt          0.8794023   1.514386
+```
 
 
 ---
 
 ### Hypothesis testing
 
-- To assess the null hypothesis that the population regression coefficient is zero, `\(H_0: \beta = 0\)`, which is interpreted as no linear relationship between the response variable and the explanatory variable, we first calculate the `\(t\)`-score.
 
-`$$\begin{equation*}
-t = (b - \beta)/\mathit{SE}_{b} = b/\mathit{SE}_{b}
-\end{equation*}$$`
+```r
+lm_res &lt;- glm(BP ~ salt, data=saltBP)
+summary(lm_res)
+```
 
-- Then, we find the corresponding `\(p\)`-value as follows, where `\(T\)` has the `\(t\)`-distribution with `\(n-2\)` degrees of freedom:
-
-`$$\begin{array}{l@{\quad}l}
-\mbox{if}\ H_{A}: \beta &lt; 0, &amp; p_{\mathrm{obs}} = P(T \leq t), \\
-\mbox{if}\ H_{A}: \beta &gt; 0, &amp; p_{\mathrm{obs}} = P(T \geq t ), \\
-\mbox{if}\ H_{A}: \beta \ne 0, &amp; p_{\mathrm{obs}} = 2 \times P\bigl(T \geq | t | \bigr),
-\end{array}$$`
-
-
----
-
-### Goodness of Fit
-
-- We now want to examine how well the regression line represents the observed data; in other words, how well the regression model **fits** the data.
-
-- In statistics, we use **goodness-of-fit** measures for this purpose. 
-
-- The residual sums of squares (RSS) can be interpreted as the **unexplained variation** or **lack of fit**.
-
-- The **total variation** in the response variable is measured by the **Total Sum of Squares** (TSS),
-`$$\begin{eqnarray*}
-\mathit{TSS} &amp; = &amp; \sum_{i}^{n}(y_{i} - \bar{y})^{2}.
-\end{eqnarray*}$$`
-
-
----
-
-### Goodness of Fit
-
-- The fraction `\(\mathit{RSS}/\mathit{TSS}\)` can be interpreted as the percent of total variation that was not explained by the regression model.
-
-- In contrast, `\(1 - \mathit{RSS}/\mathit{TSS}\)` is fraction of total variation explained by the model. 
-
-- This fraction is `\(R^{2}\)`, which measures the goodness of fit for the regression model,
-`$$\begin{eqnarray*}
-R^{2} &amp; = &amp; 1 - \frac{\mathit{RSS}}{\mathit{TSS}}.
-\end{eqnarray*}$$`
-
-- For simple linear regression models with one numerical explanatory variable, `\(R^{2}\)` is equal to the square of the correlation coefficient `\(r\)`.
-
-
+```
+## 
+## Call:
+## glm(formula = BP ~ salt, data = saltBP)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -5.0388  -1.6755   0.3662   1.8824   5.3443  
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  128.616      1.102 116.723  &lt; 2e-16 ***
+## salt           1.197      0.162   7.389 1.63e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 7.537079)
+## 
+##     Null deviance: 584.83  on 24  degrees of freedom
+## Residual deviance: 173.35  on 23  degrees of freedom
+## AIC: 125.36
+## 
+## Number of Fisher Scoring iterations: 2
+```
 
 ---
 
@@ -338,7 +350,8 @@ R^{2} &amp; = &amp; 1 - \frac{\mathit{RSS}}{\mathit{TSS}}.
 
 
 - The typical assumptions of linear regression models are
-  -Linearity
+
+  - Linearity
 
   - Independent observations
 
@@ -384,28 +397,68 @@ be presented as follows:
 
 ---
 
+### Multiple Linear Regression
+
+
+```r
+library(MASS)
+data("birthwt")
+bwt_mod &lt;- glm(bwt ~ age + factor(smoke), data=birthwt)
+```
+
+
+---
 
 ### Multiple Linear Regression
 
 
+```r
+confint(bwt_mod)
+```
+
+```
+##                      2.5 %     97.5 %
+## (Intercept)    2318.971775 3263.47685
+## age              -8.077542   30.65676
+## factor(smoke)1 -488.046399  -68.66586
+```
 
 
+
+---
+
+### Multiple Linear Regression
 
 
 ```r
-lm(bwt ~ age + factor(smoke), data=birthwt)
+summary(bwt_mod)
 ```
 
 ```
 ## 
 ## Call:
-## lm(formula = bwt ~ age + factor(smoke), data = birthwt)
+## glm(formula = bwt ~ age + factor(smoke), data = birthwt)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -2119.98   -442.66     52.92    532.38   1690.74  
 ## 
 ## Coefficients:
-##    (Intercept)             age  factor(smoke)1  
-##        2791.22           11.29         -278.36
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    2791.224    240.950  11.584   &lt;2e-16 ***
+## age              11.290      9.881   1.143    0.255    
+## factor(smoke)1 -278.356    106.987  -2.602    0.010 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for gaussian family taken to be 514367.1)
+## 
+##     Null deviance: 99969656  on 188  degrees of freedom
+## Residual deviance: 95672288  on 186  degrees of freedom
+## AIC: 3026.8
+## 
+## Number of Fisher Scoring iterations: 2
 ```
-
 
 ---
 
@@ -415,7 +468,7 @@ lm(bwt ~ age + factor(smoke), data=birthwt)
 
 - In the above example, the intercept is `\(a=2791\)`, which is obtained by setting age and smoking to zero. 
 
-- We might be tempted to interpret this as the average birthweight of babies for nonsmoking mothers ({smoke=0}) with age equal to zero. 
+- We might be tempted to interpret this as the average birthweight of babies for nonsmoking mothers (smoke=0) with age equal to zero. 
 
 - In this case, however, this is not a reasonable interpretation since mother's age cannot be zero.
 
@@ -435,26 +488,8 @@ associated with a unit increase in the corresponding explanatory variable `\(x_{
 
 - We expect that the birthweight of babies increase by 11 grams as the mother's age increases by one year among mothers with the same smoking status. 
 
-- The expected birthweight changes by `\(-278\)` (decreases by `\(278\)`) grams associated with one unit increase in the value of the variable {smoke} among mothers with the same age.
+- The expected birthweight changes by `\(-278\)` (decreases by `\(278\)`) grams associated with one unit increase in the value of the variable smoke among mothers with the same age.
 
-
-
----
-
-### Additivity
-
-- In multiple linear regression models, we usually assume that the effects of explanatory variables on the response variable are **additive**.
-
-- This means that the expected change in the response variable corresponding to one unit increase in one of the explanatory variables remains the same regardless of the values of other explanatory variables in the model.
-
-
----
-
-### Additivity
-
-- Here, nonsmoking mothers are shown as {circles}, while smoking mothers are shown as {squares}. The {dashed line} shows the regression line among nonsmoking mothers, and the {solid line} shows the regression line among the smoking mothers
-
-&lt;img src="img/bwtByAgeSmokeLinReg.png" width="25%" height="40%" style="display: block; margin: auto;" /&gt;
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
