@@ -28,6 +28,20 @@ class: title-slide
 
 
 
+
+&lt;style type="text/css"&gt;
+
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 20px
+}
+&lt;/style&gt;
+
 ---
 
 ### Introduction
@@ -78,11 +92,11 @@ class: title-slide
 ### Logistic Regression with One Binary Predictor
 
 
-- As an example, we use the {birthwt} data set to model the relationship between having low birthweight babies (a binary variable), `\(Y\)`, and smoking during pregnancy, `\(X\)`. 
+- As an example, we use the `birthwt` data set to model the relationship between having low birthweight babies (a binary variable), `\(Y\)`, and smoking during pregnancy, `\(X\)`. 
 
-- The binary variable {low} identifies low birthweight babies ({low} = 1 for low birthweight babies, and 0 otherwise). 
+- The binary variable `low` identifies low birthweight babies (low = 1 for low birthweight babies, and 0 otherwise). 
 
-- The binary variable {smoke} identifies mothers who were smoking during pregnancy ({smoke}=1 for smoking during pregnancy, and 0 otherwise).
+- The binary variable `smoke` identifies mothers who were smoking during pregnancy (smoke=1 for smoking during pregnancy, and 0 otherwise).
 
 
 ---
@@ -94,18 +108,75 @@ class: title-slide
 
 ```r
 library(MASS)
-data("birthwt")
+data(birthwt)
 birthwt$low &lt;- factor(birthwt$low)
 birthwt$smoke &lt;- factor(birthwt$smoke)
 fit &lt;- glm(low ~ smoke, family = 'binomial', data = birthwt)
+```
+
+
+
+
+---
+
+### Generalized linear model (glm) in R
+
+- We can use the `glm()` function in R to fit a regression model
+
+
+```r
 confint(fit)
+```
+
+```
+##                  2.5 %    97.5 %
+## (Intercept) -1.5243118 -0.679205
+## smoke1       0.0786932  1.335154
+```
+
+
+
+
+---
+
+### Generalized linear model (glm) in R
+
+- We can use the `glm()` function in R to fit a regression model
+
+
+```r
 summary(fit)
 ```
+
+```
+## 
+## Call:
+## glm(formula = low ~ smoke, family = "binomial", data = birthwt)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.0197  -0.7623  -0.7623   1.3438   1.6599  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -1.0871     0.2147  -5.062 4.14e-07 ***
+## smoke1        0.7041     0.3196   2.203   0.0276 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 234.67  on 188  degrees of freedom
+## Residual deviance: 229.80  on 187  degrees of freedom
+## AIC: 233.8
+## 
+## Number of Fisher Scoring iterations: 4
+```
+
 
 ---
 
 ### Estimation
-
 
 - For the above example, the estimated values of the intercept `\(\alpha\)` and the regression coefficient `\(\beta\)` are `\(a=-1.09\)` and `\(b=0.70\)` respectively. 
 
@@ -140,7 +211,8 @@ summary(fit)
 - For mothers who smoke during pregnancy, `\(x=1\)`, and
 `$$\begin{eqnarray*}
 \frac{\hat{p}_{1}}{1- \hat{p}_{1}} &amp; = &amp;  \exp(-1.09 + 0.7)\\
-&amp; = &amp;  \exp(-1.09) \exp(0.7)
+&amp; = &amp;  \exp(-1.09) \exp(0.7)\\
+&amp; = &amp; 0.68
 \end{eqnarray*}$$`
 
 
@@ -181,8 +253,82 @@ summary(fit)
 
 ```r
 fit &lt;- glm(low ~ smoke, family = 'binomial', data = birthwt)
+fit
+```
+
+```
+## 
+## Call:  glm(formula = low ~ smoke, family = "binomial", data = birthwt)
+## 
+## Coefficients:
+## (Intercept)       smoke1  
+##     -1.0871       0.7041  
+## 
+## Degrees of Freedom: 188 Total (i.e. Null);  187 Residual
+## Null Deviance:	    234.7 
+## Residual Deviance: 229.8 	AIC: 233.8
+```
+
+
+
+
+---
+
+### Inference
+
+- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
+
+
+```r
 confint(fit)
+```
+
+```
+## Waiting for profiling to be done...
+```
+
+```
+##                  2.5 %    97.5 %
+## (Intercept) -1.5243118 -0.679205
+## smoke1       0.0786932  1.335154
+```
+
+
+
+---
+
+### Inference
+
+- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
+
+
+```r
 summary(fit)
+```
+
+```
+## 
+## Call:
+## glm(formula = low ~ smoke, family = "binomial", data = birthwt)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.0197  -0.7623  -0.7623   1.3438   1.6599  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  -1.0871     0.2147  -5.062 4.14e-07 ***
+## smoke1        0.7041     0.3196   2.203   0.0276 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 234.67  on 188  degrees of freedom
+## Residual deviance: 229.80  on 187  degrees of freedom
+## AIC: 233.8
+## 
+## Number of Fisher Scoring iterations: 4
 ```
 
 
@@ -232,6 +378,33 @@ summary(fit)
 - For the most part, we follow similar steps to fit the model, estimate regression parameters, perform hypothesis testing, and predict unknown values of the response variable. 
 
 - As an example, we want to investigate the relationship between having a low birthweight baby, `\(Y\)`, and mother's age at the time of pregnancy, `\(X\)`. 
+
+
+
+---
+
+### Logistic Regression with One Numerical Predictor
+
+
+
+
+```r
+fit &lt;- glm(low ~ age, family = 'binomial', data = birthwt)
+fit
+```
+
+```
+## 
+## Call:  glm(formula = low ~ age, family = "binomial", data = birthwt)
+## 
+## Coefficients:
+## (Intercept)          age  
+##     0.38458     -0.05115  
+## 
+## Degrees of Freedom: 188 Total (i.e. Null);  187 Residual
+## Null Deviance:	    234.7 
+## Residual Deviance: 231.9 	AIC: 235.9
+```
 
 
 ---
@@ -318,22 +491,88 @@ summary(fit)
 - Similar to linear regression models, we specify the model formula by entering the response variable on the left side of the "~" symbol and the explanatory variables (separated by "+" sings) on the right side. 
 
 
-```r
-fit &lt;- glm(low ~ age + smoke, family = 'binomial', 
-           data = birthwt)
-confint(fit)
-summary(fit)
-```
 
 ---
 
 ### Logistic Regression with Multiple Variables
 
-- Obtaining the cofidence intervals and p-values for regression coefficients remain as before.
 
-- Similar to multiple linear regression, logistic regression models could be additive or include interaction terms.
+```r
+fit &lt;- glm(low ~ age + smoke, family = 'binomial', 
+           data = birthwt)
+fit
+```
 
-- As before, we should be careful when we interpret the resuls. 
+```
+## 
+## Call:  glm(formula = low ~ age + smoke, family = "binomial", data = birthwt)
+## 
+## Coefficients:
+## (Intercept)          age       smoke1  
+##     0.06091     -0.04978      0.69185  
+## 
+## Degrees of Freedom: 188 Total (i.e. Null);  186 Residual
+## Null Deviance:	    234.7 
+## Residual Deviance: 227.3 	AIC: 233.3
+```
+
+
+---
+
+### Logistic Regression with Multiple Variables
+
+
+```r
+confint(fit)
+```
+
+```
+## Waiting for profiling to be done...
+```
+
+```
+##                   2.5 %     97.5 %
+## (Intercept) -1.41611481 1.56446444
+## age         -0.11450032 0.01132921
+## smoke1       0.06214062 1.32718026
+```
+
+
+
+---
+
+### Logistic Regression with Multiple Variables
+
+
+```r
+summary(fit)
+```
+
+```
+## 
+## Call:
+## glm(formula = low ~ age + smoke, family = "binomial", data = birthwt)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.1589  -0.8668  -0.7470   1.2821   1.7925  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)  0.06091    0.75732   0.080   0.9359  
+## age         -0.04978    0.03197  -1.557   0.1195  
+## smoke1       0.69185    0.32181   2.150   0.0316 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 234.67  on 188  degrees of freedom
+## Residual deviance: 227.28  on 186  degrees of freedom
+## AIC: 233.28
+## 
+## Number of Fisher Scoring iterations: 4
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

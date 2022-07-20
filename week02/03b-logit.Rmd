@@ -33,6 +33,20 @@ library(fabricerin)
 
 
 
+
+<style type="text/css">
+
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 20px
+}
+</style>
+
 ---
 
 ### Introduction
@@ -83,11 +97,11 @@ $$\begin{eqnarray*}
 ### Logistic Regression with One Binary Predictor
 
 
-- As an example, we use the {birthwt} data set to model the relationship between having low birthweight babies (a binary variable), $Y$, and smoking during pregnancy, $X$. 
+- As an example, we use the `birthwt` data set to model the relationship between having low birthweight babies (a binary variable), $Y$, and smoking during pregnancy, $X$. 
 
-- The binary variable {low} identifies low birthweight babies ({low} = 1 for low birthweight babies, and 0 otherwise). 
+- The binary variable `low` identifies low birthweight babies (low = 1 for low birthweight babies, and 0 otherwise). 
 
-- The binary variable {smoke} identifies mothers who were smoking during pregnancy ({smoke}=1 for smoking during pregnancy, and 0 otherwise).
+- The binary variable `smoke` identifies mothers who were smoking during pregnancy (smoke=1 for smoking during pregnancy, and 0 otherwise).
 
 
 ---
@@ -96,20 +110,44 @@ $$\begin{eqnarray*}
 
 - We can use the `glm()` function in R to fit a regression model
 
-```{r, eval=FALSE}
+```{r, message=FALSE}
 library(MASS)
-data("birthwt")
+data(birthwt)
 birthwt$low <- factor(birthwt$low)
 birthwt$smoke <- factor(birthwt$smoke)
 fit <- glm(low ~ smoke, family = 'binomial', data = birthwt)
+```
+
+
+
+
+---
+
+### Generalized linear model (glm) in R
+
+- We can use the `glm()` function in R to fit a regression model
+
+```{r, message=FALSE}
 confint(fit)
+```
+
+
+
+
+---
+
+### Generalized linear model (glm) in R
+
+- We can use the `glm()` function in R to fit a regression model
+
+```{r, message=FALSE}
 summary(fit)
 ```
+
 
 ---
 
 ### Estimation
-
 
 - For the above example, the estimated values of the intercept $\alpha$ and the regression coefficient $\beta$ are $a=-1.09$ and $b=0.70$ respectively. 
 
@@ -144,7 +182,8 @@ $$\begin{eqnarray*}
 - For mothers who smoke during pregnancy, $x=1$, and
 $$\begin{eqnarray*}
 \frac{\hat{p}_{1}}{1- \hat{p}_{1}} & = &  \exp(-1.09 + 0.7)\\
-& = &  \exp(-1.09) \exp(0.7)
+& = &  \exp(-1.09) \exp(0.7)\\
+& = & 0.68
 \end{eqnarray*}$$
 
 
@@ -182,9 +221,33 @@ $$\begin{eqnarray*}
 
 - Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
 
-```{r, eval=FALSE}
+```{r}
 fit <- glm(low ~ smoke, family = 'binomial', data = birthwt)
+fit
+```
+
+
+
+
+---
+
+### Inference
+
+- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
+
+```{r}
 confint(fit)
+```
+
+
+
+---
+
+### Inference
+
+- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
+
+```{r}
 summary(fit)
 ```
 
@@ -235,6 +298,19 @@ $$\begin{eqnarray*}
 - For the most part, we follow similar steps to fit the model, estimate regression parameters, perform hypothesis testing, and predict unknown values of the response variable. 
 
 - As an example, we want to investigate the relationship between having a low birthweight baby, $Y$, and mother's age at the time of pregnancy, $X$. 
+
+
+
+---
+
+### Logistic Regression with One Numerical Predictor
+
+
+
+```{r}
+fit <- glm(low ~ age, family = 'binomial', data = birthwt)
+fit
+```
 
 
 ---
@@ -320,19 +396,33 @@ $$\begin{eqnarray*}
 
 - Similar to linear regression models, we specify the model formula by entering the response variable on the left side of the "~" symbol and the explanatory variables (separated by "+" sings) on the right side. 
 
-```{r, eval=FALSE}
-fit <- glm(low ~ age + smoke, family = 'binomial', 
-           data = birthwt)
-confint(fit)
-summary(fit)
-```
+
 
 ---
 
 ### Logistic Regression with Multiple Variables
 
-- Obtaining the cofidence intervals and p-values for regression coefficients remain as before.
+```{r}
+fit <- glm(low ~ age + smoke, family = 'binomial', 
+           data = birthwt)
+fit
+```
 
-- Similar to multiple linear regression, logistic regression models could be additive or include interaction terms.
 
-- As before, we should be careful when we interpret the resuls. 
+---
+
+### Logistic Regression with Multiple Variables
+
+```{r}
+confint(fit)
+```
+
+
+
+---
+
+### Logistic Regression with Multiple Variables
+
+```{r}
+summary(fit)
+```
