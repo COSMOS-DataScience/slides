@@ -176,7 +176,7 @@ abline(lm(rhippo~lhippo), col="red")
 lines(lowess(rhippo~lhippo), col="blue")
 ```
 ---
-- The scatterplot( ) function in the car package offers many enhanced features, including fit lines, marginal box plots, conditioning on a factor, and interactive point identification. Each of these features is optional.
+- The scatterplot( ) function in the car package offers many enhanced features, including fit lines, marginal box plots and conditioning on a factor. Each of these features is optional.
 
 ```{r error = FALSE, message=FALSE,warning=FALSE, include=FALSE}
 library(car)
