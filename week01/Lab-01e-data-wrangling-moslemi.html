@@ -4,7 +4,7 @@
     <title>Data Wrangling in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Zahra Moslemi" />
-    <script src="libs/header-attrs-2.13/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -113,7 +113,7 @@ select(arthritis, age, cdai)
 ##  8    90  40  
 ##  9    87   6  
 ## 10    82  NA  
-## # … with 520 more rows
+## # ℹ 520 more rows
 ```
 ]
 
@@ -141,7 +141,7 @@ arthritis %&gt;%
 ##  8    90  40  
 ##  9    87   6  
 ## 10    82  NA  
-## # … with 520 more rows
+## # ℹ 520 more rows
 ```
 
 ]
@@ -169,8 +169,8 @@ select(arthritis, -id, -sex)
 ##  8    90 elderly          11  40   yes         NA        1             1       0
 ##  9    87 elderly          36   6   yes         NA        1             0       0
 ## 10    82 elderly           4  NA   no          NA        1             0       1
-## # … with 520 more rows, and 3 more variables: biologics &lt;dbl&gt;, s_dmards &lt;dbl&gt;,
-## #   osteop_screen &lt;dbl&gt;
+## # ℹ 520 more rows
+## # ℹ 3 more variables: biologics &lt;dbl&gt;, s_dmards &lt;dbl&gt;, osteop_screen &lt;dbl&gt;
 ```
 
 ---
@@ -202,7 +202,7 @@ select(arthritis, starts_with("cdai"))
 ##  8  40   yes    
 ##  9   6   yes    
 ## 10  NA   no     
-## # … with 520 more rows
+## # ℹ 520 more rows
 ```
 
 ---
@@ -226,7 +226,7 @@ select(arthritis, contains("28"))
 ##  8     NA        1
 ##  9     NA        1
 ## 10     NA        1
-## # … with 520 more rows
+## # ℹ 520 more rows
 ```
 
 ---
@@ -268,7 +268,7 @@ slice(arthritis, 3:7)
 ## 3     5    85 elderly female          NA  NA   no          NA        1
 ## 4     6    79 elderly male            NA  NA   no          NA        1
 ## 5     7    90 elderly female          51  NA   no          NA        1
-## # … with 5 more variables: steroids_gt_5 &lt;dbl&gt;, dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;,
+## # ℹ 5 more variables: steroids_gt_5 &lt;dbl&gt;, dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;,
 ## #   s_dmards &lt;dbl&gt;, osteop_screen &lt;dbl&gt;
 ```
 
@@ -299,7 +299,7 @@ filter(arthritis, age == 90)
 ## 5    54    90 elderly female           3    NA no          NA        1
 ## 6    66    90 elderly female          40    NA no          NA        1
 ## 7    69    90 elderly female          40    14 yes         NA        1
-## # … with 5 more variables: steroids_gt_5 &lt;dbl&gt;, dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;,
+## # ℹ 5 more variables: steroids_gt_5 &lt;dbl&gt;, dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;,
 ## #   s_dmards &lt;dbl&gt;, osteop_screen &lt;dbl&gt;
 ```
 
@@ -351,7 +351,7 @@ arthritis %&gt;%
 ##      id   age age_gp  sex    yrs_from_dx  cdai cdai_yn das_28 das28_yn
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1     8    90 elderly female          11    40 yes         NA        1
-## # … with 5 more variables: steroids_gt_5 &lt;dbl&gt;, dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;,
+## # ℹ 5 more variables: steroids_gt_5 &lt;dbl&gt;, dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;,
 ## #   s_dmards &lt;dbl&gt;, osteop_screen &lt;dbl&gt;
 ```
 
@@ -399,8 +399,9 @@ arthritis %&gt;%
 ##  8   210    70 control female           5  13   yes         NA        1
 ##  9   211    62 control female           9  11   yes         NA        1
 ## 10   212    63 control female           1  16   yes         NA        1
-## # … with 57 more rows, and 5 more variables: steroids_gt_5 &lt;dbl&gt;,
-## #   dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;, s_dmards &lt;dbl&gt;, osteop_screen &lt;dbl&gt;
+## # ℹ 57 more rows
+## # ℹ 5 more variables: steroids_gt_5 &lt;dbl&gt;, dmar_ds &lt;dbl&gt;, biologics &lt;dbl&gt;,
+## #   s_dmards &lt;dbl&gt;, osteop_screen &lt;dbl&gt;
 ```
 
 ---
@@ -475,7 +476,7 @@ arthritis %&gt;%
 ##  8    90 elderly female          11  40  
 ##  9    87 elderly female          36   6  
 ## 10    82 elderly female           4  NA  
-## # … with 520 more rows
+## # ℹ 520 more rows
 ```
 
 ---
@@ -515,7 +516,7 @@ glimpse(arthritis)
 ```r
 arthritis &lt;-
   arthritis %&gt;% 
-  mutate(days_from_dx = 360*yrs_from_dx)
+  mutate(days_from_dx = 365*yrs_from_dx)
 
 colnames(arthritis)
 ```
@@ -553,17 +554,17 @@ arthritis
 ## # A tibble: 530 × 6
 ##      age age_gp  sex    yrs_from_dx  cdai days_from_dx
 ##    &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
-##  1    85 elderly female          27  NA           9720
-##  2    86 elderly female          27  23           9720
-##  3    83 elderly female          10  14.5         3600
-##  4    83 elderly female           9  NA           3240
+##  1    85 elderly female          27  NA           9855
+##  2    86 elderly female          27  23           9855
+##  3    83 elderly female          10  14.5         3650
+##  4    83 elderly female           9  NA           3285
 ##  5    85 elderly female          NA  NA             NA
 ##  6    79 elderly male            NA  NA             NA
-##  7    90 elderly female          51  NA          18360
-##  8    90 elderly female          11  40           3960
-##  9    87 elderly female          36   6          12960
-## 10    82 elderly female           4  NA           1440
-## # … with 520 more rows
+##  7    90 elderly female          51  NA          18615
+##  8    90 elderly female          11  40           4015
+##  9    87 elderly female          36   6          13140
+## 10    82 elderly female           4  NA           1460
+## # ℹ 520 more rows
 ```
 
 ---
@@ -581,17 +582,17 @@ arthritis %&gt;%
 ## # Groups:   age_gp [2]
 ##      age age_gp  sex    yrs_from_dx  cdai days_from_dx
 ##    &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
-##  1    85 elderly female          27  NA           9720
-##  2    86 elderly female          27  23           9720
-##  3    83 elderly female          10  14.5         3600
-##  4    83 elderly female           9  NA           3240
+##  1    85 elderly female          27  NA           9855
+##  2    86 elderly female          27  23           9855
+##  3    83 elderly female          10  14.5         3650
+##  4    83 elderly female           9  NA           3285
 ##  5    85 elderly female          NA  NA             NA
 ##  6    79 elderly male            NA  NA             NA
-##  7    90 elderly female          51  NA          18360
-##  8    90 elderly female          11  40           3960
-##  9    87 elderly female          36   6          12960
-## 10    82 elderly female           4  NA           1440
-## # … with 520 more rows
+##  7    90 elderly female          51  NA          18615
+##  8    90 elderly female          11  40           4015
+##  9    87 elderly female          36   6          13140
+## 10    82 elderly female           4  NA           1460
+## # ℹ 520 more rows
 ```
 
 

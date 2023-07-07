@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>The Pipe Operator</title>
+    <title>Working with R</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Brian Schetzsle" />
+    <meta name="author" content="Zahra Moslemi" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
@@ -16,227 +16,185 @@ class: title-slide
 
 
 
-
 &lt;br&gt;
 &lt;br&gt;
 .right-panel[ 
 
-# The Pipe Operator
-## Brian Schetzsle
+# Working with R
+## Zahra Moslemi
 
 Adapted from slides by Mine Dogucu
 ]
 
 ---
 
-class: inverse middle
+## Reminder
 
-.font50[Three solutions to a single problem]
-
----
-
-class: middle
-
-What is the average of 4, 8, 16 approximately?
+- Close all apps on your computer.  
+- Open slides for this session from the cluster website (https://cosmos-datascience.netlify.app). 
 
 ---
 
-class: middle
-
-1.What is the average of **4, 8, 16** approximately?
+# Introductions
 
 ---
 
-class: middle
-
-2.What is the **average** of 4, 8, 16 approximately?
-
----
-
-class: middle
-
-3.What is the average of 4, 8, 16 **approximately**?
+# First things first:
+- Do you have a computer?
+- Do you have R on your computer?
+- Do you have RStudio on your computer?
 
 ---
 
-class: middle inverse
-
-.font50[Solution 1: Functions within Functions]
+# A Walkthrough of RStudio
+## Why it's a nice environment for R coding
 
 ---
+
+# A Walkthrough of RStudio
+## Create a new document in which to do R coding
+
+---
+
+class: inverse middle center
+
+.font100[hello woRld]
+
+
+---
+
+# R review
+## Object assignment operator
 
 
 ```r
-c(4, 8, 16)
+birth_year &lt;- 1950
+```
+
+---
+
+# R review
+
+R is case-sensitive
+
+
+
+```r
+my_age &lt;- 2022 - birth_year
+
+My_age
 ```
 
 ```
-## [1]  4  8 16
+## Error in eval(expr, envir, enclos): object 'My_age' not found
 ```
+
+
+
+---
+
+## Variables in R
+
+`character`: takes string values (e.g. a person's name, address)
 
 --
 
-&lt;hr&gt;
-
-
-```r
-mean(c(4, 8, 16))
-```
-
-```
-## [1] 9.333333
-```
+`integer`: integer (single precision)  
 
 --
 
-&lt;hr&gt;
-
-
-```r
-round(mean(c(4, 8, 16)))
-```
-
-```
-## [1] 9
-```
-
----
-
-class: middle
-
-**Problem with writing functions within functions**
-
-Things will get messy and more difficult to read and debug as we deal with more complex operations on data.
-
----
-
-class: middle inverse
-
-.font50[Solution 2: Creating Objects]
-
----
-
-class: middle
-
-
-```r
-numbers &lt;- c(4, 8, 16)
-numbers
-```
-
-```
-## [1]  4  8 16
-```
+`double`: floating decimal (double precision) 
 
 --
 
-&lt;hr&gt;
-
-
-```r
-avg_number &lt;- mean(numbers)
-avg_number
-```
-
-```
-## [1] 9.333333
-```
+`numeric`: integer or double  
 
 --
 
-&lt;hr&gt;
-
-
-```r
-round(avg_number)
-```
-
-```
-## [1] 9
-```
-
----
-
-class: middle
-
-**Problem with creating many objects**
-
-We will end up with too many objects in `Environment`. 
-
----
-
-class: middle inverse
-
-.font50[Solution 3: The (forward) Pipe Operator %&gt;% ]
-
----
-
-class: middle
-
-.font75[Shortcut: &lt;br&gt;Ctrl (Command) + Shift + M]
-
----
-class: middle
-
-.pull-left[
-
-```r
-c(4, 8, 16) %&gt;% 
-  mean() %&gt;% 
-  round()
-```
-
-```
-## [1] 9
-```
-]
-
-.pull-right[
-
-Combine 4, 8, and 16 `and then`  
-Take the mean   `and then`  
-Round the output
-
-]
-
-
----
-
-class: middle
-
-The output of the first function is the first argument of the second function.
-
----
-
-Do you recall composite functions such as `\(f \circ g(x)\)`?
+`factor`: categorical variables with different levels  
 
 --
 
-Now we have `\(f \circ g \circ h (x)\)` or `round(mean(c(4, 8, 16)))`
+`logical`: TRUE (1), FALSE (0)  
+
+
+
+---
+
+
+# R review
+
+If something comes in quotes, it is not defined in R. 
+
+
+
+```r
+ages &lt;- c(25, my_age, 32)
+
+names &lt;- c("Menglin", "Mine", "Rafael")
+
+data.frame(age = ages, name = names)
+```
+
+```
+##   age    name
+## 1  25 Menglin
+## 2  72    Mine
+## 3  32  Rafael
+```
+
+---
+
+# R review
+## Functions and Arguments
+
+
+```r
+do(something)
+```
+
+`do()` is a function;   
+`something` is the argument of the function.
 
 --
 
-.pull-left[
+
+```r
+do(something, colorful)
+```
+
+`do()` is a function;   
+`something` is the first argument of the function;   
+`colorful` is the second argument of the function.
+
+---
+
+# R review
+
+## Getting Help
+
+In order to get any help we can use `?` followed by function (or object) name. 
 
 
 ```r
-h(x) %&gt;% 
-  g() %&gt;% 
-  f()
+?c
 ```
 
-]
 
-.pull-right[
+---
+
+# Some basic data structures
+- variables/assignment
+- combine/vector
+- matrix
 
 
 ```r
-c(4, 8, 16) %&gt;% 
-  mean() %&gt;% 
-  round()
+temp_variable = 1
+temp_vector = c(1, 2, 3)
+temp_matrix = matrix(c(1,2,3,4), nrow=2, ncol=2, 
+                     byrow=TRUE)
 ```
-
-]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
