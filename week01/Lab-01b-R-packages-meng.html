@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Working with R</title>
+    <title>Working with R Packages</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Brian Schetzsle" />
+    <meta name="author" content="Yang Meng" />
     <script src="libs/header-attrs-2.14/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
@@ -16,185 +16,213 @@ class: title-slide
 
 
 
+
+
 &lt;br&gt;
 &lt;br&gt;
 .right-panel[ 
 
-# Working with R
-## Brian Schetzsle
+# Working with R Packages
+## Yang Meng
 
 Adapted from slides by Mine Dogucu
 ]
 
----
-
-## Reminder
-
-- Close all apps on your computer.  
-- Open slides for this session from the cluster website (https://cosmos-datascience.netlify.app). 
-
----
-
-# Introductions
-
----
-
-# First things first:
-- Do you have a computer?
-- Do you have R on your computer?
-- Do you have RStudio on your computer?
-
----
-
-# A Walkthrough of RStudio
-## Why it's a nice environment for R coding
-
----
-
-# A Walkthrough of RStudio
-## Create a new document in which to do R coding
-
----
-
-class: inverse middle center
-
-.font100[hello woRld]
-
-
----
-
-# R review
-## Object assignment operator
-
-
-```r
-birth_year &lt;- 1950
-```
-
----
-
-# R review
-
-R is case-sensitive
-
-
-
-```r
-my_age &lt;- 2022 - birth_year
-
-My_age
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'My_age' not found
-```
 
 
 
 ---
 
-## Variables in R
+class: middle center
 
-`character`: takes string values (e.g. a person's name, address)
+.pull-left[
+
+__Default__
+
+&lt;img src="img/office-suite-default.png" width="60%" /&gt;
+
+]
+
+.footnote[Microsoft products have Copyright. Images used based on [fair use](https://www.microsoft.com/en-us/legal/copyright/default.aspx) for educational purposes.]
+
+.pull-right[
+
+__Optional__
+
+&lt;img src="img/office-suite-optional.png" width="60%" /&gt;
+
+
+]
+
+---
+class: middle
+
+## R packages
+
+
+When you download R, you actually download base R. 
 
 --
 
-`integer`: integer (single precision)  
-
---
-
-`double`: floating decimal (double precision) 
-
---
-
-`numeric`: integer or double  
-
---
-
-`factor`: categorical variables with different levels  
-
---
-
-`logical`: TRUE (1), FALSE (0)  
-
+But there are MANY optional packages you can download.
 
 
 ---
 
-
-# R review
-
-If something comes in quotes, it is not defined in R. 
+class: middle
 
 
+## R packages
 
-```r
-ages &lt;- c(25, my_age, 32)
-
-names &lt;- c("Menglin", "Mine", "Rafael")
-
-data.frame(age = ages, name = names)
-```
-
-```
-##   age    name
-## 1  25 Menglin
-## 2  72    Mine
-## 3  32  Rafael
-```
-
----
-
-# R review
-## Functions and Arguments
-
-
-```r
-do(something)
-```
-
-`do()` is a function;   
-`something` is the argument of the function.
+There are more than 15000 R packages. 
 
 --
 
+Good part: There is an R package for (almost) everything, from complex statistical modeling packages to baby names.
 
-```r
-do(something, colorful)
-```
+--
 
-`do()` is a function;   
-`something` is the first argument of the function;   
-`colorful` is the second argument of the function.
+Bad part: At the beginning it can feel overwhelming. 
 
 ---
 
-# R review
+class: middle 
 
-## Getting Help
+## R packages
 
-In order to get any help we can use `?` followed by function (or object) name. 
+All this time we have actually been using R packages. 
+
+---
+
+class: middle 
+
+## R packages
+
+What do R packages have? All sorts of things but mainly
+
+- functions 
+
+- datasets
+
+---
+
+class: middle
+
+## R packages
+
+Try running the following code:
 
 
 ```r
-?c
+beep()
 ```
+
+```
+## Error in beep(): could not find function "beep"
+```
+
+Why are we seeing this error? 
+
+---
+
+class: middle
+
+## R packages
+
+We will need to do two things:
+- Install the `beeper` package onto our computer
+- Load the `beeper` package into our R environment
+
+---
+
+class:inverse middle
+
+.font75[Installing packages]
+
+---
+
+## Using `install.packages()`
+
+In your **Console**, install the beepr package
+
+
+```r
+install.packages("beepr")
+```
+
+We do this in the Console because we only need to do it once.
+
+---
+
+## Using Packages pane
+
+&lt;img src="img/packages-pane.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+Packages Pane &gt; Install 
+
+---
+
+## Letting RStudio Install
+
+&lt;img src="img/rstudio-install.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+If you save your file and using a package RStudio will tell you that you have not installed the package.
+
+---
+
+class:inverse middle
+
+.font75[Loading packages]
+
+---
+
+### Using beep() from beepr
+
+.pull-left[
+
+```r
+library(beepr)
+beep()
+```
+
+More common usage. 
+Useful if you are going to use multiple functions from the same package.
+E.g. we have used many functions (ggplot, aes, geom_...) from the ggplot2 package. In such cases, usual practice is to put the library name in the first R chunk in the .Rmd file.
+
+]
+
+.pull-right[
+
+```r
+beepr::beep()
+```
+Useful when you are going to use a function once or few times. Also useful if there are any conflicts. For instance if there is some other package loaded that has a `beep()` function that prints the word beep, you would want to distinguish the beep function from the `beepr` package and the `beep()` function from the other imaginary package. 
+]
+
+---
+
+&lt;img src="img/beep-help.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
-# Some basic data structures
-- variables/assignment
-- combine/vector
-- matrix
+class: middle
 
+## Open Source
 
-```r
-temp_variable = 1
-temp_vector = c(1, 2, 3)
-temp_matrix = matrix(c(1,2,3,4), nrow=2, ncol=2, 
-                     byrow=TRUE)
-```
+Any one around the world can create R packages. 
+
+--
+
+Good part: We are able to do pretty much anything with R because someone from around the world has developed the package and shared it. 
+
+--
+
+Bad part: The language can be inconsistent. 
+
+--
+
+Good news: We have tidyverse. 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
