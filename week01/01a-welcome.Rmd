@@ -56,21 +56,23 @@ knitr::include_graphics("img/Behseta.png")
 
 class: center middle
 
-## Brian Schetzsle
-
-```{r echo=FALSE, fig.align='center', out.width="30%"}
-knitr::include_graphics("img/Brian.jpg")
-```
-
----
-
-class: center middle
-
 ## Zahra Moslemi
 
 ```{r echo=FALSE, fig.align='center', out.width="30%"}
 knitr::include_graphics("img/Zahra.JPG")
 ```
+
+
+---
+
+class: center middle
+
+## Yang Meng
+
+```{r echo=FALSE, fig.align='center', out.width="30%"}
+knitr::include_graphics("img/Yang.png")
+```
+
 
 ---
 
@@ -109,10 +111,10 @@ class:middle center
 
 | Lectures        | Topics 
 |-------------|--------
-| Week 1      |Exploring Data, Probability 
-| Week 2      |Statistical Inference, Modeling
-| Week 3      |Capstone Project
-| Week 4      |Capstone Project
+| Week 1      |Exploring Data, Probability, Statistical Inference 
+| Week 2      |Statistical Modeling
+| Week 3      |Capstone Project, Advanced Topics & Machine Learning
+| Week 4      |Capstone Project, Scientific Communication
 
 
 
@@ -198,28 +200,6 @@ knitr::include_graphics("img/thephysicsgirl.png")
 
 class: middle center
 
-Move your body, stretch, go out (if it is safe) during breaks.
-
-.pull-left[
-
-<img src="img/go-out.jpeg" width=300 height=400>
-
-]
-
-.float-right[
-
-
-<img src="img/stretch.jpeg" width=300 height=400>
-
-
-
-]
-
-
----
-
-class: middle center
-
 ```{r echo=FALSE, fig.align='center', out.width="70%"}
 knitr::include_graphics("img/support.jpeg")
 ```
@@ -256,16 +236,5 @@ Do not open too many windows on your computers. Keep e-mail, social media, messa
 ```{r echo=FALSE, fig.align='center', out.width="60%"}
 knitr::include_graphics("img/closed-windows.jpeg")
 ```
-
----
-
-class: middle 
-
-Keep your files organized.   
-
-For example, in our <a href="https://github.com/COSMOS-DataScience"> GitHub</a> page, we use numbers (e.g. `01`, `02`) to indicate the day of the program.  
-
-We use letters (e.g. `a`, `b`) to indicate the sequence of lectures/labs in a given day.
-
 
 
