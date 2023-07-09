@@ -62,7 +62,7 @@ alzheimer_data <- read.csv('data/alzheimer_data.csv') %>%
 
 - To tackle these challenges, the field of __data science__ brings together _statistics, computer science_, and _mathematics_ to solve data intensive problems.
 
-- At its core, data science relies on statistical methods to solve scientific problems. These methods have their foundation in mathematics and are implemented using computational techniques. 
+- At its core, data science relies on statistical methods to solve scientific problems. These methods have their foundation in mathematics and are implemented using computational techniques to solve real-life problems in a wide range of scientific fields. 
 
 
 ---
@@ -118,18 +118,9 @@ knitr::include_graphics('img/AlzheimerData.png')
 
 ## Study design
 
-If possible, before we conduct our study, we need to design it in order to (Cox and Donnelly, 2011)
-  + avoid systematic error
-  
-  + reduce non-systematic error
-  
-  + ensure the scale of effort is appropriate; Goldilocks rule: not too limited, not too wasteful, just right!
+Scientific studies work better and have a higher probability of success if we plan them ahead. 
 
-
-
----
-
-## Common study designs
+Common study designs include:
 
 - Survey studies: Researchers collect information from individuals through some questions
 
@@ -142,7 +133,7 @@ If possible, before we conduct our study, we need to design it in order to (Cox 
 
 ## Sampling 
 
-- We cannot of course observe the whole population of interest or conduct experiments on them. 
+- We cannot of course implement our study for the whole population of interest. 
 
 - Instead, we select a __sample__ of representative members from the population.
 
@@ -166,8 +157,7 @@ If possible, before we conduct our study, we need to design it in order to (Cox 
 
 - The process of using the data to draw conclusions about the whole population, while acknowledging the extent of our uncertainty about our findings, is called __statistical inference__. 
 
-- The knowledge we acquire from data through statistical inference allows us to make decisions with respect to the scientific problem that
-motivated our study and our data analysis. 
+- The knowledge we acquire from data through statistical inference allows us to make decisions with respect to the scientific problem that motivated our study and our data analysis. 
 
 - In this program, we will discuss some core statistical inference methods and use them to solve some scientific problems related to Alzheimer's disease.
 
