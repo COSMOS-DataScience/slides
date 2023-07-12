@@ -1,0 +1,697 @@
+---
+title: "Visualizing Data in R"
+author: "Yang Meng"
+output: 
+  xaringan::moon_reader:
+    css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
+    lib_dir: libs
+    seal: false
+    nature:
+      beforeInit: "cols_macro.js"
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+
+---
+
+class: title-slide
+
+```{r echo = FALSE, message=FALSE}
+library(openintro)
+library(tidyverse)
+babies <- babies %>% 
+  mutate(smoke = as.logical(smoke),
+         parity = as.logical(parity))
+
+xaringanExtra::use_panelset()
+theme_set(theme_gray(base_size = 18))
+```
+
+<br>
+<br>
+.right-panel[ 
+<br>
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$author`
+
+Adapted from slides by Mine Dogucu
+]
+
+
+---
+
+class: middle
+
+## Data 
+
+```{r}
+library(tidyverse)
+df <- read.csv("../data/alzheimer_data.csv")
+df <- df %>% 
+  rename(gender = female) %>%
+  mutate(gender = ifelse(gender, "female", "male"))
+```
+
+---
+
+class: middle
+
+__gg__plot is based on __g__rammar of __g__raphics.
+
+```{r echo = FALSE}
+knitr::include_graphics("img/grammar_graphics.jpeg")
+```
+
+---
+
+
+class:inverse middle
+
+.font75[Visualizing a Single Categorical Variable]
+
+
+---
+
+class: middle
+
+**3 steps of making a basic ggplot**
+
+1.Pick data
+
+2.Map data onto aesthetics
+
+3.Add the geometric layer
+
+
+
+---
+class: middle
+
+### Step 1 - Pick Data
+
+.pull-left[
+```{r eval = FALSE}
+ggplot(data = df)
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(df)
+```
+
+]
+
+---
+
+class: middle
+
+### Step 2 - Map Data to Aesthetics
+
+.pull-left[
+```{r eval = FALSE}
+ggplot(data = df,
+       aes(x = gender)) #<<
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = gender))
+```
+
+]
+
+---
+
+class: middle
+
+### Step 3 - Add the Geometric Layer
+
+.pull-left[
+```{r eval = FALSE}
+ggplot(data = df,
+       aes(x = gender)) +
+  geom_bar() #<<
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = gender)) +
+  geom_bar()
+```
+]
+---
+
+.panelset[
+
+.panel[
+.panel-name[Plot]
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = gender)) +
+  geom_bar()
+```
+
+]
+
+.panel[
+.panel-name[English]
+
+- Create a ggplot using the data frame.
+- Map `gender` to the x-axis. 
+- Add a layer of a bar plot.
+
+]
+
+.panel[
+.panel-name[R]
+```{r eval = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = gender)) +
+  geom_bar()
+```
+
+]
+
+]
+---
+
+class:inverse middle
+
+.font75[Visualizing a Single Numeric Variable]
+
+---
+
+.panelset[
+
+.panel[
+.panel-name[Plot]
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram() 
+```
+
+]
+
+.panel[
+.panel-name[English]
+
+- Create a ggplot using the data frame.
+- Map the `age` to the x-axis. 
+- Add a layer of a histogram.
+
+]
+
+.panel[
+.panel-name[R]
+```{r eval = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram() 
+```
+
+]
+
+]
+
+---
+
+### Step 1 - Pick Data
+
+.pull-left[
+```{r eval = FALSE}
+ggplot(data = df)
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(df)
+```
+
+]
+
+---
+
+### Step 2 - Map Data to Aesthetics
+
+.pull-left[
+```{r eval = FALSE}
+ggplot(data = df,
+       aes(x = age)) #<<
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = age))
+```
+
+]
+
+---
+
+### Step 3 - Add the Geometric Layer
+
+.pull-left[
+```{r eval = FALSE}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram() #<<
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram()
+```
+]
+
+---
+
+## What is this warning?
+
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram()
+```
+
+---
+
+
+```{r fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(bins = 10) #<<
+```
+
+---
+
+
+```{r fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(binwidth = 10) #<<
+```
+
+
+---
+
+.panelset[
+.panel[.panel-name[binwidth = 5]
+
+.left-panel[
+
+
+]
+
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(binwidth = 5)
+```
+
+]
+
+.panel[.panel-name[binwidth = 10]
+
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(binwidth = 10)
+```
+
+]
+
+.panel[.panel-name[binwidth = 20]
+
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(binwidth = 20)
+```
+
+]
+
+
+]
+
+
+
+
+---
+
+class: middle center
+
+
+.font150[
+`r emojifont::emoji(emojifont::search_emoji('rainbow'))[1]`
+] 
+
+Pick your favorite color(s) from the list at:
+
+[bit.ly/colors-r](https://bit.ly/colors-r)
+
+---
+
+```{r fig.align='center', fig.height=5}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(binwidth = 10, 
+                 color = "gold") #<<
+```
+
+---
+
+```{r fig.align='center', fig.height=5}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(binwidth = 10, 
+                 fill = "darkblue") #<<
+```
+
+---
+
+```{r fig.align='center', fig.height=5}
+ggplot(data = df,
+       aes(x = age)) +
+  geom_histogram(binwidth = 10, 
+                 color = "gold", #<<
+                 fill = "darkblue") #<<
+```
+
+---
+
+class: inverse middle center
+
+.font75[Visualizing Two Categorical Variables]
+
+---
+
+```{r}
+df$diagnosis <- factor(df$diagnosis)
+head(df$diagnosis, 10)
+```
+
+---
+
+## Stacked Bar-Plot
+
+.pull-left[
+
+```{r eval = FALSE}
+ggplot(data = df,
+       aes(x = diagnosis, 
+           fill = gender)) + #<<
+  geom_bar() 
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = diagnosis, 
+           fill = gender)) +
+  geom_bar()
+```
+]
+
+---
+
+## Standardized Bar Plot
+
+.pull-left[
+
+```{r eval = FALSE}
+ggplot(data = df,
+  aes(x = diagnosis, 
+  fill = gender)) + 
+  geom_bar(
+    position = "fill") #<<
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = diagnosis, fill = gender)) +
+  geom_bar(position = "fill")
+```
+]
+
+.footnote[Note that y-axis is no longer count but we will learn how to change that later.]
+
+---
+
+## Dodged Bar Plot
+
+.pull-left[
+
+```{r eval = FALSE}
+ggplot(data = df,
+  aes(x = diagnosis, 
+  fill = gender)) + 
+  geom_bar(
+    position = "dodge") #<<
+```
+]
+
+.pull-right[
+
+```{r echo = FALSE, fig.height=5}
+ggplot(data = df,
+       aes(x = diagnosis, fill = gender)) +
+  geom_bar(position = "dodge")
+```
+]
+
+
+
+---
+class: middle inverse
+
+.font75[Visualizing a single numerical and single categorical variable.]
+
+---
+
+.panelset[
+
+.panel[
+.panel-name[Plot]
+```{r echo = FALSE, fig.height=5, fig.align='center'}
+ggplot(df,
+       aes(x = gender,
+           y = age))  +
+  geom_boxplot()
+```
+
+]
+
+.panel[
+.panel-name[English]
+
+- Create a ggplot using the data frame.
+- Map the `gender` to the x-axis and `age` to the y-axis. 
+- Add a layer of a boxplot plot.
+
+]
+
+.panel[
+.panel-name[R]
+```{r eval = FALSE, fig.height=5}
+ggplot(df,
+       aes(x = gender,
+           y = age))  +
+  geom_boxplot()
+```
+
+]
+
+]
+
+
+
+---
+
+.pull-left[
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(df,
+       aes(x = gender,
+           y = age))  +
+  geom_boxplot() +
+  theme(text = element_text(size=20))
+
+```
+
+]
+
+.pull-right[
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(df,
+       aes(x = age))  +
+  geom_histogram(binwidth = 10) +
+  facet_grid(gender ~ .) +
+  theme(text = element_text(size=20))
+
+```
+]
+
+---
+class: inverse middle
+
+.font75[Visualizing Two Numerical Variables]
+
+---
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(df,
+  aes(x = height,
+      y = weight)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(df,
+  aes(x = height,
+  y = weight))  +
+  geom_point()
+```
+
+]
+
+
+---
+
+class: middle inverse
+
+.font75[Considering More Than Two Variables]
+
+---
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(df,
+  aes(x = height, 
+      y = weight, 
+      color = gender)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(df,
+  aes(x = height, y = weight, color = gender)) +
+  geom_point()
+```
+
+]
+
+
+---
+.left-panel[
+```{r eval = FALSE}
+ggplot(df,
+  aes(x = height, 
+      y = weight, 
+      shape = gender)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(df,
+  aes(x = height, 
+      y = weight, 
+      shape = gender)) +
+  geom_point()
+```
+
+]
+
+---
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(df,
+  aes(x = height, 
+      y = weight, 
+      color = gender,
+      shape = gender)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(df,
+  aes(x = height, 
+      y = weight, 
+      color = gender,
+      shape = gender)) +
+  geom_point()
+```
+
+]
+
+
+---
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(df,
+  aes(x = height, 
+      y = weight, 
+      color = gender,
+      shape = gender,
+      size = hrate)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(df,
+  aes(x = height, 
+      y = weight, 
+      color = gender,
+      shape = gender,
+      size = hrate)) +
+  geom_point()
+```
+]
+
+---
+
+```{r echo = FALSE, out.width ="95%"}
+knitr::include_graphics("img/ggplot-summary.jpeg")
+```
+
