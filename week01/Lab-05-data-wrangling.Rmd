@@ -311,6 +311,20 @@ alzheimer_data <-
 colnames(alzheimer_data)
 ```
 
+
+---
+
+We can use `mutate()` to change the data type of a variable by creating a new variable that has the desired data type.
+
+Here's an example that demonstrates how to use `mutate()` to change the data type of a variable using a conditional statement:
+
+```{r}
+alzheimer_data %>%
+  mutate(gender = case_when(female == 1 ~ "female",
+                         female == 0 ~ "male")) %>%
+  head()
+```
+
 ---
 
 class: inverse
@@ -368,16 +382,4 @@ alzheimer_data %>%
 ```
 
 
----
-
-We can use `mutate()` to change the data type of a variable by creating a new variable that has the desired data type.
-
-Here's an example that demonstrates how to use `mutate()` to change the data type of a variable using a conditional statement:
-
-```{r}
-alzheimer_data %>%
-  mutate(gender = case_when(female == 1 ~ "female",
-                         female == 0 ~ "male")) %>%
-  head()
-```
 

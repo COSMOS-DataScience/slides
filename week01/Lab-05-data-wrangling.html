@@ -3322,6 +3322,31 @@ colnames(alzheimer_data)
 ## [7] "weight_kg"
 ```
 
+
+---
+
+We can use `mutate()` to change the data type of a variable by creating a new variable that has the desired data type.
+
+Here's an example that demonstrates how to use `mutate()` to change the data type of a variable using a conditional statement:
+
+
+```r
+alzheimer_data %&gt;%
+  mutate(gender = case_when(female == 1 ~ "female",
+                         female == 0 ~ "male")) %&gt;%
+  head()
+```
+
+```
+##   age female diagnosis educ height weight weight_kg gender
+## 1  74      0         0   12   65.0    233 105.68694   male
+## 2  56      1         0   16   62.0    110  49.89512 female
+## 3  77      1         0   18   65.0    137  62.14210 female
+## 4  74      1         0   20   62.0    112  50.80230 female
+## 5  75      0         1   14   62.0    127  57.60618   male
+## 6  72      1         0   16   61.8    141  63.95647 female
+```
+
 ---
 
 class: inverse
@@ -3423,29 +3448,6 @@ alzheimer_data %&gt;%
 ```
 
 
----
-
-We can use `mutate()` to change the data type of a variable by creating a new variable that has the desired data type.
-
-Here's an example that demonstrates how to use `mutate()` to change the data type of a variable using a conditional statement:
-
-
-```r
-alzheimer_data %&gt;%
-  mutate(gender = case_when(female == 1 ~ "female",
-                         female == 0 ~ "male")) %&gt;%
-  head()
-```
-
-```
-##   age female diagnosis educ height weight weight_kg gender
-## 1  74      0         0   12   65.0    233 105.68694   male
-## 2  56      1         0   16   62.0    110  49.89512 female
-## 3  77      1         0   18   65.0    137  62.14210 female
-## 4  74      1         0   20   62.0    112  50.80230 female
-## 5  75      0         1   14   62.0    127  57.60618   male
-## 6  72      1         0   16   61.8    141  63.95647 female
-```
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
