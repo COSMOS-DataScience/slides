@@ -51,16 +51,21 @@ arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/ma
   mutate(cdai_yn = as.factor(cdai_yn))
 ```
 
+```{r echo = FALSE, message = FALSE}
+alzheimer_data <- read.csv("/Users/zahramoslemi/Documents/Summer-2023/cosmos/alzheimer_data.csv")
+```
+
 
 ```{r}
-glimpse(arthritis)
+glimpse(alzheimer_data)
 ```
 
 ---
 
 ```{r}
-colnames(arthritis)
+colnames(alzheimer_data)
 ```
+
 
 ---
 
@@ -91,7 +96,8 @@ knitr::include_graphics("img/data-wrangle.002.jpeg")
 
 .left-panel[
 ```{r}
-select(arthritis, age, cdai)
+select(alzheimer_data, height, weight) %>%
+  head()
 ```
 ]
 
@@ -100,8 +106,9 @@ select(arthritis, age, cdai)
 .right-panel[
 
 ```{r}
-arthritis %>% 
-  select(age, cdai)
+alzheimer_data %>% 
+  select(height, weight) %>%
+  head()
 ```
 
 ]
@@ -111,7 +118,8 @@ arthritis %>%
 `select` can also be used to drop certain variables if used with a negative sign.
 
 ```{r}
-select(arthritis, -id, -sex)
+select(alzheimer_data, -id, -educ) %>%
+  head()
 ```
 
 ---
@@ -125,13 +133,15 @@ select(arthritis, -id, -sex)
 ---
 
 ```{r}
-select(arthritis, starts_with("cdai"))
+select(alzheimer_data, starts_with("lp")) %>%
+  head()
 ```
 
 ---
 
 ```{r}
-select(arthritis, contains("28"))
+select(alzheimer_data, contains("arhip")) %>%
+  head()
 ```
 
 ---
@@ -161,10 +171,11 @@ knitr::include_graphics("img/data-wrangle.002.jpeg")
 .pull-left[
 `slice()` subsetting rows based on a row number.
 
-The data below include all the rows from third to seventh. Including third and seventh.
+The data below include first six rows from third to seventh. Including third and seventh.
 
 ```{r}
-slice(arthritis, 3:7)
+slice(alzheimer_data, 3:5) %>%
+  head()
 ```
 
 
@@ -179,7 +190,8 @@ slice(arthritis, 3:7)
 The data below includes rows when the age is 90.
 
 ```{r}
-filter(arthritis, age == 90)
+filter(alzheimer_data, age == 80) %>%
+  head()
 ```
 
 ]
@@ -217,11 +229,12 @@ filter(arthritis, age == 90)
 ---
 
 
-Recall that when CDAI > 22 it was identified as High Disease Activity in the data dictionary
+How many participants are in diagnosis group 1 and age 80?
 
 ```{r}
-arthritis %>% 
-  filter(age == 90 & cdai > 22)
+alzheimer_data %>% 
+  filter(age == 80 & diagnosis==1) %>%
+  head()
 ```
 
 
@@ -229,39 +242,28 @@ arthritis %>%
 
 
 ```{r}
-arthritis %>% 
-  filter(age == 90 & cdai > 22) %>% 
+alzheimer_data %>% 
+  filter(age == 80 & diagnosis==1) %>% 
   nrow()
 ```
 
 Here is when piping helps. We can pipe into other functions such as `nrow()`
 
----
-
-
-Q. How many patients are diagnosed with moderate disease activity (i.e. CDAI > 10 and ≤ 22)? 
-
---
-
-```{r}
-arthritis %>% 
-  filter(cdai > 10 & cdai <= 22)
-```
 
 ---
 
-Q. How many patients are in remission (CDAI ≤ 2.8) and are female?
+Q. How many patients are in in diagnosis group 1 and are female?
 
 
 ```{r}
-arthritis %>% 
-  filter(cdai <= 2.8 & sex == "female") %>% 
+alzheimer_data %>% 
+  filter(diagnosis ==1 & female == 1) %>% 
   nrow()
 ```
 
 ---
 
-We have done all sorts of selections, slicing, filtering on `arthritis` but it has not changed at all. Why do you think so?
+We have done all sorts of selections, slicing, filtering on `alzheimer` but it has not changed at all. Why do you think so?
 
 ```{r}
 glimpse(arthritis)
@@ -269,32 +271,32 @@ glimpse(arthritis)
 
 ---
 
-Moving forward we are only going to use, `age`, `age_gp` `sex`, `yrs_from_dx` and `cdai`. Let's clean our data accordingly and move on with the smaller `arthritis` data that we need.
+Moving forward we are only going to use, `age`, `female` `diagnosis`, `educ`, `height` and `weight`. Let's clean our data accordingly and move on with the smaller `alzheimer` data that we need.
 
 ---
 
 ```{r}
-arthritis %>% 
-  select(age, age_gp, 
-         sex, yrs_from_dx,
-         cdai)
+alzheimer_data %>% 
+  select(age, female, 
+         diagnosis, educ, height,
+         weight)
 ```
 
 ---
 
 ```{r}
-arthritis <- 
-  arthritis %>% 
-  select(age, age_gp, 
-         sex, yrs_from_dx,
-         cdai)
+alzheimer_data <- 
+  alzheimer_data %>% 
+  select(age, female, 
+         diagnosis, educ, height,
+         weight)
 ```
 
 
 ---
 
 ```{r}
-glimpse(arthritis)
+glimpse(alzheimer_data)
 ```
 
 
@@ -302,11 +304,25 @@ glimpse(arthritis)
 `mutate()` adds new variables and preserves existing ones
 
 ```{r}
-arthritis <-
-  arthritis %>% 
-  mutate(days_from_dx = 365*yrs_from_dx)
+alzheimer_data <-
+  alzheimer_data %>% 
+  mutate(weight_kg = 0.453592*weight)
 
-colnames(arthritis)
+colnames(alzheimer_data)
+```
+
+
+---
+
+We can use `mutate()` to change the data type of a variable by creating a new variable that has the desired data type.
+
+Here's an example that demonstrates how to use `mutate()` to change the data type of a variable using a conditional statement:
+
+```{r}
+alzheimer_data %>%
+  mutate(gender = case_when(female == 1 ~ "female",
+                         female == 0 ~ "male")) %>%
+  head()
 ```
 
 ---
@@ -321,7 +337,7 @@ class: inverse
 
 .font50[Question: ]
 
-> Do "elderly" group have higher or lower CDAI overall when compared with the "control" group?
+> Are participants in diagnosis group 1 older or younger when compared with the diagnosis group 2?
 
 
 ---
@@ -329,7 +345,8 @@ class: inverse
 The function group_by() from dplyr groups the rows by the unique values in the column specified to it. Note that there is no perceptible change to the dataset after running group_by(), until another dplyr verb such as mutate(), summarise(), or arrange() is applied on the “grouped” data frame.
 
 ```{r}
-arthritis
+alzheimer_data %>%
+  head()
 ```
 
 ---
@@ -337,17 +354,18 @@ arthritis
 Once we group the data, we won't see much difference other than `Groups:   age_gp [2]` statement, everything else will be similar. 
 
 ```{r}
-arthritis %>% 
-  group_by(age_gp) 
+alzheimer_data %>% 
+  group_by(diagnosis) %>%
+  head()
 ```
 
 
 ---
 
 ```{r}
-arthritis %>% 
-  group_by(age_gp) %>% 
-  summarize(median(cdai, na.rm = TRUE))
+alzheimer_data %>% 
+  group_by(diagnosis)  %>% 
+  summarize(mean(age, na.rm = TRUE))
 ```
 
 ---
@@ -355,11 +373,12 @@ arthritis %>%
 We can also calculate other descriptives as well as number of observations for each group.
 
 ```{r}
-arthritis %>% 
-  group_by(age_gp) %>% 
-  summarize(med_cdai = median(cdai, na.rm = TRUE),
-            mean_cdai = mean(cdai, na.rm = TRUE),
-            n_cdai = n())
+alzheimer_data %>% 
+  group_by(diagnosis)  %>% 
+  summarize(mean_age=mean(age, na.rm = TRUE),
+            median_age=median(age, na.rm = TRUE),
+            n_diag = n())
+
 ```
 
 
