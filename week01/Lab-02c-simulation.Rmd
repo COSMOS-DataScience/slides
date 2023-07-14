@@ -261,7 +261,7 @@ pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
 
 ---
 
-###  Distribution of Mean Values from 1000 Simulations
+###  Distribution of Mean Values from 5000 Simulations
 
 ```{r eval=FALSE, fig.align='center'}
 vol_sim <- replicate(5000, mean(rnorm(1000, vol_mean, vol_sd)))
