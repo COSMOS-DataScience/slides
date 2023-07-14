@@ -157,6 +157,7 @@ Now let's contrast the original data versus the simulated data!
 
 &lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
+
 ---
 ### Calculating Areas Under a Theoretical Gaussian Curve:
 
@@ -185,6 +186,32 @@ pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
 ## [1] 0.6669265
 ```
 
+
+
+---
+
+###  Distribution of Mean Values from 1000 Simulations
+
+
+```r
+vol_sim &lt;- replicate(5000, mean(rnorm(1000, vol_mean, vol_sd)))
+vol_means &lt;- tibble(mean_value = vol_sim)
+
+
+ggplot(data = vol_means, aes(x = mean_value)) +
+  geom_histogram(bins = 30, 
+                 fill = "steelblue", color = "black") +
+  xlab("Mean Value") +
+  ylab("Frequency")
+```
+
+
+**Central Limit Theorem**: The distribution of sample means tends to follow a normal distribution, regardless of the distribution of the individual values, as long as the sample size is sufficiently large. In this case, the mean values are calculated from a large number of individual values (1,000 in each simulation), leading to a normal distribution of the means.
+---
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+
+
 ---
 ### Simulating From the Uniform Distribution:
 
@@ -192,7 +219,7 @@ pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
 
 
 ```r
-sim_unif &lt;- tibble(sim_unif = runif(100000, 0, 10))
+sim_unif &lt;- tibble(sim_unif = runif(10000, 0, 10))
 
 ggplot(data = sim_unif, aes(x = sim_unif)) +
   geom_histogram(breaks = seq(0, 10, by = 1),
@@ -203,7 +230,7 @@ ggplot(data = sim_unif, aes(x = sim_unif)) +
 
 ---
 
-&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -225,11 +252,10 @@ ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
 
 The code **rbinom(1000, 1, 0.5)** generates a vector of 1000 random numbers from a binomial distribution with 1 trial and a success probability of 0.5. In this case, each random number will be either 0 or 1, representing the outcome of a single Bernoulli trial.
 
-The **stat = "identity"** argument indicates that the heights of the bars should be taken directly from the Freq variable.
 ---
 
 
-&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Bernoulli and Binomial Distributions:
@@ -252,7 +278,7 @@ ggplot(data = bern_table, aes(x = as.factor(binom_random ), y = Freq)) +
 The resulting **binom_random** object will contain 1000 random numbers, each representing the number of successful trials out of 5 for a given binomial distribution.
 ---
 
-&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

@@ -238,6 +238,7 @@ p1 + p2 + plot_layout(ncol = 2)
 
 ```
 
+
 ---
 ### Calculating Areas Under a Theoretical Gaussian Curve:
 
@@ -256,13 +257,50 @@ pnorm(1200, vol_mean, vol_sd)
 pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
 ```
 
+
+
+---
+
+###  Distribution of Mean Values from 1000 Simulations
+
+```{r eval=FALSE, fig.align='center'}
+vol_sim <- replicate(5000, mean(rnorm(1000, vol_mean, vol_sd)))
+vol_means <- tibble(mean_value = vol_sim)
+
+
+ggplot(data = vol_means, aes(x = mean_value)) +
+  geom_histogram(bins = 30, 
+                 fill = "steelblue", color = "black") +
+  xlab("Mean Value") +
+  ylab("Frequency")
+```
+
+
+**Central Limit Theorem**: The distribution of sample means tends to follow a normal distribution, regardless of the distribution of the individual values, as long as the sample size is sufficiently large. In this case, the mean values are calculated from a large number of individual values (1,000 in each simulation), leading to a normal distribution of the means.
+---
+
+```{r echo=FALSE, fig.align='center'}
+vol_sim <- replicate(1000, mean(rnorm(1000, vol_mean, vol_sd)))
+
+# Create a tibble with the simulated mean values
+vol_means <- tibble(mean_value = vol_sim)
+
+# Plot the histogram of mean values
+ggplot(data = vol_means, aes(x = mean_value)) +
+  geom_histogram(bins = 30, 
+                 fill = "steelblue", color = "black") +
+  xlab("Mean Value") +
+  ylab("Frequency")
+```
+
+
 ---
 ### Simulating From the Uniform Distribution:
 
 #### For Continuous Uniform:
 
 ```{r eval=FALSE}
-sim_unif <- tibble(sim_unif = runif(100000, 0, 10))
+sim_unif <- tibble(sim_unif = runif(10000, 0, 10))
 
 ggplot(data = sim_unif, aes(x = sim_unif)) +
   geom_histogram(breaks = seq(0, 10, by = 1),
@@ -275,7 +313,7 @@ ggplot(data = sim_unif, aes(x = sim_unif)) +
 ---
 
 ```{r echo=FALSE, fig.align='center'}
-sim_unif <- tibble(sim_unif = runif(100000, 0, 10))
+sim_unif <- tibble(sim_unif = runif(10000, 0, 10))
 
 ggplot(data = sim_unif, aes(x = sim_unif)) +
   geom_histogram(breaks = seq(0, 10, by = 1),
@@ -303,7 +341,6 @@ ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
 
 The code **rbinom(1000, 1, 0.5)** generates a vector of 1000 random numbers from a binomial distribution with 1 trial and a success probability of 0.5. In this case, each random number will be either 0 or 1, representing the outcome of a single Bernoulli trial.
 
-The **stat = "identity"** argument indicates that the heights of the bars should be taken directly from the Freq variable.
 ---
 
 
