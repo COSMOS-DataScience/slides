@@ -1,0 +1,369 @@
+---
+title: "Probability Through Simulation"
+author: "Zahra Moslemi"
+output: 
+  xaringan::moon_reader:
+    css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
+    lib_dir: libs
+    seal: false
+    nature:
+      beforeInit: "cols_macro.js"
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+
+---
+
+class: title-slide
+
+```{r echo = FALSE, warning=FALSE}
+library(fabricerin)
+
+```
+
+<br>
+<br>
+.right-panel[ 
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$author`
+
+Adapted from slides by Mine Dogucu and Sam Behseta
+]
+
+
+---
+
+```{r echo = FALSE, message = FALSE}
+library(tidyverse)
+
+arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/main/RheumArth_Tx_AgeComparisons.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(sex = case_when(sex == 0 ~ "female",
+                   sex == 1 ~ "male")) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(age_gp = case_when(age_gp == 1 ~ "control",
+                   age_gp == 2 ~ "elderly")) %>% 
+  mutate(age_gp = as.factor(age_gp)) %>% 
+  mutate(cdai_yn = case_when(cdai_yn == 1 ~ "no",
+                             cdai_yn == 2 ~ "yes")) %>%
+  mutate(cdai_yn = as.factor(cdai_yn))
+```
+
+```{r echo = FALSE, message = FALSE}
+alzheimer_data <- read.csv("/Users/zahramoslemi/Documents/Summer-2023/cosmos/alzheimer_data.csv")
+```
+
+class: middle
+
+## Today we will discuss the role of distributions in the context of the analysis of Alzheimer’s data.
+
+### I would like to start, somewhat unusually, with the Normal or Gaussian distribution.
+---
+As Alzheimer's progresses, the brain volume can significantly decrease. In other words, the cortex overall becomes thinner or the brain gradually shrinks. For a feature representing brain volume, we can focus on NACCICV. Note that this is a numerical feature.
+ 
+Below we calculate its mean and standard deviation and create its histogram.
+
+```{r eval=FALSE}
+# Calculate mean and standard deviation
+vol_mean <- alzheimer_data %>%
+  summarize(mean(naccicv, na.rm = TRUE))
+
+vol_sd <- alzheimer_data %>%
+  summarize(sd(naccicv, na.rm = TRUE))
+
+# Create histogram
+ggplot(data = alzheimer_data, aes(x = naccicv)) +
+  geom_histogram(bins = 10, fill = "steelblue", color = "black") 
+```
+---
+
+
+```{r echo=FALSE, fig.align='center'}
+# Calculate mean and standard deviation
+vol_mean <- alzheimer_data %>%
+  summarize(mean(naccicv, na.rm = TRUE)) %>%
+  pull() %>%
+  round(digits = 2)
+
+
+vol_sd <- alzheimer_data %>%
+  summarize(sd(naccicv, na.rm = TRUE)) %>%
+  pull() %>%
+  round(digits = 2)
+
+# Create histogram
+ggplot(data = alzheimer_data, aes(x = naccicv)) +
+  geom_histogram(bins = 10, 
+  fill = "steelblue", color = "black") 
+```
+
+The mean and standard deviation of the NACCICV variable in the dataset are `r vol_mean` and `r vol_sd`, respectively.
+
+---
+
+## Probability Distribution of NACCICV Values in Alzheimer's Data:
+
+```{r warning=FALSE, eval=FALSE}
+ggplot(data = alzheimer_data, aes(x = naccicv)) +
+  geom_histogram(aes(y = ..density..), bins = 10, 
+  fill = "steelblue", color = "black") +
+  ylab("Probability")
+```
+---
+class: middle
+```{r warning=FALSE,  echo=FALSE, fig.align='center'}
+ggplot(data = alzheimer_data, aes(x = naccicv)) +
+  geom_histogram(aes(y = ..density..), bins = 10, 
+  fill = "steelblue", color = "black") +
+  ylab("Probability")
+```
+---
+
+
+#### Calculating Some Proportions With the Original Data
+
+Proportion of patients whose vol measurement is above or below 1200:
+
+```{r eval=FALSE}
+vol_above_1200 <- alzheimer_data %>%
+  filter(naccicv > 1200) %>%
+  nrow()
+
+vol_below_1200 <- alzheimer_data %>%
+  filter(naccicv <= 1200) %>%
+  nrow()
+
+p_above_1200 <- vol_above_1200 / nrow(alzheimer_data)
+p_below_1200 <- vol_below_1200 / nrow(alzheimer_data)
+```
+
+```{r echo=FALSE}
+vol_above_1200 <- alzheimer_data %>%
+  filter(naccicv > 1200) %>%
+  nrow()
+
+vol_below_1200 <- alzheimer_data %>%
+  filter(naccicv <= 1200) %>%
+  nrow()
+
+proportion_above_1200 <- vol_above_1200 / nrow(alzheimer_data) %>%
+                         round(digits = 2)
+proportion_below_1200 <- vol_below_1200 / nrow(alzheimer_data) %>%
+                         round(digits = 2)
+```
+
+In NACC dataset, proportion of patients whose volume measurement is above 1200 is equal to `r proportion_above_1200`, and proportion of patients whose volume measurement is below 1000 is equal to `r proportion_below_1200`.
+---
+
+# Proportion of vol between 1300 and 1600:
+
+```{r}
+vol_bet_1300_1600 <- alzheimer_data %>%
+  filter(naccicv > 1300 & naccicv < 1600) %>%
+  nrow()
+
+
+vol_bet_1300_1600 / nrow(alzheimer_data) %>% 
+  round(digits = 2)
+```
+---
+class: middle
+
+We pretend there is an underlying Normal model with the same mean and standard deviation that might have generated this data.
+
+---
+
+**rnorm()** : In R, the rnorm() function is used to generate random numbers from a normal (Gaussian) distribution. It allows you to simulate data with a specified mean and standard deviation or to generate random numbers from a standard normal distribution (mean of 0 and standard deviation of 1).
+
+```{r eval=FALSE}
+
+vol_sim <- tibble(vol_sim = rnorm(10000, vol_mean, vol_sd))
+
+ggplot(data = vol_sim, aes(x = vol_sim)) +
+  geom_histogram(bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Simulated Volume") +
+  ylab("Frequency")
+
+
+```
+
+---
+
+
+```{r echo=FALSE, fig.align='center'}
+
+vol_sim <- tibble(vol_sim = rnorm(10000, vol_mean, vol_sd))
+
+ggplot(data = vol_sim, aes(x = vol_sim)) +
+  geom_histogram(bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Simulated Volume") +
+  ylab("Frequency")
+
+
+```
+
+---
+
+Now let's contrast the original data versus the simulated data!
+
+```{r echo=FALSE, fig.align='center'}
+p1 <- ggplot(data = alzheimer_data, aes(x = naccicv)) +
+  geom_histogram(aes(y = ..density..), bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Real Volumes") +
+  ylab("Probability")
+
+p2 <- ggplot(data = vol_sim, aes(x = vol_sim)) +
+  geom_histogram(aes(y = ..density..), bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Simulated Volumes") +
+  ylab("Probability")
+library(patchwork)
+
+# Arrange and display plots side by side
+p1 + p2 + plot_layout(ncol = 2)
+
+```
+
+---
+### Calculating Areas Under a Theoretical Gaussian Curve:
+
+**pnorm()** : In R, the pnorm() function is used to calculate the cumulative probability (area under the curve) of a standard normal distribution or a specified normal distribution. It provides the probability that a random variable from the given distribution is less than or equal to a specific value.
+---
+
+### Calculating Areas Under a Theoretical Gaussian Curve:
+
+Using real dataset, we've tried before to find the proportion of patients whose brain volume measurement is above or below 1200, and also proportion of patients whose brain volume measurement is between 1300 and 1600. Below see my attempt in repeating the calculations this time through a theoretical normal distribution.
+
+```{r}
+pnorm(1000, vol_mean, vol_sd)
+```
+
+```{r}
+pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
+```
+
+---
+### Simulating From the Uniform Distribution:
+
+#### For Continuous Uniform:
+
+```{r eval=FALSE}
+sim_unif <- tibble(sim_unif = runif(10000, 0, 10))
+
+ggplot(data = sim_unif, aes(x = sim_unif)) +
+  geom_histogram(bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+
+```
+
+---
+
+```{r echo=FALSE, fig.align='center'}
+sim_unif <- tibble(sim_unif = runif(10000, 0, 10))
+
+ggplot(data = sim_unif, aes(x = sim_unif)) +
+  geom_histogram(bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+---
+### Simulating From the Uniform Distribution:
+
+#### For Discrete Uniform:
+```{r eval=FALSE}
+seq_num <- seq(1, 10, 1)
+dis_samp <- sample(seq_num , 1000000, replace = TRUE)
+dis_samp  <- as.data.frame(table(dis_samp))
+
+ggplot(data = dis_samp , aes(x = dis_samp , y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+
+```
+
+---
+
+```{r echo=FALSE, fig.align='center'}
+
+seq_num <- seq(1, 10, 1)
+dis_samp <- sample(seq_num , 1000000, replace = TRUE)
+dis_samp  <- as.data.frame(table(dis_samp))
+
+ggplot(data = dis_samp , aes(x = dis_samp , y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+
+```
+
+---
+### Bernoulli and Binomial Distributions:
+
+#### Simulating a sequence of 0's and 1's with the probability of success p=0.5 :
+
+```{r eval=FALSE}
+bern_random <- rbinom(1000, 1, 0.5)
+bern_table <- as.data.frame(table(bern_random))
+
+ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+
+---
+
+
+```{r echo=FALSE, fig.align='center'}
+bern_random <- rbinom(1000, 1, 0.5)
+bern_table <- as.data.frame(table(bern_random))
+
+ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+
+---
+### Bernoulli and Binomial Distributions:
+
+#### Simulating a sequence of binary outcomes with n = 5 the probability of success p = 0.5 :
+
+
+```{r eval=FALSE}
+binom_random <- rbinom(1000, 5, 0.5)
+bern_table <- as.data.frame(table(binom_random))
+
+ggplot(data = bern_table, aes(x = as.factor(binom_random ), y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+
+---
+
+```{r echo=FALSE, fig.align='center'}
+binom_random <- rbinom(1000, 5, 0.5)
+bern_table <- as.data.frame(table(binom_random))
+
+ggplot(data = bern_table, aes(x = as.factor(binom_random ), y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Probability Through Simulation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Zahra Moslemi" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="slide-style.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide
+
+
+
+&lt;br&gt;
+&lt;br&gt;
+.right-panel[ 
+
+# Probability Through Simulation
+## Zahra Moslemi
+
+Adapted from slides by Mine Dogucu and Sam Behseta
+]
+
+
+---
+
+
+
+
+
+class: middle
+
+## Today we will discuss the role of distributions in the context of the analysis of Alzheimer’s data.
+
+### I would like to start, somewhat unusually, with the Normal or Gaussian distribution.
+---
+As Alzheimer's progresses, the brain volume can significantly decrease. In other words, the cortex overall becomes thinner or the brain gradually shrinks. For a feature representing brain volume, we can focus on NACCICV. Note that this is a numerical feature.
+ 
+Below we calculate its mean and standard deviation and create its histogram.
+
+
+```r
+# Calculate mean and standard deviation
+vol_mean &lt;- alzheimer_data %&gt;%
+  summarize(mean(naccicv, na.rm = TRUE))
+
+vol_sd &lt;- alzheimer_data %&gt;%
+  summarize(sd(naccicv, na.rm = TRUE))
+
+# Create histogram
+ggplot(data = alzheimer_data, aes(x = naccicv)) +
+  geom_histogram(bins = 10, fill = "steelblue", color = "black") 
+```
+---
+
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+The mean and standard deviation of the NACCICV variable in the dataset are 1376.92 and 134.79, respectively.
+
+---
+
+## Probability Distribution of NACCICV Values in Alzheimer's Data:
+
+
+```r
+ggplot(data = alzheimer_data, aes(x = naccicv)) +
+  geom_histogram(aes(y = ..density..), bins = 10, 
+  fill = "steelblue", color = "black") +
+  ylab("Probability")
+```
+---
+class: middle
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+
+#### Calculating Some Proportions With the Original Data
+
+Proportion of patients whose vol measurement is above or below 1200:
+
+
+```r
+vol_above_1200 &lt;- alzheimer_data %&gt;%
+  filter(naccicv &gt; 1200) %&gt;%
+  nrow()
+
+vol_below_1200 &lt;- alzheimer_data %&gt;%
+  filter(naccicv &lt;= 1200) %&gt;%
+  nrow()
+
+p_above_1200 &lt;- vol_above_1200 / nrow(alzheimer_data)
+p_below_1200 &lt;- vol_below_1200 / nrow(alzheimer_data)
+```
+
+
+
+In NACC dataset, proportion of patients whose volume measurement is above 1200 is equal to 0.9144444, and proportion of patients whose volume measurement is below 1000 is equal to 0.0855556.
+---
+
+# Proportion of vol between 1300 and 1600:
+
+
+```r
+vol_bet_1300_1600 &lt;- alzheimer_data %&gt;%
+  filter(naccicv &gt; 1300 &amp; naccicv &lt; 1600) %&gt;%
+  nrow()
+
+
+vol_bet_1300_1600 / nrow(alzheimer_data) %&gt;% 
+  round(digits = 2)
+```
+
+```
+## [1] 0.6707407
+```
+---
+class: middle
+
+We pretend there is an underlying Normal model with the same mean and standard deviation that might have generated this data.
+
+---
+
+**rnorm()** : In R, the rnorm() function is used to generate random numbers from a normal (Gaussian) distribution. It allows you to simulate data with a specified mean and standard deviation or to generate random numbers from a standard normal distribution (mean of 0 and standard deviation of 1).
+
+
+```r
+vol_sim &lt;- tibble(vol_sim = rnorm(10000, vol_mean, vol_sd))
+
+ggplot(data = vol_sim, aes(x = vol_sim)) +
+  geom_histogram(bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Simulated Volume") +
+  ylab("Frequency")
+```
+
+---
+
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+Now let's contrast the original data versus the simulated data!
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Calculating Areas Under a Theoretical Gaussian Curve:
+
+**pnorm()** : In R, the pnorm() function is used to calculate the cumulative probability (area under the curve) of a standard normal distribution or a specified normal distribution. It provides the probability that a random variable from the given distribution is less than or equal to a specific value.
+---
+
+### Calculating Areas Under a Theoretical Gaussian Curve:
+
+Using real dataset, we've tried before to find the proportion of patients whose brain volume measurement is above or below 1200, and also proportion of patients whose brain volume measurement is between 1300 and 1600. Below see my attempt in repeating the calculations this time through a theoretical normal distribution.
+
+
+```r
+pnorm(1000, vol_mean, vol_sd)
+```
+
+```
+## [1] 0.002584171
+```
+
+
+```r
+pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
+```
+
+```
+## [1] 0.6669265
+```
+
+---
+### Simulating From the Uniform Distribution:
+
+#### For Continuous Uniform:
+
+
+```r
+sim_unif &lt;- tibble(sim_unif = runif(10000, 0, 10))
+
+ggplot(data = sim_unif, aes(x = sim_unif)) +
+  geom_histogram(bins = 10, 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+
+---
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+---
+### Simulating From the Uniform Distribution:
+
+#### For Discrete Uniform:
+
+```r
+seq_num &lt;- seq(1, 10, 1)
+dis_samp &lt;- sample(seq_num , 1000000, replace = TRUE)
+dis_samp  &lt;- as.data.frame(table(dis_samp))
+
+ggplot(data = dis_samp , aes(x = dis_samp , y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+
+---
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Bernoulli and Binomial Distributions:
+
+#### Simulating a sequence of 0's and 1's with the probability of success p=0.5 :
+
+
+```r
+bern_random &lt;- rbinom(1000, 1, 0.5)
+bern_table &lt;- as.data.frame(table(bern_random))
+
+ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+
+---
+
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+### Bernoulli and Binomial Distributions:
+
+#### Simulating a sequence of binary outcomes with n = 5 the probability of success p = 0.5 :
+
+
+
+```r
+binom_random &lt;- rbinom(1000, 5, 0.5)
+bern_table &lt;- as.data.frame(table(binom_random))
+
+ggplot(data = bern_table, aes(x = as.factor(binom_random ), y = Freq)) +
+  geom_bar(stat = "identity", 
+  fill = "steelblue", color = "black") +
+  xlab("Value") +
+  ylab("Frequency")
+```
+
+---
+
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="cols_macro.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "pygments",
+"highlightLines": true,
+"highlightLanguage": "r"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
