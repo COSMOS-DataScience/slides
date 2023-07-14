@@ -96,20 +96,22 @@ vol_sd <- alzheimer_data %>%
 # Create histogram
 ggplot(data = alzheimer_data, aes(x = naccicv)) +
   geom_histogram(bins = 10, 
-  fill = "steelblue", color = "black") 
+  fill = "steelblue", color = "black") +
+  ylab("Frequency")
 ```
 
 The mean and standard deviation of the NACCICV variable in the dataset are `r vol_mean` and `r vol_sd`, respectively.
 
 ---
 
-### Probability Distribution of NACCICV Values in Alzheimer's Data:
+### Density Plot for NACCICV in Alzheimer's Data:
 
 ```{r warning=FALSE, eval=FALSE}
 ggplot(data = alzheimer_data, aes(x = naccicv)) +
   geom_histogram(aes(y = ..density..), bins = 10, 
   fill = "steelblue", color = "black") +
-  ylab("Probability")
+  ylab("Density")  +
+  labs(title = "Density Plot")
 ```
 ---
 class: middle
@@ -117,7 +119,8 @@ class: middle
 ggplot(data = alzheimer_data, aes(x = naccicv)) +
   geom_histogram(aes(y = ..density..), bins = 10, 
   fill = "steelblue", color = "black") +
-  ylab("Probability")
+  ylab("Density") +
+  labs(title = "Density Plot")
 ```
 ---
 
@@ -221,13 +224,13 @@ p1 <- ggplot(data = alzheimer_data, aes(x = naccicv)) +
   geom_histogram(aes(y = ..density..), bins = 10, 
   fill = "steelblue", color = "black") +
   xlab("Real Volumes") +
-  ylab("Probability")
+  ylab("Density")
 
 p2 <- ggplot(data = vol_sim, aes(x = vol_sim)) +
   geom_histogram(aes(y = ..density..), bins = 10, 
   fill = "steelblue", color = "black") +
   xlab("Simulated Volumes") +
-  ylab("Probability")
+  ylab("Density")
 library(patchwork)
 
 # Arrange and display plots side by side
@@ -246,7 +249,7 @@ p1 + p2 + plot_layout(ncol = 2)
 Using real dataset, we've tried before to find the proportion of patients whose brain volume measurement is above or below 1200, and also proportion of patients whose brain volume measurement is between 1300 and 1600. Below see my attempt in repeating the calculations this time through a theoretical normal distribution.
 
 ```{r}
-pnorm(1000, vol_mean, vol_sd)
+pnorm(1200, vol_mean, vol_sd)
 ```
 
 ```{r}
@@ -259,11 +262,11 @@ pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
 #### For Continuous Uniform:
 
 ```{r eval=FALSE}
-sim_unif <- tibble(sim_unif = runif(10000, 0, 10))
+sim_unif <- tibble(sim_unif = runif(100000, 0, 10))
 
 ggplot(data = sim_unif, aes(x = sim_unif)) +
-  geom_histogram(bins = 10, 
-  fill = "steelblue", color = "black") +
+  geom_histogram(breaks = seq(0, 10, by = 1),
+                 fill = "steelblue", color = "black") +
   xlab("Value") +
   ylab("Frequency")
 
@@ -272,46 +275,15 @@ ggplot(data = sim_unif, aes(x = sim_unif)) +
 ---
 
 ```{r echo=FALSE, fig.align='center'}
-sim_unif <- tibble(sim_unif = runif(10000, 0, 10))
+sim_unif <- tibble(sim_unif = runif(100000, 0, 10))
 
 ggplot(data = sim_unif, aes(x = sim_unif)) +
-  geom_histogram(bins = 10, 
-  fill = "steelblue", color = "black") +
+  geom_histogram(breaks = seq(0, 10, by = 1),
+                 fill = "steelblue", color = "black") +
   xlab("Value") +
   ylab("Frequency")
 ```
----
-### Simulating From the Uniform Distribution:
 
-#### For Discrete Uniform:
-```{r eval=FALSE}
-seq_num <- seq(1, 10, 1)
-dis_samp <- sample(seq_num , 1000000, replace = TRUE)
-dis_samp  <- as.data.frame(table(dis_samp))
-
-ggplot(data = dis_samp , aes(x = dis_samp , y = Freq)) +
-  geom_bar(stat = "identity", 
-  fill = "steelblue", color = "black") +
-  xlab("Value") +
-  ylab("Frequency")
-
-```
-
----
-
-```{r echo=FALSE, fig.align='center'}
-
-seq_num <- seq(1, 10, 1)
-dis_samp <- sample(seq_num , 1000000, replace = TRUE)
-dis_samp  <- as.data.frame(table(dis_samp))
-
-ggplot(data = dis_samp , aes(x = dis_samp , y = Freq)) +
-  geom_bar(stat = "identity", 
-  fill = "steelblue", color = "black") +
-  xlab("Value") +
-  ylab("Frequency")
-
-```
 
 ---
 ### Bernoulli and Binomial Distributions:
@@ -330,6 +302,8 @@ ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
 ```
 
 The code **rbinom(1000, 1, 0.5)** generates a vector of 1000 random numbers from a binomial distribution with 1 trial and a success probability of 0.5. In this case, each random number will be either 0 or 1, representing the outcome of a single Bernoulli trial.
+
+The **stat = "identity"** argument indicates that the heights of the bars should be taken directly from the Freq variable.
 ---
 
 

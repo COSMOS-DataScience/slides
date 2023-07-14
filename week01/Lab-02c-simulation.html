@@ -65,14 +65,15 @@ The mean and standard deviation of the NACCICV variable in the dataset are 1376.
 
 ---
 
-### Probability Distribution of NACCICV Values in Alzheimer's Data:
+### Density Plot for NACCICV in Alzheimer's Data:
 
 
 ```r
 ggplot(data = alzheimer_data, aes(x = naccicv)) +
   geom_histogram(aes(y = ..density..), bins = 10, 
   fill = "steelblue", color = "black") +
-  ylab("Probability")
+  ylab("Density")  +
+  labs(title = "Density Plot")
 ```
 ---
 class: middle
@@ -168,11 +169,11 @@ Using real dataset, we've tried before to find the proportion of patients whose 
 
 
 ```r
-pnorm(1000, vol_mean, vol_sd)
+pnorm(1200, vol_mean, vol_sd)
 ```
 
 ```
-## [1] 0.002584171
+## [1] 0.09466558
 ```
 
 
@@ -191,11 +192,11 @@ pnorm(1600,vol_mean, vol_sd)-pnorm(1300,vol_mean, vol_sd)
 
 
 ```r
-sim_unif &lt;- tibble(sim_unif = runif(10000, 0, 10))
+sim_unif &lt;- tibble(sim_unif = runif(100000, 0, 10))
 
 ggplot(data = sim_unif, aes(x = sim_unif)) +
-  geom_histogram(bins = 10, 
-  fill = "steelblue", color = "black") +
+  geom_histogram(breaks = seq(0, 10, by = 1),
+                 fill = "steelblue", color = "black") +
   xlab("Value") +
   ylab("Frequency")
 ```
@@ -203,26 +204,7 @@ ggplot(data = sim_unif, aes(x = sim_unif)) +
 ---
 
 &lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
----
-### Simulating From the Uniform Distribution:
 
-#### For Discrete Uniform:
-
-```r
-seq_num &lt;- seq(1, 10, 1)
-dis_samp &lt;- sample(seq_num , 1000000, replace = TRUE)
-dis_samp  &lt;- as.data.frame(table(dis_samp))
-
-ggplot(data = dis_samp , aes(x = dis_samp , y = Freq)) +
-  geom_bar(stat = "identity", 
-  fill = "steelblue", color = "black") +
-  xlab("Value") +
-  ylab("Frequency")
-```
-
----
-
-&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Bernoulli and Binomial Distributions:
@@ -242,10 +224,12 @@ ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
 ```
 
 The code **rbinom(1000, 1, 0.5)** generates a vector of 1000 random numbers from a binomial distribution with 1 trial and a success probability of 0.5. In this case, each random number will be either 0 or 1, representing the outcome of a single Bernoulli trial.
+
+The **stat = "identity"** argument indicates that the heights of the bars should be taken directly from the Freq variable.
 ---
 
 
-&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ### Bernoulli and Binomial Distributions:
@@ -268,7 +252,7 @@ ggplot(data = bern_table, aes(x = as.factor(binom_random ), y = Freq)) +
 The resulting **binom_random** object will contain 1000 random numbers, each representing the number of successful trials out of 5 for a given binomial distribution.
 ---
 
-&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
