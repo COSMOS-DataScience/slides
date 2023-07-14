@@ -65,7 +65,7 @@ The mean and standard deviation of the NACCICV variable in the dataset are 1376.
 
 ---
 
-## Probability Distribution of NACCICV Values in Alzheimer's Data:
+### Probability Distribution of NACCICV Values in Alzheimer's Data:
 
 
 ```r
@@ -79,10 +79,14 @@ class: middle
 &lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
+class:inverse middle
 
-#### Calculating Some Proportions With the Original Data
+.font50[Calculating Some Proportions With the Original Data]
 
-Proportion of patients whose vol measurement is above or below 1200:
+---
+
+
+**Proportion of patients whose brain volume measurement is above or below 1200**
 
 
 ```r
@@ -100,10 +104,10 @@ p_below_1200 &lt;- vol_below_1200 / nrow(alzheimer_data)
 
 
 
-In NACC dataset, proportion of patients whose volume measurement is above 1200 is equal to 0.9144444, and proportion of patients whose volume measurement is below 1000 is equal to 0.0855556.
+In NACC dataset, proportion of patients whose brain volume measurement is above 1200 is equal to 0.9144444, and proportion of patients whose volume measurement is below 1000 is equal to 0.0855556.
 ---
 
-# Proportion of vol between 1300 and 1600:
+**Proportion of patients whose brain volume measurement is between 1300 and 1600**
 
 
 ```r
@@ -121,6 +125,8 @@ vol_bet_1300_1600 / nrow(alzheimer_data) %&gt;%
 ```
 ---
 class: middle
+
+**Simulation** : Simulating a dataset involves creating a computerized dataset that mimics the characteristics and patterns of a real-world dataset. It typically involves generating random values for one or more variables based on assumptions or predefined distributions, and it allows for exploring and analyzing data without relying on actual observations.
 
 We pretend there is an underlying Normal model with the same mean and standard deviation that might have generated this data.
 
