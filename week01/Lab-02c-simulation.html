@@ -241,6 +241,7 @@ ggplot(data = bern_table, aes(x = as.factor(bern_random), y = Freq)) +
   ylab("Frequency")
 ```
 
+The code **rbinom(1000, 1, 0.5)** generates a vector of 1000 random numbers from a binomial distribution with 1 trial and a success probability of 0.5. In this case, each random number will be either 0 or 1, representing the outcome of a single Bernoulli trial.
 ---
 
 
@@ -264,6 +265,7 @@ ggplot(data = bern_table, aes(x = as.factor(binom_random ), y = Freq)) +
   ylab("Frequency")
 ```
 
+The resulting **binom_random** object will contain 1000 random numbers, each representing the number of successful trials out of 5 for a given binomial distribution.
 ---
 
 &lt;img src="Lab-02c-simulation_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
