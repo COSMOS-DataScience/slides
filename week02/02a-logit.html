@@ -59,7 +59,7 @@ pre {
 
 ### Logistic regression
 
-- Note that binary variable `\(p = P(Y=1|X)\)`; that is, `\(p\)` is the probability of the outcome of interest (denoted as 1) given the explanatory variables.
+- Note that for binary random variables, we have `\(p = P(Y=1|X)\)`; that is, `\(p\)` is the probability of the outcome of interest (denoted as 1) given the explanatory variables.
 
 - The term `\(\Big(\frac{\hat{p}}{1- \hat{p}} \Big)\)` is called the **odds** of `\(Y=1\)`. 
 
@@ -78,7 +78,7 @@ pre {
 \frac{\hat{p}}{1- \hat{p}}  &amp; = &amp; \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})
 \end{eqnarray*}$$`
 
-- and find `\(\hat{p}\)` using the **logistic function**,
+- Then, we can find `\(\hat{p}\)` using the **logistic function**:
 `$$\begin{eqnarray*}
 \hat{p} &amp; = &amp; \frac{\exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}{1 + \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}
 \end{eqnarray*}$$`
@@ -109,8 +109,32 @@ pre {
 ```r
 library(MASS)
 data(birthwt)
-birthwt$low &lt;- factor(birthwt$low)
-birthwt$smoke &lt;- factor(birthwt$smoke)
+birthwt &lt;- birthwt %&gt;% 
+  mutate(across(c(low, smoke, race, ht, ui), factor))
+glimpse(birthwt)
+```
+
+```
+## Rows: 189
+## Columns: 10
+## $ low   &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ age   &lt;int&gt; 19, 33, 20, 21, 18, 21, 22, 17, 29, 26, 19, 19, 22, 30, 18, 18, 15, 25, 20, 28, 32, 3…
+## $ lwt   &lt;int&gt; 182, 155, 105, 108, 107, 124, 118, 103, 123, 113, 95, 150, 95, 107, 100, 100, 98, 118…
+## $ race  &lt;fct&gt; 2, 3, 1, 1, 1, 3, 1, 3, 1, 1, 3, 3, 3, 3, 1, 1, 2, 1, 3, 1, 3, 1, 1, 3, 3, 1, 1, 1, 2…
+## $ smoke &lt;fct&gt; 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1…
+## $ ptl   &lt;int&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ ht    &lt;fct&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ ui    &lt;fct&gt; 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0…
+## $ ftv   &lt;int&gt; 0, 3, 1, 2, 0, 0, 1, 1, 1, 0, 0, 1, 0, 2, 0, 0, 0, 3, 0, 1, 2, 3, 1, 0, 2, 0, 0, 2, 0…
+## $ bwt   &lt;int&gt; 2523, 2551, 2557, 2594, 2600, 2622, 2637, 2637, 2663, 2665, 2722, 2733, 2751, 2750, 2…
+```
+
+---
+
+### Generalized linear model (glm) in R
+
+
+```r
 fit &lt;- glm(low ~ smoke, family = 'binomial', data = birthwt)
 fit
 ```
@@ -191,6 +215,7 @@ summary(fit)
 - For the above example, the estimated values of the intercept `\(\alpha\)` and the regression coefficient `\(\beta\)` are `\(a=-1.09\)` and `\(b=0.70\)` respectively. 
 
 - Therefore, 
+
 `$$\begin{eqnarray*}
 \frac{\hat{p}}{1- \hat{p}} &amp; = &amp; \exp(-1.09 + 0.70x)
 \end{eqnarray*}$$`
@@ -234,8 +259,9 @@ summary(fit)
 ### Interpretation 
 
 - Note that
+
 `$$\begin{eqnarray*}
-\frac{\frac{\hat{p}_{1}}{1- \hat{p}_{1}}}{\frac{\hat{p}_{0}}{1- \hat{p}_{0}}} &amp; = &amp;  \frac{\exp(-1.09) \exp(0.7)}{\exp(-1.09)} =  \exp(0.7)
+\frac{\frac{\hat{p}_{1}}{1- \hat{p}_{1}}}{\frac{\hat{p}_{0}}{1- \hat{p}_{0}}} &amp; = &amp;  \frac{\exp(-1.09) \exp(0.7)}{\exp(-1.09)} =  \exp(0.7) = 2.01
 \end{eqnarray*}$$`
 
 - We can interpret the exponential of the regression coefficient as the odds ratio of having low birthweight babies for smoking mothers compared to non-smoking mothers. 
@@ -250,92 +276,10 @@ summary(fit)
 - In general, 
 
   - if `\(b&gt;0\)`, then `\(\exp(b) &gt; 1\)` so the odds increases as `\(X\)` increases;
+  
   - if `\(b&lt;0\)`, then `\(0 &lt; \exp(b) &lt; 1\)` so the odds decreases as `\(X\)` increases;
+  
   - if `\(b=0\)`, the odds ratio is 1 so the odds does not change with `\(X\)` according to the assumed model. 
-
-
----
-
-### Inference
-
-- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
-
-
-```r
-fit &lt;- glm(low ~ smoke, family = 'binomial', data = birthwt)
-fit
-```
-
-```
-## 
-## Call:  glm(formula = low ~ smoke, family = "binomial", data = birthwt)
-## 
-## Coefficients:
-## (Intercept)       smoke1  
-##     -1.0871       0.7041  
-## 
-## Degrees of Freedom: 188 Total (i.e. Null);  187 Residual
-## Null Deviance:	    234.7 
-## Residual Deviance: 229.8 	AIC: 233.8
-```
-
-
-
-
----
-
-### Inference
-
-- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
-
-
-```r
-confint(fit)
-```
-
-```
-## Waiting for profiling to be done...
-```
-
-```
-##                  2.5 %    97.5 %
-## (Intercept) -1.5243118 -0.679205
-## smoke1       0.0786932  1.335154
-```
-
-
-
----
-
-### Inference
-
-- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
-
-
-```r
-summary(fit)
-```
-
-```
-## 
-## Call:
-## glm(formula = low ~ smoke, family = "binomial", data = birthwt)
-## 
-## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)  -1.0871     0.2147  -5.062 4.14e-07 ***
-## smoke1        0.7041     0.3196   2.203   0.0276 *  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 234.67  on 188  degrees of freedom
-## Residual deviance: 229.80  on 187  degrees of freedom
-## AIC: 233.8
-## 
-## Number of Fisher Scoring iterations: 4
-```
 
 
 ---
@@ -466,6 +410,7 @@ fit
 ### Logistic Regression with One Numerical Predictor
 
 - In general, `\(\exp(b)\)` is the estimated odds ratio for comparing two subpopulations, whose predictor values are `\(x+1\)` and `\(x\)`,
+
 `$$\begin{eqnarray*}
 \frac{\frac{\hat{p}_{x+1}}{1- \hat{p}_{x+1}}}{\frac{\hat{p}_{x}}{1- \hat{p}_{x}}} &amp; = &amp; \exp(b)
 \end{eqnarray*}$$`
@@ -530,10 +475,6 @@ fit
 
 ```r
 confint(fit)
-```
-
-```
-## Waiting for profiling to be done...
 ```
 
 ```

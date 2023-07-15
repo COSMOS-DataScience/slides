@@ -64,7 +64,7 @@ $$\begin{eqnarray*}
 
 ### Logistic regression
 
-- Note that binary variable $p = P(Y=1|X)$; that is, $p$ is the probability of the outcome of interest (denoted as 1) given the explanatory variables.
+- Note that for binary random variables, we have $p = P(Y=1|X)$; that is, $p$ is the probability of the outcome of interest (denoted as 1) given the explanatory variables.
 
 - The term $\Big(\frac{\hat{p}}{1- \hat{p}} \Big)$ is called the **odds** of $Y=1$. 
 
@@ -83,7 +83,7 @@ $$\begin{eqnarray*}
 \frac{\hat{p}}{1- \hat{p}}  & = & \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})
 \end{eqnarray*}$$
 
-- and find $\hat{p}$ using the **logistic function**,
+- Then, we can find $\hat{p}$ using the **logistic function**:
 $$\begin{eqnarray*}
 \hat{p} & = & \frac{\exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}{1 + \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}
 \end{eqnarray*}$$
@@ -113,8 +113,17 @@ $$\begin{eqnarray*}
 ```{r, message=FALSE}
 library(MASS)
 data(birthwt)
-birthwt$low <- factor(birthwt$low)
-birthwt$smoke <- factor(birthwt$smoke)
+birthwt <- birthwt %>% 
+  mutate(across(c(low, smoke, race, ht, ui), factor))
+glimpse(birthwt)
+```
+
+---
+
+### Generalized linear model (glm) in R
+
+```{r, message=FALSE}
+
 fit <- glm(low ~ smoke, family = 'binomial', data = birthwt)
 fit
 ```
@@ -153,6 +162,7 @@ summary(fit)
 - For the above example, the estimated values of the intercept $\alpha$ and the regression coefficient $\beta$ are $a=-1.09$ and $b=0.70$ respectively. 
 
 - Therefore, 
+
 $$\begin{eqnarray*}
 \frac{\hat{p}}{1- \hat{p}} & = & \exp(-1.09 + 0.70x)
 \end{eqnarray*}$$
@@ -196,8 +206,9 @@ $$\begin{eqnarray*}
 ### Interpretation 
 
 - Note that
+
 $$\begin{eqnarray*}
-\frac{\frac{\hat{p}_{1}}{1- \hat{p}_{1}}}{\frac{\hat{p}_{0}}{1- \hat{p}_{0}}} & = &  \frac{\exp(-1.09) \exp(0.7)}{\exp(-1.09)} =  \exp(0.7)
+\frac{\frac{\hat{p}_{1}}{1- \hat{p}_{1}}}{\frac{\hat{p}_{0}}{1- \hat{p}_{0}}} & = &  \frac{\exp(-1.09) \exp(0.7)}{\exp(-1.09)} =  \exp(0.7) = 2.01
 \end{eqnarray*}$$
 
 - We can interpret the exponential of the regression coefficient as the odds ratio of having low birthweight babies for smoking mothers compared to non-smoking mothers. 
@@ -212,45 +223,10 @@ $$\begin{eqnarray*}
 - In general, 
 
   - if $b>0$, then $\exp(b) > 1$ so the odds increases as $X$ increases;
+  
   - if $b<0$, then $0 < \exp(b) < 1$ so the odds decreases as $X$ increases;
+  
   - if $b=0$, the odds ratio is 1 so the odds does not change with $X$ according to the assumed model. 
-
-
----
-
-### Inference
-
-- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
-
-```{r}
-fit <- glm(low ~ smoke, family = 'binomial', data = birthwt)
-fit
-```
-
-
-
-
----
-
-### Inference
-
-- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
-
-```{r}
-confint(fit)
-```
-
-
-
----
-
-### Inference
-
-- Similar to linear regression, we use the functions `confint()` and `summary()` to obtian the confidence interval and p-value for each coefficient.
-
-```{r}
-summary(fit)
-```
 
 
 ---
@@ -367,6 +343,7 @@ $$\begin{eqnarray*}
 ### Logistic Regression with One Numerical Predictor
 
 - In general, $\exp(b)$ is the estimated odds ratio for comparing two subpopulations, whose predictor values are $x+1$ and $x$,
+
 $$\begin{eqnarray*}
 \frac{\frac{\hat{p}_{x+1}}{1- \hat{p}_{x+1}}}{\frac{\hat{p}_{x}}{1- \hat{p}_{x}}} & = & \exp(b)
 \end{eqnarray*}$$
@@ -414,7 +391,7 @@ fit
 
 ### Logistic Regression with Multiple Variables
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 confint(fit)
 ```
 

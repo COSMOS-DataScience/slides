@@ -46,9 +46,9 @@ pre {
 
 ### Introduction
 
-- We now discuss **simple linear regression** models, where the objective is to either explain the variation in a numerical **response variable** or predict its unknown values using another variable called **explanatory variable** or **predictor** (depending its role).
+- We now discuss **simple linear regression** models, where the objective is to either explain the variation in a numerical **response variable** or predict its unknown values using another variable called **explanatory variable** or **predictor** (depending on its role).
 
-- We use `\(X\)` to denote explanatory variable and `\(Y\)` to denote response variable. 
+- We use `\(X\)` to denote the explanatory variable and `\(Y\)` to denote the response variable. 
 
 - We start by focusing on problems where the explanatory variable is binary. As before, the binary variable `\(X\)` can be either 0 or 1. 
 
@@ -70,10 +70,10 @@ pre {
 ### One Binary Explanatory Variable
 
 
-- The following figure shows the dot plot along with sample means, shown as black circles, for each group. We connect the two sample means to show the overall pattern for how blood pressure changes from one
-group to another.
+- The following figure shows the dot plot along with sample means, shown as black circles, for each group. 
 
-&lt;img src="img/saltBP1.png" width="32%" height="40%" style="display: block; margin: auto;" /&gt;
+- We connect the two sample means to show the overall pattern for how blood pressure changes from one group to another.
+&lt;img src="img/saltBP1.png" width="30%" height="35%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -139,9 +139,9 @@ which is the sample mean for the first group.
 
 
 - We refer to the difference between the observed and estimated values of
-the response variable as the **residual**. 
+the response variable as **residuals**. 
 
-- For individual `\(i\)`, we denote the residual `\(e_{i}\)` and calculate it as follows:
+- For individual `\(i\)`, we denote the residual as `\(e_{i}\)` and calculate it as follows:
 `$$\begin{equation*}
 e_{i}  =  y_{i} - \hat{y}_{i}.
 \end{equation*}$$`
@@ -182,17 +182,12 @@ sample size.
 
 
 
-
-
-
-
-
 ---
 
 ### One Numerical Explanatory Variable
 
 
-- Among all possible lines we can pass through the data, we choose the one with the smallest sum of squared residuals, called the **least-squares regression line**.
+- Among all possible lines we can pass through the data, we choose the one with the smallest **RSS**. This line is called the **least-squares regression line**.
 
 
 &lt;img src="img/bpSaltLines.png" width="35%" height="40%" style="display: block; margin: auto;" /&gt;
@@ -247,6 +242,20 @@ glm(BP ~ salt, data=saltBP)
 ## Residual Deviance: 173.4 	AIC: 125.4
 ```
 
+
+---
+
+### Least-squares regression line
+
+- Using the above results, we can have estimated the intercept and the regression coefficient to be 128.6 and 1.2 respectively. 
+
+- Therefore, we can write down the equation for the least-squares regression line as follows:
+
+`$$\begin{equation*}
+\hat{y}_{i}  =  128.6 + 1.2 \times x_i. 
+\end{equation*}$$`
+
+
 ---
 
 ### Residual
@@ -257,7 +266,7 @@ glm(BP ~ salt, data=saltBP)
 
 - The estimated value of the blood pressure for this person is
 `$$\begin{equation*}
-\hat{y}_{i}  =  128.60 + 1.20 \times 3.68 = 133.02.
+\hat{y}_{i}  =  128.6 + 1.2 \times 3.68 = 133.02.
 \end{equation*}$$`
 
 - The actual blood pressure for this individual is `\(y_{i} = 128.3\)`. The residual therefore is
@@ -276,7 +285,7 @@ response variable (i.e., blood pressure) for all individuals in the target popul
 
 - For example, if we know the amount of daily sodium chloride intake is `\(x=7.81\)` for an individual, we can predict her blood pressure as follows:
 `$$\begin{equation*}
-\hat{y}  =  128.60 + 1.20 \times 7.81 = 137.97.
+\hat{y}  =  128.6 + 1.2 \times 7.81 = 137.97.
 \end{equation*}$$`
 
 
@@ -368,7 +377,18 @@ summary(lm_res)
 
 - To investigate the validity of the third assumptions we can use diagnostic plots by visualizing the residuals
 
+---
 
+### Model Assumptions and Diagnostics
+
+
+```r
+ggplot(lm_res, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0)
+```
+
+&lt;img src="01a-regression_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -497,7 +517,7 @@ summary(bwt_mod)
 - We interpret `\(b_{j}\)` as our estimate of the expected (average) change in the response variable
 associated with a unit increase in the corresponding explanatory variable `\(x_{j}\)` **while all other explanatory variables in the model remain fixed**.
 
-- For the above example, the point estimate of the regression coefficient for {age} is `\(b_{1}=11\)`, and the estimate of the regression coefficient for {smoke} is `\(b_{2} = -278\)`. 
+- For the above example, the point estimate of the regression coefficient for _age_ is `\(b_{1}=11\)`, and the estimate of the regression coefficient for _smoke_ is `\(b_{2} = -278\)`. 
 
 ---
 
@@ -505,7 +525,7 @@ associated with a unit increase in the corresponding explanatory variable `\(x_{
 
 - We expect that the birthweight of babies increase by 11 grams as the mother's age increases by one year among mothers with the same smoking status. 
 
-- The expected birthweight changes by `\(-278\)` (decreases by `\(278\)`) grams associated with one unit increase in the value of the variable smoke among mothers with the same age.
+- The expected birthweight changes by `\(-278\)` (decreases by `\(278\)`) grams associated with one unit increase in the value of the variable smoke (i.e., going from non-smoking mothers to smoking mothers) among mothers with the same age.
 
 
     </textarea>

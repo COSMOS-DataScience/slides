@@ -52,7 +52,7 @@ arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/ma
 ```
 
 ```{r echo = FALSE, message = FALSE}
-alzheimer_data <- read.csv("/Users/zahramoslemi/Documents/Summer-2023/cosmos/alzheimer_data.csv")
+alzheimer_data <- read.csv("data/alzheimer_data.csv")
 ```
 
 class: middle
