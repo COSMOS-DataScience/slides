@@ -55,20 +55,22 @@ df &lt;- read.csv("../data/Alzheimer_data.csv")
 
 
 ```r
-set.seed(0)
-norm_size &lt;- 1000
+set.seed(1)
+norm_size &lt;- 100
 norm_random &lt;- rnorm(n = norm_size, mean = 10, sd = 2)
 summary(norm_random)
 ```
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   3.527   8.583   9.882   9.968  11.375  16.533
+##   5.571   9.012  10.228  10.218  11.383  14.803
 ```
 
 ---
 
 ## Confidence Interval for Population Mean
+
+Suppose we know the population standard deviation:
 
 
 ```r
@@ -78,14 +80,16 @@ z_test_result$conf.int
 ```
 
 ```
-## [1]  9.844382 10.092300
+## [1]  9.825782 10.609768
 ## attr(,"conf.level")
 ## [1] 0.95
 ```
 
 ---
 
-## What if the population variance is unknown?
+## Confidence Interval for Population Mean
+
+In general, however, the population standard deviation is unknown:
 
 
 ```r
@@ -94,7 +98,7 @@ t_test_result$conf.int
 ```
 
 ```
-## [1]  9.844479 10.092203
+## [1]  9.86133 10.57422
 ## attr(,"conf.level")
 ## [1] 0.95
 ```
@@ -103,17 +107,40 @@ t_test_result$conf.int
 
 ## Adjust the confidence level
 
+Note that we can give a narrower interval at a lower confidence level:
+
 
 ```r
-t_test_result &lt;- t.test(x = norm_random, conf.level = 0.9)
+t_test_result &lt;- 
+  t.test(x = norm_random, conf.level = 0.9)
 t_test_result$conf.int
 ```
 
 ```
-## [1]  9.864422 10.072259
+## [1]  9.919502 10.516047
 ## attr(,"conf.level")
 ## [1] 0.9
 ```
+
+---
+
+## Adjust the confidence level
+
+On the other hand, increasing the confidence level leads to a broader interval:
+
+
+```r
+t_test_result &lt;- 
+  t.test(x = norm_random, conf.level = 0.99)
+t_test_result$conf.int
+```
+
+```
+## [1]  9.745968 10.689582
+## attr(,"conf.level")
+## [1] 0.99
+```
+
 
 ---
 
@@ -126,7 +153,7 @@ summary(norm_random)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   3.527   8.583   9.882   9.968  11.375  16.533
+##   5.571   9.012  10.228  10.218  11.383  14.803
 ```
 
 `\(H_0:\mu=10\)` vs. `\(H_A:\mu\neq10\)`
@@ -136,7 +163,7 @@ t.test(x = norm_random, mu = 10)$p.value
 ```
 
 ```
-## [1] 0.6160765
+## [1] 0.2282885
 ```
 
 ---
@@ -150,7 +177,7 @@ t.test(x = norm_random, mu = 9)$p.value
 ```
 
 ```
-## [1] 0.000000000000000000000000000000000000000000000007378699
+## [1] 0.0000000008843424
 ```
 
 ---
@@ -225,23 +252,23 @@ t_test_naccicv$p.value
 
 
 ```r
-set.seed(0)
-bern_size &lt;- 1000
+set.seed(1)
+bern_size &lt;- 100
 bern_random &lt;- rbinom(bern_size, 1, 0.3)
 head(bern_random, 10)
 ```
 
 ```
-##  [1] 1 0 0 0 1 0 1 1 0 0
+##  [1] 0 0 0 1 0 1 1 0 0 0
 ```
 
 ```r
-success_counts &lt;- sum(bern_random)
-success_counts
+success_prop &lt;- sum(bern_random) / bern_size
+success_prop
 ```
 
 ```
-## [1] 306
+## [1] 0.32
 ```
 
 ---
@@ -257,7 +284,7 @@ prop_test_result$conf.int
 ```
 
 ```
-## [1] 0.2777403 0.3357704
+## [1] 0.2322385 0.4217920
 ## attr(,"conf.level")
 ## [1] 0.95
 ```
@@ -278,7 +305,7 @@ prop_test_result$p.value
 ```
 
 ```
-## [1] 0.7042898
+## [1] 0.7434207
 ```
 
 ---
@@ -292,19 +319,13 @@ success_counts_naccicv &lt;-
   filter(naccicv &gt; 1300 &amp; naccicv &lt; 1600) %&gt;%
   nrow()
 bern_size_naccicv &lt;- nrow(df)
-success_counts_naccicv
+success_prop_naccicv &lt;- 
+  success_counts_naccicv / bern_size_naccicv
+success_prop_naccicv
 ```
 
 ```
-## [1] 1811
-```
-
-```r
-bern_size_naccicv
-```
-
-```
-## [1] 2700
+## [1] 0.6707407
 ```
 
 ---
@@ -313,7 +334,7 @@ bern_size_naccicv
 
 - Test whether the population proportion is 2/3.
 
-- Get a 95 percent confidence interval for the population proportion.
+- Get the 95 percent confidence interval for the population proportion.
 
 ---
 

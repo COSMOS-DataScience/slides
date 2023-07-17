@@ -59,8 +59,8 @@ df <- read.csv("../data/Alzheimer_data.csv")
 ## Simulated Data
 
 ```{r}
-set.seed(0)
-norm_size <- 1000
+set.seed(1)
+norm_size <- 100
 norm_random <- rnorm(n = norm_size, mean = 10, sd = 2)
 summary(norm_random)
 ```
@@ -68,6 +68,8 @@ summary(norm_random)
 ---
 
 ## Confidence Interval for Population Mean
+
+Suppose we know the population standard deviation:
 
 ```{r}
 z_test_result <-
@@ -77,7 +79,9 @@ z_test_result$conf.int
 
 ---
 
-## What if the population variance is unknown?
+## Confidence Interval for Population Mean
+
+In general, however, the population standard deviation is unknown:
 
 ```{r}
 t_test_result <- t.test(x = norm_random)
@@ -88,10 +92,26 @@ t_test_result$conf.int
 
 ## Adjust the confidence level
 
+Note that we can give a narrower interval at a lower confidence level:
+
 ```{r}
-t_test_result <- t.test(x = norm_random, conf.level = 0.9)
+t_test_result <- 
+  t.test(x = norm_random, conf.level = 0.9)
 t_test_result$conf.int
 ```
+
+---
+
+## Adjust the confidence level
+
+On the other hand, increasing the confidence level leads to a broader interval:
+
+```{r}
+t_test_result <- 
+  t.test(x = norm_random, conf.level = 0.99)
+t_test_result$conf.int
+```
+
 
 ---
 
@@ -162,12 +182,12 @@ t_test_naccicv$p.value
 ## Simulated Data
 
 ```{r}
-set.seed(0)
-bern_size <- 1000
+set.seed(1)
+bern_size <- 100
 bern_random <- rbinom(bern_size, 1, 0.3)
 head(bern_random, 10)
-success_counts <- sum(bern_random)
-success_counts
+success_prop <- sum(bern_random) / bern_size
+success_prop
 ```
 
 ---
@@ -205,8 +225,9 @@ success_counts_naccicv <-
   filter(naccicv > 1300 & naccicv < 1600) %>%
   nrow()
 bern_size_naccicv <- nrow(df)
-success_counts_naccicv
-bern_size_naccicv
+success_prop_naccicv <- 
+  success_counts_naccicv / bern_size_naccicv
+success_prop_naccicv
 ```
 
 ---
@@ -215,7 +236,7 @@ bern_size_naccicv
 
 - Test whether the population proportion is 2/3.
 
-- Get a 95 percent confidence interval for the population proportion.
+- Get the 95 percent confidence interval for the population proportion.
 
 ---
 
