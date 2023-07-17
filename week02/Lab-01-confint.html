@@ -244,36 +244,36 @@ round(t_test_age$p.value, 4)
 
 ## Comparing Two Samples
 
-Is the average age for the AD subjects different between male and female?
+Is blood pressure associated with gender?
 
-![](Lab-01-confint_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+&lt;img src="Lab-01-confint_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
 ## Two Sample t-test
 
-Is the average age for the AD subjects different between male and female?
+We can examine whether the average blood pressure is different between male and female? Note that the boxplots above show the medians not the means.
 
 `\(H_0:\mu_M=\mu_F\)` vs. `\(H_A:\mu_M \neq \mu_F\)` 
 
 
 ```r
-t.test(age ~ female, data = df)$p.value
+t.test(bpsys ~ female, data = df)$p.value
 ```
 
 ```
-## [1] 0.0009451188
+## [1] 0.5100128
 ```
 
 ---
 
 ## Two Numerical Variables
 
-Question: Are age and blood pressure (BPSYS) correlated?
+Question: Are age and blood pressure correlated?
 
 
-![](Lab-01-confint_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+&lt;img src="Lab-01-confint_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -294,7 +294,8 @@ round(cor.test(df$age, df$bpsys)$p.value, 4)
 
 
 ```r
-round(cor.test(df$age, df$bpsys, alternative = "greater")$p.value, 4)
+round(cor.test(df$age, df$bpsys, 
+               alternative = "greater")$p.value, 4)
 ```
 
 ```

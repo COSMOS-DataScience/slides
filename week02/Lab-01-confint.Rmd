@@ -178,11 +178,11 @@ round(t_test_age$p.value, 4)
 
 ## Comparing Two Samples
 
-Is the average age for the AD subjects different between male and female?
+Is blood pressure associated with gender?
 
-```{r, echo = F}
+```{r, echo = F, fig.height = 6, fig.width = 6, fig.align = "center"}
 ggplot(data = df, 
-       aes(x = factor(female), y = age)) + 
+       aes(x = factor(female), y = bpsys)) + 
   geom_boxplot() + 
   labs(x = "female")
 ```
@@ -192,22 +192,22 @@ ggplot(data = df,
 
 ## Two Sample t-test
 
-Is the average age for the AD subjects different between male and female?
+We can examine whether the average blood pressure is different between male and female? Note that the boxplots above show the medians not the means.
 
 $H_0:\mu_M=\mu_F$ vs. $H_A:\mu_M \neq \mu_F$ 
 
 ```{r}
-t.test(age ~ female, data = df)$p.value
+t.test(bpsys ~ female, data = df)$p.value
 ```
 
 ---
 
 ## Two Numerical Variables
 
-Question: Are age and blood pressure (BPSYS) correlated?
+Question: Are age and blood pressure correlated?
 
 
-```{r, echo = F}
+```{r, echo = F, fig.height = 6, fig.width = 6, fig.align = "center"}
 ggplot(data = df, 
        aes(x = age, y = bpsys)) + 
   geom_point()
@@ -226,7 +226,8 @@ round(cor.test(df$age, df$bpsys)$p.value, 4)
 $H_0:$ They are NOT correlated. vs. $H_A:$ They are positively correlated.
 
 ```{r}
-round(cor.test(df$age, df$bpsys, alternative = "greater")$p.value, 4)
+round(cor.test(df$age, df$bpsys, 
+               alternative = "greater")$p.value, 4)
 ```
 
 
