@@ -186,8 +186,10 @@ set.seed(1)
 bern_size <- 100
 bern_random <- rbinom(bern_size, 1, 0.3)
 head(bern_random, 10)
-success_prop <- sum(bern_random) / bern_size
-success_prop
+success_counts <- sum(bern_random)
+success_prop <- success_counts / bern_size
+print(paste("success counts = ", success_counts, ", success proportion = ", success_prop))
+
 ```
 
 ---

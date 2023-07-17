@@ -263,12 +263,13 @@ head(bern_random, 10)
 ```
 
 ```r
-success_prop &lt;- sum(bern_random) / bern_size
-success_prop
+success_counts &lt;- sum(bern_random)
+success_prop &lt;- success_counts / bern_size
+print(paste("success counts = ", success_counts, ", success proportion = ", success_prop))
 ```
 
 ```
-## [1] 0.32
+## [1] "success counts =  32 , success proportion =  0.32"
 ```
 
 ---
