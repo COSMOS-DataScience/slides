@@ -42,6 +42,7 @@ options(scipen = 999)
 
 - Confidence interval for the population mean
 - One-sample t-test
+- Test for Proportion
 - Two-sample t-test
 - Correlation test
 - $\chi^2$ test
@@ -176,6 +177,80 @@ round(t_test_age$p.value, 4)
 
 ---
 
+## Confidence Interval for Population Proportion
+
+Simulated data
+
+```{r}
+set.seed(0)
+bern_size <- 1000
+bern_random <- rbinom(bern_size, 1, 0.3)
+head(bern_random, 10)
+success_counts <- sum(bern_random)
+success_counts
+```
+
+---
+
+## Confidence Interval for Population Proportion
+
+```{r}
+prop_test_result <-
+  prop.test(x = success_counts, 
+            n = bern_size)
+prop_test_result$conf.int
+```
+
+---
+
+## Hypothesis Testing for Population Proportion
+
+$H_0:p=0.3$ vs. $H_A:p\neq0.3$
+
+```{r}
+prop_test_result <-
+  prop.test(x = success_counts, 
+            n = bern_size, 
+            p = 0.3)
+prop_test_result$p.value
+```
+---
+
+## Real Data Practice (brain volume: naccicv)
+
+```{r}
+success_counts_naccicv <- 
+  df %>%
+  filter(naccicv > 1300 & naccicv < 1600) %>%
+  nrow()
+bern_size_naccicv <- nrow(df)
+success_counts_naccicv
+bern_size_naccicv
+```
+
+---
+
+# Practice 
+
+- Test whether the population proportion is 2/3.
+
+- Get a 95 percent confidence interval for the population proportion.
+
+---
+
+```{r}
+prop_test_result_naccicv <-
+  prop.test(x = success_counts_naccicv, 
+            n = bern_size_naccicv, 
+            p = 2/3, 
+            conf.level = 0.95)
+prop_test_result_naccicv$conf.int
+prop_test_result_naccicv$p.value
+```
+
+
+---
+
 ## Comparing Two Samples
 
 Is blood pressure associated with gender?
@@ -259,9 +334,10 @@ chisq.test(contingency_table)
 ## Summary
 
 - "t.test()" for one/two-sample t-test
+- "prop.test()" for proportion
 - "cor.test()" for correlation test
 - "chisq.test()" for $\chi^2$ test
 - Useful arguments: "mu", "conf.level", "alternative"
-- ?t.test, ?cor.test and ?chisq.test for more information
+- ?t.test, ?prop.test, ?cor.test and ?chisq.test for more information
 
 

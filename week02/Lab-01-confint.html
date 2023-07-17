@@ -35,6 +35,7 @@ class: title-slide
 
 - Confidence interval for the population mean
 - One-sample t-test
+- Test for Proportion
 - Two-sample t-test
 - Correlation test
 - `\(\chi^2\)` test
@@ -242,11 +243,135 @@ round(t_test_age$p.value, 4)
 
 ---
 
+## Confidence Interval for Population Proportion
+
+Simulated data
+
+
+```r
+set.seed(0)
+bern_size &lt;- 1000
+bern_random &lt;- rbinom(bern_size, 1, 0.3)
+head(bern_random, 10)
+```
+
+```
+##  [1] 1 0 0 0 1 0 1 1 0 0
+```
+
+```r
+success_counts &lt;- sum(bern_random)
+success_counts
+```
+
+```
+## [1] 306
+```
+
+---
+
+## Confidence Interval for Population Proportion
+
+
+```r
+prop_test_result &lt;-
+  prop.test(x = success_counts, 
+            n = bern_size)
+prop_test_result$conf.int
+```
+
+```
+## [1] 0.2777403 0.3357704
+## attr(,"conf.level")
+## [1] 0.95
+```
+
+---
+
+## Hypothesis Testing for Population Proportion
+
+`\(H_0:p=0.3\)` vs. `\(H_A:p\neq0.3\)`
+
+
+```r
+prop_test_result &lt;-
+  prop.test(x = success_counts, 
+            n = bern_size, 
+            p = 0.3)
+prop_test_result$p.value
+```
+
+```
+## [1] 0.7042898
+```
+---
+
+## Real Data Practice (brain volume: naccicv)
+
+
+```r
+success_counts_naccicv &lt;- 
+  df %&gt;%
+  filter(naccicv &gt; 1300 &amp; naccicv &lt; 1600) %&gt;%
+  nrow()
+bern_size_naccicv &lt;- nrow(df)
+success_counts_naccicv
+```
+
+```
+## [1] 1811
+```
+
+```r
+bern_size_naccicv
+```
+
+```
+## [1] 2700
+```
+
+---
+
+# Practice 
+
+- Test whether the population proportion is 2/3.
+
+- Get a 95 percent confidence interval for the population proportion.
+
+---
+
+
+```r
+prop_test_result_naccicv &lt;-
+  prop.test(x = success_counts_naccicv, 
+            n = bern_size_naccicv, 
+            p = 2/3, 
+            conf.level = 0.95)
+prop_test_result_naccicv$conf.int
+```
+
+```
+## [1] 0.6525956 0.6883957
+## attr(,"conf.level")
+## [1] 0.95
+```
+
+```r
+prop_test_result_naccicv$p.value
+```
+
+```
+## [1] 0.6681702
+```
+
+
+---
+
 ## Comparing Two Samples
 
 Is blood pressure associated with gender?
 
-&lt;img src="Lab-01-confint_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-01-confint_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -273,7 +398,7 @@ t.test(bpsys ~ female, data = df)$p.value
 Question: Are age and blood pressure correlated?
 
 
-&lt;img src="Lab-01-confint_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-01-confint_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -348,10 +473,11 @@ chisq.test(contingency_table)
 ## Summary
 
 - "t.test()" for one/two-sample t-test
+- "prop.test()" for proportion
 - "cor.test()" for correlation test
 - "chisq.test()" for `\(\chi^2\)` test
 - Useful arguments: "mu", "conf.level", "alternative"
-- ?t.test, ?cor.test and ?chisq.test for more information
+- ?t.test, ?prop.test, ?cor.test and ?chisq.test for more information
 
 
     </textarea>
