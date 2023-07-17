@@ -183,7 +183,7 @@ Simulated data
 
 ```{r}
 set.seed(0)
-bern_size <- 1000
+bern_size <- 100
 bern_random <- rbinom(bern_size, 1, 0.3)
 head(bern_random, 10)
 success_counts <- sum(bern_random)
