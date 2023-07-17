@@ -1,0 +1,301 @@
+---
+title: "Linear and Logistic Regression"
+author: "Zahra Moslemi"
+output: 
+  xaringan::moon_reader:
+    css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
+    lib_dir: libs
+    seal: false
+    nature:
+      beforeInit: "cols_macro.js"
+      ratio: 16:9
+      highlightStyle: "pygments"
+      highlightLines: true
+      highlightLanguage: "r"
+
+---
+
+class: title-slide
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+library(fabricerin)
+library(ggplot2)
+library(gridExtra)
+library(dplyr)
+```
+
+<br>
+<br>
+.right-panel[ 
+
+# `r rmarkdown::metadata$title`
+## `r rmarkdown::metadata$author`
+
+Adapted from slides by Mine Dogucu and Sam Behseta
+]
+
+
+
+<style type="text/css">
+
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 20px
+}
+</style>
+
+---
+
+class:inverse middle
+
+.font180[Linear Regression]
+
+---
+
+```{r echo = FALSE, message = FALSE}
+library(tidyverse)
+
+arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/main/RheumArth_Tx_AgeComparisons.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(sex = case_when(sex == 0 ~ "female",
+                   sex == 1 ~ "male")) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(age_gp = case_when(age_gp == 1 ~ "control",
+                   age_gp == 2 ~ "elderly")) %>% 
+  mutate(age_gp = as.factor(age_gp)) %>% 
+  mutate(cdai_yn = case_when(cdai_yn == 1 ~ "no",
+                             cdai_yn == 2 ~ "yes")) %>%
+  mutate(cdai_yn = as.factor(cdai_yn))
+```
+
+```{r echo = FALSE, message = FALSE}
+alzheimer_data <- read_csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/main/data/alzheimer_data.csv")
+```
+
+class: middle
+
+* Now that you have learned about regression models, we will build a multiple regression model for predicting the left hippocampus volume of the brain, labeled as **lhippo**, through two predictors, namely **age** and **educ**.
+
+* Remember that in the general, the linear model can be written as follows:
+
+\begin{align*}
+Y &= \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k
+\end{align*}
+
+
+
+
+* The left hand side of this model is the response variable, a numerical continuous variable.
+
+Thereby:
+
+\begin{align*}
+\hat{Y} = \hat{\beta_0} + \hat{\beta_1} X_1 + \hat{\beta_2} X_2 + \ldots + \hat{\beta_K} X_k + \epsilon_i
+\end{align*}
+
+where $\epsilon_i$ refers to the error of the estimating the model parameters with the existing set of data.
+---
+
+class: middle
+
+
+Recall the left hippocampus volume **lhippo** is likely to shrink as Alzheimer's severs. Also, from Yueqi's introduction, while the progress of the disease is a function of age, it is possible that education can have a reverse effect on the progress of the disease.
+
+To fit linear models all we need to do is to apply the **lm()** command in R. We begin with plotting the response versus each predictor, separately.
+
+```{r eval=FALSE, warning=FALSE}
+ggplot(data = alzheimer_data) +
+  geom_point(aes(x = age, y = lhippo), color = "red") +
+  labs(x = "Age", y = "left hippo") +
+  theme_minimal()
+```
+
+```{r eval=FALSE, warning=FALSE}
+ggplot(data = alzheimer_data) +
+  geom_point(aes(x = educ, y = lhippo), color = "red") +
+  labs(x = "Education", y = "left hippo") +
+  theme_minimal()
+```
+
+---
+```{r echo=FALSE, warning=FALSE, fig.align='center'}
+library(ggplot2)
+library(gridExtra)
+
+p1 <- ggplot(data = alzheimer_data) +
+  geom_point(aes(x = age, y = lhippo), color = "red", width = 30) +
+  labs(x = "Age", y = "Left Hippocampus Volume") +
+  theme_minimal() +
+  theme(plot.margin = margin(l = 0.5, r = 0.5))  # Adjust the left and right margins
+
+p2 <- ggplot(data = alzheimer_data) +
+  geom_point(aes(x = educ, y = lhippo), color = "red") +
+  labs(x = "Education", y = "Left Hippocampus Volume") +
+  theme_minimal() +
+  theme(plot.margin = margin(l = 0.5, r = 0.5))  # Adjust the left and right margins
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+---
+Here is the regression of lhippo versus age:
+
+```{r warning=FALSE, out.height=0.1}
+lm_model <- lm(lhippo ~ age, data = alzheimer_data)
+summary(lm_model)
+```
+---
+
+Let's see the fitted line:
+
+```{r warning=FALSE, fig.align='center', message=FALSE, fig.height=5.5}
+
+ggplot(data = alzheimer_data, aes(x = age, y = lhippo)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "blue", se=FALSE) +
+  labs(x = "Age", y = "Left Hippocampus Volume")
+```
+
+---
+Here is the regression of lhippo versus education:
+
+```{r warning=FALSE}
+lm_model <- lm(lhippo ~ educ, data = alzheimer_data)
+summary(lm_model)
+```
+---
+
+
+Let's see the fitted line:
+
+
+```{r warning=FALSE, message=FALSE, fig.align='center', fig.height=5}
+ggplot(data = alzheimer_data, aes(x = educ, y = lhippo)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "blue", se=FALSE) +
+  labs(x = "Education", y = "Left Hippocampus Volume")
+```
+---
+Here is the regression of lhippo versus age and education:
+
+```{r warning=FALSE, out.height=0.1, fig.height=0.1, fig.width=6, fig.align='center'}
+lm_model <- lm(lhippo ~ age + educ, data = alzheimer_data)
+summary(lm_model)
+```
+---
+class:inverse middle
+
+.font80[Logistic Regression]
+---
+* Remember from the lecture that we are fitting a regression model with a binary outcome. 
+
+* As such, the model is as follows:
+
+$$\begin{eqnarray*}
+\log \Big(\frac{\pi}{1- \pi} \Big) & = & \beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k}
+\end{eqnarray*}$$
+
+
+* The left hand side of this model is the logarithm of the odds of success.
+
+* Thereby, the probability of success of $\pi$ can be written as follows:
+
+$$\begin{eqnarray*}
+\pi & = & \frac{\exp(\beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k})}{1 + \exp(\beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k})}
+\end{eqnarray*}$$
+
+* The above means once we estimate the coefficients of the model ($\beta$'s), we can estimate the probability of success of the
+outcome of interest.
+---
+* Let's revisit Alzheimer's data set, and consider the task of building a logistic regression model with diagnosis as its response variable and variables age, education, naccicv, and female as its predictors.
+
+* Let's begin by transforming the response to a new feature with two categories: no symptoms (0) versus mild or strong
+symptoms (1):
+
+
+```{r warning=FALSE}
+alzheimer_data <- alzheimer_data %>% 
+  mutate(diag = ifelse(diagnosis %in% c(1, 2), "1", "0"),
+         diag = as.factor(diag))
+```
+
+* Running a logistic regression model in R is pretty straightforward. Before we do that, we should notice female is a binary variable as well. As such, we should make sure R recognizes that feature as a factor variable.
+
+```{r warning=FALSE}
+alzheimer_data <- alzheimer_data %>%
+  mutate(female=as.factor(female))
+
+```
+---
+```{r warning=FALSE}
+logistic_model <-glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data)
+summary(logistic_model)
+```
+
+---
+
+class:inverse middle
+
+.font80[Cross-Validation for the Logistic Regression in R]
+
+---
+### How good is our model?
+
+* Let's try to calculate its accuracy or alternatively its misclassification rate. The higher the accuracy of a model, the better.
+
+* We can achieve the above with a simple technique called cross validation.
+
+* This is an old approach, devised by the statisticians Fred Mosteller and John Tukey (1968).
+
+* We split the data into training and validation or test sets. We fit or train the model using the training portion of the data
+set, and gauge its accuracy using the validation set.
+---
+
+
+To split the data into training and validation sets using the rsample package in R, you can use the initial_split() function. Here's an example of how you can split the data:
+
+```{r message=FALSE, warning=FALSE}
+library(rsample)
+
+set.seed(0)
+data_split <- initial_split(alzheimer_data, prop = 0.7) 
+
+train_data <- training(data_split)
+test_data <- testing(data_split)
+
+```
+
+---
+
+Next, we train the model using training data:
+
+
+```{r warning=FALSE}
+logistic_model2 <-glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data)
+summary(logistic_model2)
+```
+---
+
+* Followed, by testing it via the validation set. This means to calculate the probability of success for each subject in the
+test set:
+
+
+```{r warning=FALSE}
+pred_prob <- logistic_model2 %>% 
+  predict(test_data,type="response")
+```
+
+
+* We are now ready to calculate the accuracy of our trained model. To accomplish this, we translate all probabilities of success above to 0.5 to a 1 and otherwise to a 0, followed by tracking the number of correct predictions (1's correctly predicted as 1's and 0's correctly predicted as 0's).
+
+```{r}
+predicted.classes <- ifelse(pred_prob > 0.5, "1", "0")
+mean(predicted.classes == test_data$diag)
+```
+
+* This model yields a 65% accuracy rate!

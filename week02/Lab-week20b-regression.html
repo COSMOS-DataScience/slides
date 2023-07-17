@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear and Logistic Regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Zahra Moslemi" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="slide-style.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide
+
+
+
+&lt;br&gt;
+&lt;br&gt;
+.right-panel[ 
+
+# Linear and Logistic Regression
+## Zahra Moslemi
+
+Adapted from slides by Mine Dogucu and Sam Behseta
+]
+
+
+
+&lt;style type="text/css"&gt;
+
+body, td {
+   font-size: 14px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 20px
+}
+&lt;/style&gt;
+
+---
+
+class:inverse middle
+
+.font180[Linear Regression]
+
+---
+
+
+
+
+
+class: middle
+
+* Now that you have learned about regression models, we will build a multiple regression model for predicting the left hippocampus volume of the brain, labeled as **lhippo**, through two predictors, namely **age** and **educ**.
+
+* Remember that in the general, the linear model can be written as follows:
+
+`\begin{align*}
+Y &amp;= \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k
+\end{align*}`
+
+
+
+
+* The left hand side of this model is the response variable, a numerical continuous variable.
+
+Thereby:
+
+`\begin{align*}
+\hat{Y} = \hat{\beta_0} + \hat{\beta_1} X_1 + \hat{\beta_2} X_2 + \ldots + \hat{\beta_K} X_k + \epsilon_i
+\end{align*}`
+
+where `\(\epsilon_i\)` refers to the error of the estimating the model parameters with the existing set of data.
+---
+
+class: middle
+
+
+Recall the left hippocampus volume **lhippo** is likely to shrink as Alzheimer's severs. Also, from Yueqi's introduction, while the progress of the disease is a function of age, it is possible that education can have a reverse effect on the progress of the disease.
+
+To fit linear models all we need to do is to apply the **lm()** command in R. We begin with plotting the response versus each predictor, separately.
+
+
+```r
+ggplot(data = alzheimer_data) +
+  geom_point(aes(x = age, y = lhippo), color = "red") +
+  labs(x = "Age", y = "left hippo") +
+  theme_minimal()
+```
+
+
+```r
+ggplot(data = alzheimer_data) +
+  geom_point(aes(x = educ, y = lhippo), color = "red") +
+  labs(x = "Education", y = "left hippo") +
+  theme_minimal()
+```
+
+---
+&lt;img src="Lab-week20b-regression_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+---
+Here is the regression of lhippo versus age:
+
+
+```r
+lm_model &lt;- lm(lhippo ~ age, data = alzheimer_data)
+summary(lm_model)
+```
+
+```
+## 
+## Call:
+## lm(formula = lhippo ~ age, data = alzheimer_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.58855 -0.28598  0.01999  0.31504  1.58641 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.0639626  0.0543632   74.76   &lt;2e-16 ***
+## age         -0.0149051  0.0007657  -19.46   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4593 on 2698 degrees of freedom
+## Multiple R-squared:  0.1231,	Adjusted R-squared:  0.1228 
+## F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16
+```
+---
+
+Let's see the fitted line:
+
+
+```r
+ggplot(data = alzheimer_data, aes(x = age, y = lhippo)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "blue", se=FALSE) +
+  labs(x = "Age", y = "Left Hippocampus Volume")
+```
+
+&lt;img src="Lab-week20b-regression_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+Here is the regression of lhippo versus education:
+
+
+```r
+lm_model &lt;- lm(lhippo ~ educ, data = alzheimer_data)
+summary(lm_model)
+```
+
+```
+## 
+## Call:
+## lm(formula = lhippo ~ educ, data = alzheimer_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.45617 -0.30433  0.01738  0.33743  1.77443 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2.647647   0.042951  61.644   &lt;2e-16 ***
+## educ        0.024351   0.002743   8.877   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4835 on 2698 degrees of freedom
+## Multiple R-squared:  0.02838,	Adjusted R-squared:  0.02802 
+## F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16
+```
+---
+
+
+Let's see the fitted line:
+
+
+
+```r
+ggplot(data = alzheimer_data, aes(x = educ, y = lhippo)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "blue", se=FALSE) +
+  labs(x = "Education", y = "Left Hippocampus Volume")
+```
+
+&lt;img src="Lab-week20b-regression_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+---
+Here is the regression of lhippo versus age and education:
+
+
+```r
+lm_model &lt;- lm(lhippo ~ age + educ, data = alzheimer_data)
+summary(lm_model)
+```
+
+```
+## 
+## Call:
+## lm(formula = lhippo ~ age + educ, data = alzheimer_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.59525 -0.28746  0.01681  0.31416  1.54719 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.7348265  0.0709453  52.644  &lt; 2e-16 ***
+## age         -0.0142527  0.0007643 -18.649  &lt; 2e-16 ***
+## educ         0.0185428  0.0026010   7.129 1.29e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4551 on 2697 degrees of freedom
+## Multiple R-squared:  0.1394,	Adjusted R-squared:  0.1387 
+## F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16
+```
+---
+class:inverse middle
+
+.font80[Logistic Regression]
+---
+* Remember from the lecture that we are fitting a regression model with a binary outcome. 
+
+* As such, the model is as follows:
+
+`$$\begin{eqnarray*}
+\log \Big(\frac{\pi}{1- \pi} \Big) &amp; = &amp; \beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k}
+\end{eqnarray*}$$`
+
+
+* The left hand side of this model is the logarithm of the odds of success.
+
+* Thereby, the probability of success of `\(\pi\)` can be written as follows:
+
+`$$\begin{eqnarray*}
+\pi &amp; = &amp; \frac{\exp(\beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k})}{1 + \exp(\beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k})}
+\end{eqnarray*}$$`
+
+* The above means once we estimate the coefficients of the model ($\beta$'s), we can estimate the probability of success of the
+outcome of interest.
+---
+* Let's revisit Alzheimer's data set, and consider the task of building a logistic regression model with diagnosis as its response variable and variables age, education, naccicv, and female as its predictors.
+
+* Let's begin by transforming the response to a new feature with two categories: no symptoms (0) versus mild or strong
+symptoms (1):
+
+
+
+```r
+alzheimer_data &lt;- alzheimer_data %&gt;% 
+  mutate(diag = ifelse(diagnosis %in% c(1, 2), "1", "0"),
+         diag = as.factor(diag))
+```
+
+* Running a logistic regression model in R is pretty straightforward. Before we do that, we should notice female is a binary variable as well. As such, we should make sure R recognizes that feature as a factor variable.
+
+
+```r
+alzheimer_data &lt;- alzheimer_data %&gt;%
+  mutate(female=as.factor(female))
+```
+---
+
+```r
+logistic_model &lt;-glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data)
+summary(logistic_model)
+```
+
+```
+## 
+## Call:
+## glm(formula = diag ~ educ + age + naccicv + female, family = binomial, 
+##     data = alzheimer_data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.0157  -1.0109  -0.6794   1.1220   2.2855  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -1.1637929  0.6481630  -1.796   0.0726 .  
+## educ        -0.0707890  0.0128192  -5.522 3.35e-08 ***
+## age          0.0437751  0.0039941  10.960  &lt; 2e-16 ***
+## naccicv     -0.0004503  0.0003726  -1.209   0.2268    
+## female1     -0.8928635  0.0989969  -9.019  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3692.7  on 2699  degrees of freedom
+## Residual deviance: 3395.6  on 2695  degrees of freedom
+## AIC: 3405.6
+## 
+## Number of Fisher Scoring iterations: 4
+```
+
+---
+
+class:inverse middle
+
+.font80[Cross-Validation for the Logistic Regression in R]
+
+---
+### How good is our model?
+
+* Let's try to calculate its accuracy or alternatively its misclassification rate. The higher the accuracy of a model, the better.
+
+* We can achieve the above with a simple technique called cross validation.
+
+* This is an old approach, devised by the statisticians Fred Mosteller and John Tukey (1968).
+
+* We split the data into training and validation or test sets. We fit or train the model using the training portion of the data
+set, and gauge its accuracy using the validation set.
+---
+
+
+To split the data into training and validation sets using the rsample package in R, you can use the initial_split() function. Here's an example of how you can split the data:
+
+
+```r
+library(rsample)
+
+set.seed(0)
+data_split &lt;- initial_split(alzheimer_data, prop = 0.7) 
+
+train_data &lt;- training(data_split)
+test_data &lt;- testing(data_split)
+```
+
+---
+
+Next, we train the model using training data:
+
+
+
+```r
+logistic_model2 &lt;-glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data)
+summary(logistic_model2)
+```
+
+```
+## 
+## Call:
+## glm(formula = diag ~ educ + age + naccicv + female, family = binomial, 
+##     data = train_data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.0380  -0.9942  -0.6836   1.1234   2.2066  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -0.9952282  0.7730543  -1.287    0.198    
+## educ        -0.0759332  0.0151489  -5.012 5.37e-07 ***
+## age          0.0430518  0.0047803   9.006  &lt; 2e-16 ***
+## naccicv     -0.0004883  0.0004437  -1.101    0.271    
+## female1     -0.9058400  0.1191447  -7.603 2.90e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2578.5  on 1888  degrees of freedom
+## Residual deviance: 2371.0  on 1884  degrees of freedom
+## AIC: 2381
+## 
+## Number of Fisher Scoring iterations: 4
+```
+---
+
+* Followed, by testing it via the validation set. This means to calculate the probability of success for each subject in the
+test set:
+
+
+
+```r
+pred_prob &lt;- logistic_model2 %&gt;% 
+  predict(test_data,type="response")
+```
+
+
+* We are now ready to calculate the accuracy of our trained model. To accomplish this, we translate all probabilities of success above to 0.5 to a 1 and otherwise to a 0, followed by tracking the number of correct predictions (1's correctly predicted as 1's and 0's correctly predicted as 0's).
+
+
+```r
+predicted.classes &lt;- ifelse(pred_prob &gt; 0.5, "1", "0")
+mean(predicted.classes == test_data$diag)
+```
+
+```
+## [1] 0.6510481
+```
+
+* This model yields a 65% accuracy rate!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="cols_macro.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "pygments",
+"highlightLines": true,
+"highlightLanguage": "r"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
