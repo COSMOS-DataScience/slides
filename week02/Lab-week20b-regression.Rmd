@@ -22,6 +22,7 @@ library(fabricerin)
 library(ggplot2)
 library(gridExtra)
 library(dplyr)
+library(gtsummary)
 ```
 
 <br>
@@ -147,7 +148,14 @@ Here is the regression of lhippo versus age:
 
 ```{r warning=FALSE, out.height=0.1}
 lm_model <- lm(lhippo ~ age, data = alzheimer_data)
+
 summary(lm_model)
+```
+---
+```{r warning=FALSE}
+lm(lhippo ~ age, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
+
 ```
 ---
 
@@ -169,7 +177,12 @@ lm_model <- lm(lhippo ~ educ, data = alzheimer_data)
 summary(lm_model)
 ```
 ---
+```{r warning=FALSE}
+lm(lhippo ~ educ, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
 
+```
+---
 
 Let's see the fitted line:
 
@@ -188,6 +201,15 @@ lm_model <- lm(lhippo ~ age + educ, data = alzheimer_data)
 summary(lm_model)
 ```
 ---
+
+```{r warning=FALSE}
+lm(lhippo ~ age + educ, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
+
+```
+---
+
+
 class:inverse middle
 
 .font80[Logistic Regression]
@@ -239,6 +261,13 @@ summary(logistic_model)
 
 ---
 
+```{r warning=FALSE}
+glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3), exponentiate = TRUE)
+
+```
+---
+
 class:inverse middle
 
 .font80[Cross-Validation for the Logistic Regression in R]
@@ -276,8 +305,15 @@ Next, we train the model using training data:
 
 
 ```{r warning=FALSE}
-logistic_model2 <-glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data)
+logistic_model2 <- glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data)
 summary(logistic_model2)
+```
+---
+
+```{r warning=FALSE}
+glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3), exponentiate = TRUE)
+
 ```
 ---
 
