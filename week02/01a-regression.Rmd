@@ -67,7 +67,8 @@ pre {
 
 - Suppose that we want to investigate the relationship between sodium chloride (salt) consumption (low vs. high consumption) and blood pressure among elderly people (e.g., above 65 years old). 
 
-```{r, echo=FALSE,out.width='32%',out.height='40%',fig.align='center'}
+
+```{r, echo=FALSE,out.width='35%',out.height='60%',fig.align='center'}
 knitr::include_graphics('img/saltBP0.png')
 ```
 
@@ -77,10 +78,9 @@ knitr::include_graphics('img/saltBP0.png')
 ### One Binary Explanatory Variable
 
 
-- The following figure shows the dot plot along with sample means, shown as black circles, for each group. 
+- The following figure shows the dot plot along with sample means, shown as black circles, for each group. We connect the two sample means to show the overall pattern for how blood pressure changes from one group to another.
 
-- We connect the two sample means to show the overall pattern for how blood pressure changes from one group to another.
-```{r, echo=FALSE,out.width='30%',out.height='35%',fig.align='center'}
+```{r, echo=FALSE,out.width='35%',out.height='60%',fig.align='center'}
 knitr::include_graphics('img/saltBP1.png')
 ```
 

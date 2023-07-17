@@ -62,7 +62,8 @@ pre {
 
 - Suppose that we want to investigate the relationship between sodium chloride (salt) consumption (low vs. high consumption) and blood pressure among elderly people (e.g., above 65 years old). 
 
-&lt;img src="img/saltBP0.png" width="32%" height="40%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="img/saltBP0.png" width="35%" height="60%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -70,10 +71,9 @@ pre {
 ### One Binary Explanatory Variable
 
 
-- The following figure shows the dot plot along with sample means, shown as black circles, for each group. 
+- The following figure shows the dot plot along with sample means, shown as black circles, for each group. We connect the two sample means to show the overall pattern for how blood pressure changes from one group to another.
 
-- We connect the two sample means to show the overall pattern for how blood pressure changes from one group to another.
-&lt;img src="img/saltBP1.png" width="30%" height="35%" style="display: block; margin: auto;" /&gt;
+&lt;img src="img/saltBP1.png" width="35%" height="60%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -345,9 +345,9 @@ summary(lm_res)
 ## glm(formula = BP ~ salt, data = saltBP)
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  128.616      1.102 116.723  &lt; 2e-16 ***
-## salt           1.197      0.162   7.389 1.63e-07 ***
+##             Estimate Std. Error t value             Pr(&gt;|t|)    
+## (Intercept)  128.616      1.102 116.723 &lt; 0.0000000000000002 ***
+## salt           1.197      0.162   7.389          0.000000163 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -481,10 +481,10 @@ summary(bwt_mod)
 ## glm(formula = bwt ~ age + factor(smoke), data = birthwt)
 ## 
 ## Coefficients:
-##                Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    2791.224    240.950  11.584   &lt;2e-16 ***
-## age              11.290      9.881   1.143    0.255    
-## factor(smoke)1 -278.356    106.987  -2.602    0.010 *  
+##                Estimate Std. Error t value            Pr(&gt;|t|)    
+## (Intercept)    2791.224    240.950  11.584 &lt;0.0000000000000002 ***
+## age              11.290      9.881   1.143               0.255    
+## factor(smoke)1 -278.356    106.987  -2.602               0.010 *  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
