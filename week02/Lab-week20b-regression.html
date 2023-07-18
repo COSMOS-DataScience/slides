@@ -114,15 +114,15 @@ summary(lm_model)
 ## -2.58855 -0.28598  0.01999  0.31504  1.58641 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept)  4.0639626  0.0543632   74.76 &lt;0.0000000000000002 ***
-## age         -0.0149051  0.0007657  -19.46 &lt;0.0000000000000002 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.0639626  0.0543632   74.76   &lt;2e-16 ***
+## age         -0.0149051  0.0007657  -19.46   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.4593 on 2698 degrees of freedom
 ## Multiple R-squared:  0.1231,	Adjusted R-squared:  0.1228 
-## F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 0.00000000000000022
+## F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16
 ```
 ---
 
@@ -131,23 +131,23 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
 ```
 
-<div id="rpztvumcbd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rpztvumcbd table {
+<div id="pbxwsrzdpu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pbxwsrzdpu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rpztvumcbd thead, #rpztvumcbd tbody, #rpztvumcbd tfoot, #rpztvumcbd tr, #rpztvumcbd td, #rpztvumcbd th {
+#pbxwsrzdpu thead, #pbxwsrzdpu tbody, #pbxwsrzdpu tfoot, #pbxwsrzdpu tr, #pbxwsrzdpu td, #pbxwsrzdpu th {
   border-style: none;
 }
 
-#rpztvumcbd p {
+#pbxwsrzdpu p {
   margin: 0;
   padding: 0;
 }
 
-#rpztvumcbd .gt_table {
+#pbxwsrzdpu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -173,12 +173,12 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_caption {
+#pbxwsrzdpu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rpztvumcbd .gt_title {
+#pbxwsrzdpu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -190,7 +190,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-bottom-width: 0;
 }
 
-#rpztvumcbd .gt_subtitle {
+#pbxwsrzdpu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -202,7 +202,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-top-width: 0;
 }
 
-#rpztvumcbd .gt_heading {
+#pbxwsrzdpu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -214,13 +214,13 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_bottom_border {
+#pbxwsrzdpu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_col_headings {
+#pbxwsrzdpu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -235,7 +235,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_col_heading {
+#pbxwsrzdpu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -255,7 +255,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   overflow-x: hidden;
 }
 
-#rpztvumcbd .gt_column_spanner_outer {
+#pbxwsrzdpu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -267,15 +267,15 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   padding-right: 4px;
 }
 
-#rpztvumcbd .gt_column_spanner_outer:first-child {
+#pbxwsrzdpu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rpztvumcbd .gt_column_spanner_outer:last-child {
+#pbxwsrzdpu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rpztvumcbd .gt_column_spanner {
+#pbxwsrzdpu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -287,11 +287,11 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   width: 100%;
 }
 
-#rpztvumcbd .gt_spanner_row {
+#pbxwsrzdpu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rpztvumcbd .gt_group_heading {
+#pbxwsrzdpu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -317,7 +317,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   text-align: left;
 }
 
-#rpztvumcbd .gt_empty_group_heading {
+#pbxwsrzdpu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -332,15 +332,15 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   vertical-align: middle;
 }
 
-#rpztvumcbd .gt_from_md > :first-child {
+#pbxwsrzdpu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rpztvumcbd .gt_from_md > :last-child {
+#pbxwsrzdpu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rpztvumcbd .gt_row {
+#pbxwsrzdpu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -359,7 +359,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   overflow-x: hidden;
 }
 
-#rpztvumcbd .gt_stub {
+#pbxwsrzdpu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -372,7 +372,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#rpztvumcbd .gt_stub_row_group {
+#pbxwsrzdpu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -386,15 +386,15 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   vertical-align: top;
 }
 
-#rpztvumcbd .gt_row_group_first td {
+#pbxwsrzdpu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rpztvumcbd .gt_row_group_first th {
+#pbxwsrzdpu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rpztvumcbd .gt_summary_row {
+#pbxwsrzdpu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -404,16 +404,16 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#rpztvumcbd .gt_first_summary_row {
+#pbxwsrzdpu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_first_summary_row.thick {
+#pbxwsrzdpu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rpztvumcbd .gt_last_summary_row {
+#pbxwsrzdpu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -423,7 +423,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_grand_summary_row {
+#pbxwsrzdpu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -433,7 +433,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#rpztvumcbd .gt_first_grand_summary_row {
+#pbxwsrzdpu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -443,7 +443,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_last_grand_summary_row_top {
+#pbxwsrzdpu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -453,11 +453,11 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_striped {
+#pbxwsrzdpu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rpztvumcbd .gt_table_body {
+#pbxwsrzdpu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -466,7 +466,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_footnotes {
+#pbxwsrzdpu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -480,7 +480,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_footnote {
+#pbxwsrzdpu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -489,7 +489,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#rpztvumcbd .gt_sourcenotes {
+#pbxwsrzdpu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -503,7 +503,7 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#rpztvumcbd .gt_sourcenote {
+#pbxwsrzdpu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -511,63 +511,63 @@ lm(lhippo ~ age, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#rpztvumcbd .gt_left {
+#pbxwsrzdpu .gt_left {
   text-align: left;
 }
 
-#rpztvumcbd .gt_center {
+#pbxwsrzdpu .gt_center {
   text-align: center;
 }
 
-#rpztvumcbd .gt_right {
+#pbxwsrzdpu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rpztvumcbd .gt_font_normal {
+#pbxwsrzdpu .gt_font_normal {
   font-weight: normal;
 }
 
-#rpztvumcbd .gt_font_bold {
+#pbxwsrzdpu .gt_font_bold {
   font-weight: bold;
 }
 
-#rpztvumcbd .gt_font_italic {
+#pbxwsrzdpu .gt_font_italic {
   font-style: italic;
 }
 
-#rpztvumcbd .gt_super {
+#pbxwsrzdpu .gt_super {
   font-size: 65%;
 }
 
-#rpztvumcbd .gt_footnote_marks {
+#pbxwsrzdpu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rpztvumcbd .gt_asterisk {
+#pbxwsrzdpu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rpztvumcbd .gt_indent_1 {
+#pbxwsrzdpu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rpztvumcbd .gt_indent_2 {
+#pbxwsrzdpu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rpztvumcbd .gt_indent_3 {
+#pbxwsrzdpu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rpztvumcbd .gt_indent_4 {
+#pbxwsrzdpu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rpztvumcbd .gt_indent_5 {
+#pbxwsrzdpu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -628,15 +628,15 @@ summary(lm_model)
 ## -2.45617 -0.30433  0.01738  0.33743  1.77443 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value            Pr(&gt;|t|)    
-## (Intercept) 2.647647   0.042951  61.644 &lt;0.0000000000000002 ***
-## educ        0.024351   0.002743   8.877 &lt;0.0000000000000002 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2.647647   0.042951  61.644   &lt;2e-16 ***
+## educ        0.024351   0.002743   8.877   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.4835 on 2698 degrees of freedom
 ## Multiple R-squared:  0.02838,	Adjusted R-squared:  0.02802 
-## F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 0.00000000000000022
+## F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16
 ```
 ---
 
@@ -645,23 +645,23 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
 ```
 
-<div id="bxzyugiqsy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bxzyugiqsy table {
+<div id="pjkalxsies" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pjkalxsies table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bxzyugiqsy thead, #bxzyugiqsy tbody, #bxzyugiqsy tfoot, #bxzyugiqsy tr, #bxzyugiqsy td, #bxzyugiqsy th {
+#pjkalxsies thead, #pjkalxsies tbody, #pjkalxsies tfoot, #pjkalxsies tr, #pjkalxsies td, #pjkalxsies th {
   border-style: none;
 }
 
-#bxzyugiqsy p {
+#pjkalxsies p {
   margin: 0;
   padding: 0;
 }
 
-#bxzyugiqsy .gt_table {
+#pjkalxsies .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -687,12 +687,12 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_caption {
+#pjkalxsies .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bxzyugiqsy .gt_title {
+#pjkalxsies .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -704,7 +704,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-bottom-width: 0;
 }
 
-#bxzyugiqsy .gt_subtitle {
+#pjkalxsies .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -716,7 +716,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-top-width: 0;
 }
 
-#bxzyugiqsy .gt_heading {
+#pjkalxsies .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -728,13 +728,13 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_bottom_border {
+#pjkalxsies .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_col_headings {
+#pjkalxsies .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -749,7 +749,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_col_heading {
+#pjkalxsies .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -769,7 +769,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   overflow-x: hidden;
 }
 
-#bxzyugiqsy .gt_column_spanner_outer {
+#pjkalxsies .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -781,15 +781,15 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   padding-right: 4px;
 }
 
-#bxzyugiqsy .gt_column_spanner_outer:first-child {
+#pjkalxsies .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bxzyugiqsy .gt_column_spanner_outer:last-child {
+#pjkalxsies .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bxzyugiqsy .gt_column_spanner {
+#pjkalxsies .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -801,11 +801,11 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   width: 100%;
 }
 
-#bxzyugiqsy .gt_spanner_row {
+#pjkalxsies .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bxzyugiqsy .gt_group_heading {
+#pjkalxsies .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -831,7 +831,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   text-align: left;
 }
 
-#bxzyugiqsy .gt_empty_group_heading {
+#pjkalxsies .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -846,15 +846,15 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   vertical-align: middle;
 }
 
-#bxzyugiqsy .gt_from_md > :first-child {
+#pjkalxsies .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bxzyugiqsy .gt_from_md > :last-child {
+#pjkalxsies .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bxzyugiqsy .gt_row {
+#pjkalxsies .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -873,7 +873,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   overflow-x: hidden;
 }
 
-#bxzyugiqsy .gt_stub {
+#pjkalxsies .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -886,7 +886,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#bxzyugiqsy .gt_stub_row_group {
+#pjkalxsies .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -900,15 +900,15 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   vertical-align: top;
 }
 
-#bxzyugiqsy .gt_row_group_first td {
+#pjkalxsies .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bxzyugiqsy .gt_row_group_first th {
+#pjkalxsies .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bxzyugiqsy .gt_summary_row {
+#pjkalxsies .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -918,16 +918,16 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#bxzyugiqsy .gt_first_summary_row {
+#pjkalxsies .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_first_summary_row.thick {
+#pjkalxsies .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bxzyugiqsy .gt_last_summary_row {
+#pjkalxsies .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -937,7 +937,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_grand_summary_row {
+#pjkalxsies .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -947,7 +947,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#bxzyugiqsy .gt_first_grand_summary_row {
+#pjkalxsies .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -957,7 +957,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_last_grand_summary_row_top {
+#pjkalxsies .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -967,11 +967,11 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_striped {
+#pjkalxsies .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bxzyugiqsy .gt_table_body {
+#pjkalxsies .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -980,7 +980,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_footnotes {
+#pjkalxsies .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -994,7 +994,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_footnote {
+#pjkalxsies .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1003,7 +1003,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#bxzyugiqsy .gt_sourcenotes {
+#pjkalxsies .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1017,7 +1017,7 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#bxzyugiqsy .gt_sourcenote {
+#pjkalxsies .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1025,63 +1025,63 @@ lm(lhippo ~ educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#bxzyugiqsy .gt_left {
+#pjkalxsies .gt_left {
   text-align: left;
 }
 
-#bxzyugiqsy .gt_center {
+#pjkalxsies .gt_center {
   text-align: center;
 }
 
-#bxzyugiqsy .gt_right {
+#pjkalxsies .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bxzyugiqsy .gt_font_normal {
+#pjkalxsies .gt_font_normal {
   font-weight: normal;
 }
 
-#bxzyugiqsy .gt_font_bold {
+#pjkalxsies .gt_font_bold {
   font-weight: bold;
 }
 
-#bxzyugiqsy .gt_font_italic {
+#pjkalxsies .gt_font_italic {
   font-style: italic;
 }
 
-#bxzyugiqsy .gt_super {
+#pjkalxsies .gt_super {
   font-size: 65%;
 }
 
-#bxzyugiqsy .gt_footnote_marks {
+#pjkalxsies .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bxzyugiqsy .gt_asterisk {
+#pjkalxsies .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bxzyugiqsy .gt_indent_1 {
+#pjkalxsies .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bxzyugiqsy .gt_indent_2 {
+#pjkalxsies .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bxzyugiqsy .gt_indent_3 {
+#pjkalxsies .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bxzyugiqsy .gt_indent_4 {
+#pjkalxsies .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bxzyugiqsy .gt_indent_5 {
+#pjkalxsies .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1142,16 +1142,16 @@ summary(lm_model)
 ## -2.59525 -0.28746  0.01681  0.31416  1.54719 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value             Pr(&gt;|t|)    
-## (Intercept)  3.7348265  0.0709453  52.644 &lt; 0.0000000000000002 ***
-## age         -0.0142527  0.0007643 -18.649 &lt; 0.0000000000000002 ***
-## educ         0.0185428  0.0026010   7.129     0.00000000000129 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.7348265  0.0709453  52.644  &lt; 2e-16 ***
+## age         -0.0142527  0.0007643 -18.649  &lt; 2e-16 ***
+## educ         0.0185428  0.0026010   7.129 1.29e-12 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.4551 on 2697 degrees of freedom
 ## Multiple R-squared:  0.1394,	Adjusted R-squared:  0.1387 
-## F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 0.00000000000000022
+## F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16
 ```
 ---
 
@@ -1161,23 +1161,23 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
 ```
 
-<div id="dqeirgstmi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dqeirgstmi table {
+<div id="kqlnkokdsg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kqlnkokdsg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dqeirgstmi thead, #dqeirgstmi tbody, #dqeirgstmi tfoot, #dqeirgstmi tr, #dqeirgstmi td, #dqeirgstmi th {
+#kqlnkokdsg thead, #kqlnkokdsg tbody, #kqlnkokdsg tfoot, #kqlnkokdsg tr, #kqlnkokdsg td, #kqlnkokdsg th {
   border-style: none;
 }
 
-#dqeirgstmi p {
+#kqlnkokdsg p {
   margin: 0;
   padding: 0;
 }
 
-#dqeirgstmi .gt_table {
+#kqlnkokdsg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1203,12 +1203,12 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-left-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_caption {
+#kqlnkokdsg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dqeirgstmi .gt_title {
+#kqlnkokdsg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1220,7 +1220,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-bottom-width: 0;
 }
 
-#dqeirgstmi .gt_subtitle {
+#kqlnkokdsg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1232,7 +1232,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-top-width: 0;
 }
 
-#dqeirgstmi .gt_heading {
+#kqlnkokdsg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1244,13 +1244,13 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_bottom_border {
+#kqlnkokdsg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_col_headings {
+#kqlnkokdsg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1265,7 +1265,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_col_heading {
+#kqlnkokdsg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1285,7 +1285,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   overflow-x: hidden;
 }
 
-#dqeirgstmi .gt_column_spanner_outer {
+#kqlnkokdsg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1297,15 +1297,15 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   padding-right: 4px;
 }
 
-#dqeirgstmi .gt_column_spanner_outer:first-child {
+#kqlnkokdsg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dqeirgstmi .gt_column_spanner_outer:last-child {
+#kqlnkokdsg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dqeirgstmi .gt_column_spanner {
+#kqlnkokdsg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1317,11 +1317,11 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   width: 100%;
 }
 
-#dqeirgstmi .gt_spanner_row {
+#kqlnkokdsg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dqeirgstmi .gt_group_heading {
+#kqlnkokdsg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1347,7 +1347,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   text-align: left;
 }
 
-#dqeirgstmi .gt_empty_group_heading {
+#kqlnkokdsg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1362,15 +1362,15 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   vertical-align: middle;
 }
 
-#dqeirgstmi .gt_from_md > :first-child {
+#kqlnkokdsg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dqeirgstmi .gt_from_md > :last-child {
+#kqlnkokdsg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dqeirgstmi .gt_row {
+#kqlnkokdsg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1389,7 +1389,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   overflow-x: hidden;
 }
 
-#dqeirgstmi .gt_stub {
+#kqlnkokdsg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1402,7 +1402,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#dqeirgstmi .gt_stub_row_group {
+#kqlnkokdsg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1416,15 +1416,15 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   vertical-align: top;
 }
 
-#dqeirgstmi .gt_row_group_first td {
+#kqlnkokdsg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dqeirgstmi .gt_row_group_first th {
+#kqlnkokdsg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dqeirgstmi .gt_summary_row {
+#kqlnkokdsg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1434,16 +1434,16 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#dqeirgstmi .gt_first_summary_row {
+#kqlnkokdsg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_first_summary_row.thick {
+#kqlnkokdsg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dqeirgstmi .gt_last_summary_row {
+#kqlnkokdsg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1453,7 +1453,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_grand_summary_row {
+#kqlnkokdsg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1463,7 +1463,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#dqeirgstmi .gt_first_grand_summary_row {
+#kqlnkokdsg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1473,7 +1473,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-top-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_last_grand_summary_row_top {
+#kqlnkokdsg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1483,11 +1483,11 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_striped {
+#kqlnkokdsg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dqeirgstmi .gt_table_body {
+#kqlnkokdsg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1496,7 +1496,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-bottom-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_footnotes {
+#kqlnkokdsg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1510,7 +1510,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_footnote {
+#kqlnkokdsg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1519,7 +1519,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#dqeirgstmi .gt_sourcenotes {
+#kqlnkokdsg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1533,7 +1533,7 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   border-right-color: #D3D3D3;
 }
 
-#dqeirgstmi .gt_sourcenote {
+#kqlnkokdsg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1541,63 +1541,63 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %&gt;%
   padding-right: 5px;
 }
 
-#dqeirgstmi .gt_left {
+#kqlnkokdsg .gt_left {
   text-align: left;
 }
 
-#dqeirgstmi .gt_center {
+#kqlnkokdsg .gt_center {
   text-align: center;
 }
 
-#dqeirgstmi .gt_right {
+#kqlnkokdsg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dqeirgstmi .gt_font_normal {
+#kqlnkokdsg .gt_font_normal {
   font-weight: normal;
 }
 
-#dqeirgstmi .gt_font_bold {
+#kqlnkokdsg .gt_font_bold {
   font-weight: bold;
 }
 
-#dqeirgstmi .gt_font_italic {
+#kqlnkokdsg .gt_font_italic {
   font-style: italic;
 }
 
-#dqeirgstmi .gt_super {
+#kqlnkokdsg .gt_super {
   font-size: 65%;
 }
 
-#dqeirgstmi .gt_footnote_marks {
+#kqlnkokdsg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dqeirgstmi .gt_asterisk {
+#kqlnkokdsg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dqeirgstmi .gt_indent_1 {
+#kqlnkokdsg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dqeirgstmi .gt_indent_2 {
+#kqlnkokdsg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dqeirgstmi .gt_indent_3 {
+#kqlnkokdsg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dqeirgstmi .gt_indent_4 {
+#kqlnkokdsg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dqeirgstmi .gt_indent_5 {
+#kqlnkokdsg .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1690,12 +1690,12 @@ summary(logistic_model)
 ##     data = alzheimer_data)
 ## 
 ## Coefficients:
-##               Estimate Std. Error z value             Pr(&gt;|z|)    
-## (Intercept) -1.1637929  0.6481630  -1.796               0.0726 .  
-## educ        -0.0707890  0.0128192  -5.522         0.0000000335 ***
-## age          0.0437751  0.0039941  10.960 &lt; 0.0000000000000002 ***
-## naccicv     -0.0004503  0.0003726  -1.209               0.2268    
-## female1     -0.8928635  0.0989969  -9.019 &lt; 0.0000000000000002 ***
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -1.1637929  0.6481630  -1.796   0.0726 .  
+## educ        -0.0707890  0.0128192  -5.522 3.35e-08 ***
+## age          0.0437751  0.0039941  10.960  &lt; 2e-16 ***
+## naccicv     -0.0004503  0.0003726  -1.209   0.2268    
+## female1     -0.8928635  0.0989969  -9.019  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -1716,23 +1716,23 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   tbl_regression(estimate_fun = function(x) style_number(x, digits = 3), exponentiate = TRUE)
 ```
 
-<div id="mqutdppvtc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mqutdppvtc table {
+<div id="ruhlaowdpj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ruhlaowdpj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mqutdppvtc thead, #mqutdppvtc tbody, #mqutdppvtc tfoot, #mqutdppvtc tr, #mqutdppvtc td, #mqutdppvtc th {
+#ruhlaowdpj thead, #ruhlaowdpj tbody, #ruhlaowdpj tfoot, #ruhlaowdpj tr, #ruhlaowdpj td, #ruhlaowdpj th {
   border-style: none;
 }
 
-#mqutdppvtc p {
+#ruhlaowdpj p {
   margin: 0;
   padding: 0;
 }
 
-#mqutdppvtc .gt_table {
+#ruhlaowdpj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1758,12 +1758,12 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-left-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_caption {
+#ruhlaowdpj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mqutdppvtc .gt_title {
+#ruhlaowdpj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1775,7 +1775,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-bottom-width: 0;
 }
 
-#mqutdppvtc .gt_subtitle {
+#ruhlaowdpj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1787,7 +1787,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-top-width: 0;
 }
 
-#mqutdppvtc .gt_heading {
+#ruhlaowdpj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1799,13 +1799,13 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-right-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_bottom_border {
+#ruhlaowdpj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_col_headings {
+#ruhlaowdpj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1820,7 +1820,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-right-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_col_heading {
+#ruhlaowdpj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1840,7 +1840,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   overflow-x: hidden;
 }
 
-#mqutdppvtc .gt_column_spanner_outer {
+#ruhlaowdpj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1852,15 +1852,15 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   padding-right: 4px;
 }
 
-#mqutdppvtc .gt_column_spanner_outer:first-child {
+#ruhlaowdpj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mqutdppvtc .gt_column_spanner_outer:last-child {
+#ruhlaowdpj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mqutdppvtc .gt_column_spanner {
+#ruhlaowdpj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1872,11 +1872,11 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   width: 100%;
 }
 
-#mqutdppvtc .gt_spanner_row {
+#ruhlaowdpj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mqutdppvtc .gt_group_heading {
+#ruhlaowdpj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1902,7 +1902,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   text-align: left;
 }
 
-#mqutdppvtc .gt_empty_group_heading {
+#ruhlaowdpj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1917,15 +1917,15 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   vertical-align: middle;
 }
 
-#mqutdppvtc .gt_from_md > :first-child {
+#ruhlaowdpj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mqutdppvtc .gt_from_md > :last-child {
+#ruhlaowdpj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mqutdppvtc .gt_row {
+#ruhlaowdpj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1944,7 +1944,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   overflow-x: hidden;
 }
 
-#mqutdppvtc .gt_stub {
+#ruhlaowdpj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1957,7 +1957,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   padding-right: 5px;
 }
 
-#mqutdppvtc .gt_stub_row_group {
+#ruhlaowdpj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1971,15 +1971,15 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   vertical-align: top;
 }
 
-#mqutdppvtc .gt_row_group_first td {
+#ruhlaowdpj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mqutdppvtc .gt_row_group_first th {
+#ruhlaowdpj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mqutdppvtc .gt_summary_row {
+#ruhlaowdpj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1989,16 +1989,16 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   padding-right: 5px;
 }
 
-#mqutdppvtc .gt_first_summary_row {
+#ruhlaowdpj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_first_summary_row.thick {
+#ruhlaowdpj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mqutdppvtc .gt_last_summary_row {
+#ruhlaowdpj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2008,7 +2008,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-bottom-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_grand_summary_row {
+#ruhlaowdpj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2018,7 +2018,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   padding-right: 5px;
 }
 
-#mqutdppvtc .gt_first_grand_summary_row {
+#ruhlaowdpj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2028,7 +2028,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-top-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_last_grand_summary_row_top {
+#ruhlaowdpj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2038,11 +2038,11 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-bottom-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_striped {
+#ruhlaowdpj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mqutdppvtc .gt_table_body {
+#ruhlaowdpj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2051,7 +2051,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-bottom-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_footnotes {
+#ruhlaowdpj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2065,7 +2065,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-right-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_footnote {
+#ruhlaowdpj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2074,7 +2074,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   padding-right: 5px;
 }
 
-#mqutdppvtc .gt_sourcenotes {
+#ruhlaowdpj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2088,7 +2088,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   border-right-color: #D3D3D3;
 }
 
-#mqutdppvtc .gt_sourcenote {
+#ruhlaowdpj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2096,63 +2096,63 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
   padding-right: 5px;
 }
 
-#mqutdppvtc .gt_left {
+#ruhlaowdpj .gt_left {
   text-align: left;
 }
 
-#mqutdppvtc .gt_center {
+#ruhlaowdpj .gt_center {
   text-align: center;
 }
 
-#mqutdppvtc .gt_right {
+#ruhlaowdpj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mqutdppvtc .gt_font_normal {
+#ruhlaowdpj .gt_font_normal {
   font-weight: normal;
 }
 
-#mqutdppvtc .gt_font_bold {
+#ruhlaowdpj .gt_font_bold {
   font-weight: bold;
 }
 
-#mqutdppvtc .gt_font_italic {
+#ruhlaowdpj .gt_font_italic {
   font-style: italic;
 }
 
-#mqutdppvtc .gt_super {
+#ruhlaowdpj .gt_super {
   font-size: 65%;
 }
 
-#mqutdppvtc .gt_footnote_marks {
+#ruhlaowdpj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mqutdppvtc .gt_asterisk {
+#ruhlaowdpj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mqutdppvtc .gt_indent_1 {
+#ruhlaowdpj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mqutdppvtc .gt_indent_2 {
+#ruhlaowdpj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mqutdppvtc .gt_indent_3 {
+#ruhlaowdpj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mqutdppvtc .gt_indent_4 {
+#ruhlaowdpj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mqutdppvtc .gt_indent_5 {
+#ruhlaowdpj .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2204,7 +2204,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
 
 class:inverse middle
 
-.font80[Cross-Validation for the Logistic Regression in R]
+.font80[Cross-Validation for the Linear Regression and Logistic Regression in R]
 
 ---
 class: middle
@@ -2260,16 +2260,16 @@ summary(lm_model)
 ## -2.59635 -0.28271  0.01207  0.30870  1.55249 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value             Pr(&gt;|t|)    
-## (Intercept)  3.7664975  0.0837727  44.961 &lt; 0.0000000000000002 ***
-## age         -0.0140749  0.0009099 -15.468 &lt; 0.0000000000000002 ***
-## educ         0.0159653  0.0030390   5.254          0.000000166 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.7664975  0.0837727  44.961  &lt; 2e-16 ***
+## age         -0.0140749  0.0009099 -15.468  &lt; 2e-16 ***
+## educ         0.0159653  0.0030390   5.254 1.66e-07 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## Residual standard error: 0.4524 on 1886 degrees of freedom
 ## Multiple R-squared:  0.1329,	Adjusted R-squared:  0.132 
-## F-statistic: 144.5 on 2 and 1886 DF,  p-value: &lt; 0.00000000000000022
+## F-statistic: 144.5 on 2 and 1886 DF,  p-value: &lt; 2.2e-16
 ```
 ---
 
@@ -2787,12 +2787,12 @@ summary(logistic_model2)
 ##     data = train_data)
 ## 
 ## Coefficients:
-##               Estimate Std. Error z value             Pr(&gt;|z|)    
-## (Intercept) -0.9952282  0.7730543  -1.287                0.198    
-## educ        -0.0759332  0.0151489  -5.012    0.000000537381443 ***
-## age          0.0430518  0.0047803   9.006 &lt; 0.0000000000000002 ***
-## naccicv     -0.0004883  0.0004437  -1.101                0.271    
-## female1     -0.9058400  0.1191447  -7.603    0.000000000000029 ***
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -0.9952282  0.7730543  -1.287    0.198    
+## educ        -0.0759332  0.0151489  -5.012 5.37e-07 ***
+## age          0.0430518  0.0047803   9.006  &lt; 2e-16 ***
+## naccicv     -0.0004883  0.0004437  -1.101    0.271    
+## female1     -0.9058400  0.1191447  -7.603 2.90e-14 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
