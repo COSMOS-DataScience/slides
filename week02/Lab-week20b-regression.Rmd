@@ -270,7 +270,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) 
 
 class:inverse middle
 
-.font80[Cross-Validation for the Logistic Regression in R]
+.font80[Cross-Validation for the Linear Regression and Logistic Regression in R]
 
 ---
 class: middle
