@@ -82,24 +82,16 @@ class: middle
 
 * Now that you have learned about regression models, we will build a multiple regression model for predicting the left hippocampus volume of the brain, labeled as **lhippo**, through two predictors, namely **age** and **educ**.
 
-* Remember that in the general, the linear model can be written as follows:
+* Remember that in the general, a multiple linear regression model with $p$ explanatory variables can
+be presented as follows:
 
-\begin{align*}
-Y &= \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_k X_k
-\end{align*}
-
-
+$$\begin{equation*}
+\hat{y}  =  a + b_{1}x_{1} + b_{2}x_{2} + \cdots + b_{p}x_{p}.
+\end{equation*}$$
 
 
 * The left hand side of this model is the response variable, a numerical continuous variable.
 
-Thereby:
-
-\begin{align*}
-\hat{Y} = \hat{\beta_0} + \hat{\beta_1} X_1 + \hat{\beta_2} X_2 + \ldots + \hat{\beta_K} X_k + \epsilon_i
-\end{align*}
-
-where $\epsilon_i$ refers to the error of the estimating the model parameters with the existing set of data.
 ---
 
 class: middle
@@ -219,7 +211,7 @@ class:inverse middle
 * As such, the model is as follows:
 
 $$\begin{eqnarray*}
-\log \Big(\frac{\pi}{1- \pi} \Big) & = & \beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k}
+\log \Big(\frac{\hat{p}}{1- \hat{p}} \Big) & = & a + b_{1}x_1 + \ldots + b_{q}x_{q}
 \end{eqnarray*}$$
 
 
@@ -228,11 +220,11 @@ $$\begin{eqnarray*}
 * Thereby, the probability of success of $\pi$ can be written as follows:
 
 $$\begin{eqnarray*}
-\pi & = & \frac{\exp(\beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k})}{1 + \exp(\beta_0 + \beta_{1}x_1 + \ldots + \beta_{k}x_{k})}
+\hat{p} & = & \frac{\exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}{1 + \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}
 \end{eqnarray*}$$
 
-* The above means once we estimate the coefficients of the model ($\beta$'s), we can estimate the probability of success of the
-outcome of interest.
+* The above means once we estimate the coefficients of the model, we can estimate the probability of success of the outcome of interest.
+
 ---
 * Let's revisit Alzheimer's data set, and consider the task of building a logistic regression model with diagnosis as its response variable and variables age, education, naccicv, and female as its predictors.
 
