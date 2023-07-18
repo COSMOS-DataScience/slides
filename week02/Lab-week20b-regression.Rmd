@@ -273,16 +273,22 @@ class:inverse middle
 .font80[Cross-Validation for the Logistic Regression in R]
 
 ---
-### How good is our model?
+class: middle
 
-* Let's try to calculate its accuracy or alternatively its misclassification rate. The higher the accuracy of a model, the better.
+* Let's try to evaluate the performance of our model by calculating its accuracy or mean squared error (MSE), depending on whether we are dealing with a linear regression or logistic regression model.
 
-* We can achieve the above with a simple technique called cross validation.
+* Cross-validation is a commonly used technique to achieve this evaluation. It is an old approach, devised by statisticians Fred Mosteller and John Tukey in 1968.
 
-* This is an old approach, devised by the statisticians Fred Mosteller and John Tukey (1968).
+* The process involves splitting the data into training and validation (or test) sets. We then fit or train the model using the training portion of the dataset. The accuracy or MSE is then calculated by comparing the predictions made by the model on the validation set to the actual values.
 
-* We split the data into training and validation or test sets. We fit or train the model using the training portion of the data
-set, and gauge its accuracy using the validation set.
+---
+
+class: middle
+
+
+* For linear regression models, we typically use the mean squared error (MSE) to measure the quality of predictions. The lower the MSE, the better the model's performance. The MSE represents the average squared difference between the predicted values and the true values.
+
+* On the other hand, for logistic regression models or any other classification problem, we use accuracy as a metric to assess the model's performance. Accuracy represents the proportion of correctly classified instances out of the total instances in the validation set. The higher the accuracy, the better the model's performance.
 ---
 
 
@@ -300,9 +306,42 @@ test_data <- testing(data_split)
 ```
 
 ---
+### Linear Regression Model Evaluation:
 
-Next, we train the model using training data:
+#### After splitting the data into train and test, we train the model using training data:
 
+```{r warning=FALSE}
+lm_model <- lm(lhippo ~ age + educ, data = train_data)
+summary(lm_model)
+```
+---
+
+```{r warning=FALSE}
+lm(lhippo ~ age + educ, data = train_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
+
+```
+---
+Now, let's use the trained model to make predictions on the validation data:
+
+
+```{r warning=FALSE}
+predictions <- predict(lm_model, newdata = test_data)
+```
+---
+To evaluate the performance of our model, we can calculate the Mean Squared Error (MSE) between the predicted values and the actual values:
+
+
+```{r warning=FALSE}
+mean((test_data$lhippo - predictions)^2)
+
+```
+---
+
+
+### Logistic Regression Model Evaluation:
+
+#### As we saw, next step after splitting the data into train and test would be training the model using training data:
 
 ```{r warning=FALSE}
 logistic_model2 <- glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data)
@@ -317,8 +356,7 @@ glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data) %>%
 ```
 ---
 
-* Followed, by testing it via the validation set. This means to calculate the probability of success for each subject in the
-test set:
+* Followed, by testing it via the validation set. This means to calculate the probability of success for each subject in the test set:
 
 
 ```{r warning=FALSE}
