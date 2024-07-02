@@ -1,5 +1,5 @@
 ---
-title: "Introduction to R"
+title: "Introduction to R and R markdown"
 author: "Zoey Yang"
 output: 
   xaringan::moon_reader:
@@ -17,8 +17,9 @@ output:
 
 class: title-slide
 
-```{r echo = FALSE, warning=FALSE}
+```{r echo = FALSE, message=FALSE, warning=FALSE}
 library(fabricerin)
+library(tidyverse)
 ```
 
 <br>
@@ -92,7 +93,7 @@ class:
 
 ```{r error=TRUE}
 
-my_age <- 2020 - birth_year
+my_age <- 2024 - birth_year
 
 My_age
 ```
@@ -151,6 +152,23 @@ In order to get any help we can use `?` followed by function (or object) name.
 ```
 
 
+
+---
+
+# Some basic data structures
+- numeric
+- string
+- combine/vector
+- matrix
+
+```{r eval=FALSE}
+temp_variable = 1
+temp_string = 'hi'
+temp_vector = c(1, 2, 3)
+temp_matrix = matrix(c(1,2,3,4), nrow=2, ncol=2, 
+                     byrow=TRUE)
+```
+
 ---
 
 ## tidyverse_style_guide
@@ -188,7 +206,7 @@ Object names are all lower case, with words separated by an underscore.
 ---
 class: inverse middle center
 
-.font150[R Markdown]
+.font150[~~R~~ Markdown]
 
 ---
 
@@ -241,12 +259,6 @@ class:: middle
 
 ---
 
-class: inverse middle center
-
-.font150[~~R~~ Markdown]
-
----
-
 ## markdown `r fontawesome::fa(name = "markdown", fill = "#1B3D6D")`
 
 <br>
@@ -275,9 +287,9 @@ __Hello world__
 
 ---
 
-class: subtopic center middle
+class: inverse middle center
 
-.sub-topic-note[R .strike[Markdown]]
+.font150[R Markdown]
 
 ---
 
@@ -324,6 +336,45 @@ class: center middle
 ```{r echo=FALSE, out.width='50%'}
 knitr::include_graphics('img/knit.png')
 ```
+
+
+---
+##YAML
+
+- Title
+- Subtitle
+- Author
+- Date
+- Output type: pdf or html
+- Table of content
+
+
+Google YAML Header, you will find a new world!
+
+---
+##Inline Code
+To embed R code in a line of text, surround the code with a pair of backticks and the letter r, like this.
+
+- Two plus two equals `r 2 + 2`.
+
+```{r echo=FALSE, out.width='90%'}
+knitr::include_graphics('img/rmd-inline.png')
+```
+
+---
+## Inline Code Example
+
+When you want to use the value for variable named 'my_age', embedding 'r my_age' in rmd
+
+```{r}
+birth_year <- 2007
+my_age <- 2024 - birth_year
+```
+
+$$\\[0.05in]$$
+
+
+My age is **`r my_age`** 
 
 ---
 
