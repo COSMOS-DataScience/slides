@@ -3,8 +3,8 @@
   <head>
     <title>Introduction to R</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Zahra Moslemi" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="author" content="Zoey Yang" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -21,7 +21,7 @@ class: title-slide
 .right-panel[ 
 
 # Introduction to R
-## Zahra Moslemi
+## Zoey Yang
 
 Adapted from slides by Mine Dogucu
 ]
@@ -70,11 +70,15 @@ class: middle
 ## Object assignment operator
 
 
-```r
-birth_year &lt;- 1950
+``` r
+birth_year &lt;- 2007
 ```
 
+Shortcut:
 
+for Mac user, option -
+
+for PC user, alt -
 ---
 
 class: 
@@ -83,7 +87,7 @@ class:
 
 
 
-```r
+``` r
 my_age &lt;- 2020 - birth_year
 
 My_age
@@ -105,7 +109,7 @@ If something comes in quotes, it is not defined in R.
 
 
 
-```r
+``` r
 ages &lt;- c(25, my_age, 32)
 
 names &lt;- c("Menglin", "Mine", "Rafael")
@@ -116,7 +120,7 @@ data.frame(age = ages, name = names)
 ```
 ##   age    name
 ## 1  25 Menglin
-## 2  70    Mine
+## 2  13    Mine
 ## 3  32  Rafael
 ```
 
@@ -126,7 +130,7 @@ data.frame(age = ages, name = names)
 ## Vocabulary
 
 
-```r
+``` r
 do(something)
 ```
 
@@ -135,7 +139,7 @@ do(something)
 --
 
 
-```r
+``` r
 do(something, colorful)
 ```
 
@@ -152,7 +156,7 @@ class: middle
 In order to get any help we can use `?` followed by function (or object) name. 
 
 
-```r
+``` r
 ?c
 ```
 
@@ -169,7 +173,7 @@ In order to get any help we can use `?` followed by function (or object) name.
 .pull-right[
 
 
-```r
+``` r
 age &lt;- c(6, 9, 15)
 
 data.frame(age_kid = age)
