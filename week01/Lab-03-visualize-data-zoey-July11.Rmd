@@ -144,7 +144,6 @@ R will do some of these steps by default. Making a bar plot with another tool mi
 ]
 
 .right-panel[
-
 ```{r echo=FALSE}
 ggplot(babies, aes(x = smoke)) +
   geom_bar()
@@ -177,7 +176,6 @@ ggplot(data = babies)
 ]
 
 .pull-right[
-
 ```{r echo = FALSE, fig.height=5}
 ggplot(babies)
 ```
@@ -425,15 +423,10 @@ ggplot(data = babies,
 
 ]
 
-
 ---
 
 class: middle center
 
-
-.font150[
-`r emojifont::emoji(emojifont::search_emoji('rainbow'))[1]`
-] 
 
 Pick your favorite color(s) from the list at:
 
@@ -467,6 +460,7 @@ ggplot(data = babies,
                  fill = "darkred") #<<
 ```
 
+
 ---
 
 class: inverse middle center
@@ -497,6 +491,7 @@ ggplot(data = babies,
 ```
 ]
 
+
 ---
 
 ## Standardized Bar Plot
@@ -521,6 +516,7 @@ ggplot(data = babies,
 ]
 
 .footnote[Note that y-axis is no longer count but we will learn how to change that later.]
+
 
 ---
 
@@ -620,6 +616,7 @@ ggplot(babies,
 ```
 ]
 
+
 ---
 class: inverse middle
 
@@ -646,7 +643,6 @@ ggplot(babies,
 ```
 
 ]
-
 
 ---
 

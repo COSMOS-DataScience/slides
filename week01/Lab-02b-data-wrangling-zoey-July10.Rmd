@@ -125,6 +125,18 @@ select(alzheimer_data, -id, -educ) %>%
 
 ---
 
+`select` can also be used to select columns with known index
+
+
+```{r}
+select(alzheimer_data, 
+       1:5) %>%
+  head()
+```
+
+
+---
+
 ## Selection helpers
 
 `starts_with()`  
@@ -142,6 +154,14 @@ select(alzheimer_data, starts_with("lp")) %>%
 
 ```{r}
 select(alzheimer_data, contains("arhip")) %>%
+  head()
+```
+
+---
+
+```{r}
+select(alzheimer_data, 
+       !c(starts_with("lp"),contains("arhip")))%>%
   head()
 ```
 
@@ -279,8 +299,7 @@ Moving forward we are only going to use, `age`, `female` `diagnosis`, `educ`, `h
 ```{r}
 alzheimer_data %>% 
   select(age, female, 
-         diagnosis, educ, height,
-         weight)
+         diagnosis, educ, height,weight)
 ```
 
 ---
@@ -289,8 +308,7 @@ alzheimer_data %>%
 alzheimer_data <- 
   alzheimer_data %>% 
   select(age, female, 
-         diagnosis, educ, height,
-         weight)
+         diagnosis, educ, height,weight)
 ```
 
 
