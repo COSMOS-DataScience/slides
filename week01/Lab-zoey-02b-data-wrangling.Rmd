@@ -96,7 +96,8 @@ knitr::include_graphics("img/data-wrangle.002.jpeg")
 
 .left-panel[
 ```{r}
-select(alzheimer_data, height, weight) %>%
+select(alzheimer_data, 
+       height, weight) %>%
   head()
 ```
 ]

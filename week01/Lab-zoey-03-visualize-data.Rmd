@@ -1,13 +1,12 @@
 ---
-title: "Visualizing Data in R"
-author: "Yang Meng"
+title: "Visualizing Data"
+author: "Zoey Yang"
 output: 
   xaringan::moon_reader:
-    css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
+    css: ["slide-style.css"]
     lib_dir: libs
     seal: false
     nature:
-      beforeInit: "cols_macro.js"
       ratio: 16:9
       highlightStyle: "pygments"
       highlightLines: true
@@ -34,10 +33,21 @@ theme_set(theme_gray(base_size = 18))
 <br>
 
 # `r rmarkdown::metadata$title`
+
 ## `r rmarkdown::metadata$author`
+
 
 Adapted from slides by Mine Dogucu
 ]
+
+---
+
+class: middle
+
+## Reminder
+
+- Close all apps on your computer other than zoom.  
+- Open slides for this session from the cluster website (https://uci-dshs.netlify.app/). 
 
 
 ---
@@ -47,11 +57,7 @@ class: middle
 ## Data 
 
 ```{r}
-library(tidyverse)
-df <- read.csv("../data/alzheimer_data.csv")
-df <- df %>% 
-  rename(gender = female) %>%
-  mutate(gender = ifelse(gender, "female", "male"))
+glimpse(babies)
 ```
 
 ---
@@ -71,6 +77,79 @@ class:inverse middle
 
 .font75[Visualizing a Single Categorical Variable]
 
+---
+
+class: middle
+
+.left-panel[
+<br>
+<br>
+If you could speak to R in English, how would you tell R to make this plot for you?
+
+OR
+
+If you had the data and had to draw this bar plot by hand, what would you do?
+
+]
+
+.right-panel[
+
+```{r echo=FALSE}
+ggplot(babies, aes(x = smoke)) +
+  geom_bar()
+```
+]
+
+---
+
+class: middle
+
+.left-panel[
+<br>
+<br>
+Possible ideas
+
+- Consider the data frame
+- Count number of babies for each type of mothers' `smoke` status
+- Put `smoke` on x-axis.
+- Put `count` on y-axis.
+- Draw the bars.
+]
+
+.right-panel[
+
+```{r echo=FALSE}
+ggplot(babies, aes(x = smoke)) +
+  geom_bar()
+```
+]
+
+---
+
+class: middle
+
+.left-panel[
+<br>
+<br>
+These ideas are all correct but some are not necessary in R
+
+- Consider the data frame
+- ~~Count number of babies for each type of mothers' `smoke` status~~
+- Put `smoke` on x-axis.
+- ~~Put `count` on y-axis.~~
+- Draw the bars.
+
+R will do some of these steps by default. Making a bar plot with another tool might look slightly different.
+
+]
+
+.right-panel[
+
+```{r echo=FALSE}
+ggplot(babies, aes(x = smoke)) +
+  geom_bar()
+```
+]
 
 ---
 
@@ -93,14 +172,14 @@ class: middle
 
 .pull-left[
 ```{r eval = FALSE}
-ggplot(data = df)
+ggplot(data = babies)
 ```
 ]
 
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(df)
+ggplot(babies)
 ```
 
 ]
@@ -113,16 +192,16 @@ class: middle
 
 .pull-left[
 ```{r eval = FALSE}
-ggplot(data = df,
-       aes(x = gender)) #<<
+ggplot(data = babies,
+       aes(x = smoke)) #<<
 ```
 ]
 
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = gender))
+ggplot(data = babies,
+       aes(x = smoke))
 ```
 
 ]
@@ -135,8 +214,8 @@ class: middle
 
 .pull-left[
 ```{r eval = FALSE}
-ggplot(data = df,
-       aes(x = gender)) +
+ggplot(data = babies,
+       aes(x = smoke)) +
   geom_bar() #<<
 ```
 ]
@@ -144,20 +223,22 @@ ggplot(data = df,
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = gender)) +
+ggplot(data = babies,
+       aes(x = smoke)) +
   geom_bar()
 ```
 ]
 ---
+
+class: middle 
 
 .panelset[
 
 .panel[
 .panel-name[Plot]
 ```{r echo = FALSE, fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = gender)) +
+ggplot(data = babies,
+       aes(x = smoke)) +
   geom_bar()
 ```
 
@@ -166,8 +247,8 @@ ggplot(data = df,
 .panel[
 .panel-name[English]
 
-- Create a ggplot using the data frame.
-- Map `gender` to the x-axis. 
+- Create a ggplot using the `babies` data frame.
+- Map the `smoke` to the x-axis. 
 - Add a layer of a bar plot.
 
 ]
@@ -175,8 +256,8 @@ ggplot(data = df,
 .panel[
 .panel-name[R]
 ```{r eval = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = gender)) +
+ggplot(data = babies,
+       aes(x = smoke)) +
   geom_bar()
 ```
 
@@ -191,13 +272,15 @@ class:inverse middle
 
 ---
 
+class: middle
+
 .panelset[
 
 .panel[
 .panel-name[Plot]
 ```{r echo = FALSE, fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = age)) +
+ggplot(data = babies,
+       aes(x = bwt)) +
   geom_histogram() 
 ```
 
@@ -206,8 +289,8 @@ ggplot(data = df,
 .panel[
 .panel-name[English]
 
-- Create a ggplot using the data frame.
-- Map the `age` to the x-axis. 
+- Create a ggplot using the `babies` data frame.
+- Map the `bwt` to the x-axis. 
 - Add a layer of a histogram.
 
 ]
@@ -215,8 +298,8 @@ ggplot(data = df,
 .panel[
 .panel-name[R]
 ```{r eval = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = age)) +
+ggplot(data = babies,
+       aes(x = bwt)) +
   geom_histogram() 
 ```
 
@@ -225,51 +308,56 @@ ggplot(data = df,
 ]
 
 ---
+class: middle
 
 ### Step 1 - Pick Data
 
 .pull-left[
 ```{r eval = FALSE}
-ggplot(data = df)
+ggplot(data = babies)
 ```
 ]
 
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(df)
+ggplot(babies)
 ```
 
 ]
 
 ---
+
+class: middle
 
 ### Step 2 - Map Data to Aesthetics
 
 .pull-left[
 ```{r eval = FALSE}
-ggplot(data = df,
-       aes(x = age)) #<<
+ggplot(data = babies,
+       aes(x = bwt)) #<<
 ```
 ]
 
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = age))
+ggplot(data = babies,
+       aes(x = bwt))
 ```
 
 ]
 
 ---
 
+class: middle
+
 ### Step 3 - Add the Geometric Layer
 
 .pull-left[
 ```{r eval = FALSE}
-ggplot(data = df,
-       aes(x = age)) +
+ggplot(data = babies,
+       aes(x = bwt)) +
   geom_histogram() #<<
 ```
 ]
@@ -277,8 +365,8 @@ ggplot(data = df,
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = age)) +
+ggplot(data = babies,
+       aes(x = bwt)) +
   geom_histogram()
 ```
 ]
@@ -288,8 +376,8 @@ ggplot(data = df,
 ## What is this warning?
 
 ```{r echo = FALSE, fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = age)) +
+ggplot(data = babies,
+       aes(x = bwt)) +
   geom_histogram()
 ```
 
@@ -297,25 +385,19 @@ ggplot(data = df,
 
 
 ```{r fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(bins = 10) #<<
-```
-
----
-
-
-```{r fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(binwidth = 10) #<<
+ggplot(data = babies,
+       aes(x = bwt)) +
+  geom_histogram(binwidth = 15) #<<
 ```
 
 
 ---
+
+class: middle
+
 
 .panelset[
-.panel[.panel-name[binwidth = 5]
+.panel[.panel-name[binwidth = 15]
 
 .left-panel[
 
@@ -323,34 +405,23 @@ ggplot(data = df,
 ]
 
 ```{r echo = FALSE, fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(binwidth = 5)
+ggplot(data = babies,
+       aes(x = bwt)) +
+  geom_histogram(binwidth = 15)
 ```
 
 ]
 
-.panel[.panel-name[binwidth = 10]
+.panel[.panel-name[binwidth = 50]
 
 ```{r echo = FALSE, fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(binwidth = 10)
+ggplot(data = babies,
+       aes(x = bwt)) +
+  geom_histogram(binwidth = 50)
 ```
 
 ]
 
-.panel[.panel-name[binwidth = 20]
-
-```{r echo = FALSE, fig.height=5, fig.align='center'}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(binwidth = 20)
-```
-
-
-
-]
 
 ]
 
@@ -371,29 +442,29 @@ Pick your favorite color(s) from the list at:
 ---
 
 ```{r fig.align='center', fig.height=5}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(binwidth = 10, 
-                 color = "gold") #<<
+ggplot(data = babies,
+       aes(x = bwt)) +
+  geom_histogram(binwidth = 15, 
+                 color = "white") #<<
 ```
 
 ---
 
 ```{r fig.align='center', fig.height=5}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(binwidth = 10, 
-                 fill = "darkblue") #<<
+ggplot(data = babies,
+       aes(x = bwt)) +
+  geom_histogram(binwidth = 15, 
+                 fill = "darkred") #<<
 ```
 
 ---
 
 ```{r fig.align='center', fig.height=5}
-ggplot(data = df,
-       aes(x = age)) +
-  geom_histogram(binwidth = 10, 
-                 color = "gold", #<<
-                 fill = "darkblue") #<<
+ggplot(data = babies,
+       aes(x = bwt)) +
+  geom_histogram(binwidth = 15, 
+                 color = "white", #<<
+                 fill = "darkred") #<<
 ```
 
 ---
@@ -404,21 +475,14 @@ class: inverse middle center
 
 ---
 
-```{r}
-df$diagnosis <- factor(df$diagnosis)
-head(df$diagnosis, 10)
-```
-
----
-
 ## Stacked Bar-Plot
 
 .pull-left[
 
 ```{r eval = FALSE}
-ggplot(data = df,
-       aes(x = diagnosis, 
-           fill = gender)) + #<<
+ggplot(data = babies,
+       aes(x = smoke, 
+           fill = parity)) + #<<
   geom_bar() 
 ```
 ]
@@ -426,9 +490,9 @@ ggplot(data = df,
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = diagnosis, 
-           fill = gender)) +
+ggplot(data = babies,
+       aes(x = smoke, 
+           fill = parity)) +
   geom_bar()
 ```
 ]
@@ -440,19 +504,18 @@ ggplot(data = df,
 .pull-left[
 
 ```{r eval = FALSE}
-ggplot(data = df,
-  aes(x = diagnosis, 
-  fill = gender)) + 
-  geom_bar(
-    position = "fill") #<<
+ggplot(data = babies,
+       aes(x = smoke, 
+           fill = parity)) + 
+  geom_bar(position = "fill") #<<
 ```
 ]
 
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = diagnosis, fill = gender)) +
+ggplot(data = babies,
+       aes(x = smoke, fill = parity)) +
   geom_bar(position = "fill")
 ```
 ]
@@ -466,22 +529,23 @@ ggplot(data = df,
 .pull-left[
 
 ```{r eval = FALSE}
-ggplot(data = df,
-  aes(x = diagnosis, 
-  fill = gender)) + 
-  geom_bar(
-    position = "dodge") #<<
+ggplot(data = babies,
+       aes(x = smoke, 
+           fill = parity)) + 
+  geom_bar(position = "dodge") #<<
 ```
 ]
 
 .pull-right[
 
 ```{r echo = FALSE, fig.height=5}
-ggplot(data = df,
-       aes(x = diagnosis, fill = gender)) +
+ggplot(data = babies,
+       aes(x = smoke, fill = parity)) +
   geom_bar(position = "dodge")
 ```
 ]
+
+.footnote[Note that y-axis is no longer count but we will change that later.]
 
 
 
@@ -492,14 +556,16 @@ class: middle inverse
 
 ---
 
+class: middle 
+
 .panelset[
 
 .panel[
 .panel-name[Plot]
 ```{r echo = FALSE, fig.height=5, fig.align='center'}
-ggplot(df,
-       aes(x = gender,
-           y = age))  +
+ggplot(babies,
+       aes(x = smoke,
+           y = bwt))  +
   geom_boxplot()
 ```
 
@@ -508,8 +574,8 @@ ggplot(df,
 .panel[
 .panel-name[English]
 
-- Create a ggplot using the data frame.
-- Map the `gender` to the x-axis and `age` to the y-axis. 
+- Create a ggplot using the `babies` data frame.
+- Map the `smoke` to the x-axis and `bwt` to the y-axis. 
 - Add a layer of a boxplot plot.
 
 ]
@@ -517,9 +583,9 @@ ggplot(df,
 .panel[
 .panel-name[R]
 ```{r eval = FALSE, fig.height=5}
-ggplot(df,
-       aes(x = gender,
-           y = age))  +
+ggplot(babies,
+       aes(x = smoke,
+           y = bwt))  +
   geom_boxplot()
 ```
 
@@ -533,9 +599,9 @@ ggplot(df,
 
 .pull-left[
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
-ggplot(df,
-       aes(x = gender,
-           y = age))  +
+ggplot(babies,
+       aes(x = smoke,
+           y = bwt))  +
   geom_boxplot() +
   theme(text = element_text(size=20))
 
@@ -545,10 +611,10 @@ ggplot(df,
 
 .pull-right[
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
-ggplot(df,
-       aes(x = age))  +
-  geom_histogram(binwidth = 10) +
-  facet_grid(gender ~ .) +
+ggplot(babies,
+       aes(x = bwt))  +
+  geom_histogram() +
+  facet_grid(smoke~.) +
   theme(text = element_text(size=20))
 
 ```
@@ -563,9 +629,9 @@ class: inverse middle
 
 .left-panel[
 ```{r eval = FALSE}
-ggplot(df,
-  aes(x = height,
-      y = weight)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt))  +
   geom_point()
 ```
 
@@ -573,9 +639,9 @@ ggplot(df,
 
 .right-panel[
 ```{r echo = FALSE}
-ggplot(df,
-  aes(x = height,
-  y = weight))  +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt))  +
   geom_point()
 ```
 
@@ -592,10 +658,10 @@ class: middle inverse
 
 .left-panel[
 ```{r eval = FALSE}
-ggplot(df,
-  aes(x = height, 
-      y = weight, 
-      color = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           color = smoke)) +
   geom_point()
 ```
 
@@ -603,8 +669,10 @@ ggplot(df,
 
 .right-panel[
 ```{r echo = FALSE}
-ggplot(df,
-  aes(x = height, y = weight, color = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           color= smoke))  +
   geom_point()
 ```
 
@@ -614,10 +682,10 @@ ggplot(df,
 ---
 .left-panel[
 ```{r eval = FALSE}
-ggplot(df,
-  aes(x = height, 
-      y = weight, 
-      shape = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke)) +
   geom_point()
 ```
 
@@ -625,10 +693,36 @@ ggplot(df,
 
 .right-panel[
 ```{r echo = FALSE}
-ggplot(df,
-  aes(x = height, 
-      y = weight, 
-      shape = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke))  +
+  geom_point()
+```
+
+]
+
+---
+
+
+
+.left-panel[
+```{r eval = FALSE}
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke)) +
+  geom_point()
+```
+
+]
+
+.right-panel[
+```{r echo = FALSE}
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke))  +
   geom_point()
 ```
 
@@ -638,11 +732,11 @@ ggplot(df,
 
 .left-panel[
 ```{r eval = FALSE}
-ggplot(df,
-  aes(x = height, 
-      y = weight, 
-      color = gender,
-      shape = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
   geom_point()
 ```
 
@@ -650,11 +744,11 @@ ggplot(df,
 
 .right-panel[
 ```{r echo = FALSE}
-ggplot(df,
-  aes(x = height, 
-      y = weight, 
-      color = gender,
-      shape = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke))  +
   geom_point()
 ```
 
@@ -665,12 +759,12 @@ ggplot(df,
 
 .left-panel[
 ```{r eval = FALSE}
-ggplot(df,
-  aes(x = height, 
-      y = weight, 
-      color = gender,
-      shape = gender,
-      size = hrate)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke,
+           size = weight)) +
   geom_point()
 ```
 
@@ -678,12 +772,12 @@ ggplot(df,
 
 .right-panel[
 ```{r echo = FALSE}
-ggplot(df,
-  aes(x = height, 
-      y = weight, 
-      color = gender,
-      shape = gender,
-      size = hrate)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke,
+           size = weight))  +
   geom_point()
 ```
 ]
