@@ -1,6 +1,6 @@
 ---
 title: "Working with R"
-author: "Zoey Yang"
+author: "Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
@@ -28,7 +28,7 @@ library(fabricerin)
 # `r rmarkdown::metadata$title`
 ## `r rmarkdown::metadata$author`
 
-Adapted from slides by Mine Dogucu
+
 ]
 
 ---
