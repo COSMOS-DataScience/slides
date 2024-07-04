@@ -1,6 +1,6 @@
 ---
 title: "Welcome"
-author: "Babak Shahbaba <br> Sam Behseta <br> Mine Dogucu"
+author: "Babak Shahbaba <br> Jessica Jaynes"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
@@ -45,21 +45,21 @@ knitr::include_graphics("img/Babak.jpeg")
 
 class: center middle
 
-## Dr. Sam Behseta
+## Dr. Jessica Jaynes
 
 
 ```{r echo=FALSE, fig.align='center', out.width="30%"}
-knitr::include_graphics("img/Behseta.png")
+knitr::include_graphics("img/jaynes.png")
 ```
 
 ---
 
 class: center middle
 
-## Zahra Moslemi
+## Zoey Yang
 
 ```{r echo=FALSE, fig.align='center', out.width="30%"}
-knitr::include_graphics("img/Zahra.JPG")
+knitr::include_graphics("img/Zoey.png")
 ```
 
 
@@ -67,10 +67,10 @@ knitr::include_graphics("img/Zahra.JPG")
 
 class: center middle
 
-## Zhishun Yang
+## Payton Politewicz
 
 ```{r echo=FALSE, fig.align='center', out.width="30%"}
-knitr::include_graphics("img/Yang.png")
+knitr::include_graphics("img/politewicz.png")
 ```
 
 
@@ -129,7 +129,7 @@ class: center middle
 
 class: middle center
 
-## Capstone project
+## Running example
 
 ```{r echo=FALSE, out.width="50%"}
 knitr::include_graphics("img/Alzheimer.png")
@@ -160,8 +160,6 @@ class: middle
 ## Attendance and Participation
 
 You are expected to attend all activities of the COSMOS program and actively participate.
-
-Please arrive on time.
 
 
 ---
