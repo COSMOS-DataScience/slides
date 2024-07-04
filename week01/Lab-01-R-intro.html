@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Introduction to R</title>
+    <title>Introduction to R and R markdown</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Zahra Moslemi" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="author" content="Zoey Yang" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -20,8 +20,8 @@ class: title-slide
 &lt;br&gt;
 .right-panel[ 
 
-# Introduction to R
-## Zahra Moslemi
+# Introduction to R and R markdown
+## Zoey Yang
 
 Adapted from slides by Mine Dogucu
 ]
@@ -70,11 +70,15 @@ class: middle
 ## Object assignment operator
 
 
-```r
-birth_year &lt;- 1950
+``` r
+birth_year &lt;- 2007
 ```
 
+Shortcut:
 
+for Mac user, option -
+
+for PC user, alt -
 ---
 
 class: 
@@ -83,8 +87,8 @@ class:
 
 
 
-```r
-my_age &lt;- 2020 - birth_year
+``` r
+my_age &lt;- 2024 - birth_year
 
 My_age
 ```
@@ -105,7 +109,7 @@ If something comes in quotes, it is not defined in R.
 
 
 
-```r
+``` r
 ages &lt;- c(25, my_age, 32)
 
 names &lt;- c("Menglin", "Mine", "Rafael")
@@ -116,7 +120,7 @@ data.frame(age = ages, name = names)
 ```
 ##   age    name
 ## 1  25 Menglin
-## 2  70    Mine
+## 2  17    Mine
 ## 3  32  Rafael
 ```
 
@@ -126,7 +130,7 @@ data.frame(age = ages, name = names)
 ## Vocabulary
 
 
-```r
+``` r
 do(something)
 ```
 
@@ -135,7 +139,7 @@ do(something)
 --
 
 
-```r
+``` r
 do(something, colorful)
 ```
 
@@ -152,10 +156,28 @@ class: middle
 In order to get any help we can use `?` followed by function (or object) name. 
 
 
-```r
+``` r
 ?c
 ```
 
+
+
+---
+
+# Some basic data structures
+- numeric
+- string
+- combine/vector
+- matrix
+
+
+``` r
+temp_variable = 1
+temp_string = 'hi'
+temp_vector = c(1, 2, 3)
+temp_matrix = matrix(c(1,2,3,4), nrow=2, ncol=2, 
+                     byrow=TRUE)
+```
 
 ---
 
@@ -169,7 +191,7 @@ In order to get any help we can use `?` followed by function (or object) name.
 .pull-right[
 
 
-```r
+``` r
 age &lt;- c(6, 9, 15)
 
 data.frame(age_kid = age)
@@ -195,7 +217,7 @@ Object names are all lower case, with words separated by an underscore.
 ---
 class: inverse middle center
 
-.font150[R Markdown]
+.font150[~~R~~ Markdown]
 
 ---
 
@@ -248,12 +270,6 @@ class:: middle
 
 ---
 
-class: inverse middle center
-
-.font150[~~R~~ Markdown]
-
----
-
 ## markdown <svg aria-hidden="true" role="img" viewBox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#1B3D6D;overflow:visible;position:relative;"><path d="M593.8 59.1H46.2C20.7 59.1 0 79.8 0 105.2v301.5c0 25.5 20.7 46.2 46.2 46.2h547.7c25.5 0 46.2-20.7 46.1-46.1V105.2c0-25.4-20.7-46.1-46.2-46.1zM338.5 360.6H277v-120l-61.5 76.9-61.5-76.9v120H92.3V151.4h61.5l61.5 76.9 61.5-76.9h61.5v209.2zm135.3 3.1L381.5 256H443V151.4h61.5V256H566z"/></svg>
 
 &lt;br&gt;
@@ -282,9 +298,9 @@ __Hello world__
 
 ---
 
-class: subtopic center middle
+class: inverse middle center
 
-.sub-topic-note[R .strike[Markdown]]
+.font150[R Markdown]
 
 ---
 

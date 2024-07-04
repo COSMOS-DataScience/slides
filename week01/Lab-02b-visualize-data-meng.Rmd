@@ -348,12 +348,11 @@ ggplot(data = df,
   geom_histogram(binwidth = 20)
 ```
 
-]
 
 
 ]
 
-
+]
 
 
 ---
