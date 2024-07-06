@@ -1,5 +1,5 @@
 ---
-title: "Linear and Logistic Regression"
+title: "Linear Regression in R"
 author: "Zahra Moslemi"
 output: 
   xaringan::moon_reader:
@@ -199,70 +199,16 @@ lm(lhippo ~ age + educ, data = alzheimer_data) %>%
   tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
 
 ```
----
 
 
-class:inverse middle
-
-.font80[Logistic Regression]
----
-* Remember from the lecture that we are fitting a regression model with a binary outcome. 
-
-* As such, the model is as follows:
-
-$$\begin{eqnarray*}
-\log \Big(\frac{\hat{p}}{1- \hat{p}} \Big) & = & a + b_{1}x_1 + \ldots + b_{q}x_{q}
-\end{eqnarray*}$$
 
 
-* The left hand side of this model is the logarithm of the odds of success.
 
-* Thereby, the probability of success of $\pi$ can be written as follows:
-
-$$\begin{eqnarray*}
-\hat{p} & = & \frac{\exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}{1 + \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}
-\end{eqnarray*}$$
-
-* The above means once we estimate the coefficients of the model, we can estimate the probability of success of the outcome of interest.
-
----
-* Let's revisit Alzheimer's data set, and consider the task of building a logistic regression model with diagnosis as its response variable and variables age, education, naccicv, and female as its predictors.
-
-* Let's begin by transforming the response to a new feature with two categories: no symptoms (0) versus mild or strong
-symptoms (1):
-
-
-```{r warning=FALSE}
-alzheimer_data <- alzheimer_data %>% 
-  mutate(diag = ifelse(diagnosis %in% c(1, 2), "1", "0"),
-         diag = as.factor(diag))
-```
-
-* Running a logistic regression model in R is pretty straightforward. Before we do that, we should notice female is a binary variable as well. As such, we should make sure R recognizes that feature as a factor variable.
-
-```{r warning=FALSE}
-alzheimer_data <- alzheimer_data %>%
-  mutate(female=as.factor(female))
-
-```
----
-```{r warning=FALSE}
-logistic_model <-glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data)
-summary(logistic_model)
-```
-
----
-
-```{r warning=FALSE}
-glm(diag ~ educ + age + naccicv + female, family=binomial, data=alzheimer_data) %>%
-  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3), exponentiate = TRUE)
-
-```
 ---
 
 class:inverse middle
 
-.font80[Cross-Validation for the Linear Regression and Logistic Regression in R]
+.font80[Cross-Validation]
 
 ---
 class: middle
@@ -280,7 +226,7 @@ class: middle
 
 * For linear regression models, we typically use the mean squared error (MSE) to measure the quality of predictions. The lower the MSE, the better the model's performance. The MSE represents the average squared difference between the predicted values and the true values.
 
-* On the other hand, for logistic regression models or any other classification problem, we use accuracy as a metric to assess the model's performance. Accuracy represents the proportion of correctly classified instances out of the total instances in the validation set. The higher the accuracy, the better the model's performance.
+* For classification problems (e.g., logistic regression), we use accuracy as a metric to assess the model's performance. Accuracy represents the proportion of correctly classified instances out of the total instances in the validation set. The higher the accuracy, the better the model's performance.
 ---
 
 
@@ -328,40 +274,3 @@ To evaluate the performance of our model, we can calculate the Mean Squared Erro
 mean((test_data$lhippo - predictions)^2)
 
 ```
----
-
-
-### Logistic Regression Model Evaluation:
-
-#### As we saw, next step after splitting the data into train and test would be training the model using training data:
-
-```{r warning=FALSE}
-logistic_model2 <- glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data)
-summary(logistic_model2)
-```
----
-
-```{r warning=FALSE}
-glm(diag ~ educ + age + naccicv + female, family=binomial, data=train_data) %>%
-  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3), exponentiate = TRUE)
-
-```
----
-
-* Followed, by testing it via the validation set. This means to calculate the probability of success for each subject in the test set:
-
-
-```{r warning=FALSE}
-pred_prob <- logistic_model2 %>% 
-  predict(test_data,type="response")
-```
-
-
-* We are now ready to calculate the accuracy of our trained model. To accomplish this, we translate all probabilities of success above to 0.5 to a 1 and otherwise to a 0, followed by tracking the number of correct predictions (1's correctly predicted as 1's and 0's correctly predicted as 0's).
-
-```{r}
-predicted.classes <- ifelse(pred_prob > 0.5, "1", "0")
-mean(predicted.classes == test_data$diag)
-```
-
-* This model yields a 65% accuracy rate!
