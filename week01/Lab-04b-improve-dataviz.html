@@ -3,7 +3,7 @@
   <head>
     <title>Improving Data Visualizations</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Yang Meng" />
+    <meta name="author" content="Dr. Mine Dogucu" />
     <script src="libs/header-attrs-2.23/header-attrs.js"></script>
     <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
     <script src="libs/panelset-0.2.6/panelset.js"></script>
@@ -24,28 +24,14 @@ class: title-slide
 
 # Improving Data Visualizations
 
-## Yang Meng
-Adapted from slides by Mine Dogucu
+## Dr. Mine Dogucu
+
 ]
 
----
-
-class: middle
-
-## Data 
-
-
-```r
-library(tidyverse)
-df &lt;- read.csv("../data/alzheimer_data.csv")
-df &lt;- df %&gt;% 
-  rename(gender = female) %&gt;%
-  mutate(gender = ifelse(gender, "female", "male"))
-df$diagnosis &lt;- factor(df$diagnosis)
-```
 
 ---
 
+class: middle 
  
 
 .panelset[
@@ -53,15 +39,15 @@ df$diagnosis &lt;- factor(df$diagnosis)
 
 .panel-name[Plot]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
 .panel[
 
 .panel-name[English]
-- Using the data,   
-- Map `height` to x-axis, `weight` to y-axis, `gender` to shape and color.
+- Using the `babies` data,   
+- Map `gestation` to x-axis, `bwt` to y-axis, `smoke` to shape and color.
 - Add a layer of points and set the size of the points to 4.
 ]
 
@@ -69,11 +55,11 @@ df$diagnosis &lt;- factor(df$diagnosis)
 .panel-name[R]
 
 ```r
-ggplot(df,
-       aes(x = height,
-           y = weight,
-           shape = gender,
-           color = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
   geom_point(size = 4) 
 ```
 
@@ -83,6 +69,7 @@ ggplot(df,
 
 
 ---
+class: middle 
 
 ## Labs
 
@@ -92,17 +79,17 @@ ggplot(df,
 
 .panel-name[Plot]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
 .panel[
 
 .panel-name[English]
-- Using the data,   
-- Map `height` to x-axis, `weight` to y-axis, `gender` to shape.
+- Using the `babies` data,   
+- Map `gestation` to x-axis, `bwt` to y-axis, `smoke` to shape.
 - Add a layer of points and set the size of the points to 4.
-- .highlight-text[Add labels to x-axis, y-axis, and the title of the plot.]
+- .highlight-text[Add labels to x-axis (Gestation), y-axis (Birth Weight), and the title of the plot (Palmer babies).]
 
 
 
@@ -110,15 +97,15 @@ ggplot(df,
 .panel-name[R]
 
 ```r
-ggplot(df,
-       aes(x = height,
-           y = weight,
-           shape = gender,
-           color = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
   geom_point(size = 4) +
-* labs(x = "Height (inches)",
-*      y = "Weight (lbs)",
-*      title = "Height and Weight by Gender")
+* labs(x = "Gestation (days)",
+*      y = "Birth Weight (ounces)",
+*      title = "Gestation and Birth Weight by Mother's Smoker Status")
 ```
 
 ]
@@ -134,22 +121,22 @@ ggplot(df,
 .left-panel[
 
 ```r
-ggplot(df,
-       aes(x = height,
-           y = weight,
-           shape = gender,
-           color = gender)) +
-  geom_point(size = 4) +
-* labs(x = "Height (inch)",
-*      y = "Weight (lbs)",
-       title = "Height and Weight by Gender") + 
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Gestation and Birth Weight by Mother's Smoker Status") 
 * theme_bw()
 ```
 
 ]
 
 .right-panel[
-![](Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+![](Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -166,7 +153,7 @@ class: middle
 
 .panel-name[`theme_gray()`]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -174,7 +161,7 @@ class: middle
 
 .panel-name[`theme_bw()`]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -182,7 +169,7 @@ class: middle
 
 .panel-name[`theme_classic()`]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -190,14 +177,14 @@ class: middle
 
 .panel-name[`theme_dark()`]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
 .panel[
 .panel-name[`theme_minimal()`]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -205,56 +192,37 @@ class: middle
 .panel[
 .panel-name[`theme_void()`]
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 ]
 
 ---
 
+.left-panel[
+
 
 ```r
-ggplot(df,
-       aes(x = height,
-           y = weight,
-           shape = gender,
-           color = gender)) +
-  geom_point(size = 4) +
-* labs(x = "Height (inch)",
-*      y = "Weight (lbs)",
-       title = "Height and Weight by Gender") + 
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
   theme_bw() +
 * theme(text = element_text(size=20))
 ```
 
-
----
-
-.panelset[
-
-.panel[
-.panel-name[`size=10`]
-
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
-
 ]
 
-.panel[
-.panel-name[`size=15`]
+.right-panel[
 
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
-
+![](Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
 ]
 
-
-.panel[
-.panel-name[`size=20`]
-
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
-
-]
-
-]
 
 ---
 
@@ -276,19 +244,19 @@ class: middle
 
 
 ```r
-ggplot(df,
-       aes(x = height,
-           y = weight,
-           shape = gender,
-           color = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
   geom_point(size = 4) +
-* facet_grid(. ~ diagnosis)
+* facet_grid(.~parity)
 ```
 
 ]
 
 .right-panel[
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -300,19 +268,19 @@ class: middle
 
 
 ```r
-ggplot(df,
-       aes(x = height,
-           y = weight,
-           shape = gender,
-           color = gender)) +
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
   geom_point(size = 4) +
-* facet_grid(diagnosis ~ .)
+* facet_grid(parity~.)
 ```
 
 ]
 
 .right-panel[
-&lt;img src="Lab-02d-improve-dataviz-meng_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04b-improve-dataviz_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ---

@@ -1,6 +1,6 @@
 ---
 title: "Visualizing Data"
-author: "Zoey Yang"
+author: "Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]
@@ -36,8 +36,6 @@ theme_set(theme_gray(base_size = 18))
 
 ## `r rmarkdown::metadata$author`
 
-
-Adapted from slides by Mine Dogucu
 ]
 
 ---

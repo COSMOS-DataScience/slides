@@ -4,7 +4,7 @@
     <title>Visualizing Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
     <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
     <script src="libs/panelset-0.2.6/panelset.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
@@ -68,7 +68,7 @@ class: middle
 
 __gg__plot is based on __g__rammar of __g__raphics.
 
-![](img/grammar_graphics.jpeg)&lt;!-- --&gt;
+&lt;img src="img/grammar_graphics.jpeg" width="237" /&gt;
 
 ---
 
@@ -94,7 +94,7 @@ If you had the data and had to draw this bar plot by hand, what would you do?
 
 .right-panel[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -115,7 +115,7 @@ Possible ideas
 
 .right-panel[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -138,8 +138,7 @@ R will do some of these steps by default. Making a bar plot with another tool mi
 ]
 
 .right-panel[
-
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -169,8 +168,7 @@ ggplot(data = babies)
 ]
 
 .pull-right[
-
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -190,7 +188,7 @@ ggplot(data = babies,
 
 .pull-right[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -211,7 +209,7 @@ ggplot(data = babies,
 
 .pull-right[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 ]
 ---
 
@@ -221,7 +219,7 @@ class: middle
 
 .panel[
 .panel-name[Plot]
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -265,7 +263,7 @@ class: middle
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -305,7 +303,7 @@ ggplot(data = babies)
 
 .pull-right[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -325,7 +323,7 @@ ggplot(data = babies,
 
 .pull-right[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -351,7 +349,7 @@ ggplot(data = babies,
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -363,7 +361,7 @@ ggplot(data = babies,
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -375,7 +373,7 @@ ggplot(data = babies,
 * geom_histogram(binwidth = 15)
 ```
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -391,36 +389,23 @@ class: middle
 
 ]
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
 .panel[.panel-name[binwidth = 50]
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
-
-]
-
-.panel[.panel-name[binwidth = 100]
-
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
 
 ]
-
-
-
 
 ---
 
 class: middle center
 
-
-.font150[
-🌈
-] 
 
 Pick your favorite color(s) from the list at:
 
@@ -436,7 +421,7 @@ ggplot(data = babies,
 *                color = "white")
 ```
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -448,7 +433,7 @@ ggplot(data = babies,
 *                fill = "darkred")
 ```
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -461,7 +446,8 @@ ggplot(data = babies,
 *                fill = "darkred")
 ```
 
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
+
 
 ---
 
@@ -486,8 +472,9 @@ ggplot(data = babies,
 
 .pull-right[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
 ]
+
 
 ---
 
@@ -506,10 +493,11 @@ ggplot(data = babies,
 
 .pull-right[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
 ]
 
 .footnote[Note that y-axis is no longer count but we will learn how to change that later.]
+
 
 ---
 
@@ -528,7 +516,7 @@ ggplot(data = babies,
 
 .pull-right[
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
 ]
 
 .footnote[Note that y-axis is no longer count but we will change that later.]
@@ -548,7 +536,7 @@ class: middle
 
 .panel[
 .panel-name[Plot]
-&lt;img src="Lab-02b-visualize-data_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Lab-04a-visualize-data_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /&gt;
 
 ]
 
@@ -580,13 +568,14 @@ ggplot(babies,
 ---
 
 .pull-left[
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
 
 ]
 
 .pull-right[
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-40-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
 ]
+
 
 ---
 class: inverse middle
@@ -609,13 +598,12 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 13 rows containing missing values (geom_point).
+## Warning: Removed 13 rows containing missing values (`geom_point()`).
 ```
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
 
 ]
-
 
 ---
 
@@ -640,10 +628,10 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 13 rows containing missing values (geom_point).
+## Warning: Removed 13 rows containing missing values (`geom_point()`).
 ```
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -664,10 +652,10 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 23 rows containing missing values (geom_point).
+## Warning: Removed 23 rows containing missing values (`geom_point()`).
 ```
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-46-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -690,10 +678,10 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 23 rows containing missing values (geom_point).
+## Warning: Removed 23 rows containing missing values (`geom_point()`).
 ```
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-48-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-47-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -715,10 +703,10 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 23 rows containing missing values (geom_point).
+## Warning: Removed 23 rows containing missing values (`geom_point()`).
 ```
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-50-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-49-1.png)&lt;!-- --&gt;
 
 ]
 
@@ -742,10 +730,10 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 58 rows containing missing values (geom_point).
+## Warning: Removed 58 rows containing missing values (`geom_point()`).
 ```
 
-![](Lab-02b-visualize-data_files/figure-html/unnamed-chunk-52-1.png)&lt;!-- --&gt;
+![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-51-1.png)&lt;!-- --&gt;
 ]
 
 ---
