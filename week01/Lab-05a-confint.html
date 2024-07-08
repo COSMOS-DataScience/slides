@@ -3,8 +3,8 @@
   <head>
     <title>Confidence Interval and Hypothesis Testing</title>
     <meta charset="utf-8" />
-    <meta name="author" content="" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="author" content="Dr. Mine Dogucu" />
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -23,7 +23,7 @@ class: title-slide
 .right-panel[ 
 
 # Confidence Interval and Hypothesis Testing
-## 
+## Dr. Mine Dogucu
 
 
 ]
@@ -45,7 +45,7 @@ class: title-slide
 ## Load the Packages and Data
 
 
-```r
+``` r
 library(tidyverse)
 df &lt;- read.csv("../data/Alzheimer_data.csv")
 ```
@@ -55,7 +55,7 @@ df &lt;- read.csv("../data/Alzheimer_data.csv")
 ## Simulated Data
 
 
-```r
+``` r
 set.seed(0)
 norm_size &lt;- 100
 norm_random &lt;- rnorm(n = norm_size, mean = 10, sd = 2)
@@ -72,7 +72,7 @@ summary(norm_random)
 ## Confidence Interval
 
 
-```r
+``` r
 t_test_result &lt;- t.test(x = norm_random)
 t_test_result$conf.int
 ```
@@ -89,7 +89,7 @@ t_test_result$conf.int
 
 We can lower our confidence level, which leads to a narrower interval:
 
-```r
+``` r
 t_test_result &lt;- 
   t.test(x = norm_random, conf.level = 0.9)
 t_test_result$conf.int
@@ -107,7 +107,7 @@ t_test_result$conf.int
 
 To have a higher confidence level, we need a broader interval:
 
-```r
+``` r
 t_test_result &lt;- 
   t.test(x = norm_random, conf.level = 0.99)
 t_test_result$conf.int
@@ -125,7 +125,7 @@ t_test_result$conf.int
 ## Hypothesis Testing
 
 
-```r
+``` r
 summary(norm_random)
 ```
 
@@ -136,7 +136,7 @@ summary(norm_random)
 
 `\(H_0:\mu=10\)` vs. `\(H_A:\mu\neq10\)`
 
-```r
+``` r
 t.test(x = norm_random, mu = 10)$p.value
 ```
 
@@ -150,7 +150,7 @@ t.test(x = norm_random, mu = 10)$p.value
 
 `\(H_0:\mu=10\)` vs. `\(H_A:\mu&gt;10\)`
 
-```r
+``` r
 t.test(x = norm_random, mu = 10, 
        alternative = "greater")$p.value
 ```
@@ -162,7 +162,7 @@ t.test(x = norm_random, mu = 10,
 `\(H_0:\mu=9\)` vs. `\(H_A:\mu&gt;9\)`
 
 
-```r
+``` r
 t.test(x = norm_random, mu = 9, 
        alternative = "greater")$p.value
 ```
@@ -178,7 +178,7 @@ t.test(x = norm_random, mu = 9,
 Try to get a 90 percent confidence interval for the population mean of age among AD subjects.
 
 
-```r
+``` r
 summary(df$age)
 ```
 
@@ -194,7 +194,7 @@ summary(df$age)
 Try to get a 90 percent confidence interval for the population mean of age among AD subjects.
 
 
-```r
+``` r
 t_test_age &lt;- t.test(df$age, conf.level = 0.9)
 t_test_age$conf.int
 ```
@@ -214,7 +214,7 @@ Test whether the population mean of age is 70 or greater than 70 and get the p-v
 `\(H_0:\mu=70\)` vs. `\(H_A:\mu&gt;70\)`
 
 
-```r
+``` r
 summary(df$age)
 ```
 
@@ -232,7 +232,7 @@ Test whether the population mean of age is 70 or greater than 70 and get the p-v
 `\(H_0:\mu=70\)` vs. `\(H_A:\mu&gt;70\)`
 
 
-```r
+``` r
 t_test_age &lt;- t.test(df$age, mu = 70, alternative = "greater")
 round(t_test_age$p.value, 4)
 ```
@@ -248,7 +248,7 @@ round(t_test_age$p.value, 4)
 Simulated data
 
 
-```r
+``` r
 set.seed(0)
 bern_size &lt;- 100
 bern_random &lt;- rbinom(bern_size, 1, 0.3)
@@ -259,7 +259,7 @@ head(bern_random, 10)
 ##  [1] 1 0 0 0 1 0 1 1 0 0
 ```
 
-```r
+``` r
 success_counts &lt;- sum(bern_random)
 success_counts
 ```
@@ -273,7 +273,7 @@ success_counts
 ## Confidence Interval for Population Proportion
 
 
-```r
+``` r
 prop_test_result &lt;-
   prop.test(x = success_counts, 
             n = bern_size)
@@ -293,7 +293,7 @@ prop_test_result$conf.int
 `\(H_0:p=0.3\)` vs. `\(H_A:p\neq0.3\)`
 
 
-```r
+``` r
 prop_test_result &lt;-
   prop.test(x = success_counts, 
             n = bern_size, 
@@ -309,7 +309,7 @@ prop_test_result$p.value
 ## Real Data Practice (brain volume: naccicv)
 
 
-```r
+``` r
 success_counts_naccicv &lt;- 
   df %&gt;%
   filter(naccicv &gt; 1300 &amp; naccicv &lt; 1600) %&gt;%
@@ -322,7 +322,7 @@ success_counts_naccicv
 ## [1] 1811
 ```
 
-```r
+``` r
 bern_size_naccicv
 ```
 
@@ -341,7 +341,7 @@ bern_size_naccicv
 ---
 
 
-```r
+``` r
 prop_test_result_naccicv &lt;-
   prop.test(x = success_counts_naccicv, 
             n = bern_size_naccicv, 
@@ -356,7 +356,7 @@ prop_test_result_naccicv$conf.int
 ## [1] 0.95
 ```
 
-```r
+``` r
 prop_test_result_naccicv$p.value
 ```
 
@@ -383,7 +383,7 @@ We can examine whether the average blood pressure is different between male and 
 `\(H_0:\mu_M=\mu_F\)` vs. `\(H_A:\mu_M \neq \mu_F\)` 
 
 
-```r
+``` r
 t.test(bpsys ~ female, data = df)$p.value
 ```
 
@@ -407,7 +407,7 @@ Question: Are age and blood pressure correlated?
 `\(H_0:\)` They are NOT correlated. vs. `\(H_A:\)` They are correlated.
 
 
-```r
+``` r
 round(cor.test(df$age, df$bpsys)$p.value, 4)
 ```
 
@@ -418,7 +418,7 @@ round(cor.test(df$age, df$bpsys)$p.value, 4)
 `\(H_0:\)` They are NOT correlated. vs. `\(H_A:\)` They are positively correlated.
 
 
-```r
+``` r
 round(cor.test(df$age, df$bpsys, 
                alternative = "greater")$p.value, 4)
 ```
@@ -435,7 +435,7 @@ round(cor.test(df$age, df$bpsys,
 Question: Are gender and disease status associated with each other?
 
 
-```r
+``` r
 contingency_table &lt;- table(df$female, df$diagnosis)
 contingency_table
 ```
@@ -454,7 +454,7 @@ contingency_table
 `\(H_0:\)` They are independent vs. `\(H_A:\)` They are NOT independent.
 
 
-```r
+``` r
 chisq.test(contingency_table)
 ```
 

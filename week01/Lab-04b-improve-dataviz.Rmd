@@ -314,7 +314,10 @@ ggplot(babies,
        y = "Birth Weight (ounces)", 
        title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
   theme_bw() +
-  theme(text = element_text(size=20)) #<<
+  theme(title = 
+          element_text(size = 12),
+        axis.title = 
+          element_text(size = 10,face="bold"))
   
 ```
 
@@ -333,7 +336,8 @@ ggplot(babies,
        y = "Birth Weight (ounces)", 
        title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
   theme_bw() +
-  theme(text = element_text(size=20))
+  theme(title = element_text(size = 12),
+        axis.title = element_text(size = 10,face="bold"))
 ```
 ]
 
