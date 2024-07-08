@@ -4,9 +4,9 @@
     <title>Visualizing Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
-    <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-    <script src="libs/panelset-0.2.6/panelset.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <link href="libs/panelset-0.3.0/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.3.0/panelset.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -45,7 +45,7 @@ class: middle
 ## Data 
 
 
-```r
+``` r
 glimpse(babies)
 ```
 
@@ -68,7 +68,7 @@ class: middle
 
 __gg__plot is based on __g__rammar of __g__raphics.
 
-&lt;img src="img/grammar_graphics.jpeg" width="237" /&gt;
+![](img/grammar_graphics.jpeg)&lt;!-- --&gt;
 
 ---
 
@@ -162,7 +162,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 ggplot(data = babies)
 ```
 ]
@@ -180,7 +180,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 ggplot(data = babies,
 *      aes(x = smoke))
 ```
@@ -200,7 +200,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = smoke)) +
 * geom_bar()
@@ -235,7 +235,7 @@ class: middle
 .panel[
 .panel-name[R]
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = smoke)) +
   geom_bar()
@@ -279,7 +279,7 @@ class: middle
 .panel[
 .panel-name[R]
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = bwt)) +
   geom_histogram() 
@@ -296,7 +296,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 ggplot(data = babies)
 ```
 ]
@@ -315,7 +315,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 ggplot(data = babies,
 *      aes(x = bwt))
 ```
@@ -335,7 +335,7 @@ class: middle
 
 .pull-left[
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = bwt)) +
 * geom_histogram()
@@ -367,7 +367,7 @@ ggplot(data = babies,
 
 
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = bwt)) +
 * geom_histogram(binwidth = 15)
@@ -414,7 +414,7 @@ Pick your favorite color(s) from the list at:
 ---
 
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = bwt)) +
   geom_histogram(binwidth = 15, 
@@ -426,7 +426,7 @@ ggplot(data = babies,
 ---
 
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = bwt)) +
   geom_histogram(binwidth = 15, 
@@ -438,7 +438,7 @@ ggplot(data = babies,
 ---
 
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = bwt)) +
   geom_histogram(binwidth = 15, 
@@ -462,7 +462,7 @@ class: inverse middle center
 .pull-left[
 
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = smoke, 
 *          fill = parity)) +
@@ -483,7 +483,7 @@ ggplot(data = babies,
 .pull-left[
 
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = smoke, 
            fill = parity)) + 
@@ -506,7 +506,7 @@ ggplot(data = babies,
 .pull-left[
 
 
-```r
+``` r
 ggplot(data = babies,
        aes(x = smoke, 
            fill = parity)) + 
@@ -552,7 +552,7 @@ class: middle
 .panel[
 .panel-name[R]
 
-```r
+``` r
 ggplot(babies,
        aes(x = smoke,
            y = bwt))  +
@@ -586,7 +586,7 @@ class: inverse middle
 
 .left-panel[
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt))  +
@@ -598,7 +598,8 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 13 rows containing missing values (`geom_point()`).
+## Warning: Removed 13 rows containing missing values or values outside the scale range
+## (`geom_point()`).
 ```
 
 ![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
@@ -615,7 +616,7 @@ class: middle inverse
 
 .left-panel[
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -628,7 +629,8 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 13 rows containing missing values (`geom_point()`).
+## Warning: Removed 13 rows containing missing values or values outside the scale range
+## (`geom_point()`).
 ```
 
 ![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
@@ -639,7 +641,7 @@ ggplot(babies,
 ---
 .left-panel[
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -652,7 +654,8 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 23 rows containing missing values (`geom_point()`).
+## Warning: Removed 23 rows containing missing values or values outside the scale range
+## (`geom_point()`).
 ```
 
 ![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
@@ -665,7 +668,7 @@ ggplot(babies,
 
 .left-panel[
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -678,7 +681,8 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 23 rows containing missing values (`geom_point()`).
+## Warning: Removed 23 rows containing missing values or values outside the scale range
+## (`geom_point()`).
 ```
 
 ![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-47-1.png)&lt;!-- --&gt;
@@ -689,7 +693,7 @@ ggplot(babies,
 
 .left-panel[
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -703,7 +707,8 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 23 rows containing missing values (`geom_point()`).
+## Warning: Removed 23 rows containing missing values or values outside the scale range
+## (`geom_point()`).
 ```
 
 ![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-49-1.png)&lt;!-- --&gt;
@@ -715,7 +720,7 @@ ggplot(babies,
 
 .left-panel[
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -730,7 +735,8 @@ ggplot(babies,
 .right-panel[
 
 ```
-## Warning: Removed 58 rows containing missing values (`geom_point()`).
+## Warning: Removed 58 rows containing missing values or values outside the scale range
+## (`geom_point()`).
 ```
 
 ![](Lab-04a-visualize-data_files/figure-html/unnamed-chunk-51-1.png)&lt;!-- --&gt;
