@@ -121,6 +121,7 @@ Version control is not just a tool for software developers. It's an essential pa
 git --version (for git)
 brew install gh (for github)
 ```
+- If needed: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ::::
 
 :::{.fragment .fade-in-then-out .absolute top=400}
