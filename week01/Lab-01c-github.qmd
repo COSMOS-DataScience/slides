@@ -251,7 +251,7 @@ So, version control is like a magical camera for your projects. It lets you take
   - Now, do 'git add test.txt' to add it to github's purview
   - Let's go one further - it's time to (**commit**) a change to our repo branch
   - Commits are snapshots of progress, a save function
-    - git commit -m "my first commit!"
+    - git commit -m "my first commit"
     - The '-m' argument lets you add a commit message in quotes - always make sure to include the argument and a message.
     - If you don't, everything explodes (you open an archaic command line text editing tool)
 :::
