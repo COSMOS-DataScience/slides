@@ -4,7 +4,7 @@
     <title>R packages</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="Lab-01b-R-packages_files/header-attrs-2.23/header-attrs.js"></script>
+    <script src="Lab-02a-R-packages_files/header-attrs-2.27/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -77,7 +77,11 @@ Good part: There is an R package for (almost) everything, from complex statistic
 
 --
 
-Bad part: At the beginning it can feel overwhelming. 
+Bad part: At the beginning it can feel overwhelming.
+
+--
+
+Don't worry! Remember the axiom, "**there's nothing new under the sun**".
 
 ---
 
@@ -105,10 +109,24 @@ class: middle
 
 ## R packages
 
+Where do R packages come from?
+
+- Large orgs &amp; corporations (Apache, Posit)
+
+- Enterprising open-source developers
+
+- Graduate students &amp; research teams
+
+---
+
+class: middle
+
+## R packages
+
 Try running the following code:
 
 
-```r
+``` r
 beep()
 ```
 
@@ -131,7 +149,7 @@ class:inverse middle
 In your **Console**, install the beepr package
 
 
-```r
+``` r
 install.packages("beepr")
 ```
 
@@ -165,7 +183,7 @@ class:inverse middle
 
 .pull-left[
 
-```r
+``` r
 library(beepr)
 beep()
 ```
@@ -178,7 +196,7 @@ E.g. we have used many functions (ggplot, aes, geom_...) from the ggplot2 packag
 
 .pull-right[
 
-```r
+``` r
 beepr::beep()
 ```
 Useful when you are going to use a function once or few times. Also useful if there are any conflicts. For instance if there is some other package loaded that has a `beep()` function that prints the word beep, you would want to distinguish the beep function from the `beepr` package and the `beep()` function from the other imaginary package. 
@@ -239,7 +257,7 @@ class: middle
 We can also load the tidyverse packages all at the same time.
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
@@ -249,7 +267,7 @@ library(tidyverse)
 
 .left-panel[
 
-```r
+``` r
 library(magrittr)
 ```
 
