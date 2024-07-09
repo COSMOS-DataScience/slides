@@ -48,6 +48,8 @@ Good coding style is like correct punctuation: you can manage without it, but it
 
 
 ---
+File names
+
 - Avoid using special characters in file names - stick with numbers, letters, -, and _.
 
 ```{r, message=FALSE, eval = FALSE}
@@ -60,27 +62,33 @@ fit models.R
 foo.r
 stuff.r
 ```
----
 
+---
+Syntax
+
+- Before and after operators (e.g. <-, =) leave spaces.
 - Put a space after a comma, not before.
+- Object names are all lower case, with words separated by an underscore.
 
 ```{r, message=FALSE, eval = FALSE}
 # Good
 age <- c(6, 9, 15)
 # Bad
 age <- c(6,9,15)
-```
 
-- Object names are all lower case, with words separated by an underscore.
-- Before and after operators (e.g. <-, =) leave spaces.
-
-```{r, message=FALSE, eval = FALSE}
 # Good
 data.frame(age_kid = age)
-
 # Bad
 data.frame(Age_kid=age)
+
+# Good
+day_one <- 1
+day_1 <- 1
+# Bad
+DayOne <- 1
+first_day_of_the_month <- 1
 ```
+
 
 -[The tidyverse style guide](https://style.tidyverse.org/)
 ---
@@ -204,6 +212,23 @@ class: middle inverse
 class: middle
 
 .font75[Shortcut: <br>Ctrl (Command) + Shift + M]
+
+---
+
+class: middle
+
+Before using pipe, install package called 'tidyverse'
+
+Recall R package, how to use a function/operator from a package?
+
+---
+
+class: middle
+
+```{r}
+#install.packages('tidyverse')
+library(tidyverse)
+```
 
 ---
 class: middle
