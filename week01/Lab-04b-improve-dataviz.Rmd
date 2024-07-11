@@ -317,7 +317,8 @@ ggplot(babies,
   theme(title = 
           element_text(size = 12),
         axis.title = 
-          element_text(size = 10,face="bold"))
+          element_text(size = 10,
+                       face="bold"))
   
 ```
 
