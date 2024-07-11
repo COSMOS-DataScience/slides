@@ -789,7 +789,7 @@ ggplot(babies,
 ---
   
   .left-panel[
-    ```{r eval = FALSE}
+```{r eval = FALSE}
     ggplot(babies,
            aes(x = gestation,
                y = bwt,
@@ -797,12 +797,12 @@ ggplot(babies,
                color = smoke,
                size = weight)) +
       geom_point()
-    ```
+```
     
   ]
 
 .right-panel[
-  ```{r echo = FALSE}
+```{r echo = FALSE}
   ggplot(babies,
          aes(x = gestation,
              y = bwt,
@@ -810,7 +810,7 @@ ggplot(babies,
              color = smoke,
              size = weight))  +
     geom_point()
-  ```
+```
 ]
 
 ---
