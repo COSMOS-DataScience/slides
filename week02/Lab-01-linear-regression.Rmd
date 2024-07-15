@@ -1,6 +1,6 @@
 ---
 title: "Linear Regression in R"
-author: "Zahra Moslemi"
+author: "Dr. Mine Dogucu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
@@ -12,7 +12,8 @@ output:
       highlightStyle: "pygments"
       highlightLines: true
       highlightLanguage: "r"
-
+editor_options: 
+  chunk_output_type: console
 ---
 
 class: title-slide
@@ -32,7 +33,6 @@ library(gtsummary)
 # `r rmarkdown::metadata$title`
 ## `r rmarkdown::metadata$author`
 
-Adapted from slides by Mine Dogucu and Sam Behseta
 ]
 
 
@@ -101,14 +101,15 @@ Recall the left hippocampus volume **lhippo** is likely to shrink as Alzheimer's
 
 To fit linear models all we need to do is to apply the **lm()** command in R. We begin with plotting the response versus each predictor, separately.
 
-```{r eval=FALSE, warning=FALSE}
+---
+```{r eval=FALSE, warning=FALSE,fig.width=16}
 ggplot(data = alzheimer_data) +
   geom_point(aes(x = age, y = lhippo), color = "red") +
   labs(x = "Age", y = "left hippo") +
   theme_minimal()
 ```
 
-```{r eval=FALSE, warning=FALSE}
+```{r eval=FALSE, warning=FALSE,fig.width=16}
 ggplot(data = alzheimer_data) +
   geom_point(aes(x = educ, y = lhippo), color = "red") +
   labs(x = "Education", y = "left hippo") +
@@ -116,7 +117,7 @@ ggplot(data = alzheimer_data) +
 ```
 
 ---
-```{r echo=FALSE, warning=FALSE, fig.align='center'}
+```{r echo=FALSE, warning=FALSE, fig.align='center',fig.width=14}
 library(ggplot2)
 library(gridExtra)
 
@@ -168,11 +169,22 @@ Here is the regression of lhippo versus education:
 lm_model <- lm(lhippo ~ educ, data = alzheimer_data)
 summary(lm_model)
 ```
+
+
+---
+```{r}
+lm(lhippo ~ educ, data = alzheimer_data) %>%
+  tbl_regression()
+```
+
 ---
 ```{r warning=FALSE}
+
 lm(lhippo ~ educ, data = alzheimer_data) %>%
   tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
-
+ 
+lm(lhippo ~ educ, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) round(x, digits = 3))
 ```
 ---
 
@@ -274,3 +286,7 @@ To evaluate the performance of our model, we can calculate the Mean Squared Erro
 mean((test_data$lhippo - predictions)^2)
 
 ```
+
+Question:
+
+What happen to MSE when we change the ratio we split the data?
