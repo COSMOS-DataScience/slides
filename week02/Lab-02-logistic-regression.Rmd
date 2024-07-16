@@ -1,6 +1,6 @@
 ---
 title: "Logistic Regression in R"
-author: "Zahra Moslemi"
+author: "Mine Dogecu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"]
@@ -32,7 +32,6 @@ library(gtsummary)
 # `r rmarkdown::metadata$title`
 ## `r rmarkdown::metadata$author`
 
-Adapted from slides by Mine Dogucu and Sam Behseta
 ]
 
 
