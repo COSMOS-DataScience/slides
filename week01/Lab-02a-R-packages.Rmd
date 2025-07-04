@@ -85,7 +85,11 @@ Good part: There is an R package for (almost) everything, from complex statistic
 
 --
 
-Bad part: At the beginning it can feel overwhelming. 
+Bad part: At the beginning it can feel overwhelming.
+
+--
+
+Don't worry! Remember the axiom, "**there's nothing new under the sun**".
 
 ---
 
@@ -106,6 +110,20 @@ What do R packages have? All sorts of things but mainly
 - functions 
 
 - datasets
+
+---
+
+class: middle
+
+## R packages
+
+Where do R packages come from?
+
+- Large orgs & corporations (Apache, Posit)
+
+- Enterprising open-source developers
+
+- Graduate students & research teams
 
 ---
 

@@ -48,6 +48,44 @@ class: middle
 - Open slides for this session from the cluster website (https://uci-dshs.netlify.app/). 
 
 
+
+---
+
+class: middle
+
+## Preparation 
+
+1. Please load the data named 'babies' from package named 'openintro'
+
+2. Please install package named 'ggplot2' that used for visualization
+
+3. Also, please load tidyverse in order to refresh data wrangling 
+
+---
+
+class: middle
+
+load data
+```{r  message=FALSE,eval=FALSE}
+
+#install.packages('openintro')
+library(openintro)
+data("babies")
+```
+
+install ggplot2
+```{r  message=FALSE,eval=FALSE}
+#install.packages('ggplot2')
+library(ggplot2)
+```
+
+
+load tidyverse
+```{r  message=FALSE,eval=FALSE}
+library(tidyverse)
+```
+
+
 ---
 
 class: middle
@@ -674,105 +712,104 @@ ggplot(babies,
 
 
 ---
-.left-panel[
-```{r eval = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke)) +
-  geom_point()
-```
-
-]
+  .left-panel[
+    ```{r eval = FALSE}
+    ggplot(babies,
+           aes(x = gestation,
+               y = bwt,
+               shape = smoke)) +
+      geom_point()
+    ```
+    
+  ]
 
 .right-panel[
-```{r echo = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke))  +
-  geom_point()
-```
+  ```{r echo = FALSE}
+  ggplot(babies,
+         aes(x = gestation,
+             y = bwt,
+             shape = smoke))  +
+    geom_point()
+  ```
+  
+]
+---
+  
+  
+  
+  .left-panel[
+    ```{r eval = FALSE}
+    ggplot(babies,
+           aes(x = gestation,
+               y = bwt,
+               shape = smoke)) +
+      geom_point()
+    ```
+    
+  ]
 
+.right-panel[
+  ```{r echo = FALSE}
+  ggplot(babies,
+         aes(x = gestation,
+             y = bwt,
+             shape = smoke))  +
+    geom_point()
+  ```
+  
 ]
 
 ---
-
-
-
-.left-panel[
-```{r eval = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke)) +
-  geom_point()
-```
-
-]
-
-.right-panel[
-```{r echo = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke))  +
-  geom_point()
-```
-
-]
-
----
-
-.left-panel[
-```{r eval = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke,
-           color = smoke)) +
-  geom_point()
-```
-
-]
+  
+  .left-panel[
+    ```{r eval = FALSE}
+    ggplot(babies,
+           aes(x = gestation,
+               y = bwt,
+               shape = smoke,
+               color = smoke)) +
+      geom_point()
+    ```
+    
+  ]
 
 .right-panel[
-```{r echo = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke,
-           color = smoke))  +
-  geom_point()
-```
-
+  ```{r echo = FALSE}
+  ggplot(babies,
+         aes(x = gestation,
+             y = bwt,
+             shape = smoke,
+             color = smoke))  +
+    geom_point()
+  ```
+  
 ]
 
 
 ---
-
-.left-panel[
+  
+  .left-panel[
 ```{r eval = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke,
-           color = smoke,
-           size = weight)) +
-  geom_point()
+    ggplot(babies,
+           aes(x = gestation,
+               y = bwt,
+               shape = smoke,
+               color = smoke,
+               size = weight)) +
+      geom_point()
 ```
-
-]
+    
+  ]
 
 .right-panel[
 ```{r echo = FALSE}
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke,
-           color = smoke,
-           size = weight))  +
-  geom_point()
+  ggplot(babies,
+         aes(x = gestation,
+             y = bwt,
+             shape = smoke,
+             color = smoke,
+             size = weight))  +
+    geom_point()
 ```
 ]
 

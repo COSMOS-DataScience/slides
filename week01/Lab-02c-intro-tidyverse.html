@@ -4,7 +4,7 @@
     <title>Introduction to tidyverse</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mine Dogucu" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -42,10 +42,12 @@ Good coding style is like correct punctuation: you can manage without it, but it
 
 
 ---
+File names
+
 - Avoid using special characters in file names - stick with numbers, letters, -, and _.
 
 
-```r
+``` r
 # Good
 fit_models.R
 utility_functions.R
@@ -55,29 +57,34 @@ fit models.R
 foo.r
 stuff.r
 ```
+
 ---
+Syntax
 
+- Before and after operators (e.g. &lt;-, =) leave spaces.
 - Put a space after a comma, not before.
+- Object names are all lower case, with words separated by an underscore.
 
 
-```r
+``` r
 # Good
 age &lt;- c(6, 9, 15)
 # Bad
 age &lt;- c(6,9,15)
-```
 
-- Object names are all lower case, with words separated by an underscore.
-- Before and after operators (e.g. &lt;-, =) leave spaces.
-
-
-```r
 # Good
 data.frame(age_kid = age)
-
 # Bad
 data.frame(Age_kid=age)
+
+# Good
+day_one &lt;- 1
+day_1 &lt;- 1
+# Bad
+DayOne &lt;- 1
+first_day_of_the_month &lt;- 1
 ```
+
 
 -[The tidyverse style guide](https://style.tidyverse.org/)
 ---
@@ -121,7 +128,7 @@ class: middle inverse
 ---
 
 
-```r
+``` r
 c(4, 8, 16)
 ```
 
@@ -134,7 +141,7 @@ c(4, 8, 16)
 &lt;hr&gt;
 
 
-```r
+``` r
 mean(c(4, 8, 16))
 ```
 
@@ -147,7 +154,7 @@ mean(c(4, 8, 16))
 &lt;hr&gt;
 
 
-```r
+``` r
 round(mean(c(4, 8, 16)))
 ```
 
@@ -174,7 +181,7 @@ class: middle inverse
 class: middle
 
 
-```r
+``` r
 numbers &lt;- c(4, 8, 16)
 numbers
 ```
@@ -188,7 +195,7 @@ numbers
 &lt;hr&gt;
 
 
-```r
+``` r
 avg_number &lt;- mean(numbers)
 avg_number
 ```
@@ -202,7 +209,7 @@ avg_number
 &lt;hr&gt;
 
 
-```r
+``` r
 round(avg_number)
 ```
 
@@ -231,11 +238,44 @@ class: middle
 .font75[Shortcut: &lt;br&gt;Ctrl (Command) + Shift + M]
 
 ---
+
+class: middle
+
+Before using pipe, install package called 'tidyverse'
+
+Recall R package, how to use a function/operator from a package?
+
+---
+
+class: middle
+
+
+``` r
+#install.packages('tidyverse')
+library(tidyverse)
+```
+
+```
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.2     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ tidyr::extract()   masks magrittr::extract()
+## ✖ dplyr::filter()    masks stats::filter()
+## ✖ dplyr::lag()       masks stats::lag()
+## ✖ purrr::set_names() masks magrittr::set_names()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+```
+
+---
 class: middle
 
 .pull-left[
 
-```r
+``` r
 c(4, 8, 16) %&gt;% 
   mean() %&gt;% 
   round()
@@ -274,7 +314,7 @@ Now we have `\(f \circ g \circ h (x)\)` or `round(mean(c(4, 8, 16)))`
 .pull-left[
 
 
-```r
+``` r
 h(x) %&gt;% 
   g() %&gt;% 
   f()
@@ -285,7 +325,7 @@ h(x) %&gt;%
 .pull-right[
 
 
-```r
+``` r
 c(4, 8, 16) %&gt;% 
   mean() %&gt;% 
   round()

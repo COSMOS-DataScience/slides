@@ -79,6 +79,13 @@ glimpse(arthritis)
 ```
 
 ---
+```{r}
+arthritis_age_mon <- arthritis %>% 
+  mutate(age_months = age*12)
+glimpse(arthritis_age_mon)
+```
+
+---
 
 **Goal**: 
 

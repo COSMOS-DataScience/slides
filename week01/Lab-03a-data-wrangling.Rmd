@@ -95,7 +95,8 @@ knitr::include_graphics("img/data-wrangle.002.jpeg")
 
 .left-panel[
 ```{r}
-select(alzheimer_data, height, weight) %>%
+select(alzheimer_data, 
+       height, weight) %>%
   head()
 ```
 ]
@@ -186,7 +187,7 @@ slice(alzheimer_data, 3:5) %>%
 
 `filter()` subsetting rows based on a condition.
 
-The data below includes rows when the age is 90.
+The data below includes rows when the age is 80.
 
 ```{r}
 filter(alzheimer_data, age == 80) %>%

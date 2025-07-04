@@ -52,12 +52,14 @@ library(fabricerin)
 ---
 
 # A Walkthrough of RStudio
-## Why it's a nice environment for R coding
+### Why it's a nice environment for R coding
 
----
 
-# A Walkthrough of RStudio
-## Create a new document in which to do R coding
+It is an IDE(Integrated Development Environment) which we use to manage and execute R code.
+
+It is open-source and free, and incoperated with other platforms.
+
+### Create a new document in which to do R coding
 
 ---
 
@@ -72,7 +74,7 @@ class: inverse middle center
 ## Object assignment operator
 
 ```{r}
-birth_year <- 1996
+birth_year <- 2007
 ```
 
 ---
@@ -84,7 +86,7 @@ R is case-sensitive
 
 ```{r error=TRUE}
 
-my_age <- 2023 - birth_year
+my_age <- 2024 - birth_year
 
 My_age
 ```
@@ -111,12 +113,24 @@ My_age
 
 --
 
-`factor`: categorical variables with different levels  
+`factor`: categorical variables with different levels(AD, no AD)
 
 --
 
 `logical`: TRUE (1), FALSE (0)  
 
+---
+## Variables in R
+
+typeof is the function we use to check the type
+
+
+```{r}
+typeof(1)
+typeof(1L)
+typeof(as.integer(1))
+```
+ 
 
 
 ---

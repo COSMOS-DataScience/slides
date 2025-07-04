@@ -4,7 +4,7 @@
     <title>Changing Variables</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="Lab-02d-change-variable_files/header-attrs-2.23/header-attrs.js"></script>
+    <script src="Lab-02d-change-variable_files/header-attrs-2.27/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -33,7 +33,7 @@ class: title-slide
 
 
 
-```r
+``` r
 glimpse(arthritis)
 ```
 
@@ -54,7 +54,7 @@ Create a new variable called `age_months` that represents `age` in months.
 ---
 
 
-```r
+``` r
 arthritis %&gt;% 
   mutate(age_months = age*12)
 ```
@@ -79,7 +79,7 @@ arthritis %&gt;%
 ---
 
 
-```r
+``` r
 glimpse(arthritis)
 ```
 
@@ -91,6 +91,25 @@ glimpse(arthritis)
 ## $ sex         &lt;fct&gt; female, female, female, female, female, male, female, fema…
 ## $ yrs_from_dx &lt;dbl&gt; 27, 27, 10, 9, NA, NA, 51, 11, 36, 4, 31, NA, 9, 10, 3, 10…
 ## $ cdai        &lt;dbl&gt; NA, 23.0, 14.5, NA, NA, NA, NA, 40.0, 6.0, NA, 0.0, NA, NA…
+```
+
+---
+
+``` r
+arthritis_age_mon &lt;- arthritis %&gt;% 
+  mutate(age_months = age*12)
+glimpse(arthritis_age_mon)
+```
+
+```
+## Rows: 530
+## Columns: 6
+## $ age         &lt;dbl&gt; 85, 86, 83, 83, 85, 79, 90, 90, 87, 82, 77, 86, 84, 76, 77…
+## $ age_gp      &lt;fct&gt; elderly, elderly, elderly, elderly, elderly, elderly, elde…
+## $ sex         &lt;fct&gt; female, female, female, female, female, male, female, fema…
+## $ yrs_from_dx &lt;dbl&gt; 27, 27, 10, 9, NA, NA, 51, 11, 36, 4, 31, NA, 9, 10, 3, 10…
+## $ cdai        &lt;dbl&gt; NA, 23.0, 14.5, NA, NA, NA, NA, 40.0, 6.0, NA, 0.0, NA, NA…
+## $ age_months  &lt;dbl&gt; 1020, 1032, 996, 996, 1020, 948, 1080, 1080, 1044, 984, 92…
 ```
 
 ---
@@ -107,7 +126,7 @@ Create a new variable called `cdai_level` which reflects the levels in the the d
 ---
 
 
-```r
+``` r
 arthritis %&gt;% 
   mutate(cdai_level = case_when(
     cdai &lt;=2.8 ~ "Remission", 
@@ -146,7 +165,7 @@ We can use pipes with ggplot too!
 
 .left-panel[
 
-```r
+``` r
 arthritis %&gt;% 
   mutate(cdai_level = case_when(
     cdai &lt;=2.8 ~ "Remission", 
@@ -159,14 +178,14 @@ arthritis %&gt;%
 ]
 
 .right-panel[
-![](Lab-02d-change-variable_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+![](Lab-02d-change-variable_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ]
 
 ---
 
 
 
-```r
+``` r
 arthritis &lt;- arthritis %&gt;% 
   mutate(cdai_level = case_when(
     cdai &lt;=2.8 ~ "Remission", 
@@ -178,7 +197,7 @@ arthritis &lt;- arthritis %&gt;%
 ---
 
 
-```r
+``` r
 glimpse(arthritis)
 ```
 
@@ -200,7 +219,7 @@ Make `cdai_level` a factor and `age` an integer.
 ---
 
 
-```r
+``` r
 arthritis %&gt;% 
   mutate(cdai_level = as.factor(cdai_level),
          age = as.integer(age)) 

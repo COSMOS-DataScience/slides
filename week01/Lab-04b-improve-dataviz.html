@@ -4,9 +4,9 @@
     <title>Improving Data Visualizations</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
-    <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-    <script src="libs/panelset-0.2.6/panelset.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <link href="libs/panelset-0.3.0/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.3.0/panelset.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -54,7 +54,7 @@ class: middle
 .panel[
 .panel-name[R]
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -96,7 +96,7 @@ class: middle
 .panel[
 .panel-name[R]
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -120,7 +120,7 @@ ggplot(babies,
 
 .left-panel[
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -202,7 +202,7 @@ class: middle
 .left-panel[
 
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -213,7 +213,11 @@ ggplot(babies,
        y = "Birth Weight (ounces)", 
        title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
   theme_bw() +
-* theme(text = element_text(size=20))
+  theme(title = 
+          element_text(size = 12),
+        axis.title = 
+          element_text(size = 10,
+                       face="bold"))
 ```
 
 ]
@@ -229,7 +233,7 @@ ggplot(babies,
 class: middle
 
 
-```r
+``` r
 ?theme
 ```
 
@@ -243,7 +247,7 @@ class: middle
 .left-panel[
 
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -267,7 +271,7 @@ class: middle
 .left-panel[
 
 
-```r
+``` r
 ggplot(babies,
        aes(x = gestation,
            y = bwt,

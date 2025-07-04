@@ -4,7 +4,7 @@
     <title>Working with R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -47,12 +47,14 @@ class: title-slide
 ---
 
 # A Walkthrough of RStudio
-## Why it's a nice environment for R coding
+### Why it's a nice environment for R coding
 
----
 
-# A Walkthrough of RStudio
-## Create a new document in which to do R coding
+It is an IDE(Integrated Development Environment) which we use to manage and execute R code.
+
+It is open-source and free, and incoperated with other platforms.
+
+### Create a new document in which to do R coding
 
 ---
 
@@ -67,8 +69,8 @@ class: inverse middle center
 ## Object assignment operator
 
 
-```r
-birth_year &lt;- 1996
+``` r
+birth_year &lt;- 2007
 ```
 
 ---
@@ -79,8 +81,8 @@ R is case-sensitive
 
 
 
-```r
-my_age &lt;- 2023 - birth_year
+``` r
+my_age &lt;- 2024 - birth_year
 
 My_age
 ```
@@ -111,12 +113,43 @@ My_age
 
 --
 
-`factor`: categorical variables with different levels  
+`factor`: categorical variables with different levels(AD, no AD)
 
 --
 
 `logical`: TRUE (1), FALSE (0)  
 
+---
+## Variables in R
+
+typeof is the function we use to check the type
+
+
+
+``` r
+typeof(1)
+```
+
+```
+## [1] "double"
+```
+
+``` r
+typeof(1L)
+```
+
+```
+## [1] "integer"
+```
+
+``` r
+typeof(as.integer(1))
+```
+
+```
+## [1] "integer"
+```
+ 
 
 
 ---
@@ -128,7 +161,7 @@ If something comes in quotes, it is not defined in R.
 
 
 
-```r
+``` r
 ages &lt;- c(25, my_age, 32)
 
 names &lt;- c("Menglin", "Mine", "Rafael")
@@ -139,7 +172,7 @@ data.frame(age = ages, name = names)
 ```
 ##   age    name
 ## 1  25 Menglin
-## 2  27    Mine
+## 2  17    Mine
 ## 3  32  Rafael
 ```
 
@@ -149,7 +182,7 @@ data.frame(age = ages, name = names)
 ## Functions and Arguments
 
 
-```r
+``` r
 do(something)
 ```
 
@@ -159,7 +192,7 @@ do(something)
 --
 
 
-```r
+``` r
 do(something, colorful)
 ```
 
@@ -176,7 +209,7 @@ do(something, colorful)
 In order to get any help we can use `?` followed by function (or object) name. 
 
 
-```r
+``` r
 ?c
 ```
 
@@ -189,7 +222,7 @@ In order to get any help we can use `?` followed by function (or object) name.
 - matrix
 
 
-```r
+``` r
 temp_variable = 1
 temp_vector = c(1, 2, 3)
 temp_matrix = matrix(c(1,2,3,4), nrow=2, ncol=2, 
