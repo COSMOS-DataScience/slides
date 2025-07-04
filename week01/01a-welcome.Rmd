@@ -45,11 +45,11 @@ knitr::include_graphics("img/Babak.jpeg")
 
 class: center middle
 
-## Dr. Jessica Jaynes
+## Dr. Zhaoxia Yu
 
 
 ```{r echo=FALSE, fig.align='center', out.width="30%"}
-knitr::include_graphics("img/jaynes.png")
+knitr::include_graphics("img/Yu_profile.jpg")
 ```
 
 ---
@@ -67,10 +67,10 @@ knitr::include_graphics("img/Zoey.png")
 
 class: center middle
 
-## Payton Politewicz
+## Sara Tyo
 
 ```{r echo=FALSE, fig.align='center', out.width="30%"}
-knitr::include_graphics("img/politewicz.png")
+knitr::include_graphics("img/SaraTyo.png")
 ```
 
 
