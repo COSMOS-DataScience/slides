@@ -1,6 +1,6 @@
 ---
 title: "Describing Data"
-author: "Jessica Jaynes"
+author: "Zhaoxia Yu"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]

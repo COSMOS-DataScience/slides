@@ -3,8 +3,8 @@
   <head>
     <title>Linear Regression</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Jessica Jaynes" />
-    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <meta name="author" content="Zhaoxia Yu" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
   </head>
   <body>
@@ -22,7 +22,7 @@ class: title-slide
 
 # Linear Regression
 
-### Jessica Jaynes
+### Zhaoxia Yu
 
 ]
 
@@ -203,7 +203,7 @@ sample size.
 - We can use the function `lm()` or `glm()` in R to find the least-squares regression line. 
 
 
-```r
+``` r
 lm(BP ~ salt, data=saltBP)
 ```
 
@@ -225,7 +225,7 @@ lm(BP ~ salt, data=saltBP)
 - We can use the function `lm()` or `glm()` in R to find the least-squares regression line. 
 
 
-```r
+``` r
 glm(BP ~ salt, data=saltBP)
 ```
 
@@ -306,7 +306,7 @@ response variable (i.e., blood pressure) for all individuals in the target popul
 ### Confidence interval
 
 
-```r
+``` r
 lm_res &lt;- glm(BP ~ salt, data=saltBP)
 confint(lm_res)
 ```
@@ -335,7 +335,7 @@ confint(lm_res)
 ### Hypothesis testing
 
 
-```r
+``` r
 summary(lm_res)
 ```
 
@@ -382,7 +382,7 @@ summary(lm_res)
 ### Model Assumptions and Diagnostics
 
 
-```r
+``` r
 ggplot(lm_res, aes(x = .fitted, y = .resid)) +
   geom_point() +
   geom_hline(yintercept = 0)
@@ -427,7 +427,7 @@ be presented as follows:
 ### Multiple Linear Regression
 
 
-```r
+``` r
 library(MASS)
 data("birthwt")
 bwt_mod &lt;- glm(bwt ~ age + factor(smoke), data=birthwt)
@@ -453,7 +453,7 @@ bwt_mod
 ### Multiple Linear Regression
 
 
-```r
+``` r
 confint(bwt_mod)
 ```
 
@@ -471,7 +471,7 @@ confint(bwt_mod)
 ### Multiple Linear Regression
 
 
-```r
+``` r
 summary(bwt_mod)
 ```
 
@@ -532,10 +532,10 @@ associated with a unit increase in the corresponding explanatory variable `\(x_{
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"ratio": "16:9",
-"highlightStyle": "pygments",
-"highlightLines": true,
-"highlightLanguage": "r"
+  "ratio": "16:9",
+  "highlightStyle": "pygments",
+  "highlightLines": true,
+  "highlightLanguage": "r"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
