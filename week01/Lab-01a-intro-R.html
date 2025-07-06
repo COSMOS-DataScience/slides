@@ -4,7 +4,7 @@
     <title>Working with R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -69,7 +69,7 @@ class: inverse middle center
 ## Object assignment operator
 
 
-``` r
+```r
 birth_year &lt;- 2007
 ```
 
@@ -81,14 +81,14 @@ R is case-sensitive
 
 
 
-``` r
+```r
 my_age &lt;- 2024 - birth_year
 
 My_age
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'My_age' not found
+## Error: object 'My_age' not found
 ```
 
 
@@ -126,7 +126,7 @@ typeof is the function we use to check the type
 
 
 
-``` r
+```r
 typeof(1)
 ```
 
@@ -134,7 +134,7 @@ typeof(1)
 ## [1] "double"
 ```
 
-``` r
+```r
 typeof(1L)
 ```
 
@@ -142,7 +142,7 @@ typeof(1L)
 ## [1] "integer"
 ```
 
-``` r
+```r
 typeof(as.integer(1))
 ```
 
@@ -161,7 +161,7 @@ If something comes in quotes, it is not defined in R.
 
 
 
-``` r
+```r
 ages &lt;- c(25, my_age, 32)
 
 names &lt;- c("Menglin", "Mine", "Rafael")
@@ -182,7 +182,7 @@ data.frame(age = ages, name = names)
 ## Functions and Arguments
 
 
-``` r
+```r
 do(something)
 ```
 
@@ -192,7 +192,7 @@ do(something)
 --
 
 
-``` r
+```r
 do(something, colorful)
 ```
 
@@ -209,7 +209,7 @@ do(something, colorful)
 In order to get any help we can use `?` followed by function (or object) name. 
 
 
-``` r
+```r
 ?c
 ```
 
@@ -217,12 +217,12 @@ In order to get any help we can use `?` followed by function (or object) name.
 ---
 
 # Some basic data structures
-- variables/assignment
-- combine/vector
+- variables / assignment
+- combine / vector
 - matrix
 
 
-``` r
+```r
 temp_variable = 1
 temp_vector = c(1, 2, 3)
 temp_matrix = matrix(c(1,2,3,4), nrow=2, ncol=2, 
