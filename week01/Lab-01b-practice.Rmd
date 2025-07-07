@@ -1,0 +1,104 @@
+---
+title: "Lab-01b-practice"
+author: "Sara Tyo"
+output: html_document
+---
+
+Follow Along with slides for Lab-01b-practice
+
+## R packages
+
+Try running the following code:
+
+```{r}
+beep()
+```
+
+Why are we seeing this error?
+
+Answer: We don't have this package downloaded.
+
+Think of packages as items, when we have an error it means we have yet to get/purchase an item.
+
+## Installing 'Getting' a Package
+
+You can copy or type install.packages("beepr") in the console, or in the chunk below.
+
+NOTE: we only ever need to install a package once. Once downloaded, we can 'call' it and use it whenever we want.
+
+```{r}
+install.packages("beepr")
+```
+
+We can also use the 'packages' search in the bottom-right pane
+
+## Using Packages and Functions from Packages 
+
+- We want to use the beep() function from the beepr package. So we first need to call/open the package.
+- This is like getting the object we purchased in order to use it.
+
+How do we 'get it'?
+
+We use the function library() to recall and load in the package.
+
+```{r}
+library("beepr")
+```
+
+Now try and run beep()
+
+```{r}
+beep()
+```
+
+YAY!
+
+What if we want a different sound? Where do we go again if we don't know what to do, or maybe want to learn more about a particular function?
+
+Use help search bar, or '?'
+
+```{r Help using ?}
+?beep
+```
+
+- What kinds of sounds are there from the description?
+
+- 1. ping
+- 2...
+- 3...
+
+- Try out different sound types
+
+```{r}
+beep(sound="ping")
+```
+
+## More Fun
+
+Now, use the say() function from the library cowsay and see what it doesomk0    
+
+```{r}
+install.packages("cowsay")
+library(cowsay)
+```
+
+Need Help?
+```{r}
+?say()
+```
+
+- It will Print out default "Hello world", and generate an image of a cat
+- we can change what it says by adjusting the 'what' argument
+- we can change the animal by adjusting the 'by' argument
+
+What are some of the animals it can generate?
+-
+
+Are there other things you can change?
+
+Play around below!
+
+```{r Have Fun}
+say(what="Have Fun!", by="cat", what_color="green")
+```
+

@@ -1,0 +1,194 @@
+---
+title: "Lab-01a-practice"
+author: "Sara Tyo"
+output: html_document
+---
+
+Follow Along with slides for Lab-01a-practice
+
+
+See the the grey chunk below?
+
+```{r}
+# This is a comment
+# comments are made using hashtags '#'
+# comments don't do anything when you run the chunk
+```
+
+These  are called 'code chunks', that's where you can run R code by hitting the green right triangle at the top-right of a code chunk (you can also hit ctrl+enter/ctrl+shift+enter).
+
+To make a new code chunk you can select the +C in the toolbar, to the left of the 'run' button, or hit ctrl+alt+i
+
+## Panes
+
+Look, There are 4 main panels. 
+
+We primarily work here, in the upper left, where we write/type out code.
+
+## Creating Objects: Assignment Operator
+
+```{r}
+birth_year <- 2000 # this is my birth year, maybe fill in your own!
+
+birth_year
+```
+
+- Birth Year is the object being assigned to.
+
+## Case Sensitive
+
+```{r Wrong}
+my_age <- 2024 - birth_year
+My_age
+```
+
+Why is it throwing an error?
+
+Solve the issue in this chunk and try to print the value of your age
+```{r}
+my_age
+```
+
+## Getting Help
+
+In any code chunk the '?' to the left of an item/function can help to know what a function does.
+
+```{r}
+?mean
+```
+
+- Brief Description
+
+- How function is used
+
+- What arguments it takes
+
+- Even provides examples
+
+Look up what the function 'plot' does either using '?plot' or the help search bar. 
+
+## R Variable Types
+
+```{r}
+class("charater")             # character
+typeof("charater")            # character
+
+class(3L)                     # integer
+typeof(3L)                    # integer
+
+class(3.0)                    # numeric
+typeof(3.0)                   # double
+
+class(as.factor(c("male","female"))) # factor
+as.factor(c("male","female"))        # factor
+
+class(TRUE)                   # logical
+typeof(TRUE)                  # logical
+```
+
+
+## Some basic data structures
+
+- variable: a single item 
+- vector: multiple variables
+- matrix: multiple variables with some structure/dimension
+
+```{r}
+temp_variable <- 1
+temp_vector <- c(1, 2, 3)
+temp_matrix <- matrix(c(1,2,3,4), nrow=2, ncol=2, 
+                     byrow=TRUE)
+
+temp_variable
+temp_vector
+temp_matrix
+```
+
+# Simple Math
+
+```{r}
+3+3 # add 3+3=6
+4-1 # subtract 4-1=3
+
+3/3 # divide 3/3=1
+4*1 # multiply 4*1=4
+```
+
+Try and write your own to solve:
+
+$$\frac{e^4*|-ln(3)|}{-19*45}$$
+
+```{r}
+# write code here
+```
+
+
+## For Loop
+
+Remember this is how we generally write For Loops
+
+if(condition){
+   Do Something
+} else {
+   Do Something Else
+}
+
+```{r Example For Loop}
+height <- 63
+if(height == 63){
+  print("Fantastic! Enjoy the rollercoaster")
+} else {
+  print("OOPS! Sorry, you'll have to wait until next year")
+}
+
+money <- 10
+greed <- 1
+if(money-1000 < 0 | greed > 50){
+  print("Sorry I don't have enough money to loan you")
+}else{
+  print("Sure, here's 1000$.")
+}
+```
+
+Try and play around with the amount assigned to 'money' and 'greed'.
+
+Now, Try and make your own for loop!
+
+```{r}
+if(){
+  print("")
+}else{
+  print("")
+}
+```
+
+## Creating Functions
+
+We can also make functions in R. 
+
+Functions are useful when we find ourselves rewriting the same code over and over again. 
+
+Functions are made using the following syntax, where it's important to prespecify the input arguments, and how you want them processed.
+
+```{r}
+my_function <- function(input){
+  if(input == TRUE){
+    return("Fantastic!")
+  }
+  else{
+    return("OOPS!")
+  }
+}
+```
+
+
+- What does this function take in, what are the arguments?
+
+- What does this function do with those arguments?
+
+Try and get it to to return both results.
+
+```{r}
+
+```
+
