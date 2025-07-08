@@ -15,7 +15,7 @@ output:
 
 class: title-slide
 
-```{r echo = FALSE, message=FALSE}
+```{r echo = FALSE, message=FALSE, warning=FALSE}
 library(openintro)
 library(tidyverse)
 library(janitor)
@@ -63,8 +63,7 @@ class: middle
 - We start by focusing on data exploration techniques for one variable at a time. 
 
 - Our objective is to develop a high-level understanding of the
-data, learn about the possible values for each characteristic, and find
-out how a characteristic varies among individuals in our sample.
+data, learn about the possible values for each characteristic, and find out how a characteristic varies among individuals in our sample.
 
 - In short, we want to learn about the __distribution__ of variables.
 
@@ -135,7 +134,7 @@ knitr::include_graphics('img/AlzheimerData.png')
 
 - Variables `age`, `height`, and `weight` are __numerical variables__ since they take numerical values, and the numbers have their usual meaning.
 
-- We can do certain analyses using these variables such as finding an average or the maximum or minimum meaningfully.
+- We can do certain analyses using these variables such as finding the average, maximum, or minimum meaningfully.
 
 - Not everything represented by numbers represents a numeric quantity. e.g. `diagnosis`.
 
