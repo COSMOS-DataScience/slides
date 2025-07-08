@@ -297,11 +297,19 @@ knitr::include_graphics('img/magritte.jpg')
 
 
 ---
-## Practice
+## Practice 
 
 ```{r eval = FALSE}
 alzheimer_data <- read.csv('data/alzheimer_data.csv') %>% 
   select(id, diagnosis, age, educ, female, height, weight) %>% 
   mutate(diagnosis = as.factor(diagnosis), female = as.factor(female))
 
+```
+vs base R Version (no tidyverse)
+
+```{r eval = FALSE}
+alzheimer_data <- read.csv('data/alzheimer_data.csv') 
+alzheimer_data <- alzheimer_data[, c("id", "diagnosis", "age", "educ", "female", "height", "weight")]
+alzheimer_data$diagnosis <- as.factor(alzheimer_data$diagnosis)
+alzheimer_data$female <- as.factor(alzheimer_data$female)
 ```

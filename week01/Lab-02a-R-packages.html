@@ -287,13 +287,22 @@ library(magrittr)
 
 
 ---
-## Practice
+## Practice 
 
 
 ```r
 alzheimer_data &lt;- read.csv('data/alzheimer_data.csv') %&gt;% 
   select(id, diagnosis, age, educ, female, height, weight) %&gt;% 
   mutate(diagnosis = as.factor(diagnosis), female = as.factor(female))
+```
+vs base R Version (no tidyverse)
+
+
+```r
+alzheimer_data &lt;- read.csv('data/alzheimer_data.csv') 
+alzheimer_data &lt;- alzheimer_data[, c("id", "diagnosis", "age", "educ", "female", "height", "weight")]
+alzheimer_data$diagnosis &lt;- as.factor(alzheimer_data$diagnosis)
+alzheimer_data$female &lt;- as.factor(alzheimer_data$female)
 ```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
