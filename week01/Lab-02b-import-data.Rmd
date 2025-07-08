@@ -40,7 +40,7 @@ options(scipen = 999)
 
 `.csv` stands for comma separated values
 
-
+A base function to import `.csv` files is `read.csv()`.
 ```{r eval = FALSE}
 read.csv("dataset.csv")
 ```
