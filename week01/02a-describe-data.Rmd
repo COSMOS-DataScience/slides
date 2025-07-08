@@ -11,8 +11,6 @@ output:
       highlightStyle: "pygments"
       highlightLines: true
       highlightLanguage: "r"
-
-
 ---
 
 class: title-slide
@@ -141,7 +139,7 @@ knitr::include_graphics('img/AlzheimerData.png')
 
 - Not everything represented by numbers represents a numeric quantity. e.g. `diagnosis`.
 
-- These are are __categorical variables__ since their possible values consist of a finite number of categories.
+- These are __categorical variables__ since their possible values consist of a finite number of categories.
 
 - Sometimes we use a numerical coding for categorical variables, but these numbers do not have their usual meaning. 
 
