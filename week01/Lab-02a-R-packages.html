@@ -92,7 +92,7 @@ class: middle
 
 ## R packages
 
-All this time we have actually been using R packages. 
+&lt;img src="img/number_Rpackages.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -286,6 +286,15 @@ library(magrittr)
 ]
 
 
+---
+## Practice
+
+
+```r
+alzheimer_data &lt;- read.csv('data/alzheimer_data.csv') %&gt;% 
+  select(id, diagnosis, age, educ, female, height, weight) %&gt;% 
+  mutate(diagnosis = as.factor(diagnosis), female = as.factor(female))
+```
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

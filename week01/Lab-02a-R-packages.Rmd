@@ -100,7 +100,9 @@ class: middle
 
 ## R packages
 
-All this time we have actually been using R packages. 
+```{r echo = FALSE, out.width="60%", fig.align='center'}
+knitr::include_graphics("img/number_Rpackages.png")
+```
 
 ---
 
@@ -294,3 +296,12 @@ knitr::include_graphics('img/magritte.jpg')
 ]
 
 
+---
+## Practice
+
+```{r eval = FALSE}
+alzheimer_data <- read.csv('data/alzheimer_data.csv') %>% 
+  select(id, diagnosis, age, educ, female, height, weight) %>% 
+  mutate(diagnosis = as.factor(diagnosis), female = as.factor(female))
+
+```
