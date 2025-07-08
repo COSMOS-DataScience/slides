@@ -4,7 +4,7 @@
     <title>Importing Data in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Mine Dogucu" />
-    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -35,17 +35,29 @@ class: title-slide
 `.csv` stands for comma separated values
 
 
-``` r
+
+```r
+read.csv("dataset.csv")
+```
+
+A more efficient function
+
+```r
 readr::read_csv("dataset.csv")
 ```
 
+Example:
+
+```r
+alzheimer_data &lt;- read.csv('data/alzheimer_data.csv')
+```
 
 ---
 
 ## Importing Excel Data
 
 
-``` r
+```r
 readxl::read_excel("dataset.xlsx")
 ```
 
@@ -55,7 +67,7 @@ readxl::read_excel("dataset.xlsx")
 ## Importing Excel Data
 
 
-``` r
+```r
 readxl::read_excel("dataset.xlsx", sheet = 2)
 ```
 
@@ -64,7 +76,7 @@ readxl::read_excel("dataset.xlsx", sheet = 2)
 ## Importing SAS, SPSS, Stata Data
 
 
-``` r
+```r
 library(haven)
 # SAS
 read_sas("dataset.sas7bdat")
@@ -79,7 +91,7 @@ read_dta("dataset.dta")
 ## Writing data files
 
 
-``` r
+```r
 write_csv(data_frame, "dataset.csv")
 write_xls(data_frame, "dataset.xlsx")
 ```

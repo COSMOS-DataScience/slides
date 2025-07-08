@@ -18,7 +18,7 @@ output:
 class: title-slide
 
 
-```{r echo = FALSE, message = FALSE}
+```{r echo = FALSE, message = FALSE, warning=FALSE}
 library(tidyverse)
 options(scipen = 999)
 ```
@@ -40,10 +40,20 @@ options(scipen = 999)
 
 `.csv` stands for comma separated values
 
+
+```{r eval = FALSE}
+read.csv("dataset.csv")
+```
+
+A more efficient function
 ```{r eval = FALSE}
 readr::read_csv("dataset.csv")
 ```
 
+Example:
+```{r}
+alzheimer_data <- read.csv('data/alzheimer_data.csv')
+```
 
 ---
 
