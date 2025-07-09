@@ -4,7 +4,7 @@
     <title>Data Wrangling in R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Mine Dogucu" />
-    <script src="libs/header-attrs-2.27/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <link rel="stylesheet" href="slide-style.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" type="text/css" />
   </head>
@@ -27,14 +27,34 @@ class: title-slide
 
 
 ---
+## Read arthritis data
+
+```r
+library(tidyverse)
+
+arthritis &lt;- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/main/RheumArth_Tx_AgeComparisons.csv") %&gt;% 
+  janitor::clean_names() %&gt;% 
+  mutate(sex = case_when(sex == 0 ~ "female",
+                   sex == 1 ~ "male")) %&gt;% 
+  mutate(sex = as.factor(sex)) %&gt;% 
+  mutate(age_gp = case_when(age_gp == 1 ~ "control",
+                   age_gp == 2 ~ "elderly")) %&gt;% 
+  mutate(age_gp = as.factor(age_gp)) %&gt;% 
+  mutate(cdai_yn = case_when(cdai_yn == 1 ~ "no",
+                             cdai_yn == 2 ~ "yes")) %&gt;%
+  mutate(cdai_yn = as.factor(cdai_yn))
+```
+
+---
+## Read Alzheimer's data
+
+```r
+alzheimer_data &lt;- read.csv("data/alzheimer_data.csv")
+```
 
 
 
-
-
-
-
-``` r
+```r
 glimpse(alzheimer_data)
 ```
 
@@ -103,7 +123,7 @@ glimpse(alzheimer_data)
 ---
 
 
-``` r
+```r
 colnames(alzheimer_data)
 ```
 
@@ -146,7 +166,7 @@ colnames(alzheimer_data)
 
 .left-panel[
 
-``` r
+```r
 select(alzheimer_data, 
        height, weight) %&gt;%
   head()
@@ -168,7 +188,7 @@ select(alzheimer_data,
 .right-panel[
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   select(height, weight) %&gt;%
   head()
@@ -191,7 +211,7 @@ alzheimer_data %&gt;%
 `select` can also be used to drop certain variables if used with a negative sign.
 
 
-``` r
+```r
 select(alzheimer_data, -id, -educ) %&gt;%
   head()
 ```
@@ -252,7 +272,7 @@ select(alzheimer_data, -id, -educ) %&gt;%
 ---
 
 
-``` r
+```r
 select(alzheimer_data, starts_with("lp")) %&gt;%
   head()
 ```
@@ -270,7 +290,7 @@ select(alzheimer_data, starts_with("lp")) %&gt;%
 ---
 
 
-``` r
+```r
 select(alzheimer_data, contains("arhip")) %&gt;%
   head()
 ```
@@ -311,7 +331,7 @@ select(alzheimer_data, contains("arhip")) %&gt;%
 The data below include first six rows from third to seventh. Including third and seventh.
 
 
-``` r
+```r
 slice(alzheimer_data, 3:5) %&gt;%
   head()
 ```
@@ -355,7 +375,7 @@ slice(alzheimer_data, 3:5) %&gt;%
 The data below includes rows when the age is 80.
 
 
-``` r
+```r
 filter(alzheimer_data, age == 80) %&gt;%
   head()
 ```
@@ -443,7 +463,7 @@ filter(alzheimer_data, age == 80) %&gt;%
 How many participants are in diagnosis group 1 and age 80?
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   filter(age == 80 &amp; diagnosis==1) %&gt;%
   head()
@@ -499,7 +519,7 @@ alzheimer_data %&gt;%
 
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   filter(age == 80 &amp; diagnosis==1) %&gt;% 
   nrow()
@@ -518,7 +538,7 @@ Q. How many patients are in in diagnosis group 1 and are female?
 
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   filter(diagnosis ==1 &amp; female == 1) %&gt;% 
   nrow()
@@ -533,7 +553,7 @@ alzheimer_data %&gt;%
 We have done all sorts of selections, slicing, filtering on `alzheimer` but it has not changed at all. Why do you think so?
 
 
-``` r
+```r
 glimpse(arthritis)
 ```
 
@@ -563,7 +583,7 @@ Moving forward we are only going to use, `age`, `female` `diagnosis`, `educ`, `h
 ---
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   select(age, female, 
          diagnosis, educ, height,
@@ -3277,7 +3297,7 @@ alzheimer_data %&gt;%
 ---
 
 
-``` r
+```r
 alzheimer_data &lt;- 
   alzheimer_data %&gt;% 
   select(age, female, 
@@ -3289,7 +3309,7 @@ alzheimer_data &lt;-
 ---
 
 
-``` r
+```r
 glimpse(alzheimer_data)
 ```
 
@@ -3309,7 +3329,7 @@ glimpse(alzheimer_data)
 `mutate()` adds new variables and preserves existing ones
 
 
-``` r
+```r
 alzheimer_data &lt;-
   alzheimer_data %&gt;% 
   mutate(weight_kg = 0.453592*weight)
@@ -3330,7 +3350,7 @@ We can use `mutate()` to change the data type of a variable by creating a new va
 Here's an example that demonstrates how to use `mutate()` to change the data type of a variable using a conditional statement:
 
 
-``` r
+```r
 alzheimer_data %&gt;%
   mutate(gender = case_when(female == 1 ~ "female",
                          female == 0 ~ "male")) %&gt;%
@@ -3367,7 +3387,7 @@ class: inverse
 The function group_by() from dplyr groups the rows by the unique values in the column specified to it. Note that there is no perceptible change to the dataset after running group_by(), until another dplyr verb such as mutate(), summarise(), or arrange() is applied on the “grouped” data frame.
 
 
-``` r
+```r
 alzheimer_data %&gt;%
   head()
 ```
@@ -3387,7 +3407,7 @@ alzheimer_data %&gt;%
 Once we group the data, we won't see much difference other than `Groups:   age_gp [2]` statement, everything else will be similar. 
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   group_by(diagnosis) %&gt;%
   head()
@@ -3410,7 +3430,7 @@ alzheimer_data %&gt;%
 ---
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   group_by(diagnosis)  %&gt;% 
   summarize(mean(age, na.rm = TRUE))
@@ -3430,7 +3450,7 @@ alzheimer_data %&gt;%
 We can also calculate other descriptives as well as number of observations for each group.
 
 
-``` r
+```r
 alzheimer_data %&gt;% 
   group_by(diagnosis)  %&gt;% 
   summarize(mean_age=mean(age, na.rm = TRUE),

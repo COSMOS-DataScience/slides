@@ -33,8 +33,8 @@ library(fabricerin)
 
 
 ---
-
-```{r echo = FALSE, message = FALSE}
+## Read arthritis data
+```{r echo = TRUE, message = FALSE, warning=FALSE}
 library(tidyverse)
 
 arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/main/RheumArth_Tx_AgeComparisons.csv") %>% 
@@ -50,7 +50,9 @@ arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/ma
   mutate(cdai_yn = as.factor(cdai_yn))
 ```
 
-```{r echo = FALSE, message = FALSE}
+---
+## Read Alzheimer's data
+```{r echo = TRUE, message = FALSE, warning=FALSE}
 alzheimer_data <- read.csv("data/alzheimer_data.csv")
 ```
 
