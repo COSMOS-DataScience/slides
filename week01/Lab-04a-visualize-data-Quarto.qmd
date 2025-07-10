@@ -358,4 +358,4 @@ knitr::include_graphics("img/ggplot-summary.jpeg")
 
 ## Practice
 - Visualize lhippo by diagnosis
-- Visualize lhippo by gender by healthy subjects
+- Visualize lhippo by gender in healthy subjects

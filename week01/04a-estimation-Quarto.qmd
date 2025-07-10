@@ -416,6 +416,7 @@ $$\textrm{Point estimate} \pm\textrm{Margin of error.}$$
 
 ## Example
 Estimate the volume of hippocampus for women between 40 and 50 years old 
+
 ```{r, out.width="100%", fig.align="center"}
 #| echo: true
 #| code-fold: true
