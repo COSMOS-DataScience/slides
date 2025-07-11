@@ -183,7 +183,7 @@ t.test(alzheimer_data$rhippo- alzheimer_data$lhippo)
 
 ```{r}
 #| code-fold: true
-
+#| echo: true
 table(alzheimer_data$hippo>7,
       alzheimer_data$female)
 
