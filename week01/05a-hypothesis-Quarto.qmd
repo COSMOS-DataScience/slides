@@ -76,7 +76,10 @@ library(ggplot2)
 Mean
 
 ## Hypothesis testing for the population mean
-- Consider hippocampal volume in impaired males, where we want to examine the null hypothesis $$H_{0}: \mu = 6$$ against the alternative hypothesis $$H_A: \mu >6$$
+- Consider hippocampal volume in impaired males, where we want to examine the null hypothesis 
+
+$H_{0}: \mu = 6$ against the alternative hypothesis $H_A: \mu >6$.
+
 - The alternative hypothesis $H_{A}: \mu >6$ is a **one-sided** alternative.
 - One-sided vs two-sided alternatives:
   - One-sided: $H_A: \mu > \mu_0$ or $H_A: \mu < \mu_0$
@@ -115,8 +118,7 @@ where $\bar{x}=6.1$ in this example.
 ## Interpretation of $p$-value
 
 
-- The $p$-value is the conditional probability of extreme values (as or
-more extreme than what has been observed) of the test statistic assuming that the null hypothesis is true. 
+- The $p$-value is the probability of extreme values (as or more extreme than what has been observed) of the test statistic conditional on that the null hypothesis is true. 
 
 - When the $p$-value is small, say 0.01 for example, it is rare to find values as extreme as what we have observed (or more so). 
 
@@ -257,31 +259,8 @@ $$
 - Whether you use $z$ or $t$ affects:
   - Which critical value you compare to
   - How you compute the $p$-value
-- This distinction becomes **crucial** when:
-  - Sample size is small
+- This distinction becomes **crucial** when sample size is small
 
-## Hippocampus volume in healthy adults
-
-```{r, fig.align='center'}
-#| code-fold: true
-#| echo: true
-
-#read data
-alzheimer_subset <- read_csv("../data/alzheimer_data.csv") %>% select(diagnosis, lhippo, rhippo, age, female) %>% mutate(hippo=lhippo+rhippo) %>% filter(diagnosis==1, female==0)
-glimpse(alzheimer_subset)
-
-#calculate mean
-mean(alzheimer_subset$hippo)
-
-#compute t-test using mean and sd
-z=mean(alzheimer_subset$hippo-6)/sd(alzheimer_subset$hippo)*sqrt(nrow(alzheimer_subset))
-
-#compute one-sided p
-pnorm(z, lower.tail = FALSE)
-
-#use t.test (one-sample t-test)
-t.test(alzheimer_subset$hippo, mu=6, alternative="greater")
-```
 
 ## One-sample t-test
 
@@ -305,8 +284,31 @@ testing procedure is then called the **t-test**.
 
 ## t-test
 ::: {style="text-align: center;"}
-![](img/student-t.png){width="80%"}
+![](img/student-t.png){width="75%"}
 :::
+
+## Hippocampus volume in healthy adults
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+
+#read data
+alzheimer_subset <- read_csv("../data/alzheimer_data.csv") %>% select(diagnosis, lhippo, rhippo, age, female) %>% mutate(hippo=lhippo+rhippo) %>% filter(diagnosis==1, female==0)
+glimpse(alzheimer_subset)
+
+#calculate mean
+mean(alzheimer_subset$hippo)
+
+#compute t-test using mean and sd
+z=mean(alzheimer_subset$hippo-6)/sd(alzheimer_subset$hippo)*sqrt(nrow(alzheimer_subset))
+
+#compute one-sided p
+pnorm(z, lower.tail = FALSE)
+
+#use t.test (one-sample t-test)
+t.test(alzheimer_subset$hippo, mu=6, alternative="greater")
+```
 
 ## One-sample t-test
 
