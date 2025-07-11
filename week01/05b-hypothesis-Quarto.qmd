@@ -1,0 +1,321 @@
+---
+format:
+  revealjs:
+    title-slide: false   
+    theme: [default, custom.scss]
+    scrollable: true
+    self-contained: true
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slideNumber: true
+    transition: "fade"
+    progress: true
+    controls: true
+    ratio: 3:2
+---
+
+
+<!-- Custom title slide with logo and text --> 
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+  <img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;" />
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+  <h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">Hypothesis Testing II</h1>
+  <p style="color: #153e6c; font-size: 1.8em;">Zhaoxia Yu</p>
+</div>
+
+</div>
+
+
+## Load packages, read data
+```{r}
+#| code-fold: true
+#| echo: true
+library(tidyverse)
+library(ggplot2)
+alzheimer_data <- read.csv('data/alzheimer_data.csv') %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
+  mutate(diagnosis = as.factor(diagnosis), 
+         female = as.factor(female),
+         hippo=lhippo + rhippo)
+
+
+alzheimer_healthy <- read.csv('data/alzheimer_data.csv') %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
+  mutate(diagnosis = as.factor(diagnosis),
+         female = as.factor(female), 
+         hippo=lhippo+rhippo) %>% 
+  filter(diagnosis==0)
+```
+
+## A LIST OF QUESTIONS
+
+::: {style="font-size: 80%;"}
+
+- Ex 1. Is the hippocampal volume of healthy males greater than 6 cm$^3$? (Done)
+
+- Ex 2. Is the proportion of healthy adults with a right hippocampal volume > 3cm$^3$ equal to 50%? (can be done by using the method for testing a proportion: z-test)
+
+- Ex 3. Do healthy men and women have the same mean left hippocampal volume?
+
+- Ex 4. Is the left hippocampal volume equal to the right hippocampal volume in humans?
+
+- Ex 5. Is having a large hippocampus (> 7 cm$^3$) associated with gender?
+
+- Ex 6. Is hippocampal volume correlated with age in healthy adults?
+
+- Ex 7. Does left hippocampal volume differ across diagnostic groups?
+:::
+
+## EXAMPLE 3: Two-Sample t-test
+
+Ex 3. Do healthy men and women have the same mean left hippocampal volume?
+
+-   Categorical (gender) and Numerical (Left Hippocampus) :
+
+    -   Side by Side Boxplot
+
+    -   Side by Side Violin
+
+    -   2 Histograms
+
+## Example 3: Visualization -- boxplot
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+
+ggplot(data= alzheimer_healthy,
+       mapping= aes(x= female, 
+                    y=lhippo,
+                    fill=female)) +
+  geom_boxplot()+
+  labs(
+    title="Boxplot of lhippo by Gender",
+    x="Gender",
+    y="LHippo volume (cm^3)") +  
+  theme_minimal()
+```
+
+## Example 3: Visualization -- violin
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+ggplot(data= alzheimer_healthy,
+       mapping= aes(x= female, 
+                    y=lhippo,
+                    fill=female)) +
+  geom_violin()+
+  labs(
+    title="Violin of lhippo by Gender",
+    x="Gender",
+    y="LHippo volume (cm^3)") +  
+  theme_minimal()
+```
+
+## Example 3: Visualization -- histogram
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+ggplot(data= alzheimer_healthy,
+       mapping= aes(x=lhippo,
+                    fill=female)) +
+  geom_histogram(bins=35)+
+  labs(
+    title="Histogram of Lhippo by Gender",
+    x="LHippo volume (cm^3)",
+    y="Count") 
+```
+
+## Example 3: use two-sample t-test
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+
+t.test(alzheimer_healthy$lhippo[alzheimer_healthy$female==0], alzheimer_healthy$lhippo[alzheimer_healthy$female==1])
+
+#alternative way to do the same test
+t.test(alzheimer_healthy$lhippo ~ alzheimer_healthy$female)
+```
+
+
+## Example 4
+- **Research Question**: Is the left hippocampal volume equal to the right hippocampal volume in humans?
+
+- **Null Hypothesis**: Human’s left hippocampus volume is the same as the right hippocampus volume.
+
+- **Alternative Hypothesis**: Human’s left hippocampus volume is not the same as the right hippocampus volume.
+
+$$H_0: \mu_L = \mu_R \mbox{ vs } \mu_L \not= \mu_R$$
+
+- Method: **paired t-test**
+
+## Example 4
+- It is attempting to perform a two-sample t-test
+- However, one fundamental assumption in the two-sample problem is that the two samples should be independent, such as the female group vs the male group. 
+- Here we are looking at two features (left vs right hippocampus) of the same subjects. The correct test is 
+- **paired t-test**, which equivalent to perform a one-sample t-test using the differences
+
+
+## Example 4
+```{r}
+#| code-fold: true
+#| echo: true
+t.test(alzheimer_data$rhippo, alzheimer_data$lhippo, paired = T)
+
+#equivalently, 
+t.test(alzheimer_data$rhippo- alzheimer_data$lhippo)
+```
+
+
+## Example 5
+
+- **Research Question**:  Is having a large hippocampus (> 7 cm$^3$) associated with gender?
+
+- This is a category variable vs category variable problem
+
+- Method: **chi-squared test**
+
+```{r}
+#| code-fold: true
+
+table(alzheimer_data$hippo>7,
+      alzheimer_data$female)
+
+chisq.test(table(alzheimer_data$rhippo>7,
+      alzheimer_data$female))
+```
+
+
+## Example 6
+- **Research Question**:  hippocampal volume correlated with age in healthy adults?
+
+- **Null Hypothesis**: hippocampal volume and age are not correlated.
+- **Alternative Hypothesis**: hippocampal volume and age are not correlated.
+
+$$H_0: \rho=0 \mbox{ vs } H_1: \rho\not=0$$
+
+- Method: correlation test, more general, linear regression.
+
+## Example 6: Visualization
+```{r}
+#| code-fold: true
+#| echo: true
+#| fig-align: center
+
+#plot(alzheimer_healthy$age, alzheimer_healthy$hippo)
+ggplot(data= alzheimer_healthy,
+       mapping= aes(x= age, 
+                    y= hippo)) +
+  geom_point() +
+  labs(
+    title="Scatter plot of hippocampal volume vs age",
+    x="Age (years)",
+    y="Hippocampal volume (cm^3)") +  
+  theme_minimal()
+```
+
+Discussion: is there a linear trend? are there regions of concerns? 
+
+
+## Example 6
+```{r}
+#| code-fold: true
+#| echo: true
+cor.test(alzheimer_healthy$age, alzheimer_healthy$hippo)
+
+#alternatively, we can use linear regression
+summary(lm(alzheimer_healthy$hippo ~ alzheimer_healthy$age))
+```
+
+
+## Example 7
+- **Research Question**: Does left hippocampal volume differ across diagnostic groups?
+
+- **Null Hypothesis**: 
+
+- **Alternative Hypothesis**:
+
+$$H_0: \mu_0=\mu_1=\mu_2 \mbox{ vs } H_1: \mbox{ at least two means are different}$$
+
+- Method: one-way analysis of variance (ANOVA), more generally, linear regression
+
+
+## Example 7
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+
+ggplot(data= alzheimer_data,
+       mapping= aes(x= diagnosis, 
+                    y=lhippo,
+                    fill=diagnosis)) +
+  geom_boxplot()+
+  labs(
+    title="Boxplot of lhippo by Diagnosis",
+    x="Diagnosis",
+    y="LHippo volume (cm^3)") +  
+  theme_minimal()
+```
+
+## 
+```{r}
+#| code-fold: true
+#| echo: true
+summary(aov(alzheimer_data$lhippo ~ alzheimer_data$diagnosis))
+
+#equivalently
+summary(aov(lhippo ~ diagnosis, data=alzheimer_data))
+```
+
+## Summary
+::: {style="font-size: 70%;"}
+
+- Ex 1. Is the hippocampal volume of healthy males greater than 6 cm$^3$? (one-sample t-test)
+
+- Ex 2. Is the proportion of healthy adults with a right hippocampal volume > 3cm$^3$ equal to 50%? (one-sample proportion test or z-test)
+
+- Ex 3. Do healthy men and women have the same mean left hippocampal volume? (two-sample t-test)
+
+- Ex 4. Is the left hippocampal volume equal to the right hippocampal volume in humans?
+(paired t-test)
+
+- Ex 5. Is having a large hippocampus (> 7 cm$^3$) associated with gender?
+(chi-squared test)
+
+- Ex 6. Is hippocampal volume correlated with age in healthy adults?
+(Pearson’s correlation or linear regression)
+
+- Ex 7. Does left hippocampal volume differ across diagnostic groups?
+(one-way ANOVA or linear regression)
+:::
+
+<!--
+## Advanced: NONPARAMETRIC TESTS
+
+::: {style="font-size: 75%;"}
+- The tests we introduced might not work well for small sample sizes.
+
+- There are corresponding parametric methods, which are more robust. 
+ 
+1. one-sample t-test : signed rank test
+
+2. two-sample t-test : Mann-Whitney U test, also known as Wilcoxon rank sum test
+
+3. one-sample proportion test : binomial test
+
+4. paired t-test : signed rank test
+
+5. chi-squared test : Fisher’s exact test
+
+6. Pearson’s correlation : Spearman’s correlation
+
+7. one-way ANOVA : Kruskal-Wallis H test
+:::
+
+-->

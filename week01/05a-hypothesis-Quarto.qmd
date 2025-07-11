@@ -1,0 +1,359 @@
+---
+format:
+  revealjs:
+    title-slide: false   
+    theme: [default, custom.scss]
+    scrollable: true
+    self-contained: true
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slideNumber: true
+    transition: "fade"
+    progress: true
+    controls: true
+    ratio: 3:2
+---
+
+
+<!-- Custom title slide with logo and text --> 
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+  <img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;" />
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+  <h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">Hypothesis Testing</h1>
+  <p style="color: #153e6c; font-size: 1.8em;">Zhaoxia Yu</p>
+</div>
+
+</div>
+
+## Load packages, read data
+```{r}
+#| code-fold: true
+#| echo: true
+library(tidyverse)
+library(ggplot2)
+```
+
+## Hypothesis
+
+- Scientific investigations often start by expressing a **hypothesis**. 
+
+- A ***hypothesis*** is a statement about one or more random variables or their associated parameters.
+
+- For example, Mackowiak et al (1992) hypothesized that the average normal (i.e., for healthy people) body temperature is less than the widely accepted $98.6F$. 
+
+- If we denote the population mean of normal body temperature as $\mu$, then we can express this hypothesis as $\mu < 98.6$.
+
+
+## TYPES OF HYPOTHESES:
+
+**Null Hypothesis** ($H_0$)
+
+-   **Definition**: A statement is often about no effect or no difference, or nothing of interest.
+
+-   **Purpose**: Serves as the default or starting assumption.
+
+**Alternative Hypothesis** ($H_a$) or $H_1$)
+
+-   **Definition**: A statement is often about an effect or a difference.
+
+-   **Purpose**: Represents what we are trying to find evidence for.
+
+
+## HYPOTHESIS TESTING
+
+-   We use statistics, known as test statistics, to evaluate our hypotheses.
+
+  -   To determine whether to reject the null hypothesis, we measure the empirical support provided by the observed data against the null hypothesis using some statistics.
+
+-   A statistic is considered a **test statistic** if its sampling distribution under the null hypothesis is completely known (either exactly or approximately).
+
+-   The distribution of test statistics under the null hypothesis is referred to as the **null distribution**.
+
+## 
+Mean
+
+## Hypothesis testing for the population mean
+- Consider hippocampal volume in impaired males, where we want to examine the null hypothesis $$H_{0}: \mu = 6$$ against the alternative hypothesis $$H_A: \mu >6$$
+- The alternative hypothesis $H_{A}: \mu >6$ is a **one-sided** alternative.
+- One-sided vs two-sided alternatives:
+  - One-sided: $H_A: \mu > \mu_0$ or $H_A: \mu < \mu_0$
+  - Two-sided: $H_A: \mu \neq \mu_0$
+
+
+## Hypothesis testing for the population mean
+- We learned the sample mean is a reasonable estimator of the population mean.
+- The sample mean of hippocampal volume of impaired males is $\bar x=6.1$. 
+- What does the sample mean tell you? Should you reject $H_0$ based on the sample mean?
+- Of course not, because a sample mean alone doesn't tell us **how unusual** it is under $H_0$.
+
+## Why Isn't $\bar{x} = 6.1$ Enough?
+
+- Suppose we want to test: $H_0: \mu = 6.00$ vs. $H_1: \mu > 6.00$
+- The observed sample mean $\bar{x} = 6.1$ is higher. But how much higher is "a lot"?
+- A difference of 0.1 could be:
+  - A large difference if there's little variation
+  - A small difference if there's a lot of variation
+- We need to **quantify uncertainty** around $\bar{x}$ by considering how $\bar{X}$ behaves under the null hypothesis $H_0$.
+
+## p-value
+
+- We quantify ``how extreme" using the probability of values as or more extreme than the observed value, based on the ***null*** distribution ***in the direction*** supporting the alternative hypothesis. 
+
+- This probability is also called the **p-value** and denoted $p_{\mathrm{obs}}$.
+
+- For the above example, 
+$$\begin{equation*}
+p = P(\bar{X}  \ge \bar{x} | H_{0}),
+\end{equation*}$$
+
+where $\bar{x}=6.1$ in this example.
+
+
+## Interpretation of $p$-value
+
+
+- The $p$-value is the conditional probability of extreme values (as or
+more extreme than what has been observed) of the test statistic assuming that the null hypothesis is true. 
+
+- When the $p$-value is small, say 0.01 for example, it is rare to find values as extreme as what we have observed (or more so). 
+
+- As the $p$-value increases, it indicates that there is a good chance to find more extreme values (for the test statistic) than what has been observed. Then, we would be more reluctant to reject the null hypothesis.
+
+- A common *mistake* is to regard the $p$-value as the probability of null given the observed test statistic:
+$P(H_{0} | \bar{X} = \bar{x})$. 
+
+
+
+## The Null Distribution of $\bar{X}$ (Known σ)
+
+- Suppose $\sigma = 1$ and sample size is $n = 25$
+- Then, under the null hypothesis $H_0: \mu = 6.00$:
+
+$$
+\bar{X} \sim N\left(\mu = 6.00,\ \frac{\sigma}{\sqrt{n}} = \frac{1}{5}=0.2 \right)
+$$
+
+- $P(\bar X \ge 6.1 | H_0)$ is the area under the curve to the right of $\bar{x} = 6.1$ in the null distribution.
+
+## $P(\bar X \ge 6.1 | H_0)$ 
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+
+library(ggplot2)
+
+# Define parameters
+mu0 <- 6.00
+se <- 0.2
+x_obs <- 6.10
+
+# Create a sequence of x values centered around mu0
+x_vals <- seq(mu0 - 4 * se, mu0 + 4 * se, length.out = 1000)
+
+# Compute the density
+density_vals <- dnorm(x_vals, mean = mu0, sd = se)
+
+# Create a data frame
+df <- data.frame(x = x_vals, y = density_vals)
+
+# Define the tail area (right of observed x)
+df$tail <- ifelse(df$x >= x_obs, "Right Tail", "Main")
+
+# Plot
+ggplot(df, aes(x, y)) +
+  geom_line(color = "darkblue", size = 1) +
+  geom_area(data = subset(df, tail == "Right Tail"), aes(x, y),
+            fill = "red", alpha = 0.4) +
+  geom_vline(xintercept = x_obs, color = "red", linetype = "dashed") +
+  annotate("text", x = x_obs + 0.1, y = 0-0.1,
+           label = "sample mean = 6.1", color = "red", hjust = 0) +
+  annotate("text", x = x_obs + 0.1, y = max(df$y) * 0.9,
+           label = "p=0.31", color = "red", hjust = 0) +
+  labs(title = "Sampling Distribution of Sample Mean (under H_0)",
+       subtitle = expression(paste("N(", mu[0], " = 6.00, SE = 0.2)")),
+       x = expression(bar(X)), y = "Density") +
+  theme_minimal(base_size = 14)
+
+```
+
+## Z-score
+- It is easier to use the **z-score** 
+$$Z=\frac{\bar X - \mu_0}{\sigma/\sqrt{n}}, z=\frac{\bar x - \mu_0}{\sigma/\sqrt{n}}$$
+
+
+- This is because because 
+  - $P(\bar X \ge 6.1 | H_0) =P(Z\ge 0.5)\approx 0.31$
+where $Z\sim N(0,1)$. 
+
+
+## $P(Z \ge z)$ 
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+
+library(ggplot2)
+
+# Define parameters
+mu0 <- 0
+se <- 1
+x_obs <- 0.5
+
+# Create a sequence of x values centered around mu0
+x_vals <- seq(mu0 - 4 * se, mu0 + 4 * se, length.out = 1000)
+
+# Compute the density
+density_vals <- dnorm(x_vals, mean = mu0, sd = se)
+
+# Create a data frame
+df <- data.frame(x = x_vals, y = density_vals)
+
+# Define the tail area (right of observed x)
+df$tail <- ifelse(df$x >= x_obs, "Right Tail", "Main")
+
+# Plot
+ggplot(df, aes(x, y)) +
+  geom_line(color = "darkblue", size = 1) +
+  geom_area(data = subset(df, tail == "Right Tail"), aes(x, y),
+            fill = "red", alpha = 0.4) +
+  geom_vline(xintercept = x_obs, color = "red", linetype = "dashed") +
+  annotate("text", x = x_obs + 0.1, y = 0-0.1,
+           label = "z = 0.5", color = "red", hjust = 0) +
+  annotate("text", x = x_obs + 0.1, y = max(df$y) * 0.9,
+           label = "p=0.31", color = "red", hjust = 0) +
+  labs(title = "Sampling Distribution of Sample Mean (under H_0)",
+       subtitle = expression(paste("N(", mu[0], " = 0, SE = 1)")),
+       x = expression(bar(Z)), y = "Density") +
+  theme_minimal(base_size = 14)
+
+```
+
+## What If σ Is Unknown?
+
+- In real life, we rarely know the population standard deviation $\sigma$
+- Instead, we estimate it with the sample standard deviation $s$
+- This changes the **distribution** of our test statistic:
+  - We no longer use the standard normal ($z$)
+  - We use the **$t$ distribution**
+
+## The $t$ Distribution
+
+- If $\sigma$ is unknown, and we use $s$ to estimate $\sigma$, then:
+
+$$
+T = \frac{\bar{X} - \mu}{S / \sqrt{n}} \sim t_{n - 1}
+$$
+
+- The $t$ distribution accounts for extra uncertainty from estimating $\sigma$
+- It's wider than the normal, especially with small $n$
+- As $n \to \infty$, $t$ approaches the standard normal.
+
+## Why This Matters
+
+- Whether you use $z$ or $t$ affects:
+  - Which critical value you compare to
+  - How you compute the $p$-value
+- This distinction becomes **crucial** when:
+  - Sample size is small
+
+## Hippocampus volume in healthy adults
+
+```{r, fig.align='center'}
+#| code-fold: true
+#| echo: true
+
+#read data
+alzheimer_subset <- read_csv("../data/alzheimer_data.csv") %>% select(diagnosis, lhippo, rhippo, age, female) %>% mutate(hippo=lhippo+rhippo) %>% filter(diagnosis==1, female==0)
+glimpse(alzheimer_subset)
+
+#calculate mean
+mean(alzheimer_subset$hippo)
+
+#compute t-test using mean and sd
+z=mean(alzheimer_subset$hippo-6)/sd(alzheimer_subset$hippo)*sqrt(nrow(alzheimer_subset))
+
+#compute one-sided p
+pnorm(z, lower.tail = FALSE)
+
+#use t.test (one-sample t-test)
+t.test(alzheimer_subset$hippo, mu=6, alternative="greater")
+```
+
+## One-sample t-test
+
+- So far, we have assumed that the population variance
+$\sigma^{2}$ is known. 
+
+- In reality,
+$\sigma^{2}$ is almost always unknown, and we need to estimate it from
+the data. 
+
+- As before, we estimate $\sigma^{2}$ using the sample variance
+$S^{2}$. 
+
+- Similar to our approach
+for finding confidence intervals, we account for this additional source
+of uncertainty by using the $t$-distribution with $n-1$ degrees of
+freedom instead of the standard normal distribution. 
+
+- The hypothesis
+testing procedure is then called the **t-test**.
+
+## t-test
+::: {style="text-align: center;"}
+![](img/student-t.png){width="80%"}
+:::
+
+## One-sample t-test
+
+
+- Using the observed values of $\bar{X}$ and $S$, the observed value of
+the test statistic is obtained as follows: $t  =  \frac{\bar{x} - \mu_{0}}{s/\sqrt{n}}$.
+
+- We refer to $t$ as the $t$-*score*. Then,
+$$\begin{array}{l@{\quad}l}
+\mbox{if}\ H_{A}: \mu < \mu _0, &  p_{\mathrm{obs}} = P(T \leq t), \\
+\mbox{if}\ H_{A}: \mu > \mu _0, & p_{\mathrm{obs}} = P(T \geq t ), \\
+\mbox{if}\ H_{A}: \mu \ne \mu _0, & p_{\mathrm{obs}} = 2 \times P\bigl(T \geq | t | \bigr),
+\end{array}$$
+
+- Here, $T$ has a $t$-distribution with $n-1$ degrees of freedom, and $t$
+is our observed $t$-score. 
+
+## 
+
+Proportion
+
+
+## Hypothesis testing for the proportion proportion
+
+- For a binary random variable $X$ with possible values 0 and 1, we are
+typically interested in evaluating hypotheses regarding the population
+proportion of the outcome of interest, denoted as $X=1$. 
+ 
+- The population proportion is the same as the population mean for such binary variables.
+
+- If the sample size is large enough, we can assume that the population proportion is approximately normal according to CLT. 
+
+- So we follow the same procedure as described above. 
+
+
+
+## Hypothesis testing for population proportion
+
+- Note that for binary random variables, population variance is
+$$\sigma^{2}=\mu(1-\mu)$$ 
+
+- Therefore, by setting $\mu=\mu_{0}$ according
+to the null hypothesis, we also specify the population variance as
+$$\sigma^{2} = \mu_{0}(1-\mu_{0})$$
+
+- If we assume that the null hypothesis is true, we have
+$$\begin{equation*}
+\bar{p}| H_{0}  \sim  N\bigl(\mu_{0},  \mu_{0}(1-\mu_{0})/n\bigr).
+\end{equation*}$$
+
