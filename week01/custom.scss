@@ -1,0 +1,35 @@
+/*-- scss:rules --*/
+
+.reveal {
+  font-family: "Helvetica", sans-serif;
+  font-size: 220%; 
+}
+
+/* Add small logo to all slides except the first */
+.reveal .slides::after {
+  content: "";
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  width: 60px;
+  height: 60px;
+  background-image: url("img/cosmos-uci-dshs.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  opacity: 0.9;
+  z-index: 10;
+}
+
+/* Hide logo on first slide if needed (optional) */
+.reveal .slide:first-of-type::after {
+  display: none;
+}
+
+/* Add a dark blue frame around each slide */
+.reveal .slides section {
+  border: 6px solid #003366; /* Dark blue */
+  padding: 20px;             /* Optional: prevent content from touching border */
+  box-sizing: border-box;    /* Ensure padding doesn't increase slide size */
+  border-radius: 8px;        /* Optional: rounded corners */
+}
