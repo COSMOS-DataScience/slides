@@ -287,7 +287,7 @@ testing procedure is then called the **t-test**.
 ![](img/student-t.png){width="75%"}
 :::
 
-## Hippocampus volume in healthy adults
+## Hippocampus volume in impaired males
 
 ```{r, fig.align='center'}
 #| code-fold: true
@@ -356,6 +356,6 @@ $$\sigma^{2} = \mu_{0}(1-\mu_{0})$$
 
 - If we assume that the null hypothesis is true, we have
 $$\begin{equation*}
-\bar{p}| H_{0}  \sim  N\bigl(\mu_{0},  \mu_{0}(1-\mu_{0})/n\bigr).
+\bar{p}| H_{0}  \dot \sim  N\bigl(\mu_{0},  \mu_{0}(1-\mu_{0})/n\bigr).
 \end{equation*}$$
 
