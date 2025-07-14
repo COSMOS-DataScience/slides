@@ -86,7 +86,7 @@ alzheimer_healthy_old <- alzheimer_healthy %>% filter(age>45)
 
 -   **Null Hypothesis**: hippocampal volume and age are not correlated.
 
--   **Alternative Hypothesis**: hippocampal volume and age are not correlated.
+-   **Alternative Hypothesis**: hippocampal volume and age are  correlated.
 
 $$H_0: \rho=0 \mbox{ vs } H_1: \rho\not=0$$
 
@@ -309,7 +309,7 @@ summary(obj.age.hippo)
 ```
 
 ## Ex 1: The Fitted Line
--   The fitted line is $hippo = 8.29 - 0.027 \times age$
+-   The fitted line is $hippo = 8.42 - 0.029 \times age$
 ```{r}
 #| fig-align: center
 ggplot(alzheimer_healthy_old, aes(x=age, y=hippo)) +
@@ -322,12 +322,12 @@ ggplot(alzheimer_healthy_old, aes(x=age, y=hippo)) +
 ## Ex 1: interpret the Coefficients
 
 ::: {style="font-size: 100%;"}
--   Interpretation of $b_0=8.29$
+-   Interpretation of $b_0=8.42$
     -   mathematically, it is the estimated hippocampal value for a person at age 0.
     -   statistically, this interpretation involves extrapolation, which should be avoided. Rational:
         -   The linear trend we observed is for healthy subjects who are 45 or older.
         -   It is dangerous to assume that the same linear trend holds at around age 0.
--   Interpretation of $b_1= - 0.027$: for each added year, the hippocampal size decreased by 0.027 (cm$^3$).
+-   Interpretation of $b_1= - 0.029$: for each added year, the hippocampal size decreased by 0.029 (cm$^3$).
 :::
 
 ## Residuals
@@ -347,7 +347,7 @@ ggplot(alzheimer_healthy_old, aes(x=age, y=hippo)) +
 -   A $100(1-\alpha)\%$ confidence interval for $\beta_1$ is $$\hat\beta_1 \pm t_{\alpha / 2, n - 2} se(\hat\beta_1)$$
 
 ## Ex 1: t and p-value
--   The estimated slope ($b_1$) is -0.027, its standard error is 0.001712, and the p-value is $<2e-16$; the linear relationship is significant at level 0.05.
+-   The estimated slope ($b_1$) is -0.029, its standard error is 0.001818, and the p-value is $<2e-16$; the linear relationship is significant at level 0.05.
 
 ```{r}
 summary(obj.age.hippo)
@@ -355,8 +355,8 @@ summary(obj.age.hippo)
 
 
 ## Ex 1: Confidence Interval
--   The estimated slope ($b_1$) is -0.027.
--   A 95% confidence interval is (-0.031, -0.024).
+-   The estimated slope ($b_1$) is -0.029.
+-   A 95% confidence interval is (-0.033, -0.026).
 
 ```{r}
 confint(obj.age.hippo)
@@ -507,7 +507,7 @@ coefs <- coef(fit)
 model_means <- data.frame(
   diagnosis = c("Healthy", "MCI", "AD"),
   hippo = c(coefs[1], coefs[1] + coefs[2], coefs[1] + 2*coefs[2]),
-  label = c("a", "a + b1", "a + 2*b1")
+  label = c("b0", "b0 + b1", "b0 + 2*b1")
 )
 
 alzheimer_data <- mutate(alzheimer_data, diagnosis = factor(diagnosis, levels=c("0","1","2"), labels = c("Healthy", "MCI", "AD")))
@@ -579,7 +579,7 @@ coefs <- coef(fit)
 model_means <- data.frame(
   diagnosis = c("Healthy", "MCI", "AD"),
   hippo = c(coefs[1], coefs[1] + coefs[2], coefs[1] + coefs[3]),
-  label = c("a", "a+b1", "a + b2")
+  label = c("b0", "b0+b1", "b0 + b2")
 )
 
 # Plot
