@@ -659,7 +659,7 @@ summary(lm(hippo ~ height + female, data=alzheimer_healthy_old))$coefficients
 $$y=1.805 + 0.071 *height - 0.087 *female$$
 -   The intercept 1.805 is the estimated mean hippocampal volume for male who is height is 0 in (this is not a meaningful interpretation, but it is the intercept of the fitted model).
 -   The slope 0.071 is the estimated increase in hippocampal volume for each in increase in height, holding gender constant.  
--   The slope -0.087 is the estimated difference between a women and men with the same height.  
+-   The slope -0.087 is the estimated difference between women and men with the same height.  
 
 ## Fitting Lines
 - There are two fitted lines
@@ -711,23 +711,10 @@ summary(lm(hippo ~ height + female, data=alzheimer_healthy_old))$coefficients
 - There are two fitted lines
   - men: y=1.805 + 0.071 *height 
   - women: y=(1.805- 0.087) + 0.071 *height 
-```{r}
-#| fig-align: center
-ggplot(alzheimer_healthy_old, aes(x = height, y = hippo, color = female)) +
-  geom_point(alpha = 0.6) +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(
-    x = "Height (cm)",
-    y = "Hippocampal Volume",
-    color = "Gender",
-    title = "Fitted Lines from hippo ~ height + female"
-  ) +
-  theme_minimal()
-```
 
 ## Interactions: Introduction
 -   The two fitted lines in Ex4 are parallel to each other.
--   This is because we ***assumed*** an additive effect, i.e., gender and height contribute tohippocampal volume in an additive manner. In other words, the effect of height does not depend on gender. 
+-   This is because we ***assumed*** an additive effect, i.e., gender and height contribute to hippocampal volume in an additive manner. In other words, the effect of height does not depend on gender. 
 -   In other examples, the effect of one explanatory variable on the response depends on other/another explanatory variable (s). In this case, we need to include an interaction term in the model.
 
 ## Ex 5: A Model with Interactions
@@ -774,9 +761,9 @@ $$(\hat \beta_0  + \hat \beta_f) + (\hat \beta_{age}  +  \hat\beta_{age\times f}
 summary(lm(hippo~ age*female, data=alzheimer_healthy_old))$coefficients
 ```
 
--   The estimated brain shrinking speed for men is 0.017cc per year.
--   The estimated brain shrinking speed for women is $|-0.0177+0.0040|\approx 0.0137$cc per year.
--   The result about the interaction item indicates that the difference in brain shrinking speed between men and women is 0.005cc per year and it is statistically significant at significance level 0.05.
+-   The estimated brain shrinking speed for men is 0.035cc per year.
+-   The estimated brain shrinking speed for women is $|-0.035+0.0077|\approx 0.0273$cc per year.
+-   The result about the interaction item indicates that the difference in brain shrinking speed between men and women is 0.0077cc per year and it is statistically significant at significance level 0.05.
 
 # Transform $X$ and $Y$
 
