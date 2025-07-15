@@ -608,7 +608,7 @@ exp(confint.default(alzh.logistic)[2,])
 1-exp(confint.default(alzh.logistic))[2,]
 ```
 
-- Recall that the estimated decrease of AD associated with one-unit increase of hippocampal volume is 69.42%. 
+- Recall that the estimated decrease of odds in AD associated with one-unit increase of hippocampal volume is 69.42%. 
 
 - A 95% confidence interval is [64.98%, 73.29%]. 
 
