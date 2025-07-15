@@ -1234,11 +1234,31 @@ Zhaoxia Yu
 </details>
 </div>
 <div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href></a><span class="fu">library</span>(fabricerin)</span>
+<span id="cb2-2"><a href></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href></a></span>
+<span id="cb2-5"><a href></a><span class="co">#read, select variables</span></span>
+<span id="cb2-6"><a href></a><span class="co">#remove impaired, and define new variables</span></span>
+<span id="cb2-7"><a href></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;../data/alzheimer_data.csv&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-8"><a href></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href></a>  <span class="fu">filter</span>(diagnosis<span class="sc">!=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href></a>  <span class="fu">mutate</span>(<span class="at">alzh=</span>(diagnosis<span class="sc">&gt;</span><span class="dv">0</span>)<span class="sc">*</span><span class="dv">1</span>, <span class="at">female =</span> <span class="fu">as.factor</span>(female), <span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo) </span>
+<span id="cb2-11"><a href></a></span>
+<span id="cb2-12"><a href></a><span class="fu">table</span>(alzheimer_data<span class="sc">$</span>alzh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    0    1 
 1534  553 </code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href></a><span class="fu">ggplot</span>(<span class="at">data=</span>alzheimer_data, <span class="fu">aes</span>(<span class="at">x=</span>alzh)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 
 </div>
 <img data-src="data:image/png;base64,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6j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7bysjjqPWTVwwDDtvKyOOo9ZNXDAMO28rI46j1k1cMAw7by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" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -1266,10 +1286,10 @@ Zhaoxia Yu
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href></a><span class="fu">ggplot</span>(<span class="at">data=</span>alzheimer_data, <span class="fu">aes</span>(<span class="at">x=</span>hippo, <span class="at">y=</span>alzh)) <span class="sc">+</span></span>
-<span id="cb3-2"><a href></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb3-3"><a href></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb3-4"><a href></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;alzh vs hippo&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href></a><span class="fu">ggplot</span>(<span class="at">data=</span>alzheimer_data, <span class="fu">aes</span>(<span class="at">x=</span>hippo, <span class="at">y=</span>alzh)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&#39;lm&#39;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;alzh vs hippo&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -1286,18 +1306,18 @@ Zhaoxia Yu
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href></a>alzh.lm<span class="ot">=</span><span class="fu">lm</span>(alzh <span class="sc">~</span> hippo, <span class="at">data=</span>alzheimer_data)</span>
-<span id="cb4-2"><a href></a><span class="co">#add lm.pred variable</span></span>
-<span id="cb4-3"><a href></a>alzheimer_data<span class="sc">$</span>lm.pred<span class="ot">=</span><span class="fu">predict</span>(alzh.lm)</span>
-<span id="cb4-4"><a href></a><span class="co">#add red flags</span></span>
-<span id="cb4-5"><a href></a>alzheimer_data<span class="sc">$</span>lm.pred.red <span class="ot">=</span> alzheimer_data<span class="sc">$</span>lm.pred</span>
-<span id="cb4-6"><a href></a>alzheimer_data<span class="sc">$</span>lm.pred.red[alzheimer_data<span class="sc">$</span>lm.pred<span class="sc">&lt;</span><span class="dv">1</span> <span class="sc">&amp;</span></span>
-<span id="cb4-7"><a href></a>                             alzheimer_data<span class="sc">$</span>lm.pred<span class="sc">&gt;</span><span class="dv">0</span>]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb4-8"><a href></a><span class="fu">ggplot</span>(alzheimer_data) <span class="sc">+</span></span>
-<span id="cb4-9"><a href></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>alzh, <span class="at">y=</span>lm.pred)) <span class="sc">+</span></span>
-<span id="cb4-10"><a href></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>alzh, <span class="at">y=</span>lm.pred.red), <span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-11"><a href></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="st">&#39;red&#39;</span>) <span class="sc">+</span></span>
-<span id="cb4-12"><a href></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;true alzh&quot;</span>, <span class="at">y=</span><span class="st">&quot;predicted by lm&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href></a>alzh.lm<span class="ot">=</span><span class="fu">lm</span>(alzh <span class="sc">~</span> hippo, <span class="at">data=</span>alzheimer_data)</span>
+<span id="cb6-2"><a href></a><span class="co">#add lm.pred variable</span></span>
+<span id="cb6-3"><a href></a>alzheimer_data<span class="sc">$</span>lm.pred<span class="ot">=</span><span class="fu">predict</span>(alzh.lm)</span>
+<span id="cb6-4"><a href></a><span class="co">#add red flags</span></span>
+<span id="cb6-5"><a href></a>alzheimer_data<span class="sc">$</span>lm.pred.red <span class="ot">=</span> alzheimer_data<span class="sc">$</span>lm.pred</span>
+<span id="cb6-6"><a href></a>alzheimer_data<span class="sc">$</span>lm.pred.red[alzheimer_data<span class="sc">$</span>lm.pred<span class="sc">&lt;</span><span class="dv">1</span> <span class="sc">&amp;</span></span>
+<span id="cb6-7"><a href></a>                             alzheimer_data<span class="sc">$</span>lm.pred<span class="sc">&gt;</span><span class="dv">0</span>]<span class="ot">=</span><span class="cn">NA</span></span>
+<span id="cb6-8"><a href></a><span class="fu">ggplot</span>(alzheimer_data) <span class="sc">+</span></span>
+<span id="cb6-9"><a href></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>alzh, <span class="at">y=</span>lm.pred)) <span class="sc">+</span></span>
+<span id="cb6-10"><a href></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>alzh, <span class="at">y=</span>lm.pred.red), <span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-11"><a href></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">col=</span><span class="st">&#39;red&#39;</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;true alzh&quot;</span>, <span class="at">y=</span><span class="st">&quot;predicted by lm&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -1358,9 +1378,9 @@ Zhaoxia Yu
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href></a>p<span class="ot">=</span><span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>, <span class="fl">0.01</span>)</span>
-<span id="cb5-2"><a href></a>logit.p<span class="ot">=</span><span class="fu">log</span>(p<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p))</span>
-<span id="cb5-3"><a href></a><span class="fu">plot</span>(p, logit.p, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="fu">expression</span>(pi), <span class="at">main=</span><span class="st">&quot;the logit function&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href></a>p<span class="ot">=</span><span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>, <span class="fl">0.01</span>)</span>
+<span id="cb7-2"><a href></a>logit.p<span class="ot">=</span><span class="fu">log</span>(p<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>p))</span>
+<span id="cb7-3"><a href></a><span class="fu">plot</span>(p, logit.p, <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">xlab=</span><span class="fu">expression</span>(pi), <span class="at">main=</span><span class="st">&quot;the logit function&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -1407,9 +1427,9 @@ Zhaoxia Yu
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href></a><span class="fu">library</span>(MASS)</span>
-<span id="cb6-2"><a href></a><span class="fu">data</span>(birthwt)</span>
-<span id="cb6-3"><a href></a><span class="fu">table</span>(birthwt<span class="sc">$</span>low, birthwt<span class="sc">$</span>smoke)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href></a><span class="fu">library</span>(MASS)</span>
+<span id="cb8-2"><a href></a><span class="fu">data</span>(birthwt)</span>
+<span id="cb8-3"><a href></a><span class="fu">table</span>(birthwt<span class="sc">$</span>low, birthwt<span class="sc">$</span>smoke)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   
@@ -1432,9 +1452,9 @@ Zhaoxia Yu
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href></a>birthwt <span class="ot">&lt;-</span> birthwt <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(low, smoke, race, ht, ui), factor))</span>
-<span id="cb8-3"><a href></a><span class="fu">glimpse</span>(birthwt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href></a>birthwt <span class="ot">&lt;-</span> birthwt <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(low, smoke, race, ht, ui), factor))</span>
+<span id="cb10-3"><a href></a><span class="fu">glimpse</span>(birthwt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 189
@@ -1458,8 +1478,8 @@ $ bwt   &lt;int&gt; 2523, 2551, 2557, 2594, 2600, 2622, 2637, 2637, 2663, 2665, 
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> smoke, <span class="at">family =</span> <span class="st">&#39;binomial&#39;</span>, <span class="at">data =</span> birthwt)</span>
-<span id="cb10-2"><a href></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> smoke, <span class="at">family =</span> <span class="st">&#39;binomial&#39;</span>, <span class="at">data =</span> birthwt)</span>
+<span id="cb12-2"><a href></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1484,7 +1504,7 @@ Residual Deviance: 229.8    AIC: 233.8</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href></a><span class="fu">confint</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href></a><span class="fu">confint</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %    97.5 %
@@ -1502,7 +1522,7 @@ smoke1       0.0786932  1.335154</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1641,8 +1661,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> age, <span class="at">family =</span> <span class="st">&#39;binomial&#39;</span>, <span class="at">data =</span> birthwt)</span>
-<span id="cb16-2"><a href></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> age, <span class="at">family =</span> <span class="st">&#39;binomial&#39;</span>, <span class="at">data =</span> birthwt)</span>
+<span id="cb18-2"><a href></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1736,9 +1756,9 @@ Residual Deviance: 231.9    AIC: 235.9</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> age <span class="sc">+</span> smoke, <span class="at">family =</span> <span class="st">&#39;binomial&#39;</span>, </span>
-<span id="cb18-2"><a href></a>           <span class="at">data =</span> birthwt)</span>
-<span id="cb18-3"><a href></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(low <span class="sc">~</span> age <span class="sc">+</span> smoke, <span class="at">family =</span> <span class="st">&#39;binomial&#39;</span>, </span>
+<span id="cb20-2"><a href></a>           <span class="at">data =</span> birthwt)</span>
+<span id="cb20-3"><a href></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1760,7 +1780,7 @@ Residual Deviance: 227.3    AIC: 233.3</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1795,7 +1815,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href></a><span class="fu">confint</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a><span class="fu">confint</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  2.5 %     97.5 %
@@ -1811,8 +1831,8 @@ smoke1       0.06214062 1.32718026</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href></a>alzh.logistic<span class="ot">=</span><span class="fu">glm</span>(alzh <span class="sc">~</span> hippo, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="at">data=</span>alzheimer_data)</span>
-<span id="cb24-2"><a href></a><span class="fu">summary</span>(alzh.logistic) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href></a>alzh.logistic<span class="ot">=</span><span class="fu">glm</span>(alzh <span class="sc">~</span> hippo, <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="at">data=</span>alzheimer_data)</span>
+<span id="cb26-2"><a href></a><span class="fu">summary</span>(alzh.logistic) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate Std. Error   z value     Pr(&gt;|z|)
@@ -1876,7 +1896,7 @@ hippo       -1.184699 0.06916233 -17.12926 8.979352e-66</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href></a><span class="fu">confint.default</span>(alzh.logistic)[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href></a><span class="fu">confint.default</span>(alzh.logistic)[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    2.5 %    97.5 % 
@@ -1889,7 +1909,7 @@ hippo       -1.184699 0.06916233 -17.12926 8.979352e-66</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(alzh.logistic)[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(alzh.logistic)[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    2.5 %    97.5 % 
@@ -1903,7 +1923,7 @@ hippo       -1.184699 0.06916233 -17.12926 8.979352e-66</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href></a><span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="fu">confint.default</span>(alzh.logistic))[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a><span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="fu">confint.default</span>(alzh.logistic))[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    2.5 %    97.5 % 
@@ -1921,7 +1941,7 @@ hippo       -1.184699 0.06916233 -17.12926 8.979352e-66</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href></a><span class="fu">summary</span>(alzh.logistic) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a><span class="fu">summary</span>(alzh.logistic) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate Std. Error   z value     Pr(&gt;|z|)
@@ -1954,8 +1974,8 @@ hippo       -1.184699 0.06916233 -17.12926 8.979352e-66</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href></a><span class="fu">plot</span>(alzheimer_data<span class="sc">$</span>alzh, <span class="fu">predict</span>(alzh.logistic, <span class="at">type=</span><span class="st">&quot;response&quot;</span>),</span>
-<span id="cb34-2"><a href></a>     <span class="at">xlab=</span><span class="st">&quot;observed alzh&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;predicted alzh&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href></a><span class="fu">plot</span>(alzheimer_data<span class="sc">$</span>alzh, <span class="fu">predict</span>(alzh.logistic, <span class="at">type=</span><span class="st">&quot;response&quot;</span>),</span>
+<span id="cb36-2"><a href></a>     <span class="at">xlab=</span><span class="st">&quot;observed alzh&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;predicted alzh&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -1966,8 +1986,8 @@ hippo       -1.184699 0.06916233 -17.12926 8.979352e-66</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href></a><span class="fu">plot</span>(alzheimer_data<span class="sc">$</span>hippo, <span class="fu">predict</span>(alzh.logistic, <span class="at">type=</span><span class="st">&quot;response&quot;</span>),</span>
-<span id="cb35-2"><a href></a>     <span class="at">xlab=</span><span class="st">&quot;hippo volume&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;predicted alzh&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href></a><span class="fu">plot</span>(alzheimer_data<span class="sc">$</span>hippo, <span class="fu">predict</span>(alzh.logistic, <span class="at">type=</span><span class="st">&quot;response&quot;</span>),</span>
+<span id="cb37-2"><a href></a>     <span class="at">xlab=</span><span class="st">&quot;hippo volume&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;predicted alzh&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -1985,8 +2005,8 @@ hippo       -1.184699 0.06916233 -17.12926 8.979352e-66</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href></a>alzh.glm.multi <span class="ot">=</span> <span class="fu">glm</span>(alzh <span class="sc">~</span> age <span class="sc">+</span> female <span class="sc">+</span> educ, <span class="at">family=</span>binomial, <span class="at">data=</span>alzheimer_data)</span>
-<span id="cb36-2"><a href></a><span class="fu">summary</span>(alzh.glm.multi)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href></a>alzh.glm.multi <span class="ot">=</span> <span class="fu">glm</span>(alzh <span class="sc">~</span> age <span class="sc">+</span> female <span class="sc">+</span> educ, <span class="at">family=</span>binomial, <span class="at">data=</span>alzheimer_data)</span>
+<span id="cb38-2"><a href></a><span class="fu">summary</span>(alzh.glm.multi)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>               Estimate  Std. Error   z value     Pr(&gt;|z|)
@@ -2028,7 +2048,7 @@ educ        -0.08759757 0.015192451 -5.765862 8.124175e-09</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href></a><span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a><span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     2.5 %     97.5 % 
@@ -2036,7 +2056,7 @@ educ        -0.08759757 0.015192451 -5.765862 8.124175e-09</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,])<span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a><span class="fu">exp</span>(<span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,])<span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     2.5 %     97.5 % 
@@ -2055,7 +2075,7 @@ educ        -0.08759757 0.015192451 -5.765862 8.124175e-09</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href></a><span class="dv">10</span><span class="sc">*</span><span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a><span class="dv">10</span><span class="sc">*</span><span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    2.5 %    97.5 % 
@@ -2063,7 +2083,7 @@ educ        -0.08759757 0.015192451 -5.765862 8.124175e-09</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href></a><span class="fu">exp</span>(<span class="dv">10</span><span class="sc">*</span><span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,])<span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a><span class="fu">exp</span>(<span class="dv">10</span><span class="sc">*</span><span class="fu">confint.default</span>(alzh.glm.multi)[<span class="dv">2</span>,])<span class="sc">-</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    2.5 %    97.5 % 
@@ -2081,7 +2101,7 @@ educ        -0.08759757 0.015192451 -5.765862 8.124175e-09</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href></a><span class="fu">summary</span>(alzh.glm.multi)<span class="sc">$</span>coefficients[<span class="sc">-</span><span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href></a><span class="fu">summary</span>(alzh.glm.multi)<span class="sc">$</span>coefficients[<span class="sc">-</span><span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>           Estimate  Std. Error   z value     Pr(&gt;|z|)
