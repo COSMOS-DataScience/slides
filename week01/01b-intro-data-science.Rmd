@@ -1,6 +1,6 @@
 ---
 title: "Data Science"
-author: "Zhaoxia Yu"
+author: "Babak Shahbaba"
 output: 
   xaringan::moon_reader:
     css: ["slide-style.css"]
@@ -46,7 +46,7 @@ library(titanic)
 ---
 
 
-## What is data science 
+## What is data science? 
 
 ```{r echo = FALSE, message=FALSE}
 
@@ -62,7 +62,64 @@ alzheimer_data <- read.csv('data/alzheimer_data.csv') %>%
 
 - To tackle these challenges, the field of __data science__ brings together _statistics, computer science_, and _mathematics_ to solve data intensive problems.
 
-- At its core, data science relies on statistical methods to solve scientific problems. These methods have their foundation in mathematics and are implemented using computational techniques to solve real-life problems in a wide range of scientific fields. 
+
+
+---
+
+
+## What is data science? 
+
+
+- At its core, data science relies on statistical methods to solve scientific problems. 
+
+- These methods have their foundation in mathematics and are implemented using computational techniques to solve real-life problems in a wide range of scientific fields. 
+
+- However, data science is broader than just databases, statistics, ML, algorithms,
+but these are all critical components  
+
+
+---
+
+## What is data science? 
+
+
+```{r echo=FALSE, out.width='75%', fig.align='center'}
+knitr::include_graphics('img/ds_venn.png')
+```
+
+
+
+---
+
+## Data science in society 
+
+
+```{r echo=FALSE, out.width='70%', fig.align='center'}
+knitr::include_graphics('img/ds_applications.png')
+```
+
+
+
+---
+
+## Data lifecycle  
+
+Data science involves managing and analyzing data throughout its lifecycle, from collecting and processing unstructured data to generating insights, developing predictive models, and driving informed decision-making.
+
+```{r echo=FALSE, out.width='90%', fig.align='center'}
+knitr::include_graphics('img/data_pipeline.png')
+```
+
+
+---
+
+
+## Key aspects of data science
+
+
+```{r echo=FALSE, out.width='50%', fig.align='center'}
+knitr::include_graphics('img/ds_aspects.png')
+```
 
 
 ---
