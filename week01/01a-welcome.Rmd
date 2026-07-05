@@ -49,7 +49,7 @@ class: center middle
 
 
 ```{r echo=FALSE, fig.align='center', out.width="30%"}
-knitr::include_graphics("img/Babak.jpeg")
+knitr::include_graphics("img/Yu_profile.jpg")
 ```
 
 ---
