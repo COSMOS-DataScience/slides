@@ -4,7 +4,7 @@ format:
     title-slide: false
     theme: [default, custom1.scss]
     scrollable: true
-    self-contained: true
+    self-contained: false
     highlight-style: pygments
     code-line-numbers: true
     code-overflow: wrap
