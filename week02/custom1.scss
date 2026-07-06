@@ -1,106 +1,35 @@
-/*-- scss:defaults --*/
-
-$uci-blue: #153e6c;
-
 /*-- scss:rules --*/
 
-/* ==========================================================
-   Overall appearance
-   ========================================================== */
-
 .reveal {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "Helvetica", sans-serif;
   font-size: 220%;
 }
 
-.reveal h1,
-.reveal h2,
-.reveal h3 {
-  color: $uci-blue;
+/* Add small logo to all slides except the first */
+.reveal .slides::after {
+  content: "";
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  width: 60px;
+  height: 60px;
+  background-image: url("img/cosmos-uci-dshs.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  opacity: 0.9;
+  z-index: 10;
 }
 
-.reveal li {
-  margin-bottom: 0.35em;
-  line-height: 1.35;
+/* Hide logo on first slide */
+.reveal .slide:first-of-type::after {
+  display: none;
 }
 
-.reveal img {
-  border: none;
-  box-shadow: none;
-}
-
-.reveal pre {
-  border-radius: 6px;
-}
-
-.reveal pre code {
-  font-size: 0.82em;
-  line-height: 1.3;
-}
-
-/* ==========================================================
-   Border around ONLY the first slide
-   ========================================================== */
-
-.reveal .slides > section:first-child {
-  border: 6px solid $uci-blue;
+/* Apply dark blue frame only to the title slide */
+.reveal section.title-slide {
+  border: 6px solid #003366;
   border-radius: 8px;
+  padding: 20px;
   box-sizing: border-box;
 }
-
-/* ==========================================================
-   Cover slide layout
-   ========================================================== */
-
-.cover {
-  width: 100%;
-  height: 100%;
-}
-
-.title-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 40px;
-}
-
-.title-logo {
-  flex: 0 0 38%;
-}
-
-.title-logo img {
-  width: 100%;
-  max-width: 320px;
-}
-
-.title-text {
-  flex: 0 0 55%;
-}
-
-.cover .title-text h1 {
-  color: $uci-blue;
-  font-size: 2.8em;
-  margin-bottom: 0.3em;
-}
-
-.cover .title-text p {
-  color: $uci-blue;
-  font-size: 1.8em;
-  margin: 0;
-}
-
-/* ==========================================================
-   Footer logo (used only if footer: is in YAML)
-   ========================================================== */
-
-.footer {
-  left: 16px !important;
-  bottom: 16px !important;
-  width: auto !important;
-  font-size: 0;
-}
-
-.footer img {
-  height: 45px;
-}
-
