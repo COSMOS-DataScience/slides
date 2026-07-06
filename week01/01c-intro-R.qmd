@@ -4,7 +4,7 @@ format:
     title-slide: false
     theme: [default, custom1.scss]
     scrollable: true
-    self-contained: false
+    self-contained: true
     highlight-style: pygments
     code-line-numbers: true
     code-overflow: wrap
@@ -45,6 +45,12 @@ Zhaoxia Yu
 -   Widely used in academia, industry, government, and research around the world.
 -   Supports data analysis, visualization, machine learning, and reproducible research through thousands of contributed packages.
 
+
+
+```{r}
+knitr::knit_exit()
+```
+
 ## How Does R Look Like? {background-image="img/cosmos-uci-dshs.png" background-size="45px" background-position="20px 95%"}
 
 ::: {style="text-align:center;"}
@@ -60,6 +66,8 @@ Zhaoxia Yu
     -   [<strong>20,000+</strong> packages on CRAN]{.fragment data-fragment-index="2"}
 -   **Open source.** Free to use, free to share, and free to modify.
 -   **Reproducible research.** Analysis, figures, and reports can be generated from a single source.
+
+
 
 ## Evolution of Statistical Computing {background-image="img/cosmos-uci-dshs.png" background-size="45px" background-position="20px 95%"}
 
@@ -175,6 +183,8 @@ geom_text(
     plot.margin = margin(20, 40, 20, 40)
   )
 ```
+
+
 
 ## R Ecosystem {background-image="img/cosmos-uci-dshs.png" background-size="45px" background-position="20px 95%"}
 
@@ -353,7 +363,3 @@ Today we introduced three essential tools:
 
 Together they form a modern workflow for data science.
 
-
-```{r}
-knitr::knit_exit()
-```
