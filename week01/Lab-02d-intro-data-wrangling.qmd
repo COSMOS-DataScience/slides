@@ -1,5 +1,5 @@
 ---
-title: "Changing Variables"
+title: "Introduction to data wrangling"
 author: "Dr. Mine Dogucu"
 format:
   html:
@@ -10,7 +10,7 @@ format:
     embed-resources: true
 ---
 
-## Loading Data
+## Import Data
  
 ```{r}
 #| message: false
@@ -44,7 +44,7 @@ glimpse(arthritis)
 
 ---
 
-## Mutating Variables
+## Mutating existing variables
 
 We use `mutate()` to create or modify variables in a data frame.
 
@@ -69,6 +69,29 @@ arthritis_age_mon <- arthritis |>
 
 glimpse(arthritis_age_mon)
 ```
+
+## Using `arrange` to sort age variable
+
+
+
+```{r}
+#| code-fold: TRUE
+
+# aesending order
+arthritis |>
+  arrange(age)
+```
+
+Quest: how about sorting age in a descending order?
+
+```{r}
+#| code-fold: TRUE
+#| 
+# descending order
+arthritis |>
+  arrange(desc(age))
+```
+
 
 ## Creating a categorical variable: `cdai_level`
 

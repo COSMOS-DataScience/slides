@@ -8,7 +8,7 @@
 
 <meta name="author" content="Dr. Mine Dogucu">
 
-<title>Changing Variables</title>
+<title>Introduction to data wrangling</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -2208,12 +2208,13 @@ vertical-align: -.125em;
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#loading-data" id="toc-loading-data" class="nav-link active" data-scroll-target="#loading-data"><span class="header-section-number">1</span> Loading Data</a></li>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link active" data-scroll-target="#import-data"><span class="header-section-number">1</span> Import Data</a></li>
   <li><a href="#data-overview" id="toc-data-overview" class="nav-link" data-scroll-target="#data-overview"><span class="header-section-number">2</span> Data Overview</a></li>
-  <li><a href="#mutating-variables" id="toc-mutating-variables" class="nav-link" data-scroll-target="#mutating-variables"><span class="header-section-number">3</span> Mutating Variables</a></li>
+  <li><a href="#mutating-existing-variables" id="toc-mutating-existing-variables" class="nav-link" data-scroll-target="#mutating-existing-variables"><span class="header-section-number">3</span> Mutating existing variables</a></li>
   <li><a href="#creating-a-numeric-variable-age_months" id="toc-creating-a-numeric-variable-age_months" class="nav-link" data-scroll-target="#creating-a-numeric-variable-age_months"><span class="header-section-number">4</span> Creating a numeric variable: <code>age_months</code></a></li>
-  <li><a href="#creating-a-categorical-variable-cdai_level" id="toc-creating-a-categorical-variable-cdai_level" class="nav-link" data-scroll-target="#creating-a-categorical-variable-cdai_level"><span class="header-section-number">5</span> Creating a categorical variable: <code>cdai_level</code></a></li>
-  <li><a href="#converting-variable-types" id="toc-converting-variable-types" class="nav-link" data-scroll-target="#converting-variable-types"><span class="header-section-number">6</span> Converting variable types</a></li>
+  <li><a href="#using-arrange-to-sort-age-variable" id="toc-using-arrange-to-sort-age-variable" class="nav-link" data-scroll-target="#using-arrange-to-sort-age-variable"><span class="header-section-number">5</span> Using <code>arrange</code> to sort age variable</a></li>
+  <li><a href="#creating-a-categorical-variable-cdai_level" id="toc-creating-a-categorical-variable-cdai_level" class="nav-link" data-scroll-target="#creating-a-categorical-variable-cdai_level"><span class="header-section-number">6</span> Creating a categorical variable: <code>cdai_level</code></a></li>
+  <li><a href="#converting-variable-types" id="toc-converting-variable-types" class="nav-link" data-scroll-target="#converting-variable-types"><span class="header-section-number">7</span> Converting variable types</a></li>
   </ul>
 </nav>
 </div>
@@ -2221,7 +2222,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Changing Variables</h1>
+<h1 class="title">Introduction to data wrangling</h1>
 </div>
 
 
@@ -2244,8 +2245,8 @@ vertical-align: -.125em;
 </header>
 
 
-<section id="loading-data" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="loading-data"><span class="header-section-number">1</span> Loading Data</h2>
+<section id="import-data" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="import-data"><span class="header-section-number">1</span> Import Data</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -2284,8 +2285,8 @@ $ cdai        &lt;dbl&gt; NA, 23.0, 14.5, NA, NA, NA, NA, 40.0, 6.0, NA, 0.0, NA
 </div>
 <hr>
 </section>
-<section id="mutating-variables" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="mutating-variables"><span class="header-section-number">3</span> Mutating Variables</h2>
+<section id="mutating-existing-variables" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="mutating-existing-variables"><span class="header-section-number">3</span> Mutating existing variables</h2>
 <p>We use <code>mutate()</code> to create or modify variables in a data frame.</p>
 </section>
 <section id="creating-a-numeric-variable-age_months" class="level2" data-number="4">
@@ -2335,8 +2336,60 @@ $ age_months  &lt;dbl&gt; 1020, 1032, 996, 996, 1020, 948, 1080, 1080, 1044, 984
 </div>
 </div>
 </section>
-<section id="creating-a-categorical-variable-cdai_level" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="creating-a-categorical-variable-cdai_level"><span class="header-section-number">5</span> Creating a categorical variable: <code>cdai_level</code></h2>
+<section id="using-arrange-to-sort-age-variable" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="using-arrange-to-sort-age-variable"><span class="header-section-number">5</span> Using <code>arrange</code> to sort age variable</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aesending order</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 530 × 5
+     age age_gp  sex    yrs_from_dx  cdai
+   &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1    42 control female           8    20
+ 2    42 control female           9    12
+ 3    42 control female          27    18
+ 4    42 control female           1    NA
+ 5    42 control female          16    NA
+ 6    42 control male             2    14
+ 7    43 control female           2     0
+ 8    43 control female           7    NA
+ 9    44 control female           3    NA
+10    44 control female          11    NA
+# ℹ 520 more rows</code></pre>
+</div>
+</div>
+<p>Quest: how about sorting age in a descending order?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># descending order</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(age))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 530 × 5
+     age age_gp  sex    yrs_from_dx  cdai
+   &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1    90 elderly female          51    NA
+ 2    90 elderly female          11    40
+ 3    90 elderly female          NA    NA
+ 4    90 elderly female          11    NA
+ 5    90 elderly female           3    NA
+ 6    90 elderly female          40    NA
+ 7    90 elderly female          40    14
+ 8    88 elderly female          11    NA
+ 9    88 elderly female          12    NA
+10    87 elderly female          36     6
+# ℹ 520 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="creating-a-categorical-variable-cdai_level" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="creating-a-categorical-variable-cdai_level"><span class="header-section-number">6</span> Creating a categorical variable: <code>cdai_level</code></h2>
 <p><strong>Goal:</strong> Create a new variable called <code>cdai_level</code> based on the CDAI data dictionary:</p>
 <table class="caption-top table">
 <thead>
@@ -2368,12 +2421,12 @@ $ age_months  &lt;dbl&gt; 1020, 1032, 996, 996, 1020, 948, 1080, 1080, 1044, 984
 <div class="cell" data-output-fold="true">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">case_when</span>(</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&lt;=</span> <span class="fl">2.8</span>             <span class="sc">~</span> <span class="st">&quot;Remission&quot;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="fl">2.8</span> <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">10</span>  <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">22</span> <span class="sc">~</span> <span class="st">&quot;Moderate&quot;</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">22</span>               <span class="sc">~</span> <span class="st">&quot;High&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">case_when</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&lt;=</span> <span class="fl">2.8</span>             <span class="sc">~</span> <span class="st">&quot;Remission&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="fl">2.8</span> <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">10</span>  <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">22</span> <span class="sc">~</span> <span class="st">&quot;Moderate&quot;</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">22</span>               <span class="sc">~</span> <span class="st">&quot;High&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 530 × 6
@@ -2396,14 +2449,14 @@ $ age_months  &lt;dbl&gt; 1020, 1032, 996, 996, 1020, 948, 1080, 1080, 1044, 984
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">case_when</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&lt;=</span> <span class="fl">2.8</span>             <span class="sc">~</span> <span class="st">&quot;Remission&quot;</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="fl">2.8</span> <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">10</span>  <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">22</span> <span class="sc">~</span> <span class="st">&quot;Moderate&quot;</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">22</span>               <span class="sc">~</span> <span class="st">&quot;High&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cdai_level)) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">case_when</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&lt;=</span> <span class="fl">2.8</span>             <span class="sc">~</span> <span class="st">&quot;Remission&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="fl">2.8</span> <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">10</span>  <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">22</span> <span class="sc">~</span> <span class="st">&quot;Moderate&quot;</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">22</span>               <span class="sc">~</span> <span class="st">&quot;High&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cdai_level)) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -2417,14 +2470,14 @@ $ age_months  &lt;dbl&gt; 1020, 1032, 996, 996, 1020, 948, 1080, 1080, 1044, 984
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="ot">&lt;-</span> arthritis <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">case_when</span>(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&lt;=</span> <span class="fl">2.8</span>             <span class="sc">~</span> <span class="st">&quot;Remission&quot;</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="fl">2.8</span> <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">10</span>  <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">22</span> <span class="sc">~</span> <span class="st">&quot;Moderate&quot;</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">22</span>               <span class="sc">~</span> <span class="st">&quot;High&quot;</span>))</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(arthritis)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="ot">&lt;-</span> arthritis <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&lt;=</span> <span class="fl">2.8</span>             <span class="sc">~</span> <span class="st">&quot;Remission&quot;</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="fl">2.8</span> <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">10</span> <span class="sc">~</span> <span class="st">&quot;Low&quot;</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">10</span>  <span class="sc">&amp;</span> cdai <span class="sc">&lt;=</span> <span class="dv">22</span> <span class="sc">~</span> <span class="st">&quot;Moderate&quot;</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    cdai <span class="sc">&gt;</span> <span class="dv">22</span>               <span class="sc">~</span> <span class="st">&quot;High&quot;</span>))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(arthritis)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 530
@@ -2438,15 +2491,15 @@ $ cdai_level  &lt;chr&gt; NA, &quot;High&quot;, &quot;Moderate&quot;, NA, NA, NA
 </div>
 </div>
 </section>
-<section id="converting-variable-types" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="converting-variable-types"><span class="header-section-number">6</span> Converting variable types</h2>
+<section id="converting-variable-types" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="converting-variable-types"><span class="header-section-number">7</span> Converting variable types</h2>
 <p><strong>Goal:</strong> Make <code>cdai_level</code> a factor and <code>age</code> an integer.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">as.factor</span>(cdai_level),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">age =</span> <span class="fu">as.integer</span>(age))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>arthritis <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cdai_level =</span> <span class="fu">as.factor</span>(cdai_level),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">age =</span> <span class="fu">as.integer</span>(age))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 530 × 6
