@@ -1,0 +1,197 @@
+---
+title: "Introduction to tidyverse"
+format:
+  pdf:
+    toc: true
+    toc-location: right
+    toc-depth: 2
+    number-sections: true
+    embed-resources: true
+---
+
+```{r}
+#| echo: false
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## The tidyverse Style Guide
+
+> canyoureadthissentence?
+
+::: {callout-important}
+Good coding style is like correct punctuation: you can manage without it, but it makes things easier to read.
+:::
+
+The most important thing about the tidyverse style guide is that it provides **consistency**, making code easier to write because you need to make fewer decisions.
+
+::: {.callout-tip collapse="false"}
+See: [The tidyverse style guide](https://style.tidyverse.org/)
+:::
+
+::: {.callout-note collapse="false" icon="false"}
+### File Names
+
+Avoid special characters in file names — stick with numbers, letters, -, and \_.
+
+```{r}
+#| eval: false
+
+# Good
+fit_models.R
+utility_functions.R
+
+# Bad
+fit models.R
+foo.r
+stuff.r
+lab1.r
+```
+:::
+
+::: {.callout-note collapse="true" icon="false"}
+### Syntax
+
+- Leave spaces before and after operators (e.g. \<-, =).
+- Put a space after a comma, not before.
+- Object names should be all lowercase, with words separated by an underscore.
+
+```{r}
+#| eval: false
+
+# Good
+age <- c(6, 9, 15)
+# Bad
+age <- c(6,9,15)
+
+# Good
+data.frame(age_kid = age)
+# Bad
+data.frame(Age_kid=age)
+
+# Good
+day_one <- 1
+day_1 <- 1
+# Bad
+DayOne <- 1
+first_day_of_the_month <- 1
+```
+:::
+
+
+
+## The Pipe Operator
+
+**What is the average of 4, 8, 16 — approximately?**
+
+Breaking the problem down:
+
+1.  What is the average of **4, 8, 16** approximately?
+2.  What is the **average** of 4, 8, 16 approximately?
+3.  What is the average of 4, 8, 16 **approximately**?
+
+::: {.callout-note collapse="false"}
+### Solution 1: Functions within Functions
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+c(4, 8, 16)
+```
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+mean(c(4, 8, 16))
+```
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+round(mean(c(4, 8, 16)))
+```
+
+**Problem:** Things get messy and harder to read as operations become more complex.
+:::
+
+::: {.callout-note collapse="true"}
+### Solution 2: Creating Objects
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+numbers <- c(4, 8, 16)
+numbers
+```
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+avg_number <- mean(numbers)
+avg_number
+```
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+round(avg_number)
+```
+
+**Problem:** We end up with too many objects cluttering the `Environment`.
+:::
+
+:::::: {.callout-note collapse="true"}
+### Solution 3: The Pipe Operator `|>`
+
+First, load the tidyverse:
+
+```{r}
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+
+# install.packages("tidyverse")
+library(tidyverse)
+```
+
+The pipe `|>` passes the output of one function as the first argument of the next.
+
+**Keyboard shortcut:** `Ctrl/Cmd + Shift + M`
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+c(4, 8, 16) |>
+  mean() |>
+  round()
+```
+
+Read this as: Combine 4, 8, and 16, **then** take the mean, **then** round the result.
+
+This is equivalent to the composite function $$f \circ g \circ h(x)$$, or `round(mean(c(4, 8, 16)))` — but much easier to read.
+
+::::: columns
+::: {.column width="50%"}
+**Generalized form**
+
+```{r}
+#| eval: false
+h(x) |>
+  g() |>
+  f()
+```
+:::
+
+::: {.column width="50%"}
+**Our example**
+
+```{r}
+#| eval: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+c(4, 8, 16) |>
+  mean() |>
+  round()
+```
+:::
+:::::
+::::::

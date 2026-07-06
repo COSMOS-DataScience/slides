@@ -1,0 +1,145 @@
+---
+title: "Changing Variables"
+author: "Dr. Mine Dogucu"
+format:
+  html:
+    toc: true
+    toc-location: right
+    toc-depth: 2
+    number-sections: true
+    embed-resources: true
+---
+
+## Loading Data
+ 
+```{r}
+#| message: false
+#| code-fold: TRUE
+
+library(tidyverse)
+options(scipen = 999)
+
+arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/main/RheumArth_Tx_AgeComparisons.csv") |>
+  janitor::clean_names() |>
+  mutate(sex = case_when(sex == 0 ~ "female",
+                         sex == 1 ~ "male"),
+         sex = as.factor(sex),
+         age_gp = case_when(age_gp == 1 ~ "control",
+                            age_gp == 2 ~ "elderly"),
+         age_gp = as.factor(age_gp),
+         cdai_yn = case_when(cdai_yn == 1 ~ "no",
+                             cdai_yn == 2 ~ "yes"),
+         cdai_yn = as.factor(cdai_yn)) |>
+  select(age, age_gp, sex, yrs_from_dx, cdai)
+```
+ 
+
+## Data Overview
+
+We are working with the `arthritis` dataset. Here is a quick look at its structure:
+
+```{r}
+glimpse(arthritis)
+```
+
+---
+
+## Mutating Variables
+
+We use `mutate()` to create or modify variables in a data frame.
+
+
+## Creating a numeric variable: `age_months`
+
+**Goal:** Create a new variable called `age_months` that represents `age` in months.
+
+```{r}
+#| code-fold: TRUE
+arthritis |>
+  mutate(age_months = age * 12)
+```
+
+Note that this does not change the original `arthritis` object. To save the result, assign it:
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+arthritis_age_mon <- arthritis |>
+  mutate(age_months = age * 12)
+
+glimpse(arthritis_age_mon)
+```
+
+## Creating a categorical variable: `cdai_level`
+
+**Goal:** Create a new variable called `cdai_level` based on the CDAI data dictionary:
+
+| Level | Condition |
+|---|---|
+| Remission | cdai ≤ 2.8 |
+| Low Disease Activity | cdai > 2.8 and ≤ 10 |
+| Moderate Disease Activity | cdai > 10 and ≤ 22 |
+| High Disease Activity | cdai > 22 |
+
+We use `case_when()` inside `mutate()` to assign categories:
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+arthritis |>
+  mutate(cdai_level = case_when(
+    cdai <= 2.8             ~ "Remission",
+    cdai > 2.8 & cdai <= 10 ~ "Low",
+    cdai > 10  & cdai <= 22 ~ "Moderate",
+    cdai > 22               ~ "High"))
+```
+
+We can pipe directly into `ggplot()` to visualize the new variable:
+
+```{r}
+#| code-fold: TRUE 
+arthritis |>
+  mutate(cdai_level = case_when(
+    cdai <= 2.8             ~ "Remission",
+    cdai > 2.8 & cdai <= 10 ~ "Low",
+    cdai > 10  & cdai <= 22 ~ "Moderate",
+    cdai > 22               ~ "High")) |>
+  ggplot(aes(x = cdai_level)) +
+  geom_bar()
+```
+
+To save the result back into `arthritis`:
+
+```{r}
+#| code-fold: TRUE
+arthritis <- arthritis |>
+  mutate(cdai_level = case_when(
+    cdai <= 2.8             ~ "Remission",
+    cdai > 2.8 & cdai <= 10 ~ "Low",
+    cdai > 10  & cdai <= 22 ~ "Moderate",
+    cdai > 22               ~ "High"))
+
+glimpse(arthritis)
+```
+
+## Converting variable types
+
+**Goal:** Make `cdai_level` a factor and `age` an integer.
+
+```{r}
+#| code-fold: TRUE
+arthritis |>
+  mutate(cdai_level = as.factor(cdai_level),
+         age = as.integer(age))
+```
+
+Common type-conversion functions:
+
+| Function | Result |
+|---|---|
+| `as.factor()` | factor |
+| `as.numeric()` | numeric |
+| `as.integer()` | integer |
+| `as.double()` | double |
+| `as.character()` | character |
+ 
