@@ -1,0 +1,299 @@
+---
+title: "Improving Data Visualizations"
+format:
+  html:
+    toc: true
+    toc-location: right
+    toc-depth: 2
+    number-sections: true
+    embed-resources: true
+---
+
+# Import data
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+
+library(openintro)
+library(tidyverse)
+babies <- babies %>% 
+  mutate(smoke = as.logical(smoke),
+         parity = as.logical(parity))
+
+xaringanExtra::use_panelset()
+theme_set(theme_gray(base_size = 18))
+
+```
+ 
+
+
+# Scatter plot
+
+Task:
+
+- Using the `babies` data,   
+- Map `gestation` to x-axis, `bwt` to y-axis, `smoke` to shape and color.
+- Add a layer of points and set the size of the points to 4.
+
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point(size = 4) 
+```
+
+
+# Add labels to axis using `labs()`
+
+Task: 
+
+- Using the `babies` data,   
+- Map `gestation` to x-axis, `bwt` to y-axis, `smoke` to shape.
+- Add a layer of points and set the size of the points to 4.
+- [Add labels to x-axis (Gestation), y-axis (Birth Weight), and the title of the plot (Palmer babies).]{.highlight-text}
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point(size = 4) +
+  labs(x = "Gestation (days)", #<<
+       y = "Birth Weight (ounces)", #<<
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") #<<
+```
+
+ 
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#|
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point(size = 4) +
+  labs(x = "Gestation (days)", #<<
+       y = "Birth Weight (ounces)", #<<
+       title = "Gestation and Birth Weight by Mother's Smoker Status") #<<
+```
+  
+```{r } 
+#| message: false
+#| code-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Gestation and Birth Weight by Mother's Smoker Status") 
+  theme_bw() #<<
+  
+```
+  
+# Themes
+- `theme_gray()`
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
+  theme_gray()
+```
+
+-`theme_bw()`
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
+  theme_bw()
+```
+
+-`theme_classic()`
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
+  theme_classic()
+```
+
+-`theme_dark()`
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
+  theme_dark()
+```
+
+-`theme_minimal()`
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
+  theme_minimal()
+```
+
+-`theme_void()`
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
+  theme_void()
+```
+ 
+
+## Explore `theme()`
+
+
+```{r}
+?theme
+```
+
+There are more aspects of a theme that we can control. 
+
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point() +
+  labs(x = "Gestation (days)",
+       y = "Birth Weight (ounces)", 
+       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
+  theme_bw() +
+  theme(title = 
+          element_text(size = 12),
+        axis.title = 
+          element_text(size = 10,
+                       face="bold"))
+  
+```
+ 
+ 
+# Layout panels in a grid 
+
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+#| 
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point(size = 4) +
+  facet_grid(.~parity) #<<
+```
+
+ 
+```{r } 
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+#| 
+ggplot(babies,
+       aes(x = gestation,
+           y = bwt,
+           shape = smoke,
+           color = smoke)) +
+  geom_point(size = 4) +
+  facet_grid(parity~.) #<<
+```
+ 
+# Summary
+
+You can do much more in ggplot. 
+
+- Use images 
+- Make maps
+- Pick colors that you want
+ 
+
+Check out [the ggplot flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html#1) for some inspiration. 
+
+
+Additional resources:
+ 
+- [BBC](https://bbc.github.io/rcookbook/)   
+- [fivethirtyeight](https://blog.revolutionanalytics.com/2016/07/data-journalism-with-r-at-538.html?utm_content=bufferc03e0&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer)  
+- [NY Times](https://livefreeordichotomize.com/2021/04/07/nytimes-map-how-to/)
