@@ -17,7 +17,8 @@ format:
 ```{r}
 #| include: false
 knitr::opts_chunk$set(
-  echo = TRUE,
+  echo = FALSE,
+  eval = FALSE,
   message = FALSE,
   warning = FALSE,
   fig.align = "center",
@@ -64,6 +65,7 @@ We're going to get some practice with the basics of R.
 
 - Please stop and ask questions!! It doesn't have to just be if you're stuck. 
 
+
 ## Creating a project in R studio
 
 ![Create a new project](images/new_project.png){width=300px}
@@ -102,7 +104,7 @@ Code is written in code chunks:
 
 . . . 
 
-```{r}
+```{r, echo=TRUE}
 # Hi I am a code chunk
 ```
 
@@ -110,7 +112,7 @@ Code is written in code chunks:
 
 Code chunks are delineated by
 
-```{r}
+```{r, echo=TRUE}
 # Without the # mark:
 # ```{r}
 # ```
@@ -135,7 +137,7 @@ Code chunks are delineated by
 
 . . . 
 
-```{r}
+```{r, echo=TRUE, eval=TRUE}
 3+3 # add 3+3=6
 4-1 # subtract 4-1=3
 
@@ -152,7 +154,7 @@ Code chunks are delineated by
 
 - We can perform traditional mathematical operations in R
 
-```{r}
+```{r, echo = TRUE, eval = TRUE}
 15 %% 2 # 'modulo', the remainder when (in this case) 15 is divided by 2
 
 sqrt(16)
@@ -386,7 +388,7 @@ seeds <- c(T, F, T)
 
 . . . 
 
-- So, if we want to access the first element of the `fruits` vector we write: 
+- So, lets say we want to access the first element of the `fruits` vector 
 
 
 ```{r}
@@ -428,7 +430,7 @@ fruit_data
 
 - We can index the `data.frame` grid with brackets as well, indexing through the rows and columns
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = TRUE}
 fruit_data[row, column]
 ```
 
@@ -462,7 +464,7 @@ numbers <- c(-1, 15, 100, 111, 110)
 
 . . . 
 
-- We could do this this mathematically, by adding up the values and dividing by how many there are
+- We can do this this mathematically, by adding up the values and dividing by how many there are
 
 ```{r}
 (-1 + 15 + 100 + 111 + 110)/5
@@ -508,7 +510,7 @@ Generally, we call functions in the following way:
 
 . . . 
 
-```{r, eval=FALSE, echo = TRUE}
+```{r, eval=FALSE}
 do(something)
 ```
 
@@ -520,7 +522,7 @@ do(something)
 
 Functions are not limited to only one argument:
 
-```{r, eval=FALSE, echo = TRUE}
+```{r, eval=FALSE}
 do(something, colorful)
 ```
 
@@ -556,15 +558,12 @@ To learn about what a function does, we can use a question mark before the funct
 
 - If you are looking for something specific, Google is your friend!!
 
-. . .
-
-- More on this coming up soon
 
 ## Conditional statements
 
 . . . 
 
-```{r, eval=FALSE, echo = TRUE}
+```{r, eval=FALSE}
 if(condition){
    Do Something
 } else {
@@ -579,7 +578,7 @@ if(condition){
 
 ## Conditional statements
 
-```{r, eval=FALSE, echo = TRUE}
+```{r, eval=FALSE}
 if(condition1){
   Do something
 } else if (condition2) {
@@ -664,7 +663,7 @@ Try and play around with the amount assigned to 'money' and 'greed'.
 
 Now, Try and make your own if statement!
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo = TRUE}
 if(){
   print("")
 }else{
@@ -691,7 +690,7 @@ if(){
 
 ## `while` loop syntax
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = TRUE}
 while(condition) {
   Do this over and over 
 }
@@ -766,7 +765,7 @@ while(TRUE) {
 
 ## `for` loop syntax
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = TRUE}
 for(element in vector){
   Do this as many times as there are elements in vector
 }
@@ -864,7 +863,7 @@ my_function(ate_lunch)
 - We must first define the input variable, and then pass it into the function as an argument
 
 
-## Let's write our own `mean()` function
+## Let's write our own `my_mean()` function
 
 ```{r}
 my_mean <- function(numbers) {
@@ -890,9 +889,9 @@ We use packages by first installing them, and then loading them into our R envir
 
 ## R packages
 
-Let's ry running the following code:
+Let's try running the following code:
 
-```{r, eval = FALSE}
+```{r, echo = TRUE}
 beep()
 ```
 
@@ -913,7 +912,7 @@ You can copy or type install.packages("beepr") in the console, or in the a code 
 
 NOTE: we only ever need to install a package once. Once downloaded, we can 'call' it and use it whenever we want.
 
-```{r, eval = FALSE}
+```{r, echo = TRUE}
 install.packages("beepr")
 ```
 
@@ -932,7 +931,7 @@ How do we get it?
 
 We use the function `library()` to recall and load in the package into our R session.
 
-```{r, eval=FALSE}
+```{r, echo = TRUE}
 library("beepr")
 ```
 
@@ -940,7 +939,7 @@ library("beepr")
 
 Now try and run `beep()`
 
-```{r, eval = FALSE}
+```{r}
 beep()
 ```
 
@@ -954,7 +953,7 @@ What if we want a different sound? Where do we go again if we don't know what to
 
 Use help search bar, or '?'
 
-```{r, eval = FALSE}
+```{r}
 ?beep
 ```
 
@@ -972,7 +971,7 @@ What kinds of sounds are there from the description?
 
 - Try out different sound types
 
-```{r, eval = FALSE}
+```{r}
 beep(sound="wilhelm")
 ```
 
@@ -983,14 +982,14 @@ Now, use the say() function from the library cowsay and see what it does
 
 . . . 
 
-```{r, eval = FALSE}
+```{r, echo = TRUE}
 install.packages("cowsay")
 library(cowsay)
 ```
 . . . 
 
 Need Help?
-```{r, eval = FALSE}
+```{r, echo = TRUE}
 ?say()
 ```
 
@@ -1010,10 +1009,8 @@ Play around!
 
 . . .
 
-```{r, eval = FALSE}
+```{r}
 say(what="Have Fun!", by="cat", what_color="green")
 ```
-
-
 
 
