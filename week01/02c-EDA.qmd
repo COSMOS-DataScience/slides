@@ -347,9 +347,9 @@ knitr::include_graphics("img/Boxplot.png")
 
 -   Symmetric around its location: when the densities are \[almost\] the same for any two intervals that are equally distant from the center.
 
--   Left-skewed: stretched to the right. Example: age at death.
+-   Left-skewed: stretched to the left. Example: age at death.
 
--   Reft-skewed: stretched to the left. Example: house income.
+-   Right-skewed: stretched to the right. Example: house income.
 
 ## 
 
