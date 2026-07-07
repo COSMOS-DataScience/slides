@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="02c-EDA_files/libs/clipboard/clipboard.min.js"></script>
+<script src="02c-EDA_files/libs/quarto-html/tabby.min.js"></script>
+<script src="02c-EDA_files/libs/quarto-html/popper.min.js"></script>
+<script src="02c-EDA_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="02c-EDA_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="02c-EDA_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="02c-EDA_files/libs/quarto-html/quarto-syntax-highlighting-a185852c63625fd9ffbdc57047c9a77e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <title>c-eda</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="02c-EDA_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="02c-EDA_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="02c-EDA_files/libs/revealjs/dist/theme/quarto-37488a3070012fd431fac83a07067cfd.css">
+  <link href="02c-EDA_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="02c-EDA_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="02c-EDA_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="02c-EDA_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="02c-EDA_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="02c-EDA_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <link href="02c-EDA_files/libs/table1-1.0/table1_defaults.css" rel="stylesheet">
+
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+<p><img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;"></p>
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+<h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">
+<p>Describe Data and EDA</p>
+</h1>
+<p style="color: #153e6c; font-size: 1.8em;">
+</p><p>Zhaoxia Yu</p>
+<p></p>
+</div>
+</div>
+</section>
+<section id="import-data" class="slide level2">
+<h2>Import Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(openintro)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(janitor)</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'data/alzheimer_data.csv'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href=""></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">diagnosis =</span> <span class="fu">as.factor</span>(diagnosis), <span class="at">female =</span> <span class="fu">as.factor</span>(female))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-cycle" class="slide level2">
+<h2>Data cycle</h2>
+
+<img data-src="img/data-cycle.png" width="258" class="r-stretch"><div style="font-size: 50%;">
+<p>Image from Grolemund, G., &amp; Wickham, H. (2018). <em>R for data science</em> (CC BY-NC-ND 3.0).</p>
+</div>
+</section>
+<section>
+<section id="alzheimers-data" class="title-slide slide level1 center">
+<h1>Alzheimer’s Data</h1>
+
+</section>
+<section id="univariate-analysis" class="slide level2">
+<h2>Univariate analysis</h2>
+<p>We begin by examining one variable at a time.</p>
+<p>The goal is to gain a general understanding of each variable by:</p>
+<ul>
+<li><p>identifying the possible values,</p></li>
+<li><p>understanding how the values are distributed, and</p></li>
+<li><p>observing how the variable varies across individuals in the sample.</p></li>
+</ul>
+<p>In summary, we are exploring the distribution of each variable.</p>
+</section>
+<section id="inspect-data-using-head" class="slide level2">
+<h2>Inspect Data using <code>head()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">head</span>(alzheimer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id diagnosis age educ female height weight
+1 S060833         0  74   12      0   65.0    233
+2 S932623         0  56   16      1   62.0    110
+3 S755478         0  77   18      1   65.0    137
+4 S852291         0  74   20      1   62.0    112
+5 S011143         1  75   14      0   62.0    127
+6 S069106         0  72   16      1   61.8    141</code></pre>
+</div>
+</div>
+</section>
+<section id="inspect-data-using-tail" class="slide level2">
+<h2>Inspect Data using <code>tail()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">tail</span>(alzheimer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          id diagnosis age educ female height weight
+2695 S583416         0  65   16      1   64.0    109
+2696 S650443         2  73   20      0   68.7    158
+2697 S772964         1  70   16      1   65.0    129
+2698 S778766         0  67   14      1   62.5    149
+2699 S968945         1  66   16      0   68.5    211
+2700 S447866         0  67   20      1   70.0    143</code></pre>
+</div>
+</div>
+</section>
+<section id="inspect-data-using-glimpse" class="slide level2">
+<h2>Inspect Data using <code>glimpse()</code></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">glimpse</span>(alzheimer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 2,700
+Columns: 7
+$ id        &lt;chr&gt; "S060833", "S932623", "S755478", "S852291", "S011143", "S069…
+$ diagnosis &lt;fct&gt; 0, 0, 0, 0, 1, 0, 0, 2, 0, 2, 0, 0, 0, 1, 0, 1, 2, 2, 2, 1, …
+$ age       &lt;int&gt; 74, 56, 77, 74, 75, 72, 64, 78, 73, 81, 66, 65, 66, 73, 78, …
+$ educ      &lt;int&gt; 12, 16, 18, 20, 14, 16, 16, 17, 18, 13, 16, 16, 17, 20, 13, …
+$ female    &lt;fct&gt; 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, …
+$ height    &lt;dbl&gt; 65.0, 62.0, 65.0, 62.0, 62.0, 61.8, 60.0, 69.0, 65.0, 71.0, …
+$ weight    &lt;int&gt; 233, 110, 137, 112, 127, 141, 124, 152, 131, 197, 134, 144, …</code></pre>
+</div>
+</div>
+</section>
+<section id="check-the-number-of-columns-and-rows" class="slide level2">
+<h2>Check the Number of Columns and Rows</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">ncol</span>(alzheimer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">nrow</span>(alzheimer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2700</code></pre>
+</div>
+</div>
+</section>
+<section id="variable-types" class="slide level2">
+<h2>Variable Types</h2>
+
+<img data-src="img/AlzheimerData.png" width="228" class="r-stretch"></section>
+<section id="numericalvariables" class="slide level2">
+<h2>NumericalVariables</h2>
+<ul>
+<li><p>For numerical variables, we can meaningfully compute statistics such as the mean, minimum, and maximum.</p></li>
+<li><p><code>age</code>, <code>height</code>, and <code>weight</code> are numerical variables because their values are numeric and the numbers have their usual quantitative meaning.</p></li>
+</ul>
+</section>
+<section id="categorical-variables" class="slide level2">
+<h2>Categorical variables:</h2>
+<ul>
+<li><p><code>female</code> may be coded as 0, and 1, but these numbers are simply labels.</p></li>
+<li><p>Such variables are categorical variables, whose values belong to a finite set of categories.</p></li>
+<li><p>Although categorical variables are often encoded using numbers, the numeric codes do not represent quantities and arithmetic operations (e.g., averaging) are not meaningful.</p></li>
+</ul>
+</section></section>
+<section>
+<section id="categorical-data" class="title-slide slide level1 center">
+<h1>Categorical Data</h1>
+
+</section>
+<section id="bar-graphs" class="slide level2">
+<h2>Bar Graphs</h2>
+<ul>
+<li><p>Bar graphs are commonly used to visualize categorical variables.</p></li>
+<li><p>Each bar represents a category, and its height indicates either:</p>
+<ul>
+<li>the frequency (number of observations), or</li>
+<li>the relative frequency (proportion of observations)</li>
+</ul></li>
+</ul>
+<p>for that category.</p>
+</section>
+<section id="bar-graph-frequency" class="slide level2">
+<h2>Bar Graph: Frequency</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_data, <span class="fu">aes</span>(diagnosis)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href=""></a>  <span class="fu">geom_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02c-EDA_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">barplot</span>(<span class="fu">table</span>(alzheimer_data<span class="sc">$</span>diagnosis))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="02c-EDA_files/figure-revealjs/unnamed-chunk-9-2.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="bar-graph-relative-frequency" class="slide level2">
+<h2>Bar Graph: Relative Frequency</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">prop.table</span>(<span class="fu">table</span>(alzheimer_data<span class="sc">$</span>diagnosis)) <span class="sc">%&gt;%</span> <span class="fu">barplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="02c-EDA_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>The height of each bar represents the <strong>proportion</strong> of observations in that category.</li>
+<li>Relative frequencies always sum to <strong>100%</strong> (or 1).</li>
+</ul>
+</section>
+<section id="useful-statistics" class="slide level2">
+<h2>Useful Statistics</h2>
+<p>For a <strong>categorical variable</strong>, the most useful summary statistics are:</p>
+<ul>
+<li><p><strong>Frequency</strong>: Number of observations in each category <span class="math inline">\(n_c\)</span>.</p></li>
+<li><p><strong>Relative frequency</strong>: Proportion (or percentage) of observations in each category <span class="math inline">\(p_c = \frac{n_c}{n}\)</span>.</p></li>
+<li><p><strong>Mode</strong>: The category with the highest frequency.</p></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>For categorical variables, the <strong>mean</strong> and <strong>standard deviation</strong> are <strong>not meaningful</strong>.</p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="numerical-data" class="title-slide slide level1 center">
+<h1>Numerical Data</h1>
+
+</section>
+<section id="uesful-statistics" class="slide level2">
+<h2>Uesful Statistics</h2>
+<ul>
+<li><strong>Location</strong>: Central tendency (mean, median)</li>
+<li><strong>Spread</strong>: Dispersion (range, variance, SD)</li>
+</ul>
+
+<img data-src="img/illustData1.png" class="quarto-figure quarto-figure-center r-stretch" width="252"></section>
+<section id="mean" class="slide level2">
+<h2>Mean</h2>
+<p><span class="math display">\[\bar{x} = \frac{\sum x_i}{n}\]</span></p>
+
+<img data-src="img/illustData3.png" class="quarto-figure quarto-figure-center r-stretch" width="252"></section>
+<section id="median" class="slide level2 scrollable">
+<h2>Median</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>The <strong>median</strong> is a measure of the center (location) of a numerical variable.</li>
+<li>It is <strong>less sensitive to outliers</strong> than the mean.</li>
+<li>To find the median:
+<ol type="1">
+<li>Sort the observations from smallest to largest.</li>
+<li>Select the middle value.</li>
+</ol></li>
+<li>If the sample size (n) is <strong>odd</strong>, the median is the middle observation.</li>
+<li>If (n) is <strong>even</strong>, the median is the average of the two middle observations.</li>
+</ul>
+</div>
+</section>
+<section id="is-the-center-enough" class="slide level2">
+<h2>Is the Center Enough?</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>Consider the following blood pressure measurements (mmHg) for two patients:</li>
+</ul>
+<span class="math display">\[\begin{aligned}
+A:\quad &amp;x=\{95,\,98,\,96,\,95,\,96\}, &amp;
+\bar{x}=96,\quad \tilde{x}=96.\\[1ex]
+B:\quad &amp;y=\{85,\,106,\,88,\,105,\,96\}, &amp;
+\bar{y}=96,\quad \tilde{y}=96.
+\end{aligned}\]</span>
+<ul>
+<li><p>Both patients have the <strong>same mean</strong> and <strong>same median</strong>.</p></li>
+<li><p>However, Patient <strong>B</strong> has <strong>much greater variability</strong> in blood pressure.</p></li>
+<li><p>Measures of center alone do not fully describe a distribution. We also need measures of <strong>spread</strong>.</p></li>
+</ul>
+</div>
+</section>
+<section id="standard-deviation-and-variance" class="slide level2">
+<h2>Standard Deviation and Variance</h2>
+<ul>
+<li><p>Two common measures of <strong>spread</strong> are the <strong>sample variance</strong> and the <strong>sample standard deviation</strong>.</p></li>
+<li><p>They measure how far the observations tend to be from the sample mean.</p></li>
+<li><p>For each observation <span class="math inline">\(x_i\)</span>, compute its deviation from the mean: <span class="math inline">\(x_i-\bar{x}.\)</span></p></li>
+<li><p>The sample variance and standard deviation are calculated from these deviations.</p></li>
+</ul>
+</section>
+<section id="variance-and-standard-deviation" class="slide level2">
+<h2>Variance and Standard Deviation</h2>
+<p>Sample variance: <span class="math display">\[s^2 = \frac{\sum (x_i - \bar{x})^2}{n-1}\]</span></p>
+<p>sample standard deviation (SD): <span class="math display">\[s = \sqrt{s^2}\]</span></p>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+
+<img data-src="img/var_sd.png" class="quarto-figure quarto-figure-center r-stretch" width="681"></section>
+<section id="quantiles" class="slide level2">
+<h2>Quantiles</h2>
+<ul>
+<li><p>The <strong>(q) quantile</strong> is also called the <strong>(100q)th percentile</strong>.</p></li>
+<li><p>Examples:</p></li>
+</ul>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Quantile</th>
+<th style="text-align: center;">Percentile</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">25th</td>
+<td>First quartile (Q1)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">50th</td>
+<td>Median (Q2)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.75</td>
+<td style="text-align: center;">75th</td>
+<td>Third quartile (Q3)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="quartiles" class="slide level2">
+<h2>Quartiles</h2>
+<ul>
+<li><p>The ordered observations can be divided into <strong>four equal parts</strong> using the <strong>25th, 50th, and 75th percentiles</strong>.</p></li>
+<li><p>These three values are called the <strong>quartiles</strong>:</p>
+<ul>
+<li><strong>Q1 (25th percentile):</strong> First (lower) quartile</li>
+<li><strong>Q2 (50th percentile):</strong> Median</li>
+<li><strong>Q3 (75th percentile):</strong> Third (upper) quartile</li>
+</ul></li>
+<li><p>The distance between <strong>Q1</strong> and <strong>Q3</strong> is called the <strong>interquartile range (IQR)</strong>: <span class="math inline">\(\mathrm{IQR}=Q_3-Q_1.\)</span></p></li>
+</ul>
+</section>
+<section id="measures-of-spread" class="slide level2">
+<h2>Measures of spread</h2>
+<ul>
+<li><p>We have learned variance and standard deviation as measures of spread.</p></li>
+<li><p>Two other measures:</p>
+<ul>
+<li>Range = Maximum − Minimum</li>
+<li>IQR = Q3 − Q1</li>
+</ul></li>
+</ul>
+</section>
+<section id="five-number-summary" class="slide level2">
+<h2>Five-Number Summary</h2>
+<ul>
+<li>The <strong>five-number summary</strong>:
+<ul>
+<li>Minimum</li>
+<li>First quartile (Q1)</li>
+<li>Median (Q2)</li>
+<li>Third quartile (Q3)</li>
+<li>Maximum</li>
+</ul></li>
+<li>The five-number summary provides a concise description of the distribution using the <strong>0, 0.25, 0.50, 0.75, and 1 quantiles</strong>.</li>
+</ul>
+</section>
+<section id="five-number-summary-and-boxplot" class="slide level2">
+<h2>Five-Number Summary and Boxplot</h2>
+
+<img data-src="img/Boxplot.png" class="quarto-figure quarto-figure-center r-stretch" width="251"></section>
+<section id="interpretation-of-boxplot" class="slide level2">
+<h2>Interpretation of Boxplot</h2>
+<ul>
+<li><p><strong>Median:</strong> line inside the box</p></li>
+<li><p><strong>Q1</strong> and <strong>Q3:</strong> bottom and top of the box</p></li>
+<li><p><strong>IQR:</strong> height of the box <span class="math inline">\(\text{IQR} = Q_3 - Q_1\)</span></p></li>
+<li><p><strong>Whiskers:</strong> extend to the most extreme observations within <strong>1.5 × IQR</strong> of Q1 and Q3</p></li>
+<li><p><strong>Outliers:</strong> observations beyond the whiskers, shown as individual points</p></li>
+</ul>
+</section>
+<section id="histogram-frequency-or-relative-frequency" class="slide level2">
+<h2>Histogram: Frequency or Relative Frequency</h2>
+<ul>
+<li><p>Histograms provide another useful visual representation of the distribution of a numerical variable.</p></li>
+<li><p>A histogram displays the distribution of a <strong>numerical variable</strong> by grouping observations into intervals (called <strong>bins</strong>).</p></li>
+<li><p>The height of each bar can represent the <strong>frequency</strong>, <strong>relative frequency</strong> <span class="math inline">\(p_c=\frac{n_c}{n}\)</span>, or the <strong>percentage</strong> <span class="math inline">\((100\times p_c)\)</span> of observations in that interval.</p></li>
+</ul>
+</section>
+<section id="histogram-density" class="slide level2">
+<h2>Histogram: Density</h2>
+<ul>
+<li><p>In statistics, histograms are often drawn using <strong>density</strong> rather than relative frequency.</p></li>
+<li><p>The <strong>density</strong> is the relative frequency per unit interval: <span class="math display">\[f_c=\frac{p_c}{w_c},\]</span></p>
+<p>where <span class="math inline">\(w_c\)</span> is the width of interval <span class="math inline">\(c\)</span>.</p></li>
+<li><p>Note that <span class="math inline">\(f_c\)</span> could be greater than 1; it is not a probability, but the area of the bar is a probability. The total area of the histogram is 1.</p></li>
+</ul>
+</section>
+<section id="shape-of-a-histogram" class="slide level2">
+<h2>Shape of a Histogram</h2>
+<ul>
+<li><p>The shape of a histogram shows us how the observed values spread around the location.</p></li>
+<li><p>Symmetric around its location: when the densities are [almost] the same for any two intervals that are equally distant from the center.</p></li>
+<li><p>Left-skewed: stretched to the right. Example: age at death.</p></li>
+<li><p>Reft-skewed: stretched to the left. Example: house income.</p></li>
+</ul>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<center>
+<img src="img/histLeft.png" width="60%">
+</center>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<center>
+<img src="img/histSymm.png" width="60%">
+</center>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<center>
+<img src="img/histRight.png" width="60%">
+</center>
+</section></section>
+<section>
+<section id="alzheimer-data-age" class="title-slide slide level1 center">
+<h1>Alzheimer Data: <code>age</code></h1>
+
+</section>
+<section id="alzheimer-data-univariate-analysis-of-age" class="slide level2">
+<h2>Alzheimer Data: Univariate Analysis of Age</h2>
+<p>We will use the <strong>age</strong> variable to practice exploratory data analysis (EDA).</p>
+<p>Our goals are to answer the following questions:</p>
+<ul>
+<li>What is the center of the distribution?</li>
+<li>How much variability is there?</li>
+<li>What is the shape of the distribution?</li>
+<li>Are there any unusual observations (outliers)?</li>
+</ul>
+</section>
+<section id="summary-statistics" class="slide level2">
+<h2>Summary Statistics</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">summary</span>(alzheimer_data<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  21.00   64.00   72.00   70.05   78.00  100.00 </code></pre>
+</div>
+</div>
+<ul>
+<li>What is the <strong>minimum</strong> age?</li>
+<li>What is the <strong>maximum</strong> age?</li>
+<li>What is the <strong>median</strong> age?</li>
+<li>What is the <strong>interquartile range (IQR)</strong>?</li>
+</ul>
+</section>
+<section id="mean-and-standard-deviation" class="slide level2">
+<h2>Mean and Standard Deviation</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>alzheimer_data <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href=""></a>  <span class="fu">summarize</span>(</span>
+<span id="cb17-3"><a href=""></a>    <span class="at">Mean =</span> <span class="fu">mean</span>(age),</span>
+<span id="cb17-4"><a href=""></a>    <span class="at">SD =</span> <span class="fu">sd</span>(age)</span>
+<span id="cb17-5"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Mean       SD
+1 70.04963 11.54586</code></pre>
+</div>
+</div>
+<ul>
+<li>What does the standard deviation tell us?</li>
+</ul>
+</section>
+<section id="histogram-of-age" class="slide level2">
+<h2>Histogram of Age</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_data, <span class="fu">aes</span>(age)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="02c-EDA_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>Is the distribution symmetric or skewed?</li>
+<li>Are there multiple peaks?</li>
+</ul>
+</section>
+<section id="boxplot-of-age" class="slide level2">
+<h2>Boxplot of Age</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_data, <span class="fu">aes</span>(<span class="at">y =</span> age)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href=""></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="02c-EDA_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>What is the median age?</li>
+<li>What is the interquartile range?</li>
+<li>Are there any potential outliers?</li>
+</ul>
+</section>
+<section id="what-have-we-learned" class="slide level2">
+<h2>What Have We Learned?</h2>
+<p>From the histogram, boxplot, and summary statistics, describe the distribution of <strong>age</strong>.</p>
+<p>Consider:</p>
+<ul>
+<li>Center (mean and median)</li>
+<li>Spread (SD and IQR)</li>
+<li>Shape (symmetric or skewed?)</li>
+<li>Outliers</li>
+</ul>
+</section></section>
+<section>
+<section id="case-study-alzheimer-data" class="title-slide slide level1 center">
+<h1>Case Study: Alzheimer Data</h1>
+
+</section>
+<section id="alzheimer-data-univariate-analysis-of-female" class="slide level2">
+<h2>Alzheimer Data: Univariate Analysis of <code>female</code></h2>
+<p>We will use the <strong>female</strong> variable to practice EDA for a <strong>categorical variable</strong>.</p>
+<p>Our goals are to answer the following questions:</p>
+<ul>
+<li>What are the possible categories?</li>
+<li>How many observations are in each category?</li>
+<li>What proportion of the sample belongs to each category?</li>
+<li>Which category is the most common?</li>
+</ul>
+</section>
+<section id="frequency-table" class="slide level2">
+<h2>Frequency Table</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">table</span>(alzheimer_data<span class="sc">$</span>female)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+1151 1549 </code></pre>
+</div>
+</div>
+<ul>
+<li>What are the two categories?</li>
+<li>Which category has the larger frequency?</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip: Understand the Coding</strong></p>
+</div>
+<div class="callout-content">
+<p>Categorical variables are often stored using <strong>numeric codes</strong>.</p>
+<p>For the <strong>female</strong> variable:</p>
+<ul>
+<li><strong>0 = Male</strong></li>
+<li><strong>1 = Female</strong></li>
+</ul>
+<p>The numbers are <strong>labels</strong>, not quantities. Always check the coding before interpreting the results.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="relative-frequency" class="slide level2">
+<h2>Relative Frequency</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">prop.table</span>(<span class="fu">table</span>(alzheimer_data<span class="sc">$</span>female))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        0         1 
+0.4262963 0.5737037 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(alzheimer_data<span class="sc">$</span>female)), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+42.6 57.4 </code></pre>
+</div>
+</div>
+<ul>
+<li>What proportion of the participants are female?</li>
+<li>Do the proportions sum to 1?</li>
+</ul>
+</section>
+<section id="bar-graph" class="slide level2">
+<h2>Bar Graph</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_data, <span class="fu">aes</span>(female)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href=""></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb27-3"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb27-4"><a href=""></a>    <span class="at">x =</span> <span class="st">"Female"</span>,</span>
+<span id="cb27-5"><a href=""></a>    <span class="at">y =</span> <span class="st">"Frequency"</span></span>
+<span id="cb27-6"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="02c-EDA_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>Which category has the taller bar?</li>
+<li>Does the graph agree with the frequency table?</li>
+</ul>
+</section>
+<section id="bar-graph-relative-frequency-1" class="slide level2">
+<h2>Bar Graph: Relative Frequency</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_data,</span>
+<span id="cb28-2"><a href=""></a>       <span class="fu">aes</span>(<span class="at">x =</span> female,</span>
+<span id="cb28-3"><a href=""></a>           <span class="at">y =</span> <span class="fu">after_stat</span>(prop),</span>
+<span id="cb28-4"><a href=""></a>           <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb28-5"><a href=""></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb28-6"><a href=""></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb28-7"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb28-8"><a href=""></a>    <span class="at">x =</span> <span class="st">"Female"</span>,</span>
+<span id="cb28-9"><a href=""></a>    <span class="at">y =</span> <span class="st">"Relative Frequency"</span></span>
+<span id="cb28-10"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="02c-EDA_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>Approximately what percentage of participants are female?</li>
+<li>Is the sample balanced by sex?</li>
+</ul>
+</section>
+<section id="what-have-we-learned-1" class="slide level2">
+<h2>What Have We Learned?</h2>
+<p>Describe the distribution of <strong>female</strong>.</p>
+<ul>
+<li>Categories</li>
+<li>Frequency of each category</li>
+<li>Relative frequency of each category</li>
+<li>Most common category (mode)</li>
+</ul>
+</section>
+<section id="eda-workflow-depends-on-the-variable-type" class="slide level2">
+<h2>EDA workflow depends on the variable type:</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Numerical Variable (Age)</th>
+<th>Categorical Variable (Female)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mean, Median</td>
+<td>Frequency, Relative Frequency</td>
+</tr>
+<tr class="even">
+<td>Standard Deviation, IQR</td>
+<td>Mode</td>
+</tr>
+<tr class="odd">
+<td>Histogram</td>
+<td>Bar Graph</td>
+</tr>
+<tr class="even">
+<td>Boxplot</td>
+<td>Frequency Table</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="reporting-summary-statsitics-in-scientific-studies" class="title-slide slide level1 center">
+<h1>Reporting Summary Statsitics in Scientific Studies</h1>
+
+</section>
+<section id="typical-summary-table" class="slide level2">
+<h2>Typical Summary Table</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Age (years)</strong></td>
+<td>Mean ± SD (or Median [IQR])</td>
+</tr>
+<tr class="even">
+<td><strong>Female</strong></td>
+<td><em>n</em> (%)</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb29-2"><a href=""></a></span>
+<span id="cb29-3"><a href=""></a>alzheimer_data <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href=""></a>  <span class="fu">summarize</span>(</span>
+<span id="cb29-5"><a href=""></a>    <span class="st">`</span><span class="at">Age (years)</span><span class="st">`</span> <span class="ot">=</span></span>
+<span id="cb29-6"><a href=""></a>      <span class="fu">sprintf</span>(<span class="st">"%.1f ± %.1f"</span>,</span>
+<span id="cb29-7"><a href=""></a>              <span class="fu">mean</span>(age),</span>
+<span id="cb29-8"><a href=""></a>              <span class="fu">sd</span>(age)),</span>
+<span id="cb29-9"><a href=""></a>    <span class="at">Female =</span></span>
+<span id="cb29-10"><a href=""></a>      <span class="fu">sprintf</span>(<span class="st">"%d (%.1f%%)"</span>,</span>
+<span id="cb29-11"><a href=""></a>              <span class="fu">sum</span>(female <span class="sc">==</span> <span class="dv">1</span>),</span>
+<span id="cb29-12"><a href=""></a>              <span class="dv">100</span> <span class="sc">*</span> <span class="fu">mean</span>(female <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb29-13"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Age (years)       Female
+1 70.0 ± 11.5 1549 (57.4%)</code></pre>
+</div>
+</div>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<p>There are packages to automate the creation of summary tables.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">library</span>(table1)</span>
+<span id="cb31-2"><a href=""></a></span>
+<span id="cb31-3"><a href=""></a><span class="fu">table1</span>(<span class="sc">~</span> age <span class="sc">+</span> female,</span>
+<span id="cb31-4"><a href=""></a>       <span class="at">data =</span> alzheimer_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="Rtable1">
+<table class="Rtable1 caption-top" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th class="rowlabel firstrow lastrow" data-quarto-table-cell-role="th"></th>
+<th class="firstrow lastrow" data-quarto-table-cell-role="th"><span class="stratlabel">Overall<br>
+<span class="stratn">(N=2700)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="rowlabel firstrow"><span class="varlabel">age</span></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="even">
+<td class="rowlabel">Mean (SD)</td>
+<td>70.0 (11.5)</td>
+</tr>
+<tr class="odd">
+<td class="rowlabel lastrow">Median [Min, Max]</td>
+<td class="lastrow">72.0 [21.0, 100]</td>
+</tr>
+<tr class="even">
+<td class="rowlabel firstrow"><span class="varlabel">female</span></td>
+<td class="firstrow"></td>
+</tr>
+<tr class="odd">
+<td class="rowlabel">0</td>
+<td>1151 (42.6%)</td>
+</tr>
+<tr class="even">
+<td class="rowlabel lastrow">1</td>
+<td class="lastrow">1549 (57.4%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="eda-is-more-than-a-table-1" class="slide level2">
+<h2>EDA Is More Than a Table 1</h2>
+<p>A <strong>Table 1</strong> provides a useful summary of the data, but it is only the beginning of exploratory data analysis.</p>
+<p>EDA helps us:</p>
+<ul>
+<li><strong>Understand the data</strong>
+<ul>
+<li>Distribution, center, spread, and outliers</li>
+</ul></li>
+<li><strong>Identify data quality issues</strong>
+<ul>
+<li>Missing values</li>
+<li>Impossible or unusual values</li>
+<li>Coding errors and inconsistencies</li>
+</ul></li>
+</ul>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li><strong>Choose appropriate statistical methods</strong>
+<ul>
+<li>Is the variable continuous or categorical?</li>
+<li>Is the distribution approximately normal?</li>
+<li>Are transformations needed?</li>
+</ul></li>
+<li><strong>Generate hypotheses and guide modeling</strong>
+<ul>
+<li>Discover interesting patterns</li>
+<li>Identify potential relationships between variables</li>
+<li>Suggest variables to include in later analyses</li>
+</ul></li>
+</ul>
+<p><strong>Remember:</strong> Good data analysis begins with understanding the data.</p>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p><img src="img/cosmos-uci-dshs.png" style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;"></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="02c-EDA_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="02c-EDA_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="02c-EDA_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="02c-EDA_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
