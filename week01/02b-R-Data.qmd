@@ -1,0 +1,395 @@
+---
+format:
+  revealjs:
+    title-slide: false   
+    theme: [default]
+#    smaller: true
+    chalkboard: true
+    scrollable: true
+    self-contained: false
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slideNumber: true
+    transition: "fade"
+    progress: true
+    controls: false
+    ratio: 3:2
+    echo: true
+    code-fold: true
+    footer: |
+      <img src="img/cosmos-uci-dshs.png"
+           style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;">
+---
+
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+  <img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;" />
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+  <h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">Data in R</h1>
+  <p style="color: #153e6c; font-size: 1.8em;">Zhaoxia Yu</p>
+</div>
+
+</div>
+
+
+## Data
+<div style="font-size: 0.75em;">
+
+- Data are raw facts or measurements that can be processed and analyzed to produce information and support decision-making.
+
+| **Data** | **Information** |
+|:--------------|:----------------|
+| Raw facts, observations, or measurements | Patterns, relationships, or conclusions derived from data |
+| May be unorganized or unprocessed | Organized and useful for decision-making |
+| Example: Blood pressure measurements of patients | Example: "The average blood pressure is higher in the treatment group than in the control group." |
+
+- **Data** become **information** through analysis, interpretation, and visualization. This transformation is a central goal of **data science**.
+
+</div>
+
+
+## Data in R
+
+<div style="font-size: 0.85em;">
+
+- How does R handle data? R has several built-in data structures to store and manipulate data, such as:
+  - **Vectors**: One-dimensional arrays that can hold numeric, character, or logical data.
+  - **Matrices**: Two-dimensional arrays with rows and columns, where all elements are of the same type.
+  - **Data frames**: Two-dimensional tables that can hold different types of data in each column.
+  - **Lists**: Collections of objects that can contain different types of data.
+</div>
+
+# Getting Data into R
+
+<div style="font-size: 0.75em;">
+
+| Method | Typical Sources | Examples |
+|:-------------|:--------------|:-----------|
+| Create data in R | Small examples, simulations | `c()`, `matrix()`, `data.frame()`|
+| Import local files | Data stored on your computer | CSV, Excel, TXT, MAT, SAS, SPSS |
+| Load built-in datasets | Datasets included with R or R packages | `data(iris)`, `data(mtcars)` |
+| Import online data | Files hosted online | Read from a URL |
+| Access data through APIs | Databases and web services | World Bank, Census Bureau |
+
+
+</div>  
+
+# Create Data
+
+## Create Variables and Data Frames
+- Create Variables
+
+```{r}
+age  <- c(45, 61, 53, 38)
+sex  <- c("F", "M", "F", "M")
+bmi  <- c(23.4, 28.7, 25.1, 21.8)
+```
+
+- Create A Data Frame
+
+```{r}
+patients <- data.frame(
+  Age = age,
+  Sex = sex,
+  BMI = bmi
+)
+
+patients
+```
+
+## Create A List
+
+```{r}
+study <- list(
+  data = patients,
+  investigator = "Dr. Smith",
+  sample_size = nrow(patients)
+)
+
+study
+```
+
+## Create A Matrix
+```{r}
+# Matrix: all values must have the same type
+m <- matrix(1:6, nrow = 2)
+m
+```
+
+::: {.callout-tip}
+**Key Ideas**
+
+- A **variable** stores a value or a collection of values. 
+- A **data frame** stores tabular data, where **each column is a variable** and different columns can have different data types.
+- A **matrix** stores data in rows and columns; all elements having the same data type.
+- A **list** can store objects of different types, including vectors, matrices, data frames, and even other lists.
+:::
+
+## Create Data by Simulating Random Numbers
+```{r}
+#| code-fold: false
+set.seed(123)     # Make results reproducible
+
+sim_data <- data.frame(
+  ID = 1:100,
+  Age = round(rnorm(100, mean = 50, sd = 12)),
+  BMI = round(rnorm(100, mean = 26, sd = 4), 1),
+  Treatment = sample(c("Control", "Drug"),
+                     100, replace = TRUE)
+)
+```
+
+::: {.callout-note}
+**Why simulate data?**
+
+Simulated data allow us to test code, evaluate statistical methods, and practice data analysis when real data are unavailable or contain sensitive information.
+:::
+
+
+# Import Data from Local
+```{r}
+#| code-fold: false
+alzheimer_data <- read.csv('data/alzheimer_data.csv')
+```
+
+::: {.callout-tip}
+### Tips
+
+- **Specify the correct file path.** The path should point to the location of the file relative to your current working directory.
+- **Use the appropriate import function.** For CSV files, use `read.csv()` (base R) or `readr::read_csv()` (tidyverse).
+- **Check your working directory.** Use `getwd()` to see the current working directory and `list.files()` to verify that the file is there.
+- **Assign the imported data to a variable** so you can use it later in your analysis.
+- **Inspect the imported data** using functions such as `head()`, `str()`, `summary()`, or `View()` to ensure it was imported correctly.
+:::
+
+
+# Built-in Data
+
+## Built-in Datasets
+
+R includes many built-in datasets. Examples:
+
+| Dataset | Description |
+|:---------|:------------|
+| `iris` | Measurements of iris flowers |
+| `mtcars` | Motor vehicle performance |
+| `airquality` | Daily air quality measurements in New York |
+| `ToothGrowth` | Tooth growth in guinea pigs |
+| `Titanic` | Survival counts from the Titanic disaster |
+
+::: {.callout-tip}
+Built-in datasets are convenient because they require **no downloading or importing** and are available immediately after installing R.
+:::
+
+## Load a Built-in Dataset
+
+Use the `data()` function to load a built-in dataset.
+
+```{r}
+# Load the iris dataset
+data(iris)
+
+# Display the first six rows
+head(iris)
+```
+
+To obtain help for a dataset:
+
+```{r}
+#| eval: false
+?iris
+```
+
+## Explore a Built-in Dataset
+
+::: {.callout-note}
+A good habit is to **inspect every dataset after loading it** to understand its variables, data types, and dimensions before performing any analysis.
+:::
+
+```{r}
+dim(iris)        # Number of rows and columns
+names(iris)      # Variable names
+str(iris)        # Structure of the dataset
+summary(iris)    # Summary statistics
+head(iris)       # First six rows
+```
+
+
+## All Available Built-in Datasets
+To see all available built-in datasets:
+
+```{r}
+#| eval: false
+data()
+```
+
+# URL 
+
+## Import Data from a URL
+
+```{r}
+#| code-fold: false
+Ex1=read.csv("https://www.ics.uci.edu/~zhaoxia/Data/BeyondTandANOVA/Example1.txt", head=T)
+```
+
+```{r}
+#| code-fold: false
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T)
+```
+
+# API 
+
+## Import Data Through an API
+
+An **API (Application Programming Interface)** allows R to request data directly from an online database or web service.
+
+- Retrieve data **directly from the source** without manually downloading files.
+- Request **only the data you need** (e.g., specific countries, years, or variables).
+- Access the **latest available data** whenever the code is run.
+- Improve **reproducibility** by using the same code to retrieve updated data.
+
+
+## API 
+::: {.callout-note}
+**An API is a communication interface, not a data source.**
+
+The API connects your R program to an online database. 
+
+The timeliness of the data depends on how frequently the database is updated.
+:::
+
+
+## Example: Import Data from the World Bank API
+
+The **`WDI`** package provides an R interface to the **World Bank API**.
+
+::: {.callout-tip}
+The `WDI()` function sends a request to the World Bank API, retrieves the requested data, and returns them as a data frame for analysis in R.
+:::
+
+```{r}
+if (!requireNamespace("WDI", quietly = TRUE)) {
+  install.packages("WDI")
+}
+
+library(WDI)
+
+gdp <- WDI(
+  country = c("US", "CN", "JP"),
+  indicator = "NY.GDP.PCAP.CD",
+  start = 2020,
+  end = 2024
+)
+
+head(gdp)
+```
+
+## Example: Retrieve Weather Data 
+
+The **Open-Meteo API** provides current weather observations and hourly forecasts. Workflow:
+
+<div style="font-size: 0.75em;">
+
+1. Construct a URL specifying the **location** and **weather variables**.
+2. Send the request to the Open-Meteo API.
+3. Receive the data in **JSON** format.
+4. Use `jsonlite::fromJSON()` to convert the JSON response into R objects.
+5. Analyze the returned data just like any other dataset.
+
+</div>
+
+::: {.callout-tip}
+Unlike the World Bank API, which provides periodically updated statistics, the Open-Meteo API provides **current conditions** and **hourly forecasts**.
+:::
+
+
+##
+
+::: {.callout-note}
+**Variable names**
+
+- `temperature_2m`: Air temperature measured **2 meters above the ground**.
+- `relative_humidity_2m`: Relative humidity measured **2 meters above the ground**.
+- `wind_speed_10m`: Wind speed measured **10 meters above the ground**.
+
+:::
+
+```{r}
+#| code-fold: false
+# Install jsonlite if necessary
+if (!requireNamespace("jsonlite", quietly = TRUE)) {
+  install.packages("jsonlite")}
+
+library(jsonlite)
+
+url <- paste0(
+  "https://api.open-meteo.com/v1/forecast?",
+  "latitude=33.6405&longitude=-117.8443",
+  "&current=temperature_2m,relative_humidity_2m,wind_speed_10m",
+  "&hourly=temperature_2m"
+)
+
+weather <- fromJSON(url)
+```
+
+
+## Current Weather
+
+```{r}
+weather$current
+```
+
+## Hourly Forecast
+
+```{r}
+head(weather$hourly, 2)
+```
+
+
+The first row of `weather$hourly` is the first available forecast time, followed by the next forecast hour.
+
+
+# A Fun Example: Exploring Datasets with `tidytuesdayR`
+
+## Example: Load Weekly Datasets with `tidytuesdayR`
+
+```{r}
+#| code-fold: false
+if (!requireNamespace("tidytuesdayR", quietly = TRUE)) {
+  install.packages("tidytuesdayR")
+}
+
+library(tidytuesdayR)
+
+# Download one week's datasets
+tt <- tt_load("2026-06-30")
+
+# Show available datasets
+tt
+```
+
+## 
+```{r}
+#| code-fold: false
+#| eval: false
+# View the README
+readme(tt)
+```
+
+```{r}
+# Load one dataset
+names(tt)
+head(tt[[1]])
+```
+
+
+##  About `TidyTuesday`
+Each TidyTuesday release includes:
+
+- One or more datasets
+- A README describing the data and variables
+- Links to the original data source
+- Ideas for data visualization and analysis
+
