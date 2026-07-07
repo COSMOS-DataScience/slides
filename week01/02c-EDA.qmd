@@ -363,7 +363,7 @@ knitr::include_graphics("img/Boxplot.png")
 
 <center><img src="img/histRight.png" width="60%"/></center>
 
-# Alzheimer Data: `age`
+# Case Study: Alzheimer Data
 
 ## Alzheimer Data: Univariate Analysis of Age
 
@@ -434,8 +434,6 @@ Consider:
 -   Spread (SD and IQR)
 -   Shape (symmetric or skewed?)
 -   Outliers
-
-# Case Study: Alzheimer Data
 
 ## Alzheimer Data: Univariate Analysis of `female`
 
