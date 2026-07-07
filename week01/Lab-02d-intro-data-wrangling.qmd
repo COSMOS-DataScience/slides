@@ -10,7 +10,7 @@ format:
     embed-resources: true
 ---
 
-## Import Data
+# Import Data
  
 ```{r}
 #| message: false
@@ -41,10 +41,9 @@ We are working with the `arthritis` dataset. Here is a quick look at its structu
 ```{r}
 glimpse(arthritis)
 ```
+ 
 
----
-
-## Mutating existing variables
+# Mutating existing variables
 
 We use `mutate()` to create or modify variables in a data frame.
 
@@ -70,9 +69,7 @@ arthritis_age_mon <- arthritis |>
 glimpse(arthritis_age_mon)
 ```
 
-## Using `arrange` to sort age variable
-
-
+## Using `arrange` to sort numeric variable (age)
 
 ```{r}
 #| code-fold: TRUE
@@ -116,21 +113,7 @@ arthritis |>
     cdai > 10  & cdai <= 22 ~ "Moderate",
     cdai > 22               ~ "High"))
 ```
-
-We can pipe directly into `ggplot()` to visualize the new variable:
-
-```{r}
-#| code-fold: TRUE 
-arthritis |>
-  mutate(cdai_level = case_when(
-    cdai <= 2.8             ~ "Remission",
-    cdai > 2.8 & cdai <= 10 ~ "Low",
-    cdai > 10  & cdai <= 22 ~ "Moderate",
-    cdai > 22               ~ "High")) |>
-  ggplot(aes(x = cdai_level)) +
-  geom_bar()
-```
-
+ 
 To save the result back into `arthritis`:
 
 ```{r}
@@ -147,14 +130,36 @@ glimpse(arthritis)
 
 ## Converting variable types
 
-**Goal:** Make `cdai_level` a factor and `age` an integer.
+**Goal:** 
+
+1. Make `cdai_level` a factor and `age` an integer.
+2. Manually define the order of `cdai_level` to "High", "Moderate", "Low", "Remission".
 
 ```{r}
 #| code-fold: TRUE
 arthritis |>
-  mutate(cdai_level = as.factor(cdai_level),
-         age = as.integer(age))
+  mutate(
+    cdai_level = factor(cdai_level,levels = c("High", "Moderate", "Low", "Remission")),
+    age = as.integer(age))
 ```
+
+### Use `arrange()` sorts factors vs. characters:
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+#| 
+# Without levels: alphabetical (High, Low, Moderate, Remission)
+arthritis |>
+  arrange(cdai_level)
+
+# With levels: manually defined order
+arthritis |>
+  mutate(cdai_level = factor(cdai_level,
+    levels = c("Remission", "Low", "Moderate", "High"))) |>
+  arrange(cdai_level)
+```
+
 
 Common type-conversion functions:
 
@@ -166,3 +171,47 @@ Common type-conversion functions:
 | `as.double()` | double |
 | `as.character()` | character |
  
+
+## Your Turn
+
+Using the `arthritis` dataset, complete the two tasks below.
+
+### Task 1: Categorize years since diagnosis
+
+Create a new variable called `yrs_category` that groups `yrs_from_dx` into three stages:
+
+| Category | Condition |
+|---|---|
+| Early | yrs_from_dx ≤ 5 |
+| Established | yrs_from_dx > 5 and ≤ 15 |
+| Long-standing | yrs_from_dx > 15 |
+
+Then make it a factor with levels ordered from earliest to longest: `"Early"`, `"Established"`, `"Long-standing"`. 
+
+```{r}
+#| code-fold: TRUE
+arthritis |>
+  mutate(
+    yrs_category = case_when(
+      yrs_from_dx <= 5                        ~ "Early",
+      yrs_from_dx > 5  & yrs_from_dx <= 15   ~ "Established",
+      yrs_from_dx > 15                        ~ "Long-standing"),
+    yrs_category = factor(yrs_category, levels = c("Early", "Established", "Long-standing")))
+```
+
+### Task 2: Sort by disease stage and age
+
+Extend your pipeline from Task 1: sort the result first by `yrs_category` (earliest to longest), then by `age` in descending order within each stage.
+
+```{r}
+#| code-fold: TRUE
+arthritis |>
+  mutate(
+    yrs_category = case_when(
+      yrs_from_dx <= 5                        ~ "Early",
+      yrs_from_dx > 5  & yrs_from_dx <= 15    ~ "Established",
+      yrs_from_dx > 15                        ~ "Long-standing"),
+    yrs_category = factor(yrs_category, levels = c("Early", "Established", "Long-standing"))) |>
+  arrange(yrs_category, desc(age)) 
+```
+

@@ -17,6 +17,7 @@ format:
 
 library(openintro)
 library(tidyverse)
+library(ggplot2)
 babies <- babies %>% 
   mutate(smoke = as.logical(smoke),
          parity = as.logical(parity))
@@ -25,7 +26,8 @@ xaringanExtra::use_panelset()
 theme_set(theme_gray(base_size = 18))
 
 ```
- 
+
+Read documentation for this data set. Try `??babies`
 
 
 # Scatter plot
@@ -40,7 +42,8 @@ Task:
 ```{r } 
 #| message: false
 #| code-fold: TRUE
-
+#| fig-width: 6
+#| fig-height: 4
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -62,6 +65,8 @@ Task:
 ```{r } 
 #| message: false
 #| code-fold: TRUE
+#| fig-width: 6
+#| fig-height: 4
 
 ggplot(babies,
        aes(x = gestation,
@@ -74,25 +79,28 @@ ggplot(babies,
        title = "Baby Gestation and Birth Weight by Mother's Smoker Status") #<<
 ```
 
- 
-```{r } 
+# Themes
+
+## Theme options:
+
+Let's customize the theme. Try add a layer of `theme_bw()`.
+
+Other theme options: 
+
+- `theme_gray()`
+- `theme_bw()`
+- `theme_classic()`
+- `theme_dark()`
+- `theme_minimal()`
+- `theme_void()`
+
+
+```{r warning=FALSE } 
 #| message: false
 #| code-fold: TRUE
-#|
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke,
-           color = smoke)) +
-  geom_point(size = 4) +
-  labs(x = "Gestation (days)", #<<
-       y = "Birth Weight (ounces)", #<<
-       title = "Gestation and Birth Weight by Mother's Smoker Status") #<<
-```
-  
-```{r } 
-#| message: false
-#| code-fold: TRUE
+#| fig-width: 6
+#| fig-height: 4
+
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -101,18 +109,18 @@ ggplot(babies,
   geom_point() +
 labs(x = "Gestation (days)",
        y = "Birth Weight (ounces)", 
-       title = "Gestation and Birth Weight by Mother's Smoker Status") 
+       title = "Gestation and Birth Weight by Mother's Smoker Status") +
   theme_bw() #<<
-  
 ```
-  
-# Themes
-- `theme_gray()`
 
-```{r } 
+
+
+```{r warning=FALSE } 
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
+#| fig-width: 4
+#| fig-height: 3
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -125,30 +133,13 @@ ggplot(babies,
   theme_gray()
 ```
 
--`theme_bw()`
 
-```{r } 
+```{r warning=FALSE } 
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
-ggplot(babies,
-       aes(x = gestation,
-           y = bwt,
-           shape = smoke,
-           color = smoke)) +
-  geom_point() +
-  labs(x = "Gestation (days)",
-       y = "Birth Weight (ounces)", 
-       title = "Baby Gestation and Birth Weight by Mother's Smoker Status") +
-  theme_bw()
-```
-
--`theme_classic()`
-
-```{r } 
-#| message: false
-#| code-fold: TRUE
-#| output-fold: TRUE
+#| fig-width: 4
+#| fig-height: 3
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -161,12 +152,14 @@ ggplot(babies,
   theme_classic()
 ```
 
--`theme_dark()`
 
-```{r } 
+
+```{r warning=FALSE } 
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
+#| fig-width: 4
+#| fig-height: 3
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -179,12 +172,13 @@ ggplot(babies,
   theme_dark()
 ```
 
--`theme_minimal()`
 
-```{r } 
+```{r  warning=FALSE} 
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
+#| fig-width: 4
+#| fig-height: 3
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -197,12 +191,13 @@ ggplot(babies,
   theme_minimal()
 ```
 
--`theme_void()`
 
-```{r } 
+```{r warning=FALSE} 
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
+#| fig-width: 4
+#| fig-height: 3
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -226,10 +221,11 @@ ggplot(babies,
 There are more aspects of a theme that we can control. 
 
 
-```{r } 
+```{r  warning=FALSE} 
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
+#| out-width: "80%"
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -251,11 +247,14 @@ ggplot(babies,
  
 # Layout panels in a grid 
 
+`facet_grid()` splits your plot into a grid of panels — one panel per group — so you can compare patterns across categories side by side. The formula `rows ~ cols` controls the direction: `.~var` places panels side by side in columns, while `var~.` stacks them in rows.
+ 
+ 
 ```{r } 
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
-#| 
+#| out-width: "80%"
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -270,7 +269,7 @@ ggplot(babies,
 #| message: false
 #| code-fold: TRUE
 #| output-fold: TRUE
-#| 
+#| out-width: "80%"
 ggplot(babies,
        aes(x = gestation,
            y = bwt,
@@ -293,7 +292,64 @@ Check out [the ggplot flipbook](https://evamaerey.github.io/ggplot_flipbook/ggpl
 
 
 Additional resources:
- 
+- [Gallery](https://r-graph-gallery.com/ggplot2-package.html)
 - [BBC](https://bbc.github.io/rcookbook/)   
 - [fivethirtyeight](https://blog.revolutionanalytics.com/2016/07/data-journalism-with-r-at-538.html?utm_content=bufferc03e0&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer)  
 - [NY Times](https://livefreeordichotomize.com/2021/04/07/nytimes-map-how-to/)
+
+
+# Practice
+
+Can you make this plot?
+
+## Relationship between smoke mother v.s. birth weight
+
+**Hint**: use `filter()` and `is.na()` to remove the NA values in the smoke column
+
+
+```{r warning=FALSE}
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+#| out-width: "80%"
+
+babies |> 
+  filter(!is.na(smoke)) |> 
+  ggplot(
+       aes(x = smoke,
+           y = bwt)) +
+  geom_violin() +
+  labs(x = 'Mother\'s smoke history', y = 'Birth weight')+
+  theme_classic()
+```
+
+
+## Relationship between mother's age group v.s. birth weight
+**Hint**: use `case_when()` to create a new variable `age_group` and use `geom_jitter()` and `geom_boxplot()` to make this figure!
+
+```{r warning=FALSE}
+#| message: false
+#| code-fold: TRUE
+#| output-fold: TRUE
+#| out-width: "80%"
+babies |> 
+  mutate(
+    age_grp = case_when(
+      age >= 30 ~ '30+',
+      20 <= age & age < 30 ~ '20-30',
+      age < 20 ~ 'under 20'
+    ),
+    age_grp = factor(age_grp, levels = c('under 20','20-30','30+'))
+  ) |> 
+  filter(!is.na(age_grp)) |> 
+  ggplot(aes(
+    x = age_grp,
+           y = bwt,
+           shape = age_grp,
+           color = age_grp)) +
+  geom_jitter(width = 0.2,alpha = 0.3) +
+  geom_boxplot(alpha = 0.5, size = 1) +
+  labs(x = 'Mother\'s age group', y = 'Birth weight')+
+  theme_classic()
+```
+

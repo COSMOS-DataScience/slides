@@ -58,6 +58,7 @@ lab1.r
 ```{r}
 #| eval: false
 
+#---------Spacing ------------
 # Good
 age <- c(6, 9, 15)
 # Bad
@@ -68,12 +69,29 @@ data.frame(age_kid = age)
 # Bad
 data.frame(Age_kid=age)
 
+#---------Object name ------------
 # Good
 day_one <- 1
 day_1 <- 1
 # Bad
 DayOne <- 1
 first_day_of_the_month <- 1
+
+#---------Parentheses ------------
+# Good
+mean(x, na.rm = TRUE)
+# Bad
+mean (x, na.rm = TRUE)
+mean( x, na.rm = TRUE )
+
+
+#---------Function------------
+# Good
+function(x) {}
+
+# Bad
+function (x) {}
+function(x){}
 ```
 :::
 
@@ -195,3 +213,35 @@ c(4, 8, 16) |>
 :::
 :::::
 ::::::
+
+
+
+## Practice: The Pipe Operator
+
+### Exercise 1: Top 3 Scores
+
+A class got these quiz scores: `72, 88, 95, 61, 79, 100, 83`. Use the pipe to find the **top 3 scores**, from highest to lowest.
+
+**Hint:** try `sort()`, `rev()`, and `head()`.
+
+```{r}
+#| code-fold: TRUE
+c(72, 88, 95, 61, 79, 100, 83) |>
+  sort() |>
+  rev() |>
+  head(3)
+```
+
+### Exercise 2: How Many Words?
+
+Count the number of words in the sentence `"To be or not to be that is the question"`.
+
+**Hint:** try `strsplit()`, `unlist()`, and `length()`.
+
+```{r}
+#| code-fold: TRUE
+"To be or not to be that is the question" |>
+  strsplit(split = " ") |>
+  unlist() |>
+  length()
+```
