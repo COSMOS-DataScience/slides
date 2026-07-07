@@ -1,0 +1,204 @@
+---
+format:
+  revealjs:
+    title-slide: false   
+    theme: [default]
+#    smaller: true
+    chalkboard: true
+    scrollable: true
+    self-contained: false
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slideNumber: true
+    transition: "fade"
+    progress: true
+    controls: false
+    ratio: 3:2
+    echo: true
+    code-fold: true
+    footer: |
+      <img src="img/cosmos-uci-dshs.png"
+           style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;">
+---
+
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+  <img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;" />
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+  <h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">R Packages</h1>
+  <p style="color: #153e6c; font-size: 1.8em;">Zhaoxia Yu</p>
+</div>
+
+</div>
+
+
+## R Packages
+
+R comes with basic functionality.
+Packages extend R by adding new functions, datasets, and documentation.
+Think of packages as "apps for R."
+
+Example.
+
+| Without packages | With packages                     |
+| ---------------- | --------------------------------- |
+| Basic plots      | Beautiful plots with `ggplot2`    |
+| Basic regression | Survival analysis with `survival` |
+| Read CSV         | Read Excel with `readxl`          |
+
+
+## Importance
+- New statistical methods are often released as R packages before they appear in commercial software.
+
+- Many research papers provide an accompanying R package so others can reproduce the analysis.
+
+- Today, CRAN hosts over 24,000 active packages.
+
+- Packages are one of the biggest reasons R has become so popular among statisticians and data scientists.
+
+
+## Open Source: Procs
+- Free
+- Thousands of packages
+- Rapid development
+- Transparent source code
+- Community support
+- Reproducible research
+
+## Open Source: Cons
+- No official support
+- Quality varies
+- Documentation can be inconsistent
+- Some packages are no longer maintained
+- Different packages may do similar things
+- Updates can occasionally break older code
+
+<!-- Open source gives us tremendous flexibility and innovation, but it also requires users to evaluate package quality and choose well-maintained tools.-->
+
+
+## Popular R Packages
+
+[Popular R Packages](https://www.datasciencemeta.com/rpackages){target="_blank"}
+
+
+- UPDATED DAILY. Last updated: 2026-07-07 00:06:18 +1000 Melbourne time (about 9 hours ago)
+
+- ggplot2	has been downloaded 191,131,424	times!
+
+
+## Some Famous R Packages
+| Package    | Purpose           |
+| ---------- | ----------------- |
+| `ggplot2`  | Graphics          |
+| `dplyr`    | Data manipulation |
+| `tidyr`    | Data cleaning     |
+| `readr`    | Import data       |
+| `survival` | Survival analysis |
+| `lme4`     | Mixed models      |
+| `glmnet`   | LASSO             |
+| `shiny`    | Web apps          |
+
+
+
+## Types of R Packages - by Purpose
+| Type                 | Examples                              |
+| -------------------- | ------------------------------------- |
+| Data packages        | `palmerpenguins`, `nycflights13`      |
+| Data wrangling       | `dplyr`, `tidyr`                      |
+| Visualization        | `ggplot2`                             |
+| Statistical modeling | `survival`, `lme4`, `glmnet`          |
+| Machine learning     | `caret`, `tidymodels`, `randomForest` |
+| Reporting            | `knitr`, `rmarkdown`, Quarto          |
+| Web applications     | `shiny`                               |
+
+
+## Types of R Packages
+- Single packages are designed for a specific purpose and contain a set of functions, datasets, and documentation.
+
+  - `ggplot2` – data visualization
+  - `dplyr` – data manipulation
+  - `survival` – survival analysis
+
+- A meta-package is a package that contains other packages. A set of related packages can be downloaded at once.
+  - `tidyverse` - a collection of packages for data science, including `ggplot2`, `dplyr`, `tidyr`, and more.
+
+
+## Is a package good?
+
+A practical checklist:
+
+- Is it on CRAN?
+- Is it actively maintained?
+- Is it widely used?
+- Is there good documentation?
+- Is it cited in papers or textbooks?
+- Does it have recent updates?
+
+
+## Install and Use a Package
+
+<div style="font-size: 1.4em;">
+
+```{r}
+#| eval: false
+#| code-fold: false
+install.packages("ggplot2")   # once
+
+library(ggplot2)              # every new R session
+```
+
+</div>
+
+
+## Example: `Ecdat`
+- The package `Ecdat` contains data sets for econometrics. It has a dataset called `CRANpackages` that contains the number of R packages on CRAN over time.
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| fig-align: center
+#| out-width: 70%
+if(!require('Ecdat')) {
+  install.packages('Ecdat')
+  library('Ecdat')
+}
+plot(Packages ~ Date, CRANpackages, log = "y", ylab = "n (log scale)", xlab = "Year", main="near-exponential growth in its early years")
+```
+
+## Example: `tidyverse`
+
+<div style="font-size: 1.4em;">
+
+```{r}
+#| code-fold: false
+#please download and install the tidyverse package first if you haven't done so.
+library(tidyverse) 
+```
+
+</div>
+
+## Example: `tidyverse`
+
+<div style="font-size: 1.1em;">
+
+- Base R version
+```{r}
+#| code-fold: false
+alzheimer_data <- read.csv('data/alzheimer_data.csv') 
+alzheimer_data <- alzheimer_data[, c("id", "diagnosis", "age", "educ", "female", "height", "weight")]
+alzheimer_data$diagnosis <- as.factor(alzheimer_data$diagnosis)
+alzheimer_data$female <- as.factor(alzheimer_data$female)
+```
+
+- Tidyverse version
+```{r}
+#| code-fold: false
+alzheimer_data <- read.csv('data/alzheimer_data.csv') %>% 
+  select(id, diagnosis, age, educ, female, height, weight) %>% 
+  mutate(diagnosis = as.factor(diagnosis), female = as.factor(female))
+```
+
+
+</div>
