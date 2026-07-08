@@ -255,12 +255,12 @@
 </section>
 <section id="sample-space" class="slide level2">
 <h2>Sample Space</h2>
-<p><strong>Sample space</strong>: the set of all possible outcomes of an experiment. Denoted by the symbol <span class="math inline">\(\mathcal S\)</span>. Examples:</p>
+<p><strong>Sample space</strong>: the set of all possible outcomes of an experiment. Denoted by the symbol <span class="math inline">\(\mathbf S\)</span>. Examples:</p>
 <ul>
-<li><p>For rolling a die, the sample space is <span class="math inline">\(\mathcal S = \{1, 2, 3, 4, 5, 6\}\)</span>.</p></li>
+<li><p>For rolling a die, the sample space is <span class="math inline">\(\mathbf S = \{1, 2, 3, 4, 5, 6\}\)</span>.</p></li>
 <li><p>For flipping a coin 10 times, the sample space is</p>
 <span class="math display">\[\begin{aligned}
-\mathcal S = \{&amp;
+\mathbf S = \{&amp;
 HHHHHHHHHH,\; HHHHHHHHHT,\; \ldots,\\
 &amp;
 TTTTTTTTTH,\; TTTTTTTTTT
@@ -271,8 +271,8 @@ TTTTTTTTTH,\; TTTTTTTTTT
 <section id="sample-space-examples-cont." class="slide level2">
 <h2>Sample Space: Examples (cont.)</h2>
 <ul>
-<li><p>For measuring the resting heart rate of a randomly selected participant, the sample space is <span class="math inline">\(\mathcal S = \{0, 1, 2, \ldots\}\)</span> (assuming heart rate is measured in beats per minute).</p></li>
-<li><p>For randomly selecting a patient and recording their blood type, the sample space is <span class="math inline">\(\mathcal S = \{A, B, AB, O\}\)</span>.</p></li>
+<li><p>For measuring the resting heart rate of a randomly selected participant, the sample space is <span class="math inline">\(\mathbf S = \{0, 1, 2, \ldots\}\)</span> (assuming heart rate is measured in beats per minute).</p></li>
+<li><p>For randomly selecting a patient and recording their blood type, the sample space is <span class="math inline">\(\mathbf S = \{A, B, AB, O\}\)</span>.</p></li>
 </ul>
 </section>
 <section id="experiment-and-sample-space-1" class="slide level2">
@@ -298,7 +298,7 @@ TTTTTTTTTH,\; TTTTTTTTTT
 <section id="example-roll-a-die" class="slide level2">
 <h2>Example: Roll a Die</h2>
 <p>Experiment: - Roll a fair die.</p>
-<p>Sample space: <span class="math inline">\(\mathcal S=\{1,2,3,4,5,6\}\)</span></p>
+<p>Sample space: <span class="math inline">\(\mathbf S=\{1,2,3,4,5,6\}\)</span></p>
 <p>Events:</p>
 <ul>
 <li><p><span class="math inline">\(A=\{2,4,6\}\)</span>: roll an even number</p></li>
@@ -311,16 +311,16 @@ TTTTTTTTTH,\; TTTTTTTTTT
 <p>Every sample space contains two special events.</p>
 <ul>
 <li><p><strong>Impossible event</strong>: <span class="math inline">\(\emptyset\)</span> Contains no outcomes.</p></li>
-<li><p><strong>Certain event</strong>: <span class="math inline">\(\mathcal S\)</span></p>
+<li><p><strong>Certain event</strong>: <span class="math inline">\(\mathbf S\)</span></p>
 <p>Contains every possible outcome.</p></li>
 </ul>
 </section>
 <section id="example" class="slide level2">
 <h2>Example</h2>
-<p>For <span class="math inline">\(\mathcal S=\{1,2,3,4,5,6\}\)</span>,</p>
+<p>For <span class="math inline">\(\mathbf S=\{1,2,3,4,5,6\}\)</span>,</p>
 <ul>
 <li><p>“Roll a 7” =<span class="math inline">\(\emptyset\)</span>.</p></li>
-<li><p>“Roll a number between 1 and 6” = <span class="math inline">\(\mathcal S\)</span>.</p></li>
+<li><p>“Roll a number between 1 and 6” = <span class="math inline">\(\mathbf S\)</span>.</p></li>
 </ul>
 </section>
 <section id="set-operations-on-events" class="slide level2">
@@ -344,7 +344,7 @@ C=\{1,3,5\}.\]</span></p>
 <li><p><span class="math inline">\(B\subset A\)</span></p></li>
 <li><p><span class="math inline">\(A\cap C=\emptyset\)</span></p></li>
 <li><p><span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> are <strong>disjoint</strong> (mutually exclusive)</p></li>
-<li><p><span class="math inline">\(A\cup C=\mathcal S\)</span></p></li>
+<li><p><span class="math inline">\(A\cup C=\mathbf S\)</span></p></li>
 <li><p><span class="math inline">\(C=A^c\)</span></p></li>
 </ul>
 </section></section>
@@ -372,7 +372,7 @@ P(A).
 <p>Suppose a fair six-sided die is rolled once.</p>
 <p>Sample space:</p>
 <p><span class="math display">\[
-\mathcal S=\{1,2,3,4,5,6\}.
+\mathbf S=\{1,2,3,4,5,6\}.
 \]</span></p>
 <p>Since the die is <strong>fair</strong>, each outcome is equally likely.</p>
 <p><span class="math display">\[
@@ -404,7 +404,7 @@ P(\{2\})+P(\{4\})+P(\{6\})
 <p>A probability function satisfies three basic properties.</p>
 <ol type="1">
 <li><p>Nonnegative <span class="math inline">\(P(A)\ge0.\)</span></p></li>
-<li><p>Certain event <span class="math inline">\(P(\mathcal S)=1.\)</span></p></li>
+<li><p>Certain event <span class="math inline">\(P(\mathbf S)=1.\)</span></p></li>
 <li><p>Additivity. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint,</p></li>
 </ol>
 <p><span class="math display">\[
@@ -418,7 +418,7 @@ P(A\cup B)=P(A)+P(B).
 P(A)
 =
 \frac{\text{number of outcomes in }A}
-{\text{number of outcomes in }\mathcal S}.
+{\text{number of outcomes in }\mathbf S}.
 \]</span></p>
 <h3 id="example-1">Example</h3>
 <p>For a fair die,</p>
@@ -595,7 +595,7 @@ Independent events <strong>do not influence each other</strong>.</p>
 <p>Randomly select one person and determine the person’s blood type and Rh factor.</p>
 <p><strong>Sample Space</strong></p>
 <p><span class="math display">\[
-\mathcal S=
+\mathbf S=
 \{
 \text{A+},\text{A−},
 \text{B+},\text{B−},
@@ -638,7 +638,7 @@ Independent events <strong>do not influence each other</strong>.</p>
 <p>A person cannot have both blood type A and blood type O.</p></li>
 <li><p>Therefore, <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> are <strong>disjoint</strong>.</p></li>
 <li><p><span class="math inline">\(A\subset A\cup C\)</span></p></li>
-<li><p><span class="math inline">\(A\cup A^c=\mathcal S\)</span></p></li>
+<li><p><span class="math inline">\(A\cup A^c=\mathbf S\)</span></p></li>
 </ul>
 <p>These relationships hold for any events.</p>
 </section>
@@ -1022,7 +1022,7 @@ p=P(\text{blood type O}).
 <div class="column" style="width:60%;">
 <ul>
 <li><p><strong>Experiment:</strong> The process we perform.</p></li>
-<li><p><strong>Sample Space (<span class="math inline">\(\mathcal{S}\)</span>):</strong> All possible outcomes of the experiment.</p></li>
+<li><p><strong>Sample Space (<span class="math inline">\(\mathbf{S}\)</span>):</strong> All possible outcomes of the experiment.</p></li>
 <li><p><strong>Events:</strong> Subsets of the sample space.</p></li>
 <li><p><strong>Random Variables:</strong> Numerical functions defined on the sample space.</p></li>
 </ul>
