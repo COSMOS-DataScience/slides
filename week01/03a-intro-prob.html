@@ -1,831 +1,2011 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
-  <head>
-    <title>Introduction to Probability</title>
-    <meta charset="utf-8" />
-    <meta name="author" content="Zhaoxia Yu" />
-    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
-    <link rel="stylesheet" href="slide-style.css" type="text/css" />
-  </head>
-  <body>
-    <textarea id="source">
-
-
-class: title-slide
-
-
-
-&lt;br&gt;
-&lt;br&gt;
-.right-panel[ 
-&lt;br&gt;
-
-# Introduction to Probability
-
-### Zhaoxia Yu
-
-]
-
----
-
-
-## Introduction
- - We have used plots and summary statistics to learn about the distribution of different variables in the observed data and to investigate their relationships. 
- 
- - We now want to __generalize__ our findings to the entire population of interest. 
- 
- - However, we almost always remain uncertain about the true distributions and relationships in the population.
- 
- - Therefore, when we generalize our findings from a sample to the whole population, we should explicitly specify the extent of our uncertainty.  
- 
- - We use probability to measure or quanitfy uncertainty.
- 
- 
-
----
-## Experiment
-- __Experiment__: Any process, real or hypothetical, in which the outcomes occur randomly but the set of the possible outcomes can be identified ahead of time.
-
-- Example: roll a die twice.
-
-- Example: flip a coin twice.
-
-- Example: randomly select a person from a population and measure their height.
-
-- Example: randomly select a person from a population and measure their blood type.
-
----
-## Sample space
-
-- For an experiment, the collection of all possible outcomes is the called the __sample space__. 
-
-`$$\begin{array}{l@{\quad}l}
-\text{Coin tossing:}  &amp; S=\{H, T\}, \\
-\text{Die rolling:} &amp;  S=\{1, 2, 3, 4, 5, 6\}, \\
-\text{Bi-allelic gene:} &amp; S=\{A,a\},\\
-\text{Genotype:} &amp; S=\{\mathit{AA}, \mathit{Aa}, \mathit{aa}\}.
-\end{array}$$`
----
-
-## Probability
-
-- To each possible outcome in the sample space, we assign a probability `\(P\)`, which represents how certain we are about the occurrence of the corresponding outcome. 
-
-- For an outcome `\(o\)`, we denote the probability as `\(P(o)\)`, where `\(0 \le P(o) \le 1\)`. 
-
-- The total probability of all outcomes in the sample space is always 1.
-
-  - Coin tossing: `\(P(H)+ P(T)=1\)`
-  - Die rolling:  `\(P(1)+P(2)+P(3)+P(4)+P(5)+P(6) = 1\)`.
-
-- Therefore, if the outcomes are equally probable, the probability of
-each outcome is `\(1/n_{S}\)`, where `\(n_{S}\)` is the number of possible
-outcomes.
-  
----
-
-## Events
-
-- An **event** is a subset of the sample space `\(S\)`. Two special events:
-  - The __sample space__ `\(S\)`, which contains all possible outcomes.
-  - The __empty set__ `\(\phi\)`, which contains no outcomes.
-
-- A possible event for die rolling is `\(E = \{1, 3, 5\}\)`. This is the event of rolling an
-odd number. 
-
-&lt;!-- - For the genotype example, `\(E=\{\mathit{AA}, \mathit{aa}\}\)`
-is the event that a person is homozygous. --&gt;
-
-- An event occurs when any outcome within that event occurs. 
-
-- We denote the probability of event `\(E\)` as `\(P(E)\)`.
- 
-- The probability of an event is the sum of the probabilities for all
-individual outcomes included in that event.
-
-
----
- 
-## Example: SNPs and Genotypes
-
-- `Gene` is a segment of double-stranded DNA, which itself is made of a sequence of four different nucleotides: A, G, T, C. 
-  
-- `Single Nucleotide Polymorphisms (SNPs)` are a common type of genetic variation when single nucleotide is replaced by another one.
-  
-- `Alleles` are the alternate forms of a gene (for example, `\(T\)` vs. `\(G\)`, or in general denoted as `\(A\)` vs. `\(a\)`).
-  
-- `Genotype` (i.e., genetic makeup) of an individual for a bi-allelic gene __A__ can take one of the three possible forms: `\(AA\)`, `\(aa\)`, or `\(Aa\)`.
-  
-- `Homozygous`: `\(AA\)`, `\(aa\)`; `\(\quad\)`  `Heterozygous`: `\(Aa\)`.
-
----
- 
-## Some commonly used genetic terms
-
-- `Phenotype` is an observable trait (e.g., eye color, disease status) due to genetic factors and/or environmental factors.
-  
-- `Recessive` alleles produce their trait only when both homologous chromosomes carry that specific variant. 
-  
-- `Dominant` alleles produce their traits when they appear on at least one of the homologous chromosomes. 
-
----
-
-## Example
-
-- As a running example, we consider a bi-allelic gene __A__ with
-two alleles `\(A\)` and `\(a\)`. 
-
-- Suppose that allele `\(a\)` is recessive and
-causes a specific disease. 
-
-- Then only people with the genotype
-`\(\mathit{aa}\)` have the disease. 
-
-&lt;img src="img/vennGene1.png" width="50%" style="display: block; margin: auto;" /&gt;
-
----
-
-## Example
-- We can define four events as follows:
-`$$\begin{array}{l@{\quad}l}
-\text{The homozygous event:} &amp; HM = \{\mathit{AA}, \mathit{aa}\}, \\
-\text{The heterozygous event:} &amp; HT  = \{\mathit{Aa}\},  \\  
-\text{The no-disease event:} &amp; ND   = \{\mathit{AA}, \mathit{Aa}\}, \\
-\text{The disease event:} &amp; D   = \{\mathit{aa}\} .
-\end{array}$$`
-- Assume `\(P(\mathit{AA}) = 0.49\)`,
-`\(P(\mathit{Aa}) = 0.42\)`, and `\(P(\mathit{aa}) = 0.09\)`. Then,
-$$
-`\begin{eqnarray*}
-P(HM ) &amp; = &amp; 0.49+0.09 = 0.58,  \\
-P(HT ) &amp; = &amp; 0.42, \\
-P(ND) &amp; = &amp; 0.49 + 0.42 = 0.91,\\
-P(D) &amp; = &amp; 0.09.
-\end{eqnarray*}`
-$$
----
-
-## Complement
-- For any event `\(E\)`, we define its **complement**, `\(E^c\)`, as the set
-of all outcomes that are in the sample space `\(S\)` but not in `\(E\)`.
-
-- For the gene-disease example, the complement of the homozygous event
-`\(HM  = \{\mathit{AA}, \mathit{aa}\}\)` is the heterozygous event
-`\(\{\mathit{Aa}\}\)`; we show this as `\(HM^{c} = HT\)`. 
-
-- Likewise, the complement of the disease event, `\(D=\{\mathit{aa}\}\)`, is the no-disease
-event, `\(ND = \{\mathit{AA}, \mathit{Aa}\}\)`; we show this as `\(D^{c} = ND\)`.
-
-- The probability of the complement event is 1 minus the probability of
-the event:
-`$$P\bigl(E^{c}\bigr) = 1- P(E).$$`
-
-
----
-
-## Union
-
-- For two events `\(E_{1}\)` and `\(E_{2}\)` in a sample space `\(S\)`, we define
-their **union** `\(E_{1}\cup E_{2}\)` as the set of all outcomes that
-are at least in one of the events. 
-
-- The union `\(E_{1}\cup E_{2}\)` is an
-event by itself, and it occurs when **either** `\(E_{1}\)` **or**
-`\(E_{2}\)` (or both) occurs. 
-
-- For example, the
-union of the heterozygous event, `\(HT\)`, and the disease event, `\(D\)`, is
-`\(\{\mathit{Aa}\} \cup \{\mathit{aa}\} = \{\mathit{Aa}, \mathit{aa}\}\)`.
-
-- When possible, we can identify the outcomes in the
-union of the two events and find the probability by adding the
-probabilities of those outcomes.
-
----
-
-
-## Intersection
-
-- For two events `\(E_{1}\)` and `\(E_{2}\)` in a sample space `\(S\)`, we define their **intersection** `\(E_{1} \cap E_{2}\)` as the set of outcomes that are in **both** events. 
-
-- The intersection `\(E_{1}\cap E_{2}\)` is an event
-by itself, and it occurs when both `\(E_{1}\)` **and** `\(E_{2}\)` occur.
-
-- The intersection of
-the homozygous event and the no-disease event is `\(HM  \cap ND = \{\mathit{AA}\}\)`.
-
-- When possible, we can identify the outcomes in the
-intersection of the two events and find the probability by adding the
-probabilities of those outcomes.
-
----
-
-## Joint vs. marginal probability
-- We refer to the probability of the intersection of two events, `\(P(E_{1} \cap E_{2})\)`, as their **joint probability**. 
-
-- In contrast, we refer to probabilities `\(P(E_{1})\)` and `\(P(E_{2})\)` as the **marginal probabilities** of events `\(E_{1}\)` and `\(E_{2}\)`.
-
-&lt;!--- For any two events `\(E_{1}\)` and `\(E_{2}\)`, we have
-
-`$$P(E_{1} \cup E_{2}) = P(E_{1}) + P(E_{2}) - P(E_{1} \cap E_{2}).$$`
-- That is, the probability of the union `\(P(E_1 \cup E_2)\)` is the sum of their marginal probabilities minus their joint probability. 
---&gt;
-&lt;!-- --- --&gt;
-
-&lt;!-- ## Joint vs. marginal probability --&gt;
-
-&lt;!-- - For example, the union of the heterozygous and the no-disease events is --&gt;
-&lt;!-- $$\begin{eqnarray*} --&gt;
-&lt;!-- P(HM  \cup ND)  &amp;=&amp;  P(HM ) + P(ND) - P(HM  \cap ND) \\ --&gt;
-&lt;!--   &amp;= &amp; 0.58 + 0.91 - 0.49 = 1. --&gt;
-&lt;!-- \end{eqnarray*}$$ --&gt;
-
----
-
-## Disjoint events
-- Two events are called **disjoint** or **mutually exclusive** if they never occur together: if we know that one of them has occurred, we can conclude that the other event has not occurred. 
-
-- Disjoint events have no
-elements (outcomes) in common, and their intersection is the empty set.
-
-- For the above example, if a person is heterozygous, we know that they do not have the disease so the two events `\(HT\)` and `\(D\)` are disjoint. 
-
-- For two disjoint events `\(E_{1}\)` and `\(E_{2}\)`, the probability of their
-intersection (i.e., their joint probability) is zero: 
-`$$P(E_{1} \cap E_{2}) = P(\phi) =  0$$`
-&lt;!--- Therefore, the probability of the union of the two disjoint events is simply the sum of their marginal probabilities: 
-`$$P(E_{1} \cup E_{2}) = P(E_{1}) + P(E_{2})$$`--&gt;
-&lt;!--- In general, if we have multiple disjoint events, `\(E_1\)`, `\(E_2\)`, ..., `\(E_n\)`, then the probability of their union is the sum of the marginal probabilities:
-`$$P(E_1 \cup E_2 \cup ... \cup E_n) = P(E_1) + P(E_2) + ... + P(E_n)$$`--&gt;
-
-&lt;!-----
-
-## Partition
-
-- When two or more events are disjoint and their union is the sample
-space `\(S\)`, we say that the events form a **partition** of the
-sample space.
-
-- Two complementary events `\(E\)` and `\(E^{c}\)` always form a partition of the
-sample space since they are disjoint and their union is the sample
-space.
---&gt;
----
-
-## Conditional probability
-
-- Very often, we need to discuss possible changes in the
-probability of one event based on our knowledge regarding the
-occurrence of another event.
-
-- The **conditional probability**, denoted  `\(P(E_{1}|E_{2})\)`, is the
-probability of event `\(E_1\)` given that another event `\(E_2\)` has occurred.
-
-- The conditional probability of event `\(E_1\)` given event `\(E_2\)` can be
-calculated as follows: (assuming `\(P(E_{2}) \ne 0\)`)
-
-`$$P(E_{1}|E_{2}) = \frac{P(E_{1} \cap E_{2})}{P(E_{2})}.$$`
-
-- This is the joint probability of the two events divided
-by the marginal probability of the event on which we are conditioning.
-
-
----
-## Independent events
-
-- Two events `\(E_{1}\)` and `\(E_{2}\)` are **independent** if our
-knowledge of the occurrence of one event does not change the
-probability of occurrence of the other event. 
-
-`\begin{eqnarray*}
-P(E_{1}|E_{2}) &amp; = &amp; P(E_{1}), \\
-P(E_{2}|E_{1}) &amp; = &amp; P(E_{2}).
-\end{eqnarray*}`
-
-- For example, if a disease is not genetic, knowing a person has a specific genotype (e.g., `\(AA\)`) does not  change the probability of having that disease. 
-
----
-
-## Independent events
-
-- When two events `\(E_{1}\)` and `\(E_{2}\)` are independent, the probability
-that `\(E_{1}\)` and `\(E_{2}\)` occur simultaneously, i.e., their joint
-probability, is the product of their marginal probabilities:
-
-`$$P(E_{1} \cap E_{2}) = P(E_{1})\times P(E_{2})$$`
-
-
-&lt;!-- --- --&gt;
-
-&lt;!-- ## Bayes' theorem --&gt;
-
-&lt;!-- - Sometimes, we know the conditional --&gt;
-&lt;!-- probability of `\(E_{1}\)` given `\(E_{2}\)`, but we are interested in the --&gt;
-&lt;!-- conditional probability of `\(E_{2}\)` given `\(E_{1}\)`.  --&gt;
-
-&lt;!-- - For example, suppose --&gt;
-&lt;!-- that the probability of having lung cancer is `\(P(C) = 0.001\)` and that --&gt;
-&lt;!-- the probability of being a smoker is `\(P(SM) = 0.25\)`.  --&gt;
-
-&lt;!-- - Further, suppose --&gt;
-&lt;!-- we know that if a person has lung cancer, the probability of being a --&gt;
-&lt;!-- smoker increases to `\(P(SM |C) = 0.40\)`.   --&gt;
-
-&lt;!-- - We are, however, interested in --&gt;
-&lt;!-- the probability of developing lung cancer if a person is a smoker, --&gt;
-&lt;!-- `\(P(C|SM)\)`.  --&gt;
-
-
-&lt;!-- --- --&gt;
-
-&lt;!-- ## Bayes' theorem --&gt;
-
-&lt;!-- - In general, for two events `\(E_1\)` and `\(E_2\)`, the following equation --&gt;
-&lt;!-- shows the relationship between `\(P(E_{2}|E_{1})\)` and `\(P(E_{1}|E_{2})\)`: --&gt;
-&lt;!-- `$$P(E_{2}|E_{1})  =  \frac{P(E_{1}|E_{2})P(E_{2})}{P(E_{1})}.$$` --&gt;
-
-&lt;!-- - This formula is known as **Bayes' theorem** or **Bayes' rule**. --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- ## Bayes' theorem --&gt;
-
-&lt;!-- - For the above example,  --&gt;
-&lt;!-- `$$P(C|SM)  =  \frac{P(SM|C)P(C) }{P(SM)} = \frac{ 0.4 \times 0.001}{0.25} = 0.0016.$$` --&gt;
-
-&lt;!-- - Therefore, the probability of lung cancer for smokers increases from --&gt;
-&lt;!-- 0.001 to 0.0016.  --&gt;
-
-
-
-
-
----
-
-## Random Variables
-
-- We now discuss random variables and their probability distributions.
-
-- Formally, a **random variable** `\(X\)` assigns a
-numerical value to each possible outcome (and event) of a random
-phenomenon. 
-
-- For instance, we can define `\(X\)` for possible genotypes
-of a bi-allelic gene **A** as follows:
-`$$X = \left\{ \begin{array}{l@{\quad}l}
-0 &amp;  \mbox{for genotype } \mathit{AA}, \\
-1 &amp;  \mbox{for genotype } \mathit{Aa}, \\
-2 &amp;  \mbox{for genotype } \mathit{aa}.
-\end{array} \right.$$`
-
-
-
-
----
-
-## Random Variables
-
-- After we define a random variable, we can find the probabilities for
-its possible values based on the probabilities specified for its underlying
-random phenomenon. This way, instead of talking about the probabilities
-for different outcomes and events, we can talk about the probability of
-different values for a random variable. 
-
-- For example, suppose `\(P({AA}) = 0.49\)`, `\(P({Aa}) = 0.42\)`, and `\(P({aa}) = 0.09\)`. 
-
-- Then, we can say that `\(P(X=0) = 0.49\)`, i.e., `\(X\)` is equal
-to `\(0\)` with probability of 0.49. 
-
-- Note that the total probability for the random variable is still 1 and all the probability rules we discussed still hold. 
-
-
-
----
-
-## Random Variables
-
-
-- The probability distribution of a random variable specifies its
-possible values (i.e., its range) and their corresponding
-probabilities.
-
-- For the random variable `\(X\)` defined based on genotypes, the
-probability distribution can be simply specified as follows:
-
-`$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
+<html lang="en"><head>
+<script src="03a-intro-prob_files/libs/clipboard/clipboard.min.js"></script>
+<script src="03a-intro-prob_files/libs/quarto-html/tabby.min.js"></script>
+<script src="03a-intro-prob_files/libs/quarto-html/popper.min.js"></script>
+<script src="03a-intro-prob_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="03a-intro-prob_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="03a-intro-prob_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="03a-intro-prob_files/libs/quarto-html/quarto-syntax-highlighting-a185852c63625fd9ffbdc57047c9a77e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <title>a-intro-prob</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="03a-intro-prob_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="03a-intro-prob_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="03a-intro-prob_files/libs/revealjs/dist/theme/quarto-37488a3070012fd431fac83a07067cfd.css">
+  <link href="03a-intro-prob_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="03a-intro-prob_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="03a-intro-prob_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="03a-intro-prob_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="03a-intro-prob_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="03a-intro-prob_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="03a-intro-prob_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="03a-intro-prob_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="03a-intro-prob_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+<p><img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;"></p>
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+<h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">
+Introduction to Probability
+</h1>
+<p style="color: #153e6c; font-size: 1.8em;">
+Zhaoxia Yu
+</p>
+</div>
+</div>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>Experiment and Sample Space</li>
+<li>Event</li>
+<li>Probability</li>
+<li>Random Variable</li>
+<li>Distribution of a Random Variable</li>
+</ul>
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p>We have used plots and summary statistics to learn about the distribution of different variables in the observed data and to investigate their relationships.</p></li>
+<li><p>We now want to <strong>generalize</strong> our findings to the entire population of interest.</p></li>
+<li><p>However, we almost always remain uncertain about the true distributions and relationships in the population.</p></li>
+<li><p>Therefore, when we generalize our findings from a sample to the whole population, we should explicitly specify the extent of our uncertainty.</p></li>
+<li><p>We use probability to measure or quantify uncertainty.</p></li>
+</ul>
+</section>
+<section>
+<section id="experiment-and-sample-space" class="title-slide slide level1 center">
+<h1>Experiment and Sample Space</h1>
+
+</section>
+<section id="experiment" class="slide level2">
+<h2>Experiment</h2>
+<ul>
+<li><p><strong>Experiment</strong>: any process that produces one outcome from <strong>a set of possible outcomes</strong>.</p></li>
+<li><p>Before performing the experiment, we know the possible outcomes but do not know which one will occur.</p></li>
+</ul>
+</section>
+<section id="experiment-examples" class="slide level2">
+<h2>Experiment: Examples</h2>
+<ul>
+<li><p>roll a die.</p></li>
+<li><p>flip a coin 10 times.</p></li>
+<li><p>measure the resting heart rate of a randomly selected participant.</p></li>
+<li><p>randomly select a patient and record their blood type.</p></li>
+</ul>
+</section>
+<section id="sample-space" class="slide level2">
+<h2>Sample Space</h2>
+<p><strong>Sample space</strong>: the set of all possible outcomes of an experiment. Denoted by the symbol <span class="math inline">\(\mathcal S\)</span>. Examples:</p>
+<ul>
+<li><p>For rolling a die, the sample space is <span class="math inline">\(\mathcal S = \{1, 2, 3, 4, 5, 6\}\)</span>.</p></li>
+<li><p>For flipping a coin 10 times, the sample space is</p>
+<span class="math display">\[\begin{aligned}
+\mathcal S = \{&amp;
+HHHHHHHHHH,\; HHHHHHHHHT,\; \ldots,\\
+&amp;
+TTTTTTTTTH,\; TTTTTTTTTT
+\}.
+\end{aligned}\]</span></li>
+</ul>
+</section>
+<section id="sample-space-examples-cont." class="slide level2">
+<h2>Sample Space: Examples (cont.)</h2>
+<ul>
+<li><p>For measuring the resting heart rate of a randomly selected participant, the sample space is <span class="math inline">\(\mathcal S = \{0, 1, 2, \ldots\}\)</span> (assuming heart rate is measured in beats per minute).</p></li>
+<li><p>For randomly selecting a patient and recording their blood type, the sample space is <span class="math inline">\(\mathcal S = \{A, B, AB, O\}\)</span>.</p></li>
+</ul>
+</section>
+<section id="experiment-and-sample-space-1" class="slide level2">
+<h2>Experiment and Sample Space</h2>
+<ul>
+<li><p>An <strong>experiment</strong> is the process we perform.</p></li>
+<li><p>Once the experiment is specified, the <strong>sample space</strong> is determined. It contains all possible outcomes of the experiment.</p></li>
+<li><p>From the sample space, we can define different <strong>events</strong> and <strong>random variables</strong> depending on the question we want to answer.</p></li>
+</ul>
+</section></section>
+<section>
+<section id="events" class="title-slide slide level1 center">
+<h1>Events</h1>
+
+</section>
+<section id="event-definition" class="slide level2">
+<h2>Event: Definition</h2>
+<ul>
+<li><p>An <strong>event</strong> is a subset of the sample space.</p></li>
+<li><p>An event occurs if the observed outcome belongs to that subset.</p></li>
+</ul>
+</section>
+<section id="example-roll-a-die" class="slide level2">
+<h2>Example: Roll a Die</h2>
+<p>Experiment: - Roll a fair die.</p>
+<p>Sample space: <span class="math inline">\(\mathcal S=\{1,2,3,4,5,6\}\)</span></p>
+<p>Events:</p>
+<ul>
+<li><p><span class="math inline">\(A=\{2,4,6\}\)</span>: roll an even number</p></li>
+<li><p><span class="math inline">\(B=\{5,6\}\)</span>: roll a number greater than 4</p></li>
+<li><p><span class="math inline">\(C=\{1\}\)</span>: roll a 1</p></li>
+</ul>
+</section>
+<section id="two-special-events" class="slide level2">
+<h2>Two Special Events</h2>
+<p>Every sample space contains two special events.</p>
+<ul>
+<li><p><strong>Impossible event</strong>: <span class="math inline">\(\emptyset\)</span> Contains no outcomes.</p></li>
+<li><p><strong>Certain event</strong>: <span class="math inline">\(\mathcal S\)</span></p>
+<p>Contains every possible outcome.</p></li>
+</ul>
+</section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<p>For <span class="math inline">\(\mathcal S=\{1,2,3,4,5,6\}\)</span>,</p>
+<ul>
+<li><p>“Roll a 7” =<span class="math inline">\(\emptyset\)</span>.</p></li>
+<li><p>“Roll a number between 1 and 6” = <span class="math inline">\(\mathcal S\)</span>.</p></li>
+</ul>
+</section>
+<section id="set-operations-on-events" class="slide level2">
+<h2>Set Operations on Events</h2>
+<p>Suppose</p>
+<p><span class="math inline">\(A=\{2,4,6\},\qquad B=\{4,5,6\}.\)</span></p>
+<p>Then</p>
+<ul>
+<li><p>Union: <span class="math inline">\(A\cup B=\{2,4,5,6\}\)</span></p></li>
+<li><p>Intersection: <span class="math inline">\(A\cap B=\{4,6\}\)</span></p></li>
+<li><p>Complement: <span class="math inline">\(A^c=\{1,3,5\}\)</span></p></li>
+</ul>
+</section>
+<section id="relationships-between-events" class="slide level2">
+<h2>Relationships Between Events</h2>
+<p>Suppose</p>
+<p><span class="math display">\[A=\{2,4,6\},\qquad
+B=\{4,6\},\qquad
+C=\{1,3,5\}.\]</span></p>
+<ul>
+<li><p><span class="math inline">\(B\subset A\)</span></p></li>
+<li><p><span class="math inline">\(A\cap C=\emptyset\)</span></p></li>
+<li><p><span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> are <strong>disjoint</strong> (mutually exclusive)</p></li>
+<li><p><span class="math inline">\(A\cup C=\mathcal S\)</span></p></li>
+<li><p><span class="math inline">\(C=A^c\)</span></p></li>
+</ul>
+</section></section>
+<section>
+<section id="probability" class="title-slide slide level1 center">
+<h1>Probability</h1>
+
+</section>
+<section id="probability-1" class="slide level2">
+<h2>Probability</h2>
+<ul>
+<li><p>A <strong>probability function</strong> assigns a number to each event.</p></li>
+<li><p>The probability of an event measures how likely the event is to occur.</p></li>
+<li><p>We write the probability of an event <span class="math inline">\(A\)</span> as</p></li>
+</ul>
+<p><span class="math display">\[
+P(A).
+\]</span></p>
+<ul>
+<li>A larger probability means the event is more likely to occur.</li>
+</ul>
+</section>
+<section id="example-a-fair-die" class="slide level2">
+<h2>Example: A Fair Die</h2>
+<p>Suppose a fair six-sided die is rolled once.</p>
+<p>Sample space:</p>
+<p><span class="math display">\[
+\mathcal S=\{1,2,3,4,5,6\}.
+\]</span></p>
+<p>Since the die is <strong>fair</strong>, each outcome is equally likely.</p>
+<p><span class="math display">\[
+P(\{1\})=P(\{2\})=\cdots=P(\{6\})=\frac16.
+\]</span></p>
+<p>Each outcome has probability <span class="math inline">\(\frac16\)</span>.</p>
+</section>
+<section id="probability-of-events" class="slide level2">
+<h2>Probability of Events</h2>
+<p>Let</p>
+<p><span class="math display">\[
+A=\{2,4,6\},
+\]</span></p>
+<p>the event that the die shows an even number.</p>
+<p>Since <span class="math inline">\(A=\{2\}\cup\{4\}\cup\{6\},\)</span></p>
+<p><span class="math display">\[
+P(A)
+=
+P(\{2\})+P(\{4\})+P(\{6\})
+=
+\frac36
+=
+\frac12.
+\]</span></p>
+<p>The probability of an event is the sum of the probabilities of its outcomes.</p>
+</section>
+<section id="properties-of-a-probability-function" class="slide level2 scrollable">
+<h2>Properties of a Probability Function</h2>
+<p>A probability function satisfies three basic properties.</p>
+<ol type="1">
+<li><p>Nonnegative <span class="math inline">\(P(A)\ge0.\)</span></p></li>
+<li><p>Certain event <span class="math inline">\(P(\mathcal S)=1.\)</span></p></li>
+<li><p>Additivity. If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint,</p></li>
+</ol>
+<p><span class="math display">\[
+P(A\cup B)=P(A)+P(B).
+\]</span></p>
+</section>
+<section id="equally-likely-outcomes" class="slide level2">
+<h2>Equally Likely Outcomes</h2>
+<p>When all outcomes are equally likely,</p>
+<p><span class="math display">\[
+P(A)
+=
+\frac{\text{number of outcomes in }A}
+{\text{number of outcomes in }\mathcal S}.
+\]</span></p>
+<h3 id="example-1">Example</h3>
+<p>For a fair die,</p>
+<p><span class="math display">\[
+P(\{2,4,6\})=\frac36=\frac12.
+\]</span></p>
+<p>This shortcut applies only when all outcomes are equally likely.</p>
+</section>
+<section id="joint-probability" class="slide level2">
+<h2>Joint Probability</h2>
+<p>The <strong>joint probability</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> is</p>
+<p><span class="math display">\[
+P(A\cap B),
+\]</span></p>
+<p>the probability that <strong>both events occur</strong>.</p>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<p>Suppose a fair die is rolled once. Let</p>
+<ul>
+<li><p><span class="math inline">\(A=\{2,4,6\}\)</span>, the event that the outcome is even, and</p></li>
+<li><p><span class="math inline">\(B=\{4,5,6\}\)</span>, the event that the outcome is greater than 3.</p></li>
+</ul>
+<p>Since <span class="math display">\[
+A\cap B=\{4,6\},
+\]</span></p>
+<p><span class="math display">\[
+P(A\cap B)=\frac26=\frac13.
+\]</span></p>
+</section>
+<section id="marginal-vs-joint-probability" class="slide level2">
+<h2>Marginal vs Joint Probability</h2>
+<p>The probability of a single event is called its <strong>marginal probability</strong>.</p>
+<ul>
+<li><p><span class="math inline">\(P(A)\)</span> is the marginal probability of <span class="math inline">\(A\)</span>.</p></li>
+<li><p><span class="math inline">\(P(B)\)</span> is the marginal probability of <span class="math inline">\(B\)</span>.</p></li>
+<li><p><span class="math inline">\(P(A\cap B)\)</span> is the joint probability of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p></li>
+</ul>
+<p>Marginal probabilities describe one event at a time, while a joint probability describes two events occurring together.</p>
+</section>
+<section id="conditional-probability" class="slide level2">
+<h2>Conditional Probability</h2>
+<p>Suppose we know that event <span class="math inline">\(B\)</span> has occurred. What is the probability that event <span class="math inline">\(A\)</span> also occurs? This is called the <strong>conditional probability</strong> of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span>, denoted by</p>
+<p><span class="math display">\[
+P(A\mid B).
+\]</span></p>
+<p><strong>Definition:</strong> If <span class="math inline">\(P(B)&gt;0\)</span>, the conditional probability of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span> is</p>
+<p><span class="math display">\[
+P(A\mid B)=\frac{P(A\cap B)}{P(B)}.
+\]</span></p>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<ul>
+<li>The denominator <span class="math inline">\(P(B)\)</span> represents the probability of the condition.</li>
+<li>The numerator <span class="math inline">\(P(A\cap B)\)</span> is the probability that <strong>both</strong> <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> occur.</li>
+<li>Conditional probability restricts our attention to outcomes in event <span class="math inline">\(B\)</span>.</li>
+</ul>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<p>Consider rolling a fair die once. Let <span class="math display">\[
+A=A=\{2,4,6\},  B=\{4,5,6\}\]</span></p>
+<p>By the definition of <span class="math inline">\(P(A\mid B)\)</span>, we have <span class="math display">\[P(A\mid B)
+=
+\frac{P(A\cap B)}{P(B)}
+=
+\frac{2/6}{3/6}
+=
+\frac23.
+\]</span></p>
+<p>Conditional probability updates probabilities using additional information.</p>
+</section>
+<section id="independence" class="slide level2">
+<h2>Independence</h2>
+<p>Two events are <strong>independent</strong> if knowing one event occurs does not change the probability of the other.</p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+P(A\mid B)=P(A).
+\]</span></p>
+<p>or</p>
+<p><span class="math display">\[
+P(A\cap B)=P(A)P(B).
+\]</span></p>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<p>In our example,</p>
+<p><span class="math display">\[
+P(A)=\frac12, \quad P(A\mid B)=\frac23.
+\]</span></p>
+<p>Since</p>
+<p><span class="math display">\[
+P(A\mid B)\ne P(A),
+\]</span></p>
+<p>the events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <strong>dependent</strong>.</p>
+</section>
+<section id="independent-events" class="slide level2">
+<h2>Independent Events</h2>
+<p>Let <span class="math inline">\(A=\{1,3,5\}, \quad B=\{1,2,3,4\}\)</span></p>
+<p>Then, <span class="math display">\[P(A)=\frac36=\frac12, P(B)=\frac46=\frac23, P(A\cap B)=\frac26=\frac13.\]</span></p>
+<p>Since <span class="math display">\[P(A\cap B)
+=
+P(A)P(B)
+=
+\frac12\times\frac23
+=
+\frac13,\]</span></p>
+<p>the events are <strong>independent</strong>.</p>
+</section>
+<section id="independent-vs.-disjoint-events" class="slide level2">
+<h2>Independent vs.&nbsp;Disjoint Events</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Disjoint</th>
+<th style="text-align: left;">Independent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cannot occur together</td>
+<td style="text-align: left;">Can occur together</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math display">\[A\cap B=\emptyset\]</span></td>
+<td style="text-align: left;"><span class="math display">\[P(A\cap B)=P(A)P(B)\]</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Knowing one occurs tells you the other cannot occur</td>
+<td style="text-align: left;">Knowing one occurs does not change the probability of the other</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-roll-a-fair-die" class="slide level2">
+<h2>Example (Roll a Fair Die)</h2>
+<p>Let <span class="math inline">\(A=\{2,4,6\}, \quad
+B=\{1,3,5\}.\)</span></p>
+<ul>
+<li><p><span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <strong>disjoint</strong> because <span class="math inline">\(A\cap B=\emptyset.\)</span></p></li>
+<li><p>They are <strong>not independent</strong> because</p></li>
+</ul>
+<p><span class="math display">\[
+P(A\mid B)=0\ne\frac12=P(A).
+\]</span></p>
+<blockquote>
+<p><strong>Key Idea:</strong><br>
+Disjoint events are <strong>mutually exclusive</strong>.<br>
+Independent events <strong>do not influence each other</strong>.</p>
+</blockquote>
+</section></section>
+<section>
+<section id="caes-study" class="title-slide slide level1 center">
+<h1>Caes Study</h1>
+
+</section>
+<section id="case-study-blood-type-and-rh-factor" class="slide level2">
+<h2>Case Study: Blood Type and Rh Factor</h2>
+<p>Suppose we randomly select one person from a population.</p>
+<p>For this person, we observe</p>
+<ul>
+<li>ABO blood type: A, B, AB, or O</li>
+<li>Rh factor: Positive (+) or Negative (−)</li>
+</ul>
+</section>
+<section id="experiment-and-sample-space-2" class="slide level2">
+<h2>Experiment and Sample Space</h2>
+<p><strong>Experiment</strong></p>
+<p>Randomly select one person and determine the person’s blood type and Rh factor.</p>
+<p><strong>Sample Space</strong></p>
+<p><span class="math display">\[
+\mathcal S=
+\{
+\text{A+},\text{A−},
+\text{B+},\text{B−},
+\text{AB+},\text{AB−},
+\text{O+},\text{O−}
+\}.
+\]</span></p>
+<p>The sample space contains eight possible outcomes.</p>
+</section>
+<section id="events-1" class="slide level2">
+<h2>Events</h2>
+<p>Examples of events include</p>
+<ul>
+<li><p><span class="math inline">\(A=\{\text{A+},\text{A−}\}\)</span></p>
+<p>The person has blood type A.</p></li>
+<li><p><span class="math inline">\(B=\{\text{A+},\text{B+},\text{AB+},\text{O+}\}\)</span></p>
+<p>The person is Rh positive.</p></li>
+<li><p><span class="math inline">\(C=\{\text{O+},\text{O−}\}\)</span></p>
+<p>The person has blood type O.</p></li>
+</ul>
+<p>Each event is a subset of the sample space.</p>
+</section>
+<section id="operations-on-events" class="slide level2">
+<h2>Operations on Events</h2>
+<p>Using the previous events,</p>
+<ul>
+<li><p>Union: <span class="math inline">\(A\cup C\)</span></p>
+<p>The person has blood type A <strong>or</strong> O.</p></li>
+<li><p>Intersection: <span class="math inline">\(A\cap B\)</span></p>
+<p>The person has blood type A <strong>and</strong> is Rh positive.</p></li>
+<li><p>Complement: <span class="math inline">\(B^c\)</span></p>
+<p>The person is Rh negative.</p></li>
+</ul>
+</section>
+<section id="relationships-between-events-1" class="slide level2">
+<h2>Relationships Between Events</h2>
+<p>Examples:</p>
+<ul>
+<li><p><span class="math inline">\(A\cap C=\emptyset\)</span></p>
+<p>A person cannot have both blood type A and blood type O.</p></li>
+<li><p>Therefore, <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> are <strong>disjoint</strong>.</p></li>
+<li><p><span class="math inline">\(A\subset A\cup C\)</span></p></li>
+<li><p><span class="math inline">\(A\cup A^c=\mathcal S\)</span></p></li>
+</ul>
+<p>These relationships hold for any events.</p>
+</section>
+<section id="probability-2" class="slide level2">
+<h2>Probability</h2>
+<div style="font-size: 0.75em;">
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>Suppose the blood type distribution in a population is</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Blood Type</th>
+<th style="text-align: center;">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">0.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">0.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">AB</td>
+<td style="text-align: center;">0.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">O</td>
+<td style="text-align: center;">0.44</td>
+</tr>
+</tbody>
+</table>
+<p>This is <strong>marginal dsitribution</strong> of blood type.</p>
+</div><div class="column" style="width:55%;">
+<p>Recall</p>
+<ul>
+<li><p><span class="math inline">\(A\)</span>: person has blood type A</p></li>
+<li><p><span class="math inline">\(C\)</span>: person has blood type O</p></li>
+</ul>
+<p>Then</p>
+<ul>
+<li><p><span class="math inline">\(P(A)=0.42\)</span></p></li>
+<li><p><span class="math inline">\(P(C)=0.44\)</span></p></li>
+</ul>
+<p>Since <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> are disjoint,</p>
+<p><span class="math display">\[
+P(A\cup C)
+=
+P(A)+P(C)
+=
+0.42+0.44
+=
+0.86.
+\]</span></p>
+</div></div>
+</div>
+</section>
+<section id="abo-and-rh-factor" class="slide level2">
+<h2>ABO and Rh Factor</h2>
+<ul>
+<li><p>Suppose we also know he Rh factor distribution is</p>
+<p><span class="math display">\[P(\text{Rh+})=0.85,\qquad
+P(\text{Rh−})=0.15.\]</span></p></li>
+<li><p>The ABO and Rh blood group systems are determined by <strong>different genes</strong> and are generally considered <strong>independent</strong>.</p></li>
+<li><p>Therefore, the probability of having a particular ABO blood type does not depend on Rh status.</p></li>
+</ul>
+</section>
+<section id="joint-and-conditional-probability" class="slide level2">
+<h2>Joint and Conditional Probability</h2>
+<div style="font-size: 0.8em;">
+<p>Since ABO blood type and Rh factor are independent,</p>
+<p><span class="math display">\[
+P(\text{A and Rh+})
+=
+P(\text{A})P(\text{Rh+})
+=
+0.42\times0.85
+=
+0.357.
+\]</span></p>
+<p>The probability that a randomly selected person has blood type A <strong>and</strong> is Rh positive is 0.357.</p>
+<p>Using conditional probability,</p>
+<p><span class="math display">\[
+P(\text{A}\mid\text{Rh+})
+=
+\frac{P(\text{A and Rh+})}
+     {P(\text{Rh+})}
+=
+\frac{0.357}{0.85}
+=
+0.42.
+\]</span></p>
+<p>Knowing that a person is Rh positive does <strong>not</strong> change the probability that the person has blood type A.</p>
+</div>
+</section></section>
+<section id="section-4" class="title-slide slide level1 center">
+<h1></h1>
+
+</section>
+
+<section>
+<section id="discrete-random-variable" class="title-slide slide level1 center">
+<h1>Discrete Random Variable</h1>
+
+</section>
+<section id="a-motivating-example" class="slide level2">
+<h2>A Motivating Example</h2>
+<p><strong>Experiment</strong>: flip a fair coin 10 times.</p>
+<h3 id="assumptions">Assumptions</h3>
+<ul>
+<li>The coin is fair.</li>
+<li>The 10 flips are independent.</li>
+</ul>
+<p><strong>Question:</strong> What can we say about the outcomes?</p>
+</section>
+<section id="sample-space-1" class="slide level2">
+<h2>Sample Space</h2>
+<p>Each outcome is a sequence of 10 heads (H) and tails (T).</p>
+<p>Examples:</p>
+<p>HHHTHTTTHH</p>
+<p>HTHHHTTTHT</p>
+<p>TTTTTHHHHH</p>
+<p>There are <span class="math inline">\(2^{10}=1024\)</span> possible sequences. Since the coin is fair and the flips are independent,</p>
+<p><span class="math display">\[
+P(\text{each sequence})=\frac1{2^{10}}=\frac1{1024}.
+\]</span></p>
+</section>
+<section id="events-2" class="slide level2">
+<h2>Events</h2>
+<p>An event is a subset of the sample space.</p>
+<p>Examples of events:</p>
+<ul>
+<li><p><span class="math inline">\(A\)</span>: Exactly 4 heads</p></li>
+<li><p><span class="math inline">\(B\)</span>: At least 8 heads</p></li>
+<li><p><span class="math inline">\(C\)</span>: The first flip is a head</p></li>
+</ul>
+<p>Each event contains many possible sequences.</p>
+<p><strong>Question:</strong> How many sequences belong to event <span class="math inline">\(A\)</span>?</p>
+</section>
+<section id="do-we-really-need-all-1024-sequences" class="slide level2">
+<h2>Do We Really Need All 1024 Sequences?</h2>
+<p>The sample space contains <span class="math inline">\(1024\)</span> possible outcomes.</p>
+<p>However, in many applications we do <strong>not</strong> care about the exact sequence. Instead, we ask questions like</p>
+<ul>
+<li><p>How many heads were observed?</p></li>
+<li><p>Was the first flip a head?</p></li>
+<li><p>Were there at least 8 heads?</p></li>
+</ul>
+<p>These questions summarize the outcome rather than describing the entire sequence.</p>
+</section>
+<section id="random-variables" class="slide level2">
+<h2>Random Variables</h2>
+<p>A <strong>random variable</strong> assigns a numerical value to each outcome in the sample space.</p>
+<p>Define <span class="math inline">\(X=\text{number of heads in 10 flips}.\)</span></p>
+<p>Examples</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Outcome</th>
+<th style="text-align: center;"><span class="math inline">\(X\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">HHHHHHHHHH</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HHHTHTTTHH</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TTTTTTTTTT</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HTHTHTHTHT</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="why-random-variables-help" class="slide level2">
+<h2>Why Random Variables Help</h2>
+<p>Instead of studying <span class="math inline">\(1024\)</span> possible sequences, we study only <span class="math inline">\(11\)</span> possible values of <span class="math inline">\(X.\)</span></p>
+<p>where <span class="math inline">\(X\in\{0,1,2,\ldots,10\}.\)</span></p>
+<p>Random variables simplify probability problems.</p>
+</section>
+<section id="probability-distribution" class="slide level2">
+<h2>Probability Distribution</h2>
+<p>Now our goal is to find</p>
+<p><span class="math display">\[
+P(X=x),
+\]</span></p>
+<p>for each possible value <span class="math inline">\(x=0,1,\ldots,10.\)</span></p>
+<p>For example,</p>
+<p><span class="math display">\[
+P(X=4)
+\]</span></p>
+<p>is the probability of observing exactly four heads.</p>
+</section>
+<section id="example-2" class="slide level2">
+<h2>Example</h2>
+<p>To compute <span class="math inline">\(P(X=4),\)</span> count the number of sequences with exactly four heads.</p>
+<p>There are <span class="math inline">\(\binom{10}{4}=210\)</span> such sequences. Therefore,</p>
+<p><span class="math display">\[
+P(X=4)
+=
+\frac{\binom{10}{4}}{2^{10}}
+=
+\frac{210}{1024}
+\approx0.205.
+\]</span></p>
+</section>
+<section id="another-example" class="slide level2">
+<h2>Another Example</h2>
+<p>Similarly,</p>
+<p><span class="math display">\[
+P(X=3)
+=
+\frac{\binom{10}{3}}{2^{10}},
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+P(X=7)
+=
+\frac{\binom{10}{7}}{2^{10}}.
+\]</span></p>
+<p>Notice the pattern.</p>
+</section>
+<section id="a-general-formula" class="slide level2">
+<h2>A General Formula</h2>
+<p>For any</p>
+<p><span class="math display">\[
+x=0,1,\ldots,10,
+\]</span></p>
+<p><span class="math display">\[
+P(X=x)
+=
+\frac{\binom{10}{x}}{2^{10}}.
+\]</span></p>
+<p>More generally, if the probability of heads is <span class="math inline">\(p,\)</span> then</p>
+<p><span class="math display">\[
+P(X=x)
+=
+\binom{10}{x}
+p^x
+(1-p)^{10-x}.
+\]</span></p>
+</section>
+<section id="binomial-distribution" class="slide level2">
+<h2>Binomial Distribution</h2>
+<p>A random variable follows a <strong>Binomial distribution</strong> if</p>
+<ul>
+<li>there are a fixed number of trials,</li>
+<li>each trial has two possible outcomes,</li>
+<li>the trials are independent,</li>
+<li>the probability of success is the same for every trial.</li>
+</ul>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<p>Notation:</p>
+<p><span class="math display">\[
+X\sim\text{Binomial}(n,p).
+\]</span></p>
+<p>Its <strong>probability mass function</strong> is</p>
+<p><span class="math display">\[
+P(X=x)
+=
+\binom{n}{x}
+p^x
+(1-p)^{n-x},
+\]</span></p>
+<p>for <span class="math inline">\(x=0,1,\ldots,n.\)</span></p>
+</section>
+<section id="does-our-example-follow-a-binomial-distribution" class="slide level2">
+<h2>Does Our Example Follow a Binomial Distribution?</h2>
+<p>For the coin-flipping experiment,</p>
+<ul>
+<li><p>Number of trials: <span class="math inline">\(n=10\)</span></p></li>
+<li><p>Success: Head</p></li>
+<li><p>Probability of success: <span class="math inline">\(p=\frac12\)</span></p></li>
+</ul>
+<p>Therefore,</p>
+<p><span class="math display">\[
+X\sim\text{Binomial}\left(10,\frac12\right).
+\]</span></p>
+</section>
+<section id="a-special-case-one-trial" class="slide level2">
+<h2>A Special Case: One Trial</h2>
+<p>The Binomial distribution describes the number of successes in <span class="math inline">\(n\)</span> independent trials.</p>
+<p>When $n=14, for example,</p>
+<ul>
+<li>Flip a coin <strong>once</strong>.</li>
+<li>Test whether a patient responds to a treatment.</li>
+<li>Determine whether a person has blood type O.</li>
+</ul>
+<p>Each experiment has only two possible outcomes:</p>
+<ul>
+<li>Success</li>
+<li>Failure</li>
+</ul>
+</section>
+<section id="bernoulli-distribution" class="slide level2">
+<h2>Bernoulli Distribution</h2>
+<p>A <strong>Bernoulli random variable</strong> records the outcome of a single trial.</p>
+<p>Define</p>
+<p><span class="math display">\[
+X=
+\begin{cases}
+1, &amp; \text{if success},\\
+0, &amp; \text{if failure.}
+\end{cases}
+\]</span></p>
+<p>Denote <span class="math inline">\(p=P(X=1)\)</span>, then</p>
+<p><span class="math display">\[
+P(X=0)=1-p.
+\]</span></p>
+<p>We write</p>
+<p><span class="math display">\[
+X\sim\text{Bernoulli}(p).
+\]</span></p>
+</section>
+<section id="bernoulli-distribution-1" class="slide level2">
+<h2>Bernoulli Distribution</h2>
+<p>The <strong>probability mass function (pmf)</strong> is</p>
+<p><span class="math display">\[
+P(X=x)
+=
+p^x(1-p)^{1-x},
+\qquad
+x=0,1.
+\]</span></p>
+<p>Equivalently,</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(x\)</span></th>
+<th style="text-align: center;">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span class="math inline">\(1-p\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><span class="math inline">\(p\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-3" class="slide level2">
+<h2>Example</h2>
+<p>Randomly select one person.</p>
+<p>Define</p>
+<p><span class="math display">\[
+X=
+\begin{cases}
+1, &amp; \text{if the person has blood type O},\\
+0, &amp; \text{otherwise.}
+\end{cases}
+\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+X\sim\text{Bernoulli}(p),
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+p=P(\text{blood type O}).
+\]</span></p>
+<p>The value of <span class="math inline">\(p\)</span> depends on the population being studied.</p>
+</section>
+<section id="from-experiment-to-random-variable" class="slide level2">
+<h2>From Experiment to Random Variable</h2>
+<div class="column" style="width:60%;">
+<ul>
+<li><p><strong>Experiment:</strong> The process we perform.</p></li>
+<li><p><strong>Sample Space (<span class="math inline">\(\mathcal{S}\)</span>):</strong> All possible outcomes of the experiment.</p></li>
+<li><p><strong>Events:</strong> Subsets of the sample space.</p></li>
+<li><p><strong>Random Variables:</strong> Numerical functions defined on the sample space.</p></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<div class="cell" data-reveal="true" data-layout-align="default">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href=""></a>flowchart TD</span>
+<span id="cb1-2"><a href=""></a>    A(Experiment)</span>
+<span id="cb1-3"><a href=""></a>    B(Sample Space)</span>
+<span id="cb1-4"><a href=""></a>    C(Events)</span>
+<span id="cb1-5"><a href=""></a>    D(Random Variables)</span>
+<span id="cb1-6"><a href=""></a></span>
+<span id="cb1-7"><a href=""></a>    A --&gt; B</span>
+<span id="cb1-8"><a href=""></a>    B --&gt; C</span>
+<span id="cb1-9"><a href=""></a>    B --&gt; D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A(Experiment)
+    B(Sample Space)
+    C(Events)
+    D(Random Variables)
+
+    A --&gt; B
+    B --&gt; C
+    B --&gt; D
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div></section></section>
+<section>
+<section id="discrete-vs.-continuous-random-variables" class="title-slide slide level1 center">
+<h1>Discrete vs.&nbsp;Continuous Random Variables</h1>
+
+</section>
+<section id="discrete-random-variables" class="slide level2">
+<h2>Discrete Random Variables</h2>
+<ul>
+<li>Take a <strong>countable</strong> set of possible values.</li>
+<li>Typically represent <strong>counts</strong> or <strong>categories</strong>.</li>
+<li>Examples:
+<ul>
+<li>Number of heads in 10 coin flips (Binomial)</li>
+<li>Whether a person has blood type O (Bernoulli)</li>
+<li>Number of patients visiting an emergency room in one day</li>
+</ul></li>
+</ul>
+</section>
+<section id="continuous-random-variables" class="slide level2">
+<h2>Continuous Random Variables</h2>
+<ul>
+<li>Take <strong>any value within an interval</strong> of the real line.</li>
+<li>Used to measure quantities rather than count them.</li>
+<li>Examples:
+<ul>
+<li>Height</li>
+<li>Weight</li>
+<li>Body Mass Index (BMI)</li>
+<li>Blood pressure</li>
+</ul></li>
+</ul>
+<p>For a continuous random variable, between any two possible values, there are infinitely many other possible values.</p>
+</section>
+<section id="probability-distributions" class="slide level2">
+<h2>Probability distributions</h2>
+<ul>
+<li><p>The probability distribution of a random variable provides the required information to find the probability of its possible values.</p></li>
+<li><p>The probability distributions discussed here are characterized by one or more <strong>parameters</strong>.</p></li>
+<li><p>The parameters of probability distributions we assume for random variables are usually unknown.</p></li>
+</ul>
+</section>
+<section id="discrete-probability-distributions" class="slide level2">
+<h2>Discrete probability distributions</h2>
+<ul>
+<li><p>For discrete random variables, the probability distribution is fully defined by its <strong>probability mass function</strong> (pmf).</p></li>
+<li><p>This is a function that specifies the probability of each possible value within the range of random variable.</p></li>
+<li><p>For the genotype example, the pmf of the random variable <span class="math inline">\(X\)</span> is</p></li>
+</ul>
+<p><span class="math display">\[P(X=x) = \left\{ \begin{array}{l@{\quad}l}
 0.49 &amp;  \mbox{for } x=0, \\
 0.42 &amp;  \mbox{for } x=1, \\
 0.09 &amp;  \mbox{for } x=2.
-\end{array} \right.$$`
-
-- Here, `\(x\)` denotes a specific value (i.e., 0, 1, or 2) of the random variable.
-
-
----
-
-
-## Discrete vs. continuous random variables
-
-- We divide the random variables into two major groups: **discrete** and
-**continuous**. 
-
-- Discrete random variables can take a countable set of
-values.
-
-- These variables can be categorical (nominal or ordinal), such
-as genotype, or counts, such as the number of patients visiting an emergency room per day, 
-
-- Continuous random variables, for example BMI, can take an uncountable number of possible
-values.
-
-- For any two possible values of this random variable, we can always find another
-value between them. 
-
----
-
-## Probability distributions
-
-- The probability distribution of a random variable provides the required
-information to find the probability of its possible values.
-
-- The probability distributions discussed here are characterized by one or more
-__parameters__.
-
-- The parameters of probability distributions we assume for random variables are usually unknown.
-
----
-
-## Discrete probability distributions
-
-- For discrete random variables, the probability distribution is fully
-defined by its **probability mass function** (pmf). 
-
-- This is a function that specifies the probability of each possible value within the
-range of random variable. 
-
-- For the genotype example, the pmf of the
-random variable `\(X\)` is
-
-`$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
-0.49 &amp;  \mbox{for } x=0, \\
-0.42 &amp;  \mbox{for } x=1, \\
-0.09 &amp;  \mbox{for } x=2.
-\end{array} \right.$$`
-
-
----
-
-## Discrete uniform distribution
-
-- One of the most straightforward, yet useful distributions, is the one that assigns the same probability, regardless of the value. 
-
-- For that reason, it is called __uniform probability distribution__. 
-
-- A _discrete_ uniform distribution can be written as follow
-
-`$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
+\end{array} \right.\]</span></p>
+</section>
+<section id="discrete-uniform-distribution" class="slide level2">
+<h2>Discrete uniform distribution</h2>
+<ul>
+<li><p>One of the most straightforward, yet useful distributions, is the one that assigns the same probability, regardless of the value.</p></li>
+<li><p>For that reason, it is called <strong>uniform probability distribution</strong>.</p></li>
+<li><p>A <em>discrete</em> uniform distribution can be written as follow</p></li>
+</ul>
+<p><span class="math display">\[P(X=x) = \left\{ \begin{array}{l@{\quad}l}
 \frac{1}{k}  &amp; x=1,...,k  \\
 0 &amp; \mbox{otherwise} \\
-\end{array} \right.$$`
+\end{array} \right.\]</span></p>
+</section>
+<section id="continuous-probability-distributions" class="slide level2">
+<h2>Continuous probability distributions</h2>
+<ul>
+<li><p>For discrete random variables, the pmf provides the probability of each possible value.</p></li>
+<li><p>For continuous random variables, the number of possible values is uncountable, and the probability of any specific value is zero.</p></li>
+<li><p>For these variables, we are usually interested in the probability that the value of the random variable is within a specific interval from <span class="math inline">\(x_{1}\)</span> to <span class="math inline">\(x_{2}\)</span>; we show this probability as <span class="math inline">\(P(x_{1} &lt; X \le x_{2})\)</span>.</p></li>
+</ul>
+</section>
+<section id="probability-density-function" class="slide level2">
+<h2>Probability density function</h2>
+<ul>
+<li>For continuous random variables, we use <strong>probability density functions</strong> (pdf) to specify the distribution. Using the pdf, we can obtain the probability of any interval. <!--
 
 
----
-
-## Bernoulli distribution
-
-- Binary random variables (e.g., healthy/diseased) are abundant in scientific studies. 
-- The binary random variable `\(X\)` with possible values 0 and 1 has a **Bernoulli** distribution. 
-
-- We denote `\(P(X=1) = \mu\)`, which mean `\(P(X=0) = 1 - \mu\)`, where `\(0 \le \mu \le 1\)` is the mean (rate) of the random variable.
-
-- For example,  
-`$$P(X=x) = \left\{ \begin{array}{l@{\quad}l}
-0.2 &amp;  \mbox{for } x=0, \\
-0.8 &amp;  \mbox{for } x=1.
-\end{array} \right.$$`
+::: {.cell layout-align="center"}
+::: {.cell-output-display}
+![Probability density function for BMI](img/densityNormalBMI.png){fig-align='center' width=25% height=60%}
+:::
+:::
 
 
-
----
-
-## Binomial distribution
-
-- A sequence of binary random variables `\(X_{1}, X_{2}, \ldots, X_{n}\)` is called **Bernoulli trials** if they all have the same Bernoulli distribution and  are independent. 
-
-- The random variable `\(Y\)` representing the number of times the outcome of interest occurs in `\(n\)` Bernoulli trials (i.e., the sum of Bernoulli trials) has a **Binomial** distribution 
-
-- The pmf of a binomial distribution specifies the probability of each possible value (integers from 0 through `\(n\)`) of the random variable.
-
-- Binomial includes Bernoulli as a special case (n = 1). 
-
-
----
-
-## Continuous probability distributions
-
-- For discrete random variables, the pmf provides the probability of each
-possible value. 
-
-- For continuous random variables, the number of possible
-values is uncountable, and the probability of any specific value is
-zero. 
-
-- For these variables, we are usually interested in the probability that the value of
-the random variable is within a specific interval from `\(x_{1}\)` to
-`\(x_{2}\)`; we show this probability as `\(P(x_{1} &lt; X \le x_{2})\)`. 
-
-
----
-
-## Probability density function
-
-- For continuous random variables, we use **probability density functions** (pdf) to specify the distribution. Using the pdf, we can obtain the probability of any interval. 
-
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="img/densityNormalBMI.png" alt="Probability density function for BMI" width="25%" height="60%" /&gt;
-&lt;p class="caption"&gt;Probability density function for BMI&lt;/p&gt;
-&lt;/div&gt;
-
-
-
----
-
-## Probability density function
-
-- The total area under the probability density curve is 1. 
-
-- The curve (and its corresponding function) gives the probability of the random variable falling within an interval. 
-
-- This probability is equal to the area under the probability density curve over the interval.
-&lt;img src="img/densityShaded2530.png" width="25%" height="60%" style="display: block; margin: auto;" /&gt;
-
-
----
-
-## Lower tail probability
-- the probability of observing
-values less than or equal to a specific value `\(x\)`, is called the lower
-tail probability and is denoted as `\(P(X \le x)\)`. 
-
-&lt;img src="img/densityShaded18.png" width="25%" height="60%" style="display: block; margin: auto;" /&gt;
-
----
-
-## Upper tail probability
-
-- The probability of observing values greater than `\(x\)`, `\(P(X &gt; x)\)`, is called the upper tail probability and is found by
-measuring the area under the curve to the right of `\(x\)`. 
-
-&lt;img src="img/densityShaded30.png" width="25%" height="60%" style="display: block; margin: auto;" /&gt;
-
----
-
-## Probability of intervals
-
-- The probability of any interval from `\(x_{1}\)` to `\(x_{2}\)`, where `\(x_{1} &lt; x_{2}\)`, can be obtained using the corresponding lower tail probabilities for these two points as follows:
-`$$\begin{equation*}
+--></li>
+</ul>
+</section>
+<section id="probability-density-function-1" class="slide level2">
+<h2>Probability density function</h2>
+<ul>
+<li><p>The total area under the probability density curve is 1.</p></li>
+<li><p>The curve (and its corresponding function) gives the probability of the random variable falling within an interval.</p></li>
+<li><p>This probability is equal to the area under the probability density curve over the interval.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/densityShaded2530.png" class="quarto-figure quarto-figure-center" style="width:25.0%;height:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lower-tail-probability" class="slide level2">
+<h2>Lower tail probability</h2>
+<ul>
+<li>the probability of observing values less than or equal to a specific value <span class="math inline">\(x\)</span>, is called the lower tail probability and is denoted as <span class="math inline">\(P(X \le x)\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/densityShaded18.png" class="quarto-figure quarto-figure-center" style="width:25.0%;height:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="upper-tail-probability" class="slide level2">
+<h2>Upper tail probability</h2>
+<ul>
+<li>The probability of observing values greater than <span class="math inline">\(x\)</span>, <span class="math inline">\(P(X &gt; x)\)</span>, is called the upper tail probability and is found by measuring the area under the curve to the right of <span class="math inline">\(x\)</span>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/densityShaded30.png" class="quarto-figure quarto-figure-center" style="width:25.0%;height:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="probability-of-intervals" class="slide level2">
+<h2>Probability of intervals</h2>
+<ul>
+<li><p>The probability of any interval from <span class="math inline">\(x_{1}\)</span> to <span class="math inline">\(x_{2}\)</span>, where <span class="math inline">\(x_{1} &lt; x_{2}\)</span>, can be obtained using the corresponding lower tail probabilities for these two points as follows: <span class="math display">\[\begin{equation*}
 P(x_1 &lt; X \le x_2) = P(X \le x_2) - P(X \le x_1).
-\end{equation*}$$`
-
-- For example, the probability of a BMI between 25 and 30 is
-`$$\begin{equation*}
+\end{equation*}\]</span></p></li>
+<li><p>For example, the probability of a BMI between 25 and 30 is <span class="math display">\[\begin{equation*}
 P(25 &lt; X \le 30) = P(X \le 30) - P(X \le 25).
-\end{equation*}$$`
-
-
----
-
-## Continuous Uniform Distribution
-
-- We previously saw discrete uniform distribution; we now discuss its continuous version. 
-
-- Let `\(a\)` and `\(b\)` be two real numbers, so that `\(a&lt;b\)`. The following the pdf of a __continuous uniform distribution__: 
-
-`$$f(x) = \left\{ \begin{array}{l@{\quad}l}
+\end{equation*}\]</span></p></li>
+</ul>
+</section>
+<section id="continuous-uniform-distribution" class="slide level2">
+<h2>Continuous Uniform Distribution</h2>
+<ul>
+<li><p>We previously saw discrete uniform distribution; we now discuss its continuous version.</p></li>
+<li><p>Let <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> be two real numbers, so that <span class="math inline">\(a&lt;b\)</span>. The following the pdf of a <strong>continuous uniform distribution</strong>:</p></li>
+</ul>
+<p><span class="math display">\[f(x) = \left\{ \begin{array}{l@{\quad}l}
 \frac{1}{b-a}  &amp; a&lt;x&lt;b  \\
 0 &amp; \mbox{otherwise} \\
-\end{array} \right.$$`
+\end{array} \right.\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/cont_unif_dist.png" class="quarto-figure quarto-figure-center" style="width:50.0%;height:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a-pdf-is-not-a-probability-function" class="slide level2">
+<h2>A PDF Is <strong>Not</strong> a Probability Function</h2>
+<p>Suppose <span class="math inline">\(X\sim\text{Uniform}(0,0.5).\)</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+f(x)=
+\begin{cases}
+2, &amp; 0&lt;x&lt;0.5,\\
+0, &amp; \text{otherwise}.
+\end{cases}
+\]</span></p>
+<p>Notice that <span class="math inline">\(f(0.25)=2.\)</span> So <span class="math inline">\(f(0.25)\)</span> <strong>cannot</strong> be the probability that <span class="math inline">\(X=0.25\)</span>.</p>
+<p>In fact, <span class="math inline">\(P(X=0.25)=0.\)</span></p>
+<p><strong>A PDF gives the density of probability, not the probability itself.</strong></p>
+</section>
+<section id="probability-is-the-area-under-the-pdf" class="slide level2">
+<h2>Probability Is the Area Under the PDF</h2>
+<p>For <span class="math inline">\(X\sim\text{Uniform}(0,0.5),\)</span></p>
+<p>the probability of an interval is the <strong>area under the PDF</strong>.</p>
+<p>For example,</p>
+<p><span class="math display">\[
+P(0.10&lt;X&lt;0.30)
+=
+2\times(0.30-0.10)
+=
+0.40.
+\]</span></p>
+<ul>
+<li>the <strong>height</strong> of the PDF is 2,</li>
+<li>the <strong>probability</strong> is the area between 0.10 and 0.30, which is a rectangle with width <span class="math inline">\(0.30-0.10=0.20\)</span> and height <span class="math inline">\(2\)</span>. So the area is: <span class="math inline">\(2\times0.20=0.40.\)</span></li>
+</ul>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<p><strong>Key idea:</strong></p>
+<ul>
+<li>For a discrete random variable, probability is assigned to individual values.</li>
+<li>For a continuous random variable, probability is assigned to intervals.</li>
+</ul>
+</section>
+<section id="normal-distribution" class="slide level2">
+<h2>Normal distribution</h2>
+<ul>
+<li><p>Consider the probability distribution function and its corresponding probability density curve we assumed for BMI in the above example.</p></li>
+<li><p>This distribution is known as <strong>normal</strong> distribution, which is one of the most widely used distributions for continuous random variables.</p></li>
+<li><p>Random variables with this distribution (or very close to it) occur often in nature.</p></li>
+</ul>
+</section>
+<section id="normal-distribution-1" class="slide level2">
+<h2>Normal distribution</h2>
+<ul>
+<li>A <strong>normal distribution</strong> and its corresponding pdf are fully specified by the mean (usually denoted as <span class="math inline">\(\mu\)</span>) and variance (usually denoted as <span class="math inline">\(\sigma^2\)</span>):</li>
+</ul>
+<p><span class="math display">\[N(\mu, \sigma^2)\]</span></p>
+<ul>
+<li><span class="math inline">\(N(0, 1)\)</span> is called the <strong>standard normal distribution</strong>.</li>
+</ul>
+</section>
+<section id="normal-distributions" class="slide level2">
+<h2>Normal Distributions</h2>
 
+<img data-src="img/normal_PDFs.png" class="quarto-figure quarto-figure-center r-stretch" style="width:65.0%"></section>
+<section id="the-68-95-99.7-rule" class="slide level2">
+<h2>The 68-95-99.7% rule</h2>
+<ul>
+<li><p>The 68–95–99.7% rule for normal distributions specifies that</p>
+<ul>
+<li><p>68% of values fall within 1 standard deviation of the mean</p></li>
+<li><p>95% of values fall within 2 standard deviations of the mean</p></li>
+<li><p>99.7% of values fall within 3 standard deviations of the mean</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="normal-distribution-2" class="slide level2">
+<h2>Normal Distribution</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/normal68.png" class="quarto-figure quarto-figure-center" style="width:40.0%;height:30.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="normal-distribution-3" class="slide level2">
+<h2>Normal Distribution</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/normal95.png" class="quarto-figure quarto-figure-center" style="width:40.0%;height:49.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-68-95-99.7-rule-1" class="slide level2">
+<h2>The 68-95-99.7% rule</h2>
 
-&lt;img src="img/cont_unif_dist.png" width="50%" height="60%" style="display: block; margin: auto;" /&gt;
+<img data-src="img/normal_1s2s3s.png" class="quarto-figure quarto-figure-center r-stretch" style="width:75.0%"></section>
+<section id="practice" class="slide level2">
+<h2>Practice</h2>
+<ul>
+<li>Suppose <span class="math inline">\(Z\sim N(0,1)\)</span>.</li>
+<li><span class="math inline">\(P(Z&gt;1)=0.135+0.0235+0.0015=0.16\)</span>.</li>
+<li><span class="math inline">\(P(Z&lt;1)=1-P(Z&gt;1)=1-0.16=0.84\)</span></li>
+<li><span class="math inline">\(P(Z&lt;-1)=0.135+0.0235+0.0015=0.16\)</span>.</li>
+<li><span class="math inline">\(P(-1 &lt; Z &lt; 1)=P(Z&lt;1)-P(Z&lt;-1)=0.68\)</span></li>
+</ul>
+</section>
+<section id="the-standard-normal-distribution" class="slide level2">
+<h2>The Standard Normal Distribution</h2>
+<ul>
+<li>If <span class="math inline">\(X\sim N(\mu, \sigma)\)</span>, we can standardize in the following way <span class="math display">\[Z=\frac{X-\mu}{\sigma},\]</span> where <span class="math inline">\(Z\sim N(0,1)\)</span>.</li>
+</ul>
+</section>
+<section id="students-t-distribution" class="slide level2">
+<h2>Student’s t-distribution</h2>
+<p>Another continuous probability distribution that is used very often in statistics is the <strong>Student’s</strong> <span class="math inline">\(t\)</span>-<strong>distribution</strong> or simply the <span class="math inline">\(t\)</span>-distribution.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/standNormT.png" class="quarto-figure quarto-figure-center" style="width:35.0%;height:35.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="additional-example" class="title-slide slide level1 center">
+<h1>Additional Example</h1>
 
+</section>
+<section id="going-further-genotype-vs.-blood-type" class="slide level2">
+<h2>Going Further: Genotype vs.&nbsp;Blood Type</h2>
+<p>The <strong>ABO blood type</strong> is determined by a person’s <strong>genotype</strong>.</p>
+<p>Each person inherits one allele from the mother, and one allele from the father.</p>
+<p>There are three possible alleles: A, B, and O.</p>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+<p>The six possible genotypes are</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Genotype</th>
+<th style="text-align: center;">Blood Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">AA</td>
+<td style="text-align: center;">A</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">AO</td>
+<td style="text-align: center;">A</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BB</td>
+<td style="text-align: center;">B</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BO</td>
+<td style="text-align: center;">B</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">AB</td>
+<td style="text-align: center;">AB</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">OO</td>
+<td style="text-align: center;">O</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observation:</strong> Blood type A can arise from two different genotypes (AA or AO).</p>
+</section>
+<section id="a-compatible-genotype-distribution" class="slide level2">
+<h2>A Compatible Genotype Distribution</h2>
+<p>Suppose the genotype distribution is</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Genotype</th>
+<th style="text-align: center;">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">AA</td>
+<td style="text-align: center;">0.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">AO</td>
+<td style="text-align: center;">0.30</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BB</td>
+<td style="text-align: center;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BO</td>
+<td style="text-align: center;">0.07</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">AB</td>
+<td style="text-align: center;">0.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">OO</td>
+<td style="text-align: center;">0.44</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<p>The genotype distribution gives the blood type distribution</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Blood Type</th>
+<th style="text-align: center;">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">0.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">0.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">AB</td>
+<td style="text-align: center;">0.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">O</td>
+<td style="text-align: center;">0.44</td>
+</tr>
+</tbody>
+</table>
+<p>because</p>
+<ul>
+<li><p><span class="math inline">\(P(\text{A})=P(\text{AA})+P(\text{AO})=0.42\)</span></p></li>
+<li><p><span class="math inline">\(P(\text{B})=P(\text{BB})+P(\text{BO})=0.10\)</span></p></li>
+</ul>
+</section>
+<section id="conditional-probability-1" class="slide level2">
+<h2>Conditional Probability</h2>
+<p>Suppose a randomly selected person has blood type A.</p>
+<p>What is the probability that the genotype is AO?</p>
+<p>Using conditional probability,</p>
+<p><span class="math display">\[
+P(\text{AO}\mid\text{A})
+=
+\frac{P(\text{AO})}{P(\text{A})}
+=
+\frac{0.30}{0.42}
+=
+0.714.
+\]</span></p>
+<p>Similarly,</p>
+<p><span class="math display">\[
+P(\text{AA}\mid\text{A})
+=
+\frac{0.12}{0.42}
+=
+0.286.
+\]</span></p>
+</section>
+<section id="why-does-this-matter" class="slide level2">
+<h2>Why Does This Matter?</h2>
+<p>Suppose two people both have blood type A.</p>
+<ul>
+<li>Person 1 may have genotype AA.</li>
+<li>Person 2 may have genotype AO.</li>
+</ul>
+<p>Although they have the same blood type,</p>
+<p>their children may inherit different blood types.</p>
+<p>Genotype contains more information than blood type.</p>
+</section>
+<section id="take-home-message" class="slide level2">
+<h2>Take-Home Message</h2>
+<p>This case study illustrates several important ideas.</p>
+<ul>
+<li><p>An experiment defines a sample space.</p></li>
+<li><p>Events are subsets of the sample space.</p></li>
+<li><p>Probabilities quantify uncertainty.</p></li>
+<li><p>Conditional probability incorporates additional information.</p></li>
+<li><p>Sometimes what we observe (blood type) does not uniquely determine the underlying state (genotype).</p></li>
+</ul>
+<p>This is a common theme in data science and biomedical research.</p>
 
----
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p><img src="img/cosmos-uci-dshs.png" style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;"></p>
+</div>
+</div></div>
 
-## Normal distribution
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="03a-intro-prob_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
 
-- Consider the probability distribution function and its corresponding probability density curve we assumed for BMI in the above example. 
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="03a-intro-prob_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
-- This distribution is known as **normal** distribution, which is one of the most widely used distributions for continuous random variables. 
+  <script>
 
-- Random variables with this distribution (or very close to it) occur often in nature.
-
----
-
-## Normal distribution
-
-- A **normal distribution** and its corresponding pdf are fully specified by the mean (usually denoted as `\(\mu\)`) and variance (usually denoted as `\(\sigma^2\)`): 
-
-`$$N(\mu, \sigma^2)$$` 
-
-- `\(N(0, 1)\)` is called the **standard normal distribution**.
-&lt;img src="img/simpNormalDensity.png" width="25%" height="60%" style="display: block; margin: auto;" /&gt;
-
----
-## Normal Distributions
-
-&lt;img src="img/normal_PDFs.png" width="65%" style="display: block; margin: auto;" /&gt;
-
----
-
-## The 68-95-99.7% rule
-
-- The 68--95--99.7% rule for normal distributions specifies that
-
-  + 68% of values fall within 1 standard deviation of the mean
-
-  + 95% of values fall within 2 standard deviations of the mean
-
-  + 99.7% of values fall within 3 standard deviations of the mean
-
-
----
-
-## Normal Distribution
-
-&lt;img src="img/normal68.png" width="40%" height="30%" style="display: block; margin: auto;" /&gt;
-
-
----
-
-## Normal Distribution
-
-&lt;img src="img/normal95.png" width="40%" height="49%" style="display: block; margin: auto;" /&gt;
-
-
----
-## The 68-95-99.7% rule
-&lt;img src="img/normal_1s2s3s.png" width="75%" style="display: block; margin: auto;" /&gt;
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
  
----
-## Practice
-- Suppose `\(Z\sim N(0,1)\)`. 
--  `\(P(Z&gt;1)=0.135+0.0235+0.0015=0.16\)`.
--  `\(P(Z&lt;1)=1-P(Z&gt;1)=1-0.16=0.84\)`
-- `\(P(Z&lt;-1)=0.135+0.0235+0.0015=0.16\)`.
--  `\(P(-1 &lt; Z &lt; 1)=P(Z&lt;1)-P(Z&lt;-1)=0.68\)`
+        // Display controls in the bottom right corner
+        controls: false,
 
----
-## The Standard Normal Distribution
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
 
-- If `\(X\sim N(\mu, \sigma)\)`, we can standardize in the following way
-`$$Z=\frac{X-\mu}{\sigma},$$`
-where `\(Z\sim N(0,1)\)`.
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
 
----
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
 
-## Student's t-distribution
+        // Display a presentation progress bar
+        progress: true,
 
-Another continuous probability distribution that is used very often in
-statistics is the __Student's__ `\(t\)`-__distribution__ or
-simply the `\(t\)`-distribution.
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
 
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
 
-&lt;img src="img/standNormT.png" width="35%" height="35%" style="display: block; margin: auto;" /&gt;
-    </textarea>
-<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create({
-"ratio": "16:9",
-"highlightStyle": "pygments",
-"highlightLines": true,
-"highlightLanguage": "r"
-});
-if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
-  window.dispatchEvent(new Event('resize'));
-});
-(function(d) {
-  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
-  if (!r) return;
-  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
-  d.head.appendChild(s);
-})(document);
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
 
-(function(d) {
-  var el = d.getElementsByClassName("remark-slides-area");
-  if (!el) return;
-  var slide, slides = slideshow.getSlides(), els = el[0].children;
-  for (var i = 1; i < slides.length; i++) {
-    slide = slides[i];
-    if (slide.properties.continued === "true" || slide.properties.count === "false") {
-      els[i - 1].className += ' has-continuation';
-    }
-  }
-  var s = d.createElement("style");
-  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
-  d.head.appendChild(s);
-})(document);
-// delete the temporary CSS (for displaying all slides initially) when the user
-// starts to view slides
-(function() {
-  var deleted = false;
-  slideshow.on('beforeShowSlide', function(slide) {
-    if (deleted) return;
-    var sheets = document.styleSheets, node;
-    for (var i = 0; i < sheets.length; i++) {
-      node = sheets[i].ownerNode;
-      if (node.dataset["target"] !== "print-only") continue;
-      node.parentNode.removeChild(node);
-    }
-    deleted = true;
-  });
-})();
-// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
-// screen reader (see PR #262)
-(function(d) {
-  let res = {};
-  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
-    const t = tr.querySelector('td:nth-child(2)').innerText;
-    tr.querySelectorAll('td:first-child .key').forEach(key => {
-      const k = key.innerText;
-      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
-    });
-  });
-  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
-})(document);
-(function() {
-  "use strict"
-  // Replace <script> tags in slides area to make them executable
-  var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container script'
-  );
-  if (!scripts.length) return;
-  for (var i = 0; i < scripts.length; i++) {
-    var s = document.createElement('script');
-    var code = document.createTextNode(scripts[i].textContent);
-    s.appendChild(code);
-    var scriptAttrs = scripts[i].attributes;
-    for (var j = 0; j < scriptAttrs.length; j++) {
-      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
-    }
-    scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-})();
-(function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
-      links[i].target = '_blank';
-    }
-  }
-})();
-// adds .remark-code-has-line-highlighted class to <pre> parent elements
-// of code chunks containing highlighted lines with class .remark-code-line-highlighted
-(function(d) {
-  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
-  const preParents = [];
-  const findPreParent = function(line, p = 0) {
-    if (p > 1) return null; // traverse up no further than grandparent
-    const el = line.parentElement;
-    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
-  };
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
 
-  for (let line of hlines) {
-    let pre = findPreParent(line);
-    if (pre && !preParents.includes(pre)) preParents.push(pre);
-  }
-  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
-})(document);</script>
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
 
-<script>
-slideshow._releaseMath = function(el) {
-  var i, text, code, codes = el.getElementsByTagName('code');
-  for (i = 0; i < codes.length;) {
-    code = codes[i];
-    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
-      text = code.textContent;
-      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
-          /^\$\$(.|\s)+\$\$$/.test(text) ||
-          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
-        code.outerHTML = code.innerHTML;  // remove <code></code>
-        continue;
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
       }
-    }
-    i++;
-  }
-};
-slideshow._releaseMath(document);
-</script>
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-(function () {
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
-  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
-    script.src  = script.src.replace(/^https?:/, '');
-  document.getElementsByTagName('head')[0].appendChild(script);
-})();
-</script>
-  </body>
-</html>
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
