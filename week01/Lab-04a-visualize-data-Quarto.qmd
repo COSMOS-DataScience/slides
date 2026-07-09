@@ -35,14 +35,6 @@ format:
 - Open slides for this session from the COSMOS website. 
 
 
-```{r echo = FALSE, message=FALSE, warning=FALSE}
-library(ggplot2)
-library(tidyverse)
-alzheimer_data <- read.csv("../data/alzheimer_data.csv")
-
-```
-
-
 
 ## Preparation 
 
@@ -54,7 +46,7 @@ alzheimer_data <- read.csv("../data/alzheimer_data.csv")
 
 
 install/load ggplot2 and tidyverse
-```{r  message=FALSE,eval=FALSE}
+```{r  message=FALSE}
 #| echo: true
 #| code-fold: true
 #install.packages('ggplot2')
@@ -62,14 +54,14 @@ library(ggplot2)
 
 #install.packages('tidyverse')
 library(tidyverse)
-
 ```
 
 load alzheimer_data
-```{r  message=FALSE,eval=FALSE}
+```{r  message=FALSE}
 #| echo: true
 #| code-fold: true
 
+# change the path to your personal folder path
 alzheimer_data <- read.csv("../data/alzheimer_data.csv")
 ```
 
@@ -108,6 +100,8 @@ knitr::include_graphics("img/grammar_graphics.jpeg")
 
 ## Visualizing a Categorical Variable
 
+Let's check the number of patients in each diagnosis group.
+
 ## Step 1: Data
 ```{r, fig.align='center'}
 #| echo: true
@@ -123,31 +117,32 @@ ggplot(data = alzheimer_data,
        aes(x = diagnosis)) 
 ```
 
-## Step 3: Add Geometric Layer
+## Step 3: Add Geometric Layer with `+`
 ```{r, fig.align='center'}
 #| echo: true
 #| code-fold: true
 ggplot(data = alzheimer_data,
        aes(x = diagnosis)) +
-  geom_bar(position = "dodge") 
+  geom_bar() 
 ```
 
 ## Additional Features
+1. Use pipe operator to feed the data to ggplot.  
+
 ```{r, fig.align='center'}
 #| echo: true
 #| code-fold: true
-ggplot(data = alzheimer_data,
-       aes(x = diagnosis)) +
-  geom_bar(position = "dodge", fill="blue") +
-  labs(
-    title = "Distribution of Diagnosis",
-    x = "Diagnosis Type",
-    y = "Count"
-  )  +  
-  theme_minimal()
+alzheimer_data %>% 
+  ggplot(aes(x = diagnosis)) +
+  geom_bar() 
 ```
 
+
 ## Additional Features
+2. Use `factor()` to add informative label to categorical variable (diagnosis) 
+
+[Note: We will learn how to add labels to the axis later. Ignore `labs(), theme_minmial()` for now.]{style="font-size: 0.6em;"}
+
 ```{r, fig.align='center'}
 #| echo: true
 #| code-fold: true
@@ -155,44 +150,38 @@ ggplot(data = alzheimer_data,
 alzheimer_data <- alzheimer_data %>%
   mutate(diagnosis_name = factor(diagnosis, 
                             levels = c(0, 1, 2), 
-                            labels = c("Healthy", "Impaired", "Alzheimer's")))
+                            labels = c("Healthy", "Impaired", "Alzheimer's"))) 
 
-ggplot(data = alzheimer_data,
-       aes(x = diagnosis_name)) +
+alzheimer_data %>% 
+  ggplot(aes(x = diagnosis_name)) +
   geom_bar() +
   labs(
-    title = "Distribution of Diagnosis",
+    title = "Count of Diagnosis Groups",
     x = "Diagnosis Type",
     y = "Count"
   )  +  
   theme_minimal()
 ```
 
-## Additional Features
-```{r, fig.align='center'}
-#| echo: true
-#| code-fold: true
-ggplot(data = alzheimer_data, 
-       aes(x = factor(diagnosis, 
-                      levels = c(0, 1, 2), 
-                      labels = c("Healthy", "Impaired", "Alzheimer's")))) +
-  geom_bar() +
-  labs(
-    title = "Distribution of Diagnosis",
-    x = "Diagnosis Type",
-    y = "Count"
-  ) +
-  theme_minimal()
-```
+## Categorical by Categorical Variable
 
-
-
+We can also use bar plot to visualize how the count of one categorical variable (e.g. gender) are distributed across the levels of another (e.g. diagnosis).
 
 ## Categorical by Categorical Variable
 1. Stacked Bar Plot (Counts)
+
 ```{r, fig.align='center'}
-ggplot(alzheimer_data, aes(x = factor(female, labels = c("Male", "Female")), 
-                          fill = factor(diagnosis, labels = c("Healthy", "Impaired", "Alzheimer's")))) +
+#| echo: true
+#| code-fold: true
+# label female 0, 1 to male, female
+alzheimer_data = alzheimer_data %>% 
+         mutate(female = factor(
+           female, 
+           levels = c(0,1), 
+           labels = c("Male", "Female")))
+                
+alzheimer_data %>%  
+  ggplot(aes(x = female, fill = diagnosis_name)) +
   geom_bar(position = "stack") +
   labs(
     title = "Count of Diagnosis by Gender",
@@ -209,8 +198,8 @@ ggplot(alzheimer_data, aes(x = factor(female, labels = c("Male", "Female")),
 ```{r, fig.align='center'}
 #| echo: true
 #| code-fold: true
-ggplot(alzheimer_data, aes(x = factor(female, labels = c("Male", "Female")), 
-                          fill = factor(diagnosis, labels = c("Healthy", "Impaired", "Alzheimer's")))) +
+ggplot(alzheimer_data, aes(x = female, 
+                          fill = diagnosis_name)) +
   geom_bar(position = "dodge") +
   labs(
     title = "Count of Diagnosis by Gender (Grouped)",
@@ -227,67 +216,61 @@ ggplot(alzheimer_data, aes(x = factor(female, labels = c("Male", "Female")),
 ```{r, fig.align='center'}
 #| echo: true
 #| code-fold: true
-ggplot(alzheimer_data, aes(x = factor(female, labels = c("Male", "Female")), 
-                          fill = factor(diagnosis, labels = c("Healthy", "Impaired", "Alzheimer's")))) +
+alzheimer_data %>% 
+  ggplot(aes(x = female,fill = diagnosis_name)) +
   geom_bar(position = "fill") +  # Normalizes to 100% per group
   labs(
     title = "Proportion of Diagnosis by Gender",
     x = "Gender",
     y = "Proportion",
     fill = "Diagnosis"
-  ) +
-  scale_y_continuous(labels = scales::percent) +  # Show as %
+  ) + 
   theme_minimal()
 ```
 
 
-## Categorical by Categorical Variable
-4. Standardized Proportions (Comparable Across Groups)
-```{r, fig.align='center'}
-#| echo: true
-#| code-fold: true
-library(dplyr)
-prop_data <- alzheimer_data %>%
-  count(female, diagnosis) %>%
-  group_by(female) %>%
-  mutate(prop = n / sum(n) * 1000)  # Standardize per 1000
+<!-- ## Categorical by Categorical Variable -->
+<!-- 4. Standardized Proportions (Comparable Across Groups) -->
+<!-- ```{r, fig.align='center'} -->
+<!-- #| echo: true -->
+<!-- #| code-fold: true -->
+<!-- library(dplyr) -->
+<!-- prop_data <- alzheimer_data %>% -->
+<!--   count(female, diagnosis) %>% -->
+<!--   group_by(female) %>% -->
+<!--   mutate(prop = n / sum(n) * 1000)  # Standardize per 1000 -->
 
-ggplot(prop_data, aes(x = factor(female, labels = c("Male", "Female")), 
-                     y = prop, 
-                     fill = factor(diagnosis, labels = c("Healthy", "Impaired", "Alzheimer's")))) +
-  geom_col(position = "dodge") +
-  labs(
-    title = "Standardized Diagnosis Rates by Gender (per 1000)",
-    x = "Gender",
-    y = "Cases per 1000",
-    fill = "Diagnosis"
-  ) +
-  theme_minimal()
-```
+<!-- ggplot(prop_data, aes(x = female,  -->
+<!--                      y = prop,  -->
+<!--                      fill = diagnosis_name)) + -->
+<!--   geom_col(position = "dodge") + -->
+<!--   labs( -->
+<!--     title = "Standardized Diagnosis Rates by Gender (per 1000)", -->
+<!--     x = "Gender", -->
+<!--     y = "Cases per 1000", -->
+<!--     fill = "Diagnosis" -->
+<!--   ) + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+## Visualize a Numerical Variable
 
+- What data type is the volume of left hippocampus (lhippo) ?
+- What is the distribution of the observed volume of left hippocampus?
 
 ## Visualize a Numerical Variable: boxplot
-- The volume of left hippocampus (lhippo) in the alzheimer_data dataset is a numerical variable.
-
 ```{r, fig.align='center'}
 #| echo: true
 #| code-fold: true
 
 ggplot(data= alzheimer_data,
        mapping= aes(x= lhippo)) +
-  geom_boxplot() +
-  geom_vline(xintercept= 3, 
-             color= "red",
-             lty= 2)+
-  labs(
-    title="Boxplot of lhippo",
-    x="volume ((cm^3))",
-    y="lhippo") +  
+  geom_boxplot() + 
+  labs(title="Boxplot of lhippo",
+      x="Left Hippocampal Volume (cm³)") +  
   theme_minimal()
 ```
 
 ## Visualize a Numerical Variable: histogram
-
 ```{r, fig.align='center'}
 #| echo: true
 #| code-fold: true
@@ -295,8 +278,8 @@ ggplot(data= alzheimer_data,
        mapping= aes(x= lhippo)) +
   geom_histogram(bins = 30) +
   labs(
-    title="Violin of lhippo, vs 3",
-    x="lhippo",
+    title="Violin of lhippo",
+    x="Left Hippocampal Volume (cm³)",
     y="Count") +  
   theme_minimal() 
 ```
@@ -309,13 +292,13 @@ ggplot(data= alzheimer_data,
 
 ggplot(data = alzheimer_data,
        mapping = aes(
-         x = factor(female, labels = c("Male", "Female")),  # Convert to labeled factor
+         x = female,  
          y = lhippo,
-         fill = factor(female, labels = c("Male", "Female"))  # Optional: color by gender
-       )) +
+         fill = female)  # Optional: color by gender
+       ) +
   geom_boxplot() +
   labs(
-    title = "Boxplot of Hippocampal Volume by Gender",
+    title = "Boxplot of Left Hippocampal Volume by Gender",
     x = "Gender",
     y = "Left Hippocampal Volume (cm³)",  
     fill = "Gender"  # Legend title
@@ -331,12 +314,12 @@ ggplot(data = alzheimer_data,
 ggplot(data = alzheimer_data,
        mapping = aes(
          x = lhippo,
-         fill = factor(female, labels = c("Male", "Female"))  # Ensure 'female' is a labeled factor
-       )) +
-  geom_histogram(bins = 35, alpha = 0.7, position = "identity") +  # Adjust transparency & position
+         fill =female)  # Ensure 'female' is a labeled factor
+       ) +
+  geom_histogram(bins = 35, alpha = 0.7) +  # Adjust transparency  
   labs(
     title = "Histogram of Left Hippocampal Volume by Gender",
-    x = "Left Hippocampal Volume (cm3)",  
+    x = "Left Hippocampal Volume (cm³)",  
     y = "Count",
     fill = "Gender"  # Legend title
   ) +
@@ -345,9 +328,8 @@ ggplot(data = alzheimer_data,
 ```
 
 
-## Visualize two Numerical Variables
-Will be covered in linear regression session.
-
+## Visualize Numerical Variable by Numerical Variable
+Will be covered in next session.
 
 
 

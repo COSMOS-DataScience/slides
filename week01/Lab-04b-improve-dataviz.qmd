@@ -1,5 +1,5 @@
 ---
-title: "Improving Data Visualizations"
+title: "Improving Data Visualization"
 format:
   html:
     toc: true
@@ -21,9 +21,7 @@ library(ggplot2)
 babies <- babies %>% 
   mutate(smoke = as.logical(smoke),
          parity = as.logical(parity))
-
-xaringanExtra::use_panelset()
-theme_set(theme_gray(base_size = 18))
+ 
 
 ```
 
@@ -285,13 +283,12 @@ You can do much more in ggplot.
 
 - Use images 
 - Make maps
-- Pick colors that you want
- 
+- Pick colors that you want, 
 
-Check out [the ggplot flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html#1) for some inspiration. 
+Resources:
 
-
-Additional resources:
+- [the ggplot flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html#1) 
+- [coloring for colorblindness](https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40)
 - [Gallery](https://r-graph-gallery.com/ggplot2-package.html)
 - [BBC](https://bbc.github.io/rcookbook/)   
 - [fivethirtyeight](https://blog.revolutionanalytics.com/2016/07/data-journalism-with-r-at-538.html?utm_content=bufferc03e0&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer)  
@@ -313,8 +310,8 @@ Can you make this plot?
 #| output-fold: TRUE
 #| out-width: "80%"
 
-babies |> 
-  filter(!is.na(smoke)) |> 
+babies %>% 
+  filter(!is.na(smoke)) %>% 
   ggplot(
        aes(x = smoke,
            y = bwt)) +
@@ -332,7 +329,7 @@ babies |>
 #| code-fold: TRUE
 #| output-fold: TRUE
 #| out-width: "80%"
-babies |> 
+babies %>% 
   mutate(
     age_grp = case_when(
       age >= 30 ~ '30+',
@@ -340,8 +337,8 @@ babies |>
       age < 20 ~ 'under 20'
     ),
     age_grp = factor(age_grp, levels = c('under 20','20-30','30+'))
-  ) |> 
-  filter(!is.na(age_grp)) |> 
+  ) %>% 
+  filter(!is.na(age_grp)) %>% 
   ggplot(aes(
     x = age_grp,
            y = bwt,
