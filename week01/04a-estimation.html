@@ -273,7 +273,7 @@ Zhaoxia Yu
 <li>the population standard deviation <span class="math inline">\(\sigma\)</span> is <strong>known</strong>.</li>
 </ul>
 <p><strong>Goal</strong></p>
-<p>Estimate the unknown population mean <span class="math inline">\(mu\)</span>.</p>
+<p>Estimate the unknown population mean <span class="math inline">\(\mu\)</span>.</p>
 </section>
 <section id="point-estimation" class="slide level2">
 <h2>Point Estimation</h2>
@@ -283,7 +283,7 @@ Zhaoxia Yu
 \]</span></p>
 <p>It can be shown that <span class="math inline">\(E(\bar X)=\mu.\)</span></p>
 <p>Thus, on average, the sample mean equals the population mean.</p>
-<p>We call <span class="math inline">\(\boxed{\bar X}\)</span> the <strong>point estimate</strong> of ().</p>
+<p>We call <span class="math inline">\(\boxed{\bar X}\)</span> the <strong>point estimate</strong> of <span class="math inline">\(\mu\)</span>.</p>
 </section>
 <section id="sampling-distribution-of-bar-x" class="slide level2">
 <h2>Sampling Distribution of <span class="math inline">\(\bar X\)</span></h2>
@@ -370,7 +370,7 @@ z_{0.975}\frac{\sigma}{\sqrt n}
 <section id="a-1-alpha100-confidence-interval-with-known-sigma" class="slide level2">
 <h2>A <span class="math inline">\((1-\alpha)100\%\)</span> Confidence Interval with known <span class="math inline">\(\sigma\)</span></h2>
 <ul>
-<li>In general, a ((1-)100%) confidence interval for () is</li>
+<li>In general, a <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\mu\)</span> is</li>
 </ul>
 <p><span class="math display">\[\bar X \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt n}.\]</span></p>
 <ul>
@@ -415,12 +415,12 @@ ME=t_{0.975,n-1}\frac{s}{\sqrt n}
 </section>
 <section id="comparing-normal-and-t-critical-values" class="slide level2">
 <h2>Comparing Normal and <span class="math inline">\(t\)</span> Critical Values</h2>
-<p>The critical value depends on the <strong>confidence level</strong>, and the <strong>degrees of freedom</strong> ((df=n-1)) for the (t)-distribution.</p>
+<p>The critical value depends on the <strong>confidence level</strong>, and the <strong>degrees of freedom</strong> (<span class="math inline">\(df=n-1\)</span>) for the <span class="math inline">\(t\)</span>-distribution.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: center;">Sample Size (n)</th>
-<th style="text-align: center;">(df)</th>
+<th style="text-align: center;">Sample Size <span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(df\)</span></th>
 <th style="text-align: right;">90%</th>
 <th style="text-align: right;">95%</th>
 <th style="text-align: right;">99%</th>
@@ -428,8 +428,8 @@ ME=t_{0.975,n-1}\frac{s}{\sqrt n}
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">Normal ((z))</td>
-<td style="text-align: center;">()</td>
+<td style="text-align: center;">Normal (<span class="math inline">\(z\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\infty\)</span></td>
 <td style="text-align: right;">1.645</td>
 <td style="text-align: right;">1.960</td>
 <td style="text-align: right;">2.576</td>
@@ -502,8 +502,8 @@ ME=t_{0.975,n-1}\frac{s}{\sqrt n}
 <h2>What do you notice?</h2>
 <ul>
 <li><p>Higher confidence levels require <strong>larger critical values</strong>, resulting in <strong>wider confidence intervals</strong>.</p></li>
-<li><p>For the same confidence level, <strong>(t)-critical values are always larger</strong> than the corresponding (z)-critical values.</p></li>
-<li><p>As the sample size increases, the (t)-critical values get closer to the (z)-critical values.</p></li>
+<li><p>For the same confidence level, <strong><span class="math inline">\(t\)</span>-critical values are always larger</strong> than the corresponding <span class="math inline">\(z\)</span>-critical values.</p></li>
+<li><p>As the sample size increases, the <span class="math inline">\(t\)</span>-critical values get closer to the <span class="math inline">\(z\)</span>-critical values.</p></li>
 </ul>
 </section>
 <section id="t-vs-n01" class="slide level2">
@@ -521,12 +521,12 @@ ME=t_{0.975,n-1}\frac{s}{\sqrt n}
 <section id="t-vs-n01-1" class="slide level2">
 <h2>t vs <span class="math inline">\(N(0,1)\)</span></h2>
 <ul>
-<li><p>When <span class="math inline">\(\sigma\)</span> is known, we use the critical value from the standard normal distribution (N(0,1)).</p></li>
+<li><p>When <span class="math inline">\(\sigma\)</span> is known, we use the critical value from the standard normal distribution <span class="math inline">\(N(0,1)\)</span>.</p></li>
 <li><p>When <span class="math inline">\(\sigma\)</span> is unknown,</p>
 <ul>
 <li>we first estimate it with the sample standard deviation <span class="math inline">\(s\)</span>, and</li>
-<li>we then use the critical value from the (t)-distribution with (n-1) degrees of freedom.</li>
-<li>Because estimating <span class="math inline">\(\sigma\)</span> introduces additional uncertainty, the (t)-critical value is larger than the corresponding (z)-critical value.</li>
+<li>we then use the critical value from the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</li>
+<li>Because estimating <span class="math inline">\(\sigma\)</span> introduces additional uncertainty, the <span class="math inline">\(t\)</span>-critical value is larger than the corresponding <span class="math inline">\(z\)</span>-critical value.</li>
 <li>Correspondingly, the confidence interval is wider when <span class="math inline">\(\sigma\)</span> is unknown.</li>
 </ul></li>
 </ul>
@@ -800,7 +800,21 @@ attr(,"conf.level")
 <span id="cb15-4"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">10</span>, <span class="dv">1</span>, p)</span>
 <span id="cb15-5"><a href=""></a>p_hat_sim1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
 <span id="cb15-6"><a href=""></a></span>
-<span id="cb15-7"><a href=""></a>p_hat_sim1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-7"><a href=""></a>p_hat_sim1</span>
+<span id="cb15-8"><a href=""></a></span>
+<span id="cb15-9"><a href=""></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb15-10"><a href=""></a></span>
+<span id="cb15-11"><a href=""></a><span class="co"># Estimated standard errors</span></span>
+<span id="cb15-12"><a href=""></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p_hat_sim1 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_hat_sim1) <span class="sc">/</span> n)</span>
+<span id="cb15-13"><a href=""></a></span>
+<span id="cb15-14"><a href=""></a><span class="co"># Margin of error</span></span>
+<span id="cb15-15"><a href=""></a>ME <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">*</span> se</span>
+<span id="cb15-16"><a href=""></a></span>
+<span id="cb15-17"><a href=""></a><span class="co"># Confidence intervals</span></span>
+<span id="cb15-18"><a href=""></a>lower <span class="ot">&lt;-</span> p_hat_sim1 <span class="sc">-</span> ME</span>
+<span id="cb15-19"><a href=""></a>upper <span class="ot">&lt;-</span> p_hat_sim1 <span class="sc">+</span> ME</span>
+<span id="cb15-20"><a href=""></a>lower</span>
+<span id="cb15-21"><a href=""></a>upper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="simulation-1-results" class="slide level2">
@@ -839,7 +853,21 @@ attr(,"conf.level")
 <span id="cb17-4"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="dv">1</span>, p)</span>
 <span id="cb17-5"><a href=""></a>p_hat_sim2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
 <span id="cb17-6"><a href=""></a></span>
-<span id="cb17-7"><a href=""></a>p_hat_sim2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-7"><a href=""></a>p_hat_sim2</span>
+<span id="cb17-8"><a href=""></a></span>
+<span id="cb17-9"><a href=""></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb17-10"><a href=""></a></span>
+<span id="cb17-11"><a href=""></a><span class="co"># Estimated standard errors</span></span>
+<span id="cb17-12"><a href=""></a>se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(p_hat_sim2 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p_hat_sim2) <span class="sc">/</span> n)</span>
+<span id="cb17-13"><a href=""></a></span>
+<span id="cb17-14"><a href=""></a><span class="co"># Margin of error</span></span>
+<span id="cb17-15"><a href=""></a>ME <span class="ot">&lt;-</span> <span class="fl">1.96</span> <span class="sc">*</span> se</span>
+<span id="cb17-16"><a href=""></a></span>
+<span id="cb17-17"><a href=""></a><span class="co"># Confidence intervals</span></span>
+<span id="cb17-18"><a href=""></a>lower <span class="ot">&lt;-</span> p_hat_sim2 <span class="sc">-</span> ME</span>
+<span id="cb17-19"><a href=""></a>upper <span class="ot">&lt;-</span> p_hat_sim2 <span class="sc">+</span> ME</span>
+<span id="cb17-20"><a href=""></a>lower</span>
+<span id="cb17-21"><a href=""></a>upper</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="simulation-2-results" class="slide level2">
@@ -1250,9 +1278,9 @@ s.e.(\hat p)
 <h2>Simulation Study</h2>
 <p>We will</p>
 <ul>
-<li>simulate <strong>10,000</strong> random samples of size (n=50),</li>
+<li>simulate <strong>10,000</strong> random samples of size <span class="math inline">\(n=50\)</span>,</li>
 <li>construct a 95% confidence interval for each sample,</li>
-<li>check whether each interval contains the true probability (p).</li>
+<li>check whether each interval contains the true probability <span class="math inline">\(p\)</span>.</li>
 </ul>
 <div class="cell">
 <details class="code-fold">
@@ -1334,7 +1362,7 @@ s.e.(\hat p)
 <h2>Assess the Performance of the Confidence Interval for <span class="math inline">\(p\)</span> when <span class="math inline">\(n=20\)</span></h2>
 <p>Again, we will</p>
 <ul>
-<li>use the simulated estimates from 10,000 samples of size (n=20),</li>
+<li>use the simulated estimates from 10,000 samples of size <span class="math inline">\(n=20\)</span>,</li>
 <li>construct a 95% confidence interval for each sample, and</li>
 <li>estimate the coverage probability.</li>
 </ul>
@@ -1374,7 +1402,7 @@ s.e.(\hat p)
 </div>
 </div>
 <p>Compare the estimated coverage probability with the nominal confidence level of <strong>95%</strong>.</p>
-<p>Is the coverage closer to 95% than when (n=50)?</p>
+<p>Is the coverage closer to 95% than when <span class="math inline">\(n=50\)</span>?</p>
 </section>
 <section id="visualize-the-frist-20-cis" class="slide level2">
 <h2>Visualize the Frist 20 CIs</h2>
