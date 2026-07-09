@@ -599,6 +599,21 @@ x <- rbinom(n=10, 1, p)
 p_hat_sim1 <- mean(x)
 
 p_hat_sim1
+
+n <- 10
+
+# Estimated standard errors
+se <- sqrt(p_hat_sim1 * (1 - p_hat_sim1) / n)
+
+# Margin of error
+ME <- 1.96 * se
+
+# Confidence intervals
+lower <- p_hat_sim1 - ME
+upper <- p_hat_sim1 + ME
+lower
+upper
+
 ```
 
 
@@ -639,6 +654,21 @@ x <- rbinom(n=100, 1, p)
 p_hat_sim2 <- mean(x)
 
 p_hat_sim2
+
+n <- 100
+
+# Estimated standard errors
+se <- sqrt(p_hat_sim2 * (1 - p_hat_sim2) / n)
+
+# Margin of error
+ME <- 1.96 * se
+
+# Confidence intervals
+lower <- p_hat_sim2 - ME
+upper <- p_hat_sim2 + ME
+lower
+upper
+
 ```
 
 
