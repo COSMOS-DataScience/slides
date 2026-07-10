@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="05a-hypothesis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="05a-hypothesis_files/libs/quarto-html/tabby.min.js"></script>
+<script src="05a-hypothesis_files/libs/quarto-html/popper.min.js"></script>
+<script src="05a-hypothesis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="05a-hypothesis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="05a-hypothesis_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="05a-hypothesis_files/libs/quarto-html/quarto-syntax-highlighting-a185852c63625fd9ffbdc57047c9a77e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <title>a-hypothesis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="05a-hypothesis_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="05a-hypothesis_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="05a-hypothesis_files/libs/revealjs/dist/theme/quarto-37488a3070012fd431fac83a07067cfd.css">
+  <link href="05a-hypothesis_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="05a-hypothesis_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="05a-hypothesis_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="05a-hypothesis_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="05a-hypothesis_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="05a-hypothesis_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+<p><img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;"></p>
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+<h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">
+Hypothesis Testing I
+</h1>
+<p style="color: #153e6c; font-size: 1.8em;">
+Zhaoxia Yu
+</p>
+</div>
+</div>
+</section>
+<section id="load-packages-read-data" class="slide level2">
+<h2>Load packages, read data</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li><p>What does hypothesis testing do?</p></li>
+<li><p>We will use <strong>testing a population proportion</strong> as a running example to introduce the key concepts of hypothesis testing.</p></li>
+<li><p>Testing hypotheses about population mean.</p></li>
+</ul>
+</section>
+<section id="the-role-of-hypothesis-testing" class="slide level2">
+<h2>The Role of Hypothesis Testing</h2>
+<p>After collecting data, we often want to answer questions about a population.</p>
+<p>Statistical inference provides several tools:</p>
+<ul>
+<li>Estimate a population quantity.</li>
+<li>Quantify uncertainty.</li>
+<li>Test a scientific hypothesis.</li>
+</ul>
+<p><strong>Hypothesis testing</strong> helps determine whether the observed data provide sufficient evidence against a proposed explanation (the null hypothesis).</p>
+</section>
+<section id="scientific-questions-and-hypotheses" class="slide level2">
+<h2>Scientific Questions and Hypotheses</h2>
+<ul>
+<li>Scientific research often begins with a <strong>scientific question</strong>.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><p>Do more than half of people have a larger right hippocampus than their left hippocampus?</p></li>
+<li><p>Does more than 20% of patients respond to a new treatment?</p></li>
+<li><p>Is the average body temperature of healthy adults less than 98.6°F?</p></li>
+</ul>
+</section>
+<section id="expressing-hypotheses-statistically" class="slide level2">
+<h2>Expressing Hypotheses Statistically</h2>
+<p>Scientific questions are translated into statements about <strong>population parameters</strong>.</p>
+<p>A <strong>hypothesis</strong> is a testable statement about a population that can be evaluated using data.</p>
+<ul>
+<li><p>Do more than half of people have a larger right hippocampus than their left hippocampus? <span class="math inline">\(p&gt;0.50\)</span></p></li>
+<li><p>Does more than 20% of patients respond to a new treatment? <span class="math inline">\(p&gt;0.20\)</span></p></li>
+<li><p>Is the average body temperature of healthy adults less than 98.6°F? <span class="math inline">\(\mu&lt;98.6\)</span></p></li>
+</ul>
+</section>
+<section id="formulating-a-hypothesis-test" class="slide level2">
+<h2>Formulating a Hypothesis Test</h2>
+<div style="font-size: 90%;">
+<p>Every hypothesis test consists of two competing hypotheses.</p>
+<p><strong>Null Hypothesis</strong> (<span class="math inline">\(H_0\)</span>)</p>
+<ul>
+<li><p><strong>Definition</strong>: A statement is often about no effect or no difference, or nothing of interest.</p></li>
+<li><p><strong>Purpose</strong>: Serves as the default or starting assumption.</p></li>
+</ul>
+<p><strong>Alternative Hypothesis</strong> (<span class="math inline">\(H_a\)</span> or <span class="math inline">\(H_1\)</span>)</p>
+<ul>
+<li><p><strong>Definition</strong>: A statement is often about an effect or a difference.</p></li>
+<li><p><strong>Purpose</strong>: Represents what we are trying to find evidence for.</p></li>
+</ul>
+</div>
+</section>
+<section id="formulating-a-hypothesis-test-example" class="slide level2">
+<h2>Formulating a Hypothesis Test: Example</h2>
+<div style="font-size: 80%;">
+<ul>
+<li><p><strong>Scientific Question:</strong> Do more than half of people have a larger right hippocampus than their left hippocampus?</p></li>
+<li><p><strong>Parameter of Interest:</strong> <span class="math inline">\(p\)</span>: the proportion of people whose right hippocampus is larger than their left hippocampus.</p></li>
+<li><p><strong>Null Hypothesis:</strong> <span class="math inline">\(H_0: p = 0.5\)</span></p>
+<ul>
+<li>In testing a population proportion, the hypothetical value is often denoted as <span class="math inline">\(p_0\)</span>. In this case, <span class="math inline">\(p_0 = 0.5\)</span>.</li>
+</ul></li>
+<li><p><strong>Alternative Hypothesis:</strong> <span class="math inline">\(H_a: p &gt; 0.5\)</span></p>
+<ul>
+<li>Because we are interested in whether the proportion is greater than 0.5, we use a one-sided alternative hypothesis.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="test-statistic" class="slide level2">
+<h2>Test Statistic</h2>
+<ul>
+<li><p>A <strong>test statistic</strong> is a number calculated from the sample data.</p></li>
+<li><p>It summarizes the evidence <strong>against the null hypothesis</strong>.</p></li>
+<li><p>We compare the observed test statistic to its <strong>null distribution</strong>, the distribution expected if the null hypothesis is true.</p></li>
+<li><p>If the observed value is sufficiently unlikely under the null distribution, we reject <span class="math inline">\(H_0\)</span>.</p></li>
+</ul>
+</section>
+<section id="test-statistic-example" class="slide level2">
+<h2>Test Statistic: Example</h2>
+<ul>
+<li><p><strong>Question:</strong> Do more than half of people have a larger right hippocampus than their left hippocampus?</p></li>
+<li><p>Suppose we examine <strong>100</strong> people, and <strong>62</strong> have a larger right hippocampus.</p></li>
+<li><p>A natural test statistic is the <strong>sample proportion</strong></p>
+<p><span class="math display">\[
+\hat p=\frac{62}{100}=0.62.
+\]</span></p></li>
+</ul>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>Is <strong>0.62</strong> sufficiently larger than <strong>0.50</strong>, or could this difference be due to random sampling?</p></li>
+<li><p>To answer this question, we <strong>standardize</strong> the sample proportion.</p></li>
+<li><p>For testing a proportion, it is common to use the standardized test statistic: the <strong>z-statistic</strong>.</p></li>
+</ul>
+</section>
+<section id="z-statistic" class="slide level2">
+<h2>Z-statistic</h2>
+<ul>
+<li><p>Let <span class="math inline">\(\hat p\)</span> denote the sample proportion, <span class="math inline">\(p_0\)</span> denote the hypothesized population proportion under <span class="math inline">\(H_0\)</span>, and <span class="math inline">\(n\)</span> denote the sample size.</p></li>
+<li><p>The z-statistic is defined as <span class="math display">\[
+z=\frac{\hat p-p_0}
+{\sqrt{p_0(1-p_0)/n}},
+\]</span></p></li>
+<li><p>If the null hypothesis is true, the z-statistic follows a standard normal distribution approximately when <span class="math inline">\(n\)</span> is large enough.</p></li>
+</ul>
+</section>
+<section id="testing-a-proportion-example" class="slide level2">
+<h2>Testing a Proportion: Example</h2>
+<ul>
+<li><p><strong>Question:</strong> Do more than half of people have a larger right hippocampus than their left hippocampus?</p></li>
+<li><p>Suppose we examine <strong>100</strong> people, and <strong>62</strong> have a larger right hippocampus.</p></li>
+<li><p><strong>Hypotheses:</strong> <span class="math inline">\(H_0: p = 0.50 \qquad\text{vs.}\qquad H_a: p &gt; 0.50\)</span></p></li>
+<li><p><strong>Sample proportion:</strong> <span class="math inline">\(\hat{p}=\frac{62}{100}=0.62.\)</span></p></li>
+<li><p><strong>Test statistic:</strong> <span class="math display">\[z=\frac{0.62-0.50}{\sqrt{0.5(1-0.5)/100}}=2.40.\]</span></p></li>
+</ul>
+</section>
+<section id="the-null-distribution-and-observed-z-statistic" class="slide level2">
+<h2>The Null Distribution and Observed Z-statistic</h2>
+<ul>
+<li>Is 2.40 extreme enough to reject the null hypothesis?</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a href=""></a></span>
+<span id="cb2-3"><a href=""></a><span class="co"># Observed z-statistic</span></span>
+<span id="cb2-4"><a href=""></a>z <span class="ot">&lt;-</span> <span class="fl">2.40</span></span>
+<span id="cb2-5"><a href=""></a></span>
+<span id="cb2-6"><a href=""></a><span class="co"># Data for the standard normal curve</span></span>
+<span id="cb2-7"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb2-8"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-9"><a href=""></a>  <span class="at">x =</span> x,</span>
+<span id="cb2-10"><a href=""></a>  <span class="at">y =</span> <span class="fu">dnorm</span>(x)</span>
+<span id="cb2-11"><a href=""></a>)</span>
+<span id="cb2-12"><a href=""></a></span>
+<span id="cb2-13"><a href=""></a><span class="co"># Right-tail region</span></span>
+<span id="cb2-14"><a href=""></a>tail_df <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, x <span class="sc">&gt;=</span> z)</span>
+<span id="cb2-15"><a href=""></a></span>
+<span id="cb2-16"><a href=""></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb2-17"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-18"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> z,</span>
+<span id="cb2-19"><a href=""></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb2-20"><a href=""></a>             <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb2-21"><a href=""></a>             <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb2-22"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb2-23"><a href=""></a>    <span class="at">x =</span> <span class="st">"z"</span>,</span>
+<span id="cb2-24"><a href=""></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb2-25"><a href=""></a>    <span class="at">title =</span> <span class="fu">expression</span>(<span class="st">"Distribution Under "</span> <span class="sc">*</span> H[<span class="dv">0</span>])</span>
+<span id="cb2-26"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb2-27"><a href=""></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="05a-hypothesis_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="the-null-distribution-and-observed-z-statistic-1" class="slide level2">
+<h2>The Null Distribution and Observed Z-statistic</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>pval <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(z, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-2"><a href=""></a></span>
+<span id="cb3-3"><a href=""></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href=""></a>  <span class="fu">geom_area</span>(</span>
+<span id="cb3-6"><a href=""></a>    <span class="at">data =</span> tail_df,</span>
+<span id="cb3-7"><a href=""></a>    <span class="fu">aes</span>(x, y),</span>
+<span id="cb3-8"><a href=""></a>    <span class="at">alpha =</span> <span class="fl">0.4</span>,</span>
+<span id="cb3-9"><a href=""></a>    <span class="at">fill =</span> <span class="st">"red"</span></span>
+<span id="cb3-10"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb3-11"><a href=""></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb3-12"><a href=""></a>    <span class="at">xintercept =</span> z,</span>
+<span id="cb3-13"><a href=""></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb3-14"><a href=""></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb3-15"><a href=""></a>    <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
+<span id="cb3-16"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb3-17"><a href=""></a>  <span class="fu">annotate</span>(</span>
+<span id="cb3-18"><a href=""></a>    <span class="st">"text"</span>,</span>
+<span id="cb3-19"><a href=""></a>    <span class="at">x =</span> z <span class="sc">+</span> <span class="fl">0.35</span>,</span>
+<span id="cb3-20"><a href=""></a>    <span class="at">y =</span> <span class="fl">0.06</span>,</span>
+<span id="cb3-21"><a href=""></a>    <span class="at">label =</span> <span class="st">"p-value"</span>,</span>
+<span id="cb3-22"><a href=""></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb3-23"><a href=""></a>    <span class="at">hjust =</span> <span class="dv">0</span></span>
+<span id="cb3-24"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb3-25"><a href=""></a><span class="co">#  annotate(</span></span>
+<span id="cb3-26"><a href=""></a><span class="co">#    "text",</span></span>
+<span id="cb3-27"><a href=""></a><span class="co">#    x = z + 0.45,</span></span>
+<span id="cb3-28"><a href=""></a><span class="co">#    y = 0.03,</span></span>
+<span id="cb3-29"><a href=""></a><span class="co">#    label = paste0("= ", round(pval, 4)),</span></span>
+<span id="cb3-30"><a href=""></a><span class="co">#    color = "red",</span></span>
+<span id="cb3-31"><a href=""></a><span class="co">#    hjust = 0</span></span>
+<span id="cb3-32"><a href=""></a><span class="co">#  ) +</span></span>
+<span id="cb3-33"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-34"><a href=""></a>    <span class="at">x =</span> <span class="st">"z"</span>,</span>
+<span id="cb3-35"><a href=""></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb3-36"><a href=""></a>    <span class="at">title =</span> <span class="fu">expression</span>(<span class="st">"Distribution Under "</span> <span class="sc">*</span> H[<span class="dv">0</span>])</span>
+<span id="cb3-37"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb3-38"><a href=""></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="05a-hypothesis_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="p-value" class="slide level2">
+<h2>P-value</h2>
+<ul>
+<li><p>The <strong>p-value</strong> measures how surprising the observed data are <strong>if the null hypothesis is true</strong>.</p></li>
+<li><p><strong>Definition:</strong> The <strong>p-value</strong> is the probability, <strong>assuming the null hypothesis is true</strong>, of observing a test statistic <strong>at least as extreme as the one observed</strong>.</p></li>
+<li><p>A <strong>small p-value</strong> indicates strong evidence against the null hypothesis.</p></li>
+</ul>
+<blockquote>
+<p><strong>Important:</strong> A p-value is <strong>not</strong> the probability that the null hypothesis is true.</p>
+</blockquote>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<ul>
+<li><strong>What does “extreme” mean?</strong>
+<ul>
+<li>It means values that provide <strong>at least as much evidence against the null hypothesis</strong> as the observed test statistic.</li>
+<li>For a <strong>right-tailed</strong> test (<span class="math inline">\(H_a: p&gt;p_0\)</span>), “more extreme” means <strong>larger</strong> values.</li>
+<li>In our example, “as extreme as 2.40” means <strong>2.40 or larger</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="p-value-example" class="slide level2">
+<h2>P-value: Example</h2>
+<ul>
+<li><p>Why are we interested in the area to the right of 2.40?</p></li>
+<li><p>Recall that <span class="math inline">\(H_0: p = 0.50\)</span> and <span class="math inline">\(H_a: p &gt; 0.50\)</span>.</p></li>
+<li><p>In this example, the p-value is</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">pnorm</span>(z, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.008197536</code></pre>
+</div>
+</div>
+<ul>
+<li><p>It tell us the probability of observing a z-statistic as extreme or more extreme than 2.40 under the null hypothesis.</p></li>
+<li><p>At level <span class="math inline">\(\alpha=0.05\)</span>, we reject <span class="math inline">\(H_0\)</span> because the p-value is less than 0.05.</p></li>
+</ul>
+</section>
+<section id="significance-level-alpha" class="slide level2">
+<h2>Significance Level (<span class="math inline">\(\alpha\)</span>)</h2>
+<ul>
+<li><p>The <strong>significance level</strong> (<span class="math inline">\(\alpha\)</span>) is the threshold for deciding whether to reject the null hypothesis.</p></li>
+<li><p>It is chosen <strong>before</strong> analyzing the data.</p></li>
+<li><p>A common choice is [ = 0.05. ]</p></li>
+<li><p><strong>Decision rule:</strong></p>
+<ul>
+<li>If the <strong>p-value</strong> <span class="math inline">\(\le \alpha\)</span>, reject <span class="math inline">\(H_0\)</span>.</li>
+<li>If the <strong>p-value</strong> <span class="math inline">\(&gt; \alpha\)</span>, fail to reject <span class="math inline">\(H_0\)</span>.</li>
+</ul></li>
+<li><p>Choosing <span class="math inline">\(\alpha=0.05\)</span> means we are willing to tolerate a <strong>5% Type I error rate</strong>.</p></li>
+</ul>
+</section>
+<section id="two-sided-test" class="slide level2">
+<h2>Two-Sided Test</h2>
+<p>What if <span class="math inline">\(H_0: p = 0.50\)</span> and <span class="math inline">\(H_a: p \neq 0.50\)</span>?</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>left_df  <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, x <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fu">abs</span>(z))</span>
+<span id="cb6-2"><a href=""></a>right_df <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, x <span class="sc">&gt;=</span>  <span class="fu">abs</span>(z))</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-6"><a href=""></a>  <span class="fu">geom_area</span>(</span>
+<span id="cb6-7"><a href=""></a>    <span class="at">data =</span> left_df,</span>
+<span id="cb6-8"><a href=""></a>    <span class="fu">aes</span>(x, y),</span>
+<span id="cb6-9"><a href=""></a>    <span class="at">fill =</span> <span class="st">"red"</span>,</span>
+<span id="cb6-10"><a href=""></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
+<span id="cb6-11"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb6-12"><a href=""></a>  <span class="fu">geom_area</span>(</span>
+<span id="cb6-13"><a href=""></a>    <span class="at">data =</span> right_df,</span>
+<span id="cb6-14"><a href=""></a>    <span class="fu">aes</span>(x, y),</span>
+<span id="cb6-15"><a href=""></a>    <span class="at">fill =</span> <span class="st">"red"</span>,</span>
+<span id="cb6-16"><a href=""></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
+<span id="cb6-17"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb6-18"><a href=""></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb6-19"><a href=""></a>    <span class="at">xintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fu">abs</span>(z), <span class="fu">abs</span>(z)),</span>
+<span id="cb6-20"><a href=""></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb6-21"><a href=""></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb6-22"><a href=""></a>    <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
+<span id="cb6-23"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb6-24"><a href=""></a>  <span class="fu">annotate</span>(</span>
+<span id="cb6-25"><a href=""></a>    <span class="st">"text"</span>,</span>
+<span id="cb6-26"><a href=""></a>    <span class="at">x =</span> <span class="sc">-</span><span class="fu">abs</span>(z) <span class="sc">-</span> <span class="fl">0.35</span>,</span>
+<span id="cb6-27"><a href=""></a>    <span class="at">y =</span> <span class="fl">0.06</span>,</span>
+<span id="cb6-28"><a href=""></a>    <span class="at">label =</span> <span class="st">"p-value/2"</span>,</span>
+<span id="cb6-29"><a href=""></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb6-30"><a href=""></a>    <span class="at">hjust =</span> <span class="dv">1</span></span>
+<span id="cb6-31"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb6-32"><a href=""></a>  <span class="fu">annotate</span>(</span>
+<span id="cb6-33"><a href=""></a>    <span class="st">"text"</span>,</span>
+<span id="cb6-34"><a href=""></a>    <span class="at">x =</span> <span class="fu">abs</span>(z) <span class="sc">+</span> <span class="fl">0.35</span>,</span>
+<span id="cb6-35"><a href=""></a>    <span class="at">y =</span> <span class="fl">0.06</span>,</span>
+<span id="cb6-36"><a href=""></a>    <span class="at">label =</span> <span class="st">"p-value/2"</span>,</span>
+<span id="cb6-37"><a href=""></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb6-38"><a href=""></a>    <span class="at">hjust =</span> <span class="dv">0</span></span>
+<span id="cb6-39"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb6-40"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-41"><a href=""></a>    <span class="at">x =</span> <span class="st">"z"</span>,</span>
+<span id="cb6-42"><a href=""></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb6-43"><a href=""></a>    <span class="at">title =</span> <span class="fu">expression</span>(<span class="st">"Distribution Under "</span> <span class="sc">*</span> H[<span class="dv">0</span>])</span>
+<span id="cb6-44"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb6-45"><a href=""></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="05a-hypothesis_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="left-sided-test" class="slide level2">
+<h2>Left-Sided Test</h2>
+<p>What if <span class="math inline">\(H_0: p = 0.50\)</span> and <span class="math inline">\(H_a: p &lt; 0.50\)</span>?</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="co"># Left-tail region</span></span>
+<span id="cb7-2"><a href=""></a>tail_df <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, x <span class="sc">&lt;=</span> z)</span>
+<span id="cb7-3"><a href=""></a></span>
+<span id="cb7-4"><a href=""></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href=""></a>  <span class="fu">geom_area</span>(</span>
+<span id="cb7-7"><a href=""></a>    <span class="at">data =</span> tail_df,</span>
+<span id="cb7-8"><a href=""></a>    <span class="fu">aes</span>(x, y),</span>
+<span id="cb7-9"><a href=""></a>    <span class="at">alpha =</span> <span class="fl">0.4</span>,</span>
+<span id="cb7-10"><a href=""></a>    <span class="at">fill =</span> <span class="st">"red"</span></span>
+<span id="cb7-11"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb7-12"><a href=""></a>  <span class="fu">geom_vline</span>(</span>
+<span id="cb7-13"><a href=""></a>    <span class="at">xintercept =</span> z,</span>
+<span id="cb7-14"><a href=""></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb7-15"><a href=""></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb7-16"><a href=""></a>    <span class="at">linewidth =</span> <span class="fl">0.8</span></span>
+<span id="cb7-17"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb7-18"><a href=""></a>  <span class="fu">annotate</span>(</span>
+<span id="cb7-19"><a href=""></a>    <span class="st">"text"</span>,</span>
+<span id="cb7-20"><a href=""></a>    <span class="at">x =</span> z <span class="sc">-</span> <span class="fl">0.35</span>,</span>
+<span id="cb7-21"><a href=""></a>    <span class="at">y =</span> <span class="fl">0.06</span>,</span>
+<span id="cb7-22"><a href=""></a>    <span class="at">label =</span> <span class="st">"p-value"</span>,</span>
+<span id="cb7-23"><a href=""></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb7-24"><a href=""></a>    <span class="at">hjust =</span> <span class="dv">1</span></span>
+<span id="cb7-25"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb7-26"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-27"><a href=""></a>    <span class="at">x =</span> <span class="st">"z"</span>,</span>
+<span id="cb7-28"><a href=""></a>    <span class="at">y =</span> <span class="st">""</span>,</span>
+<span id="cb7-29"><a href=""></a>    <span class="at">title =</span> <span class="fu">expression</span>(<span class="st">"Distribution Under "</span> <span class="sc">*</span> H[<span class="dv">0</span>])</span>
+<span id="cb7-30"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb7-31"><a href=""></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">18</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="05a-hypothesis_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section>
+<section id="test-a-proprotion-activities" class="title-slide slide level1 center">
+<h1>Test a Proprotion: Activities</h1>
+
+</section>
+<section id="activities-and-goals" class="slide level2">
+<h2>Activities and Goals</h2>
+<ul>
+<li><p>n = 20.</p></li>
+<li><p>We will test</p>
+<p><span class="math display">\[
+H_0: p=0.50
+\qquad\text{vs.}\qquad
+H_a: p&gt;0.50.
+\]</span></p></li>
+<li><p>Activity 1: Simulate data when the null hypothesis is true. Conduct the hypothesis test and discuss the results.</p></li>
+<li><p>Activity 2: Simulate data when the alternative hypothesis is true <span class="math inline">\(p=0.7\)</span>. Conduct the hypothesis test and discuss the results.</p></li>
+</ul>
+</section>
+<section id="activity-1-when-h_0-is-true" class="slide level2">
+<h2>Activity 1: When <span class="math inline">\(H_0\)</span> Is True</h2>
+<ul>
+<li><p>Change the random seed to any number.</p></li>
+<li><p>Run the code and compute the p-value.</p></li>
+<li><p>Based on the p-value, do you reject <span class="math inline">\(H_0\)</span> at the 5% significance level?</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb8-2"><a href=""></a></span>
+<span id="cb8-3"><a href=""></a>p0 <span class="ot">&lt;-</span> <span class="fl">0.50</span></span>
+<span id="cb8-4"><a href=""></a>p  <span class="ot">&lt;-</span> p0      <span class="co"># H0 is true</span></span>
+<span id="cb8-5"><a href=""></a>n  <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb8-6"><a href=""></a></span>
+<span id="cb8-7"><a href=""></a><span class="co"># Simulate data</span></span>
+<span id="cb8-8"><a href=""></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, n, p)</span>
+<span id="cb8-9"><a href=""></a></span>
+<span id="cb8-10"><a href=""></a><span class="co"># Sample proportion</span></span>
+<span id="cb8-11"><a href=""></a>phat <span class="ot">&lt;-</span> x <span class="sc">/</span> n</span>
+<span id="cb8-12"><a href=""></a></span>
+<span id="cb8-13"><a href=""></a><span class="co"># z statistic</span></span>
+<span id="cb8-14"><a href=""></a>z <span class="ot">&lt;-</span> (phat <span class="sc">-</span> p0) <span class="sc">/</span> <span class="fu">sqrt</span>(p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0) <span class="sc">/</span> n)</span>
+<span id="cb8-15"><a href=""></a></span>
+<span id="cb8-16"><a href=""></a><span class="co"># One-sided p-value: H1: p &gt; p0</span></span>
+<span id="cb8-17"><a href=""></a>p.value <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(z, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb8-18"><a href=""></a></span>
+<span id="cb8-19"><a href=""></a><span class="fu">cat</span>(<span class="st">"Number of successes:"</span>, x, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-20"><a href=""></a><span class="fu">cat</span>(<span class="st">"Sample proportion:"</span>, <span class="fu">round</span>(phat, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-21"><a href=""></a><span class="fu">cat</span>(<span class="st">"z statistic:"</span>, <span class="fu">round</span>(z, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb8-22"><a href=""></a><span class="fu">cat</span>(<span class="st">"p-value:"</span>, <span class="fu">round</span>(p.value, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="activity-1-discussion" class="slide level2">
+<h2>Activity 1: Discussion</h2>
+<p>Since <span class="math inline">\(H_0\)</span> is actually true,</p>
+<ul>
+<li><p>If you <strong>fail to reject</strong> <span class="math inline">\(H_0\)</span>, the decision is <strong>correct</strong>.</p></li>
+<li><p>If you <strong>reject</strong> <span class="math inline">\(H_0\)</span>, you have made a <strong>false positive (Type I error)</strong>.</p></li>
+</ul>
+<p>Will everyone obtain the same answer? Why or why not?</p>
+</section>
+<section id="activity-2-when-h_a-is-true" class="slide level2">
+<h2>Activity 2: When <span class="math inline">\(H_a\)</span> Is True</h2>
+<p>Now change <span class="math inline">\(p\)</span> to 0.7 and repeat the activity.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>p <span class="ot">&lt;-</span> <span class="fl">0.70</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Do you reject <span class="math inline">\(H_0\)</span> at the 5% significance level?
+<ul>
+<li>If you reject <span class="math inline">\(H_0\)</span>, the decision is <strong>correct</strong>.</li>
+</ul></li>
+<li>Do you fail to reject <span class="math inline">\(H_0\)</span> at the 5% significance level?
+<ul>
+<li>If you fail to reject <span class="math inline">\(H_0\)</span>, you have made a <strong>false negative (Type II error)</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>Suppose the null is true. What can happen?
+<ul>
+<li>Fail to reject <span class="math inline">\(H_0\)</span> - True Negative (TN)</li>
+<li>Reject <span class="math inline">\(H_0\)</span>: False Positive (FP): Type I error</li>
+<li>The rate of type I error is called type I error rate.</li>
+</ul></li>
+<li>Suppose the alternative is true
+<ul>
+<li>Reject <span class="math inline">\(H_0\)</span>: True Positive (TP)</li>
+<li>Fail to reject <span class="math inline">\(H_0\)</span>: False Negative (FN): Type II error</li>
+<li>The rate of true positive is called the statistical power of a test.</li>
+</ul></li>
+</ul>
+</section>
+<section id="summary-1" class="slide level2">
+<h2>Summary</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 46%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Truth</strong></th>
+<th><strong>Fail to Reject <span class="math inline">\(H_0\)</span></strong></th>
+<th><strong>Reject <span class="math inline">\(H_0\)</span></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><span class="math inline">\(H_0\)</span> is true</strong></td>
+<td><strong>True Negative (TN)</strong></td>
+<td><strong>False Positive (FP)</strong> <em>(Type I error)</em></td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(H_a\)</span> is true</strong></td>
+<td><strong>False Negative (FN)</strong> <em>(Type II error)</em></td>
+<td><strong>True Positive (TP)</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Type I error rate</strong>: Probability of a <strong>false positive</strong>.</li>
+<li><strong>Power</strong>: Probability of a <strong>true positive</strong> (<span class="math inline">\(1-\)</span> Type II error rate).</li>
+</ul>
+</section></section>
+<section id="section-2" class="title-slide slide level1 center">
+<h1></h1>
+
+</section>
+
+<section>
+<section id="mean" class="title-slide slide level1 center">
+<h1>Mean</h1>
+
+</section>
+<section id="hypothesis-testing-for-the-population-mean" class="slide level2">
+<h2>Hypothesis testing for the population mean</h2>
+<ul>
+<li>Consider hippocampal volume in impaired males, where we want to examine the null hypothesis</li>
+</ul>
+<p><span class="math inline">\(H_{0}: \mu = 6\)</span> against the alternative hypothesis <span class="math inline">\(H_A: \mu &gt;6\)</span>.</p>
+<ul>
+<li>The alternative hypothesis <span class="math inline">\(H_{A}: \mu &gt;6\)</span> is a <strong>one-sided</strong> alternative.</li>
+<li>One-sided vs two-sided alternatives:
+<ul>
+<li>One-sided: <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span> or <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span></li>
+<li>Two-sided: <span class="math inline">\(H_A: \mu \neq \mu_0\)</span></li>
+</ul></li>
+</ul>
+</section>
+<section id="hypothesis-testing-for-the-population-mean-1" class="slide level2">
+<h2>Hypothesis testing for the population mean</h2>
+<ul>
+<li>We learned the sample mean is a reasonable estimator of the population mean.</li>
+<li>The sample mean of hippocampal volume of impaired males is <span class="math inline">\(\bar x=6.1\)</span>.</li>
+<li>What does the sample mean tell you? Should you reject <span class="math inline">\(H_0\)</span> based on the sample mean?</li>
+<li>Of course not, because a sample mean alone doesn’t tell us <strong>how unusual</strong> it is under <span class="math inline">\(H_0\)</span>.</li>
+</ul>
+</section>
+<section id="why-isnt-barx-6.1-enough" class="slide level2">
+<h2>Why Isn’t <span class="math inline">\(\bar{x} = 6.1\)</span> Enough?</h2>
+<ul>
+<li>Suppose we want to test: <span class="math inline">\(H_0: \mu = 6.00\)</span> vs.&nbsp;<span class="math inline">\(H_1: \mu &gt; 6.00\)</span></li>
+<li>The observed sample mean <span class="math inline">\(\bar{x} = 6.1\)</span> is higher. But how much higher is “a lot”?</li>
+<li>A difference of 0.1 could be:
+<ul>
+<li>A large difference if there’s little variation</li>
+<li>A small difference if there’s a lot of variation</li>
+</ul></li>
+<li>We need to <strong>quantify uncertainty</strong> around <span class="math inline">\(\bar{x}\)</span> by considering how <span class="math inline">\(\bar{X}\)</span> behaves under the null hypothesis <span class="math inline">\(H_0\)</span>.</li>
+</ul>
+</section>
+<section id="p-value-1" class="slide level2">
+<h2>p-value</h2>
+<ul>
+<li><p>We quantify “how extreme” using the probability of values as or more extreme than the observed value, based on the <strong><em>null</em></strong> distribution <strong><em>in the direction</em></strong> supporting the alternative hypothesis.</p></li>
+<li><p>This probability is also called the <strong>p-value</strong> and denoted <span class="math inline">\(p\)</span>.</p></li>
+<li><p>For the above example, <span class="math display">\[\begin{equation*}
+p = P(\bar{X}  \ge \bar{x} | H_{0}),
+\end{equation*}\]</span></p></li>
+</ul>
+<p>where <span class="math inline">\(\bar{x}=6.1\)</span> in this example.</p>
+</section>
+<section id="the-null-distribution-of-barx-known-σ" class="slide level2">
+<h2>The Null Distribution of <span class="math inline">\(\bar{X}\)</span> (Known σ)</h2>
+<ul>
+<li>Suppose <span class="math inline">\(\sigma = 1\)</span> and sample size is <span class="math inline">\(n = 25\)</span></li>
+<li>Then, under the null hypothesis <span class="math inline">\(H_0: \mu = 6.00\)</span>:</li>
+</ul>
+<p><span class="math display">\[
+\bar{X} \sim N\left(\mu = 6.00,\ \frac{\sigma}{\sqrt{n}} = \frac{1}{5}=0.2 \right)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(P(\bar X \ge 6.1 | H_0)\)</span> is the area under the curve to the right of <span class="math inline">\(\bar{x} = 6.1\)</span> in the null distribution.</li>
+</ul>
+</section>
+<section id="pbar-x-ge-6.1-h_0" class="slide level2">
+<h2><span class="math inline">\(P(\bar X \ge 6.1 | H_0)\)</span></h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-2"><a href=""></a></span>
+<span id="cb10-3"><a href=""></a><span class="co"># Define parameters</span></span>
+<span id="cb10-4"><a href=""></a>mu0 <span class="ot">&lt;-</span> <span class="fl">6.00</span></span>
+<span id="cb10-5"><a href=""></a>se <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb10-6"><a href=""></a>x_obs <span class="ot">&lt;-</span> <span class="fl">6.10</span></span>
+<span id="cb10-7"><a href=""></a></span>
+<span id="cb10-8"><a href=""></a><span class="co"># Create a sequence of x values centered around mu0</span></span>
+<span id="cb10-9"><a href=""></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(mu0 <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> se, mu0 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> se, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb10-10"><a href=""></a></span>
+<span id="cb10-11"><a href=""></a><span class="co"># Compute the density</span></span>
+<span id="cb10-12"><a href=""></a>density_vals <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> mu0, <span class="at">sd =</span> se)</span>
+<span id="cb10-13"><a href=""></a></span>
+<span id="cb10-14"><a href=""></a><span class="co"># Create a data frame</span></span>
+<span id="cb10-15"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_vals, <span class="at">y =</span> density_vals)</span>
+<span id="cb10-16"><a href=""></a></span>
+<span id="cb10-17"><a href=""></a><span class="co"># Define the tail area (right of observed x)</span></span>
+<span id="cb10-18"><a href=""></a>df<span class="sc">$</span>tail <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>x <span class="sc">&gt;=</span> x_obs, <span class="st">"Right Tail"</span>, <span class="st">"Main"</span>)</span>
+<span id="cb10-19"><a href=""></a></span>
+<span id="cb10-20"><a href=""></a><span class="co"># Plot</span></span>
+<span id="cb10-21"><a href=""></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb10-22"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-23"><a href=""></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">subset</span>(df, tail <span class="sc">==</span> <span class="st">"Right Tail"</span>), <span class="fu">aes</span>(x, y),</span>
+<span id="cb10-24"><a href=""></a>            <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb10-25"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> x_obs, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb10-26"><a href=""></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> x_obs <span class="sc">+</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="dv">0</span><span class="fl">-0.1</span>,</span>
+<span id="cb10-27"><a href=""></a>           <span class="at">label =</span> <span class="st">"sample mean = 6.1"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb10-28"><a href=""></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> x_obs <span class="sc">+</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="fu">max</span>(df<span class="sc">$</span>y) <span class="sc">*</span> <span class="fl">0.9</span>,</span>
+<span id="cb10-29"><a href=""></a>           <span class="at">label =</span> <span class="st">"p=0.31"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb10-30"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampling Distribution of Sample Mean (under H_0)"</span>,</span>
+<span id="cb10-31"><a href=""></a>       <span class="at">subtitle =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"N("</span>, mu[<span class="dv">0</span>], <span class="st">" = 6.00, SE = 0.2)"</span>)),</span>
+<span id="cb10-32"><a href=""></a>       <span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">bar</span>(X)), <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb10-33"><a href=""></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="05a-hypothesis_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="z-score" class="slide level2">
+<h2>Z-score</h2>
+<ul>
+<li><p>It is easier to use the <strong>z-score</strong> <span class="math display">\[Z=\frac{\bar X - \mu_0}{\sigma/\sqrt{n}}, z=\frac{\bar x - \mu_0}{\sigma/\sqrt{n}}\]</span></p></li>
+<li><p>This is because because</p>
+<ul>
+<li><span class="math inline">\(P(\bar X \ge 6.1 | H_0) =P(Z\ge 0.5)\approx 0.31\)</span> where <span class="math inline">\(Z\sim N(0,1)\)</span>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="pz-ge-z" class="slide level2">
+<h2><span class="math inline">\(P(Z \ge z)\)</span></h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-2"><a href=""></a></span>
+<span id="cb11-3"><a href=""></a><span class="co"># Define parameters</span></span>
+<span id="cb11-4"><a href=""></a>mu0 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb11-5"><a href=""></a>se <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb11-6"><a href=""></a>x_obs <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb11-7"><a href=""></a></span>
+<span id="cb11-8"><a href=""></a><span class="co"># Create a sequence of x values centered around mu0</span></span>
+<span id="cb11-9"><a href=""></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(mu0 <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> se, mu0 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> se, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb11-10"><a href=""></a></span>
+<span id="cb11-11"><a href=""></a><span class="co"># Compute the density</span></span>
+<span id="cb11-12"><a href=""></a>density_vals <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> mu0, <span class="at">sd =</span> se)</span>
+<span id="cb11-13"><a href=""></a></span>
+<span id="cb11-14"><a href=""></a><span class="co"># Create a data frame</span></span>
+<span id="cb11-15"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_vals, <span class="at">y =</span> density_vals)</span>
+<span id="cb11-16"><a href=""></a></span>
+<span id="cb11-17"><a href=""></a><span class="co"># Define the tail area (right of observed x)</span></span>
+<span id="cb11-18"><a href=""></a>df<span class="sc">$</span>tail <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(df<span class="sc">$</span>x <span class="sc">&gt;=</span> x_obs, <span class="st">"Right Tail"</span>, <span class="st">"Main"</span>)</span>
+<span id="cb11-19"><a href=""></a></span>
+<span id="cb11-20"><a href=""></a><span class="co"># Plot</span></span>
+<span id="cb11-21"><a href=""></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb11-22"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb11-23"><a href=""></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">subset</span>(df, tail <span class="sc">==</span> <span class="st">"Right Tail"</span>), <span class="fu">aes</span>(x, y),</span>
+<span id="cb11-24"><a href=""></a>            <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb11-25"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> x_obs, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb11-26"><a href=""></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> x_obs <span class="sc">+</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="dv">0</span><span class="fl">-0.1</span>,</span>
+<span id="cb11-27"><a href=""></a>           <span class="at">label =</span> <span class="st">"z = 0.5"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb11-28"><a href=""></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> x_obs <span class="sc">+</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="fu">max</span>(df<span class="sc">$</span>y) <span class="sc">*</span> <span class="fl">0.9</span>,</span>
+<span id="cb11-29"><a href=""></a>           <span class="at">label =</span> <span class="st">"p=0.31"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">hjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb11-30"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sampling Distribution of Sample Mean (under H_0)"</span>,</span>
+<span id="cb11-31"><a href=""></a>       <span class="at">subtitle =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"N("</span>, mu[<span class="dv">0</span>], <span class="st">" = 0, SE = 1)"</span>)),</span>
+<span id="cb11-32"><a href=""></a>       <span class="at">x =</span> <span class="fu">expression</span>(<span class="fu">bar</span>(Z)), <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb11-33"><a href=""></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="05a-hypothesis_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="what-if-σ-is-unknown" class="slide level2">
+<h2>What If σ Is Unknown?</h2>
+<ul>
+<li>In real life, we rarely know the population standard deviation <span class="math inline">\(\sigma\)</span></li>
+<li>Instead, we estimate it with the sample standard deviation <span class="math inline">\(s\)</span></li>
+<li>This changes the <strong>distribution</strong> of our test statistic:
+<ul>
+<li>We no longer use the standard normal (<span class="math inline">\(z\)</span>)</li>
+<li>We use the <strong><span class="math inline">\(t\)</span> distribution</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="the-t-distribution" class="slide level2">
+<h2>The <span class="math inline">\(t\)</span> Distribution</h2>
+<ul>
+<li>If <span class="math inline">\(\sigma\)</span> is unknown, and we use <span class="math inline">\(s\)</span> to estimate <span class="math inline">\(\sigma\)</span>, then:</li>
+</ul>
+<p><span class="math display">\[
+T = \frac{\bar{X} - \mu}{S / \sqrt{n}} \sim t_{n - 1}
+\]</span></p>
+<ul>
+<li>The <span class="math inline">\(t\)</span> distribution accounts for extra uncertainty from estimating <span class="math inline">\(\sigma\)</span></li>
+<li>It’s wider than the normal, especially with small <span class="math inline">\(n\)</span></li>
+<li>As <span class="math inline">\(n \to \infty\)</span>, <span class="math inline">\(t\)</span> approaches the standard normal.</li>
+</ul>
+</section>
+<section id="why-this-matters" class="slide level2">
+<h2>Why This Matters</h2>
+<ul>
+<li>Whether you use <span class="math inline">\(z\)</span> or <span class="math inline">\(t\)</span> affects:
+<ul>
+<li>Which critical value you compare to</li>
+<li>How you compute the <span class="math inline">\(p\)</span>-value</li>
+</ul></li>
+<li>This distinction becomes <strong>crucial</strong> when sample size is small</li>
+</ul>
+</section>
+<section id="one-sample-t-test" class="slide level2">
+<h2>One-sample t-test</h2>
+<ul>
+<li><p>So far, we have assumed that the population variance <span class="math inline">\(\sigma^{2}\)</span> is known.</p></li>
+<li><p>In reality, <span class="math inline">\(\sigma^{2}\)</span> is almost always unknown, and we need to estimate it from the data.</p></li>
+<li><p>As before, we estimate <span class="math inline">\(\sigma^{2}\)</span> using the sample variance <span class="math inline">\(S^{2}\)</span>.</p></li>
+<li><p>Similar to our approach for finding confidence intervals, we account for this additional source of uncertainty by using the <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom instead of the standard normal distribution.</p></li>
+<li><p>The hypothesis testing procedure is then called the <strong>t-test</strong>.</p></li>
+</ul>
+</section>
+<section id="t-test" class="slide level2">
+<h2>t-test</h2>
+<div style="text-align: center;">
+<p><img data-src="img/student-t.png" style="width:75.0%"></p>
+</div>
+</section>
+<section id="hippocampus-volume-in-impaired-males" class="slide level2">
+<h2>Hippocampus volume in impaired males</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co">#read data</span></span>
+<span id="cb12-2"><a href=""></a>alzheimer_subset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/alzheimer_data.csv"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(diagnosis, lhippo, rhippo, age, female) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(diagnosis<span class="sc">==</span><span class="dv">1</span>, female<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb12-3"><a href=""></a><span class="fu">glimpse</span>(alzheimer_subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 327
+Columns: 6
+$ diagnosis &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ lhippo    &lt;dbl&gt; 2.9342, 3.5100, 2.5872, 3.2445, 1.8555, 3.5754, 3.2100, 2.56…
+$ rhippo    &lt;dbl&gt; 3.2890, 3.7000, 2.3688, 3.1980, 2.6565, 3.7621, 3.6000, 2.46…
+$ age       &lt;dbl&gt; 75, 78, 85, 79, 77, 79, 83, 83, 77, 66, 78, 73, 72, 82, 77, …
+$ female    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ hippo     &lt;dbl&gt; 6.2232, 7.2100, 4.9560, 6.4425, 4.5120, 7.3375, 6.8100, 5.03…</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co">#calculate mean</span></span>
+<span id="cb14-2"><a href=""></a><span class="fu">mean</span>(alzheimer_subset<span class="sc">$</span>hippo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.105257</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co">#compute t-test using mean and sd</span></span>
+<span id="cb16-2"><a href=""></a>z<span class="ot">=</span><span class="fu">mean</span>(alzheimer_subset<span class="sc">$</span>hippo<span class="dv">-6</span>)<span class="sc">/</span><span class="fu">sd</span>(alzheimer_subset<span class="sc">$</span>hippo)<span class="sc">*</span><span class="fu">sqrt</span>(<span class="fu">nrow</span>(alzheimer_subset))</span>
+<span id="cb16-3"><a href=""></a></span>
+<span id="cb16-4"><a href=""></a><span class="co">#compute one-sided p</span></span>
+<span id="cb16-5"><a href=""></a><span class="fu">pnorm</span>(z, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02269207</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co">#use t.test (one-sample t-test)</span></span>
+<span id="cb18-2"><a href=""></a><span class="fu">t.test</span>(alzheimer_subset<span class="sc">$</span>hippo, <span class="at">mu=</span><span class="dv">6</span>, <span class="at">alternative=</span><span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  alzheimer_subset$hippo
+t = 2.0011, df = 326, p-value = 0.02311
+alternative hypothesis: true mean is greater than 6
+95 percent confidence interval:
+ 6.018491      Inf
+sample estimates:
+mean of x 
+ 6.105257 </code></pre>
+</div>
+</div>
+</section>
+<section id="one-sample-t-test-1" class="slide level2">
+<h2>One-sample t-test</h2>
+<ul>
+<li><p>Using the observed values of <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(S\)</span>, the observed value of the test statistic is obtained as follows: <span class="math inline">\(t  =  \frac{\bar{x} - \mu_{0}}{s/\sqrt{n}}\)</span>.</p></li>
+<li><p>We refer to <span class="math inline">\(t\)</span> as the <span class="math inline">\(t\)</span>-<em>score</em>. Then, <span class="math display">\[\begin{array}{l@{\quad}l}
+\mbox{if}\ H_{A}: \mu &lt; \mu _0, &amp;  p_{\mathrm{obs}} = P(T \leq t), \\
+\mbox{if}\ H_{A}: \mu &gt; \mu _0, &amp; p_{\mathrm{obs}} = P(T \geq t ), \\
+\mbox{if}\ H_{A}: \mu \ne \mu _0, &amp; p_{\mathrm{obs}} = 2 \times P\bigl(T \geq | t | \bigr),
+\end{array}\]</span></p></li>
+<li><p>Here, <span class="math inline">\(T\)</span> has a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom, and <span class="math inline">\(t\)</span> is our observed <span class="math inline">\(t\)</span>-score.</p></li>
+</ul>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p><img src="img/cosmos-uci-dshs.png" style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;"></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="05a-hypothesis_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="05a-hypothesis_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
