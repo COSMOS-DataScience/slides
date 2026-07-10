@@ -53,8 +53,6 @@ library(ggplot2)
 
 ## The Role of Hypothesis Testing
 
-After collecting data, we often want to answer questions about a population.
-
 Statistical inference provides several tools:
 
 - Estimate a population quantity.
