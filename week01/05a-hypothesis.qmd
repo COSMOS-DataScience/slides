@@ -519,6 +519,17 @@ p <- 0.70
 - **Type I error rate**: Probability of a **false positive**.
 - **Power**: Probability of a **true positive** ($1-$ Type II error rate).
 
+## Discussion
+- p-value is only one piece of information in hypothesis testing.
+
+- Report treatment effect, standard error, CI. 
+
+- Statistical Significance
+  - A small p-value might be due to a large sample size but a small effect
+  
+- Scientifically Significance
+  - How large is the effect? Is it meaningful in practice?
+
 #
 
 
