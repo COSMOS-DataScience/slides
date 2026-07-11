@@ -270,6 +270,11 @@ The `WDI()` function sends a request to the World Bank API, retrieves the reques
 :::
 
 ```{r}
+#| eval: false
+
+# I changed it to eval:false because API cannot be connected on 07/10/2026 at around 9:30pm PCT. Will check later
+
+# I changed it to eval:false because API con
 if (!requireNamespace("WDI", quietly = TRUE)) {
   install.packages("WDI")
 }
