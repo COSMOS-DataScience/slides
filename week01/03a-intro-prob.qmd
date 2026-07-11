@@ -1069,21 +1069,176 @@ $x_{2}$; we show this probability as $P(x_{1} < X \le x_{2})$.
 
 ## Probability density function
 
-- For continuous random variables, we use **probability density functions** (pdf) to specify the distribution. Using the pdf, we can obtain the probability of any interval. 
-<!--
-```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center',fig.cap='Probability density function for BMI'}
-knitr::include_graphics('img/densityNormalBMI.png')
+- For continuous random variables, we use **probability density functions** (pdf) to specify the distribution. 
+
+- Using the pdf, we can obtain the probability of any interval. 
+
+- Example: (continuous) uniform distribution.
+
+
+## Continuous Uniform Distribution
+
+- We previously saw discrete uniform distribution; we now discuss its continuous version. 
+
+- Let $a$ and $b$ be two real numbers, so that $a<b$. The following the pdf of a __continuous uniform distribution__: 
+
+$$f(x) = \left\{ \begin{array}{l@{\quad}l}
+\frac{1}{b-a}  & a<x<b  \\
+0 & \mbox{otherwise} \\
+\end{array} \right.$$
+
+
+## PDf of a Uniform Distribution
+
+- Lex $X\sim U(a,b)$ where $a<b$. Then its pdf $f(x)$ is given by
+
+```{r}
+#| fig-align: center
+
+a <- 2
+b <- 8
+h <- 1/(b-a)
+
+# Set up empty plot
+plot(0, 0,
+     type = "n",
+     xlim = c(0, 10),
+     ylim = c(-0.03, h + 0.05),
+     axes = FALSE,
+     xlab = "",
+     ylab = "")
+
+# x-axis with arrow
+arrows(0, 0, 10, 0, length = 0.08)
+
+# Rectangle
+rect(a, 0, b, h)
+
+# Dashed vertical sides
+segments(a, 0, a, h, lty = 2)
+segments(b, 0, b, h, lty = 2)
+
+# Labels
+text(a, -0.012, "a")
+text(b, -0.012, "b")
+text(a - 0.55, h/2, expression(frac(1, b-a)))
 ```
--->
 
 
-## Probability density function
+## Example: Uniform Distribution $U(3,\,3.5)$
 
-- The total area under the probability density curve is 1. 
+- Suppose Adam arrives at a coffee shop **at a random time** between **3:00 pm and 3:30 pm**.
 
-- The curve (and its corresponding function) gives the probability of the random variable falling within an interval. 
+- Every arrival time in this interval is equally likely.
 
-- This probability is equal to the area under the probability density curve over the interval.
+- Let $X$ denote Adam's arrival time. Then
+$$X \sim U(3,\,3.5).$$
+  
+
+## PDF of $U(3,\,3.5)$
+
+<div style="font-size: 0.75em;">
+
+$$
+f(x)=
+\begin{cases}
+\dfrac{1}{3.5-3}=2, & 3<x<3.5,\\[1ex]
+0, & \text{otherwise.}
+\end{cases}
+$$
+
+```{r}
+#| fig-align: center
+
+a <- 3
+b <- 3.5
+h <- 1/(b-a)
+
+plot(0, 0,
+     type = "n",
+     xlim = c(2.8, 3.7),
+     ylim = c(-0.15, 2.3),
+     axes = FALSE,
+     xlab = "", ylab = "")
+
+arrows(2.8, 0, 3.7, 0, length = 0.08)
+
+rect(a, 0, b, h)
+
+segments(a, 0, a, h, lty = 2)
+segments(b, 0, b, h, lty = 2)
+
+text(a, -0.08, "3")
+text(b, -0.08, "3.5")
+text(a-0.08, h/2, "2")
+```
+
+</div>
+
+
+
+
+## Probability Is the Area Under the PDF
+
+The probability of an interval is the **area under the PDF**.
+
+For example,
+
+$$
+P(3.1<X<3.3)
+=
+2\times(3.3-3.1)
+=
+0.40.
+$$
+
+
+- the **height** of the PDF is 2,
+- the **probability** is the area between 3.1 and 3.3, which is a rectangle with width $3.3-3.1=0.20$ and height $2$. So the area is: $2\times0.20=0.40.$
+
+
+## Probability and Area Under the PDF
+
+For $X\si mU(3, 3.5)$, similarly, we can find the probability of any interval by calculating the area under the PDF. 
+
+- $P(3.09<X<3.11)=2\times(3.11-3.09)=0.04$
+
+- $P(3.099<X<3.101)=2\times(3.101-3.099)=0.004$
+
+- Can you guess what $P(X=3.1)$ is?
+
+
+## A PDF Is **Not** a Probability Function
+
+
+<div style="font-size: 0.75em;">
+
+- In the $X\sim U(3,\,3.5)$ example, the pdf is $f(x)=2$ for $3<x<3.5$.
+
+- From the previous slide, $P(X=3.1)=0$.
+
+- So $fx$ **cannot** be the probability that $X=x$.
+
+**A PDF gives the density of probability, not the probability itself.**
+
+
+**Key idea:**
+
+- For a discrete random variable, probability is assigned to individual values.
+
+- For a continuous random variable, probability is assigned to intervals.
+
+</div>
+
+## Probability Density Function
+
+A probability density function (pdf) has two key properties:
+
+- The **total area** under the density curve is **1**.
+
+- The probability that a continuous random variable falls within an interval is the **area under the density curve** over that interval.
+
+
 ```{r, echo=FALSE,out.width='25%',out.height='60%',fig.align='center'}
 knitr::include_graphics('img/densityShaded2530.png')
 ```
@@ -1124,71 +1279,6 @@ P(25 < X \le 30) = P(X \le 30) - P(X \le 25).
 
 
 
-## Continuous Uniform Distribution
-
-- We previously saw discrete uniform distribution; we now discuss its continuous version. 
-
-- Let $a$ and $b$ be two real numbers, so that $a<b$. The following the pdf of a __continuous uniform distribution__: 
-
-$$f(x) = \left\{ \begin{array}{l@{\quad}l}
-\frac{1}{b-a}  & a<x<b  \\
-0 & \mbox{otherwise} \\
-\end{array} \right.$$
-
-
-```{r, echo=FALSE,out.width='50%',out.height='60%',fig.align='center'}
-knitr::include_graphics('img/cont_unif_dist.png')
-```
-
-
-## A PDF Is **Not** a Probability Function
-
-Suppose $X\sim\text{Uniform}(0,0.5).$
-
-Then
-
-$$
-f(x)=
-\begin{cases}
-2, & 0<x<0.5,\\
-0, & \text{otherwise}.
-\end{cases}
-$$
-
-Notice that $f(0.25)=2.$ So $f(0.25)$ **cannot** be the probability that $X=0.25$.
-
-In fact, $P(X=0.25)=0.$
-
-**A PDF gives the density of probability, not the probability itself.**
-
-
-
-## Probability Is the Area Under the PDF
-
-For $X\sim\text{Uniform}(0,0.5),$
-
-the probability of an interval is the **area under the PDF**.
-
-For example,
-
-$$
-P(0.10<X<0.30)
-=
-2\times(0.30-0.10)
-=
-0.40.
-$$
-
-
-- the **height** of the PDF is 2,
-- the **probability** is the area between 0.10 and 0.30, which is a rectangle with width $0.30-0.10=0.20$ and height $2$. So the area is: $2\times0.20=0.40.$
-
-## 
-
-**Key idea:**
-
-- For a discrete random variable, probability is assigned to individual values.
-- For a continuous random variable, probability is assigned to intervals.
 
 ## Normal distribution
 

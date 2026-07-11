@@ -1137,25 +1137,161 @@ p=P(\text{blood type O}).
 <section id="probability-density-function" class="slide level2">
 <h2>Probability density function</h2>
 <ul>
-<li>For continuous random variables, we use <strong>probability density functions</strong> (pdf) to specify the distribution. Using the pdf, we can obtain the probability of any interval. <!--
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![Probability density function for BMI](img/densityNormalBMI.png){fig-align='center' width=25% height=60%}
-:::
-:::
-
-
---></li>
+<li><p>For continuous random variables, we use <strong>probability density functions</strong> (pdf) to specify the distribution.</p></li>
+<li><p>Using the pdf, we can obtain the probability of any interval.</p></li>
+<li><p>Example: (continuous) uniform distribution.</p></li>
 </ul>
 </section>
-<section id="probability-density-function-1" class="slide level2">
-<h2>Probability density function</h2>
+<section id="continuous-uniform-distribution" class="slide level2">
+<h2>Continuous Uniform Distribution</h2>
 <ul>
-<li><p>The total area under the probability density curve is 1.</p></li>
-<li><p>The curve (and its corresponding function) gives the probability of the random variable falling within an interval.</p></li>
-<li><p>This probability is equal to the area under the probability density curve over the interval.</p></li>
+<li><p>We previously saw discrete uniform distribution; we now discuss its continuous version.</p></li>
+<li><p>Let <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> be two real numbers, so that <span class="math inline">\(a&lt;b\)</span>. The following the pdf of a <strong>continuous uniform distribution</strong>:</p></li>
+</ul>
+<p><span class="math display">\[f(x) = \left\{ \begin{array}{l@{\quad}l}
+\frac{1}{b-a}  &amp; a&lt;x&lt;b  \\
+0 &amp; \mbox{otherwise} \\
+\end{array} \right.\]</span></p>
+</section>
+<section id="pdf-of-a-uniform-distribution" class="slide level2">
+<h2>PDf of a Uniform Distribution</h2>
+<ul>
+<li>Lex <span class="math inline">\(X\sim U(a,b)\)</span> where <span class="math inline">\(a&lt;b\)</span>. Then its pdf <span class="math inline">\(f(x)\)</span> is given by</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>a <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb2-2"><a href=""></a>b <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb2-3"><a href=""></a>h <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(b<span class="sc">-</span>a)</span>
+<span id="cb2-4"><a href=""></a></span>
+<span id="cb2-5"><a href=""></a><span class="co"># Set up empty plot</span></span>
+<span id="cb2-6"><a href=""></a><span class="fu">plot</span>(<span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb2-7"><a href=""></a>     <span class="at">type =</span> <span class="st">"n"</span>,</span>
+<span id="cb2-8"><a href=""></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),</span>
+<span id="cb2-9"><a href=""></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.03</span>, h <span class="sc">+</span> <span class="fl">0.05</span>),</span>
+<span id="cb2-10"><a href=""></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-11"><a href=""></a>     <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb2-12"><a href=""></a>     <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb2-13"><a href=""></a></span>
+<span id="cb2-14"><a href=""></a><span class="co"># x-axis with arrow</span></span>
+<span id="cb2-15"><a href=""></a><span class="fu">arrows</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">0</span>, <span class="at">length =</span> <span class="fl">0.08</span>)</span>
+<span id="cb2-16"><a href=""></a></span>
+<span id="cb2-17"><a href=""></a><span class="co"># Rectangle</span></span>
+<span id="cb2-18"><a href=""></a><span class="fu">rect</span>(a, <span class="dv">0</span>, b, h)</span>
+<span id="cb2-19"><a href=""></a></span>
+<span id="cb2-20"><a href=""></a><span class="co"># Dashed vertical sides</span></span>
+<span id="cb2-21"><a href=""></a><span class="fu">segments</span>(a, <span class="dv">0</span>, a, h, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb2-22"><a href=""></a><span class="fu">segments</span>(b, <span class="dv">0</span>, b, h, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb2-23"><a href=""></a></span>
+<span id="cb2-24"><a href=""></a><span class="co"># Labels</span></span>
+<span id="cb2-25"><a href=""></a><span class="fu">text</span>(a, <span class="sc">-</span><span class="fl">0.012</span>, <span class="st">"a"</span>)</span>
+<span id="cb2-26"><a href=""></a><span class="fu">text</span>(b, <span class="sc">-</span><span class="fl">0.012</span>, <span class="st">"b"</span>)</span>
+<span id="cb2-27"><a href=""></a><span class="fu">text</span>(a <span class="sc">-</span> <span class="fl">0.55</span>, h<span class="sc">/</span><span class="dv">2</span>, <span class="fu">expression</span>(<span class="fu">frac</span>(<span class="dv">1</span>, b<span class="sc">-</span>a)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="03a-intro-prob_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="example-uniform-distribution-u33.5" class="slide level2">
+<h2>Example: Uniform Distribution <span class="math inline">\(U(3,\,3.5)\)</span></h2>
+<ul>
+<li><p>Suppose Adam arrives at a coffee shop <strong>at a random time</strong> between <strong>3:00 pm and 3:30 pm</strong>.</p></li>
+<li><p>Every arrival time in this interval is equally likely.</p></li>
+<li><p>Let <span class="math inline">\(X\)</span> denote Adam’s arrival time. Then <span class="math display">\[X \sim U(3,\,3.5).\]</span></p></li>
+</ul>
+</section>
+<section id="pdf-of-u33.5" class="slide level2">
+<h2>PDF of <span class="math inline">\(U(3,\,3.5)\)</span></h2>
+<div style="font-size: 0.75em;">
+<p><span class="math display">\[
+f(x)=
+\begin{cases}
+\dfrac{1}{3.5-3}=2, &amp; 3&lt;x&lt;3.5,\\[1ex]
+0, &amp; \text{otherwise.}
+\end{cases}
+\]</span></p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>a <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb3-2"><a href=""></a>b <span class="ot">&lt;-</span> <span class="fl">3.5</span></span>
+<span id="cb3-3"><a href=""></a>h <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>(b<span class="sc">-</span>a)</span>
+<span id="cb3-4"><a href=""></a></span>
+<span id="cb3-5"><a href=""></a><span class="fu">plot</span>(<span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb3-6"><a href=""></a>     <span class="at">type =</span> <span class="st">"n"</span>,</span>
+<span id="cb3-7"><a href=""></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">2.8</span>, <span class="fl">3.7</span>),</span>
+<span id="cb3-8"><a href=""></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.15</span>, <span class="fl">2.3</span>),</span>
+<span id="cb3-9"><a href=""></a>     <span class="at">axes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb3-10"><a href=""></a>     <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>)</span>
+<span id="cb3-11"><a href=""></a></span>
+<span id="cb3-12"><a href=""></a><span class="fu">arrows</span>(<span class="fl">2.8</span>, <span class="dv">0</span>, <span class="fl">3.7</span>, <span class="dv">0</span>, <span class="at">length =</span> <span class="fl">0.08</span>)</span>
+<span id="cb3-13"><a href=""></a></span>
+<span id="cb3-14"><a href=""></a><span class="fu">rect</span>(a, <span class="dv">0</span>, b, h)</span>
+<span id="cb3-15"><a href=""></a></span>
+<span id="cb3-16"><a href=""></a><span class="fu">segments</span>(a, <span class="dv">0</span>, a, h, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb3-17"><a href=""></a><span class="fu">segments</span>(b, <span class="dv">0</span>, b, h, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb3-18"><a href=""></a></span>
+<span id="cb3-19"><a href=""></a><span class="fu">text</span>(a, <span class="sc">-</span><span class="fl">0.08</span>, <span class="st">"3"</span>)</span>
+<span id="cb3-20"><a href=""></a><span class="fu">text</span>(b, <span class="sc">-</span><span class="fl">0.08</span>, <span class="st">"3.5"</span>)</span>
+<span id="cb3-21"><a href=""></a><span class="fu">text</span>(a<span class="fl">-0.08</span>, h<span class="sc">/</span><span class="dv">2</span>, <span class="st">"2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03a-intro-prob_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="probability-is-the-area-under-the-pdf" class="slide level2">
+<h2>Probability Is the Area Under the PDF</h2>
+<p>The probability of an interval is the <strong>area under the PDF</strong>.</p>
+<p>For example,</p>
+<p><span class="math display">\[
+P(3.1&lt;X&lt;3.3)
+=
+2\times(3.3-3.1)
+=
+0.40.
+\]</span></p>
+<ul>
+<li>the <strong>height</strong> of the PDF is 2,</li>
+<li>the <strong>probability</strong> is the area between 3.1 and 3.3, which is a rectangle with width <span class="math inline">\(3.3-3.1=0.20\)</span> and height <span class="math inline">\(2\)</span>. So the area is: <span class="math inline">\(2\times0.20=0.40.\)</span></li>
+</ul>
+</section>
+<section id="probability-and-area-under-the-pdf" class="slide level2">
+<h2>Probability and Area Under the PDF</h2>
+<p>For <span class="math inline">\(X\si mU(3, 3.5)\)</span>, similarly, we can find the probability of any interval by calculating the area under the PDF.</p>
+<ul>
+<li><p><span class="math inline">\(P(3.09&lt;X&lt;3.11)=2\times(3.11-3.09)=0.04\)</span></p></li>
+<li><p><span class="math inline">\(P(3.099&lt;X&lt;3.101)=2\times(3.101-3.099)=0.004\)</span></p></li>
+<li><p>Can you guess what <span class="math inline">\(P(X=3.1)\)</span> is?</p></li>
+</ul>
+</section>
+<section id="a-pdf-is-not-a-probability-function" class="slide level2">
+<h2>A PDF Is <strong>Not</strong> a Probability Function</h2>
+<div style="font-size: 0.75em;">
+<ul>
+<li><p>In the <span class="math inline">\(X\sim U(3,\,3.5)\)</span> example, the pdf is <span class="math inline">\(f(x)=2\)</span> for <span class="math inline">\(3&lt;x&lt;3.5\)</span>.</p></li>
+<li><p>From the previous slide, <span class="math inline">\(P(X=3.1)=0\)</span>.</p></li>
+<li><p>So <span class="math inline">\(fx\)</span> <strong>cannot</strong> be the probability that <span class="math inline">\(X=x\)</span>.</p></li>
+</ul>
+<p><strong>A PDF gives the density of probability, not the probability itself.</strong></p>
+<p><strong>Key idea:</strong></p>
+<ul>
+<li><p>For a discrete random variable, probability is assigned to individual values.</p></li>
+<li><p>For a continuous random variable, probability is assigned to intervals.</p></li>
+</ul>
+</div>
+</section>
+<section id="probability-density-function-1" class="slide level2">
+<h2>Probability Density Function</h2>
+<p>A probability density function (pdf) has two key properties:</p>
+<ul>
+<li><p>The <strong>total area</strong> under the density curve is <strong>1</strong>.</p></li>
+<li><p>The probability that a continuous random variable falls within an interval is the <strong>area under the density curve</strong> over that interval.</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -1206,66 +1342,6 @@ P(x_1 &lt; X \le x_2) = P(X \le x_2) - P(X \le x_1).
 <li><p>For example, the probability of a BMI between 25 and 30 is <span class="math display">\[\begin{equation*}
 P(25 &lt; X \le 30) = P(X \le 30) - P(X \le 25).
 \end{equation*}\]</span></p></li>
-</ul>
-</section>
-<section id="continuous-uniform-distribution" class="slide level2">
-<h2>Continuous Uniform Distribution</h2>
-<ul>
-<li><p>We previously saw discrete uniform distribution; we now discuss its continuous version.</p></li>
-<li><p>Let <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> be two real numbers, so that <span class="math inline">\(a&lt;b\)</span>. The following the pdf of a <strong>continuous uniform distribution</strong>:</p></li>
-</ul>
-<p><span class="math display">\[f(x) = \left\{ \begin{array}{l@{\quad}l}
-\frac{1}{b-a}  &amp; a&lt;x&lt;b  \\
-0 &amp; \mbox{otherwise} \\
-\end{array} \right.\]</span></p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="img/cont_unif_dist.png" class="quarto-figure quarto-figure-center" style="width:50.0%;height:60.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="a-pdf-is-not-a-probability-function" class="slide level2">
-<h2>A PDF Is <strong>Not</strong> a Probability Function</h2>
-<p>Suppose <span class="math inline">\(X\sim\text{Uniform}(0,0.5).\)</span></p>
-<p>Then</p>
-<p><span class="math display">\[
-f(x)=
-\begin{cases}
-2, &amp; 0&lt;x&lt;0.5,\\
-0, &amp; \text{otherwise}.
-\end{cases}
-\]</span></p>
-<p>Notice that <span class="math inline">\(f(0.25)=2.\)</span> So <span class="math inline">\(f(0.25)\)</span> <strong>cannot</strong> be the probability that <span class="math inline">\(X=0.25\)</span>.</p>
-<p>In fact, <span class="math inline">\(P(X=0.25)=0.\)</span></p>
-<p><strong>A PDF gives the density of probability, not the probability itself.</strong></p>
-</section>
-<section id="probability-is-the-area-under-the-pdf" class="slide level2">
-<h2>Probability Is the Area Under the PDF</h2>
-<p>For <span class="math inline">\(X\sim\text{Uniform}(0,0.5),\)</span></p>
-<p>the probability of an interval is the <strong>area under the PDF</strong>.</p>
-<p>For example,</p>
-<p><span class="math display">\[
-P(0.10&lt;X&lt;0.30)
-=
-2\times(0.30-0.10)
-=
-0.40.
-\]</span></p>
-<ul>
-<li>the <strong>height</strong> of the PDF is 2,</li>
-<li>the <strong>probability</strong> is the area between 0.10 and 0.30, which is a rectangle with width <span class="math inline">\(0.30-0.10=0.20\)</span> and height <span class="math inline">\(2\)</span>. So the area is: <span class="math inline">\(2\times0.20=0.40.\)</span></li>
-</ul>
-</section>
-<section id="section-6" class="slide level2">
-<h2></h2>
-<p><strong>Key idea:</strong></p>
-<ul>
-<li>For a discrete random variable, probability is assigned to individual values.</li>
-<li>For a continuous random variable, probability is assigned to intervals.</li>
 </ul>
 </section>
 <section id="normal-distribution" class="slide level2">
@@ -1369,7 +1445,7 @@ P(0.10&lt;X&lt;0.30)
 <p>Each person inherits one allele from the mother, and one allele from the father.</p>
 <p>There are three possible alleles: A, B, and O.</p>
 </section>
-<section id="section-7" class="slide level2">
+<section id="section-6" class="slide level2">
 <h2></h2>
 <p>The six possible genotypes are</p>
 <table class="caption-top">
@@ -1446,7 +1522,7 @@ P(0.10&lt;X&lt;0.30)
 </tbody>
 </table>
 </section>
-<section id="section-8" class="slide level2">
+<section id="section-7" class="slide level2">
 <h2></h2>
 <p>The genotype distribution gives the blood type distribution</p>
 <table class="caption-top">
