@@ -1,0 +1,1118 @@
+---
+format:
+  revealjs:
+    title-slide: false   
+    theme: [default]
+#    smaller: true
+    chalkboard: true
+    scrollable: true
+    self-contained: false
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slideNumber: true
+    transition: "fade"
+    progress: true
+    controls: false
+    ratio: 3:2
+    echo: true
+    code-fold: true
+    footer: |
+      <img src="img/cosmos-uci-dshs.png"
+           style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;">
+---
+
+::::: {style="display: flex; align-items: center; justify-content: space-between;"}
+::: {style="flex: 0 0 40%;"}
+<img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;"/>
+:::
+
+::: {style="flex: 0 0 55%; text-align: left;"}
+<h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">
+
+Linear Regression
+
+</h1>
+
+<p style="color: #153e6c; font-size: 1.8em;">
+
+Zhaoxia Yu
+
+</p>
+:::
+:::::
+
+## Load packages, read data
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
+  mutate(diagnosis = as.factor(diagnosis), 
+         female = as.factor(female),
+         hippo=lhippo+rhippo)
+
+
+alzheimer_healthy <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  mutate(hippo=lhippo+rhippo, 
+         diagnosis = as.factor(diagnosis), 
+         female = as.factor(female)) %>% filter(diagnosis==0)
+
+
+#define the subset of older (>45) healthy subjects
+alzheimer_healthy_old <- alzheimer_healthy %>% filter(age>45)
+```
+
+## Outline
+
+-   Introduction
+    -   Correlation and Linear Regression
+-   Linear Regression
+    -   The Response Variable
+    -   One explanatory variable
+        -   Ex1. A numerical X: hippo \~ age
+        -   Ex2. A Binary X: hippo \~ female
+        -   Ex3. A categorical Variables X: hippo \~ diagnosis
+
+## Outline
+
+-   Multiple Linear Regression
+    -   Motivating Example
+    -   Can the difference be explained by height?
+-   Outliers and model Diagnostics
+
+::: {style="font-size: 100%; color: gray"}
+-   Advanced Topics
+    -   Interactions
+    -   Transform $X$ and $Y$
+:::
+
+# Introduction
+
+## Review: Example 6 of Day 5
+
+-   **Question**: Is hippocampal volume correlated with age in healthy adults?
+
+-   We mentioned a correlation test, but we did not discuss the details the relationship between hippocampal volume and age.
+
+-   Is linear appropriate for the whole age range? What about the age range of 45+?
+
+-   How can be better understand the relationship between hippocampal volume and age? Correlation doesn't provide an answer to this question. We need linear regression.
+
+## Example: Left vs Right Hippocampal Volume
+
+```{r}
+#| fig-align: center
+#plot(alzheimer_healthy$age, alzheimer_healthy$hippo, xlab="age", ylab="hippo")
+
+ggplot(alzheimer_healthy, aes(x=age, y=hippo)) +
+  geom_point() + 
+  labs(x = "age", y="hippo volume", title="hippo volume vs age")
+```
+
+-   The relationship is roughly (negatively) linear except for age \<45.
+
+## Linear Relationship
+
+```{r}
+#| fig-align: center
+
+ggplot(alzheimer_healthy, aes(x=lhippo, y=rhippo)) +
+  geom_point() + 
+  labs(x = "left hippo", y="right hippo", title="hippo volume")
+
+
+```
+
+## Strong vs Weak Linear Relationship
+
+```{r}
+#| fig-align: center
+
+par(mfrow=c(1,2))
+plot(alzheimer_healthy$lhippo, alzheimer_healthy$rhippo,
+     xlab = "left hippo", ylab="right hippo", main="hippo volume")
+plot(alzheimer_healthy$weight, alzheimer_healthy$hippo,
+     xlab = "weight", ylab="hippo", main="hippo vs weight")
+
+```
+
+## Correlation vs Linear Regression
+
+-   Correlation is a measure of the strength of **linear** relationship between two continuous variables.
+
+Correlation between left and right hippo volume
+
+```{r}
+#| fig-align: center
+cor(alzheimer_healthy$lhippo, alzheimer_healthy$rhippo)
+```
+
+Correlation between weight and hippo volume
+
+```{r}
+cor(alzheimer_healthy$weight, alzheimer_healthy$hippo)
+```
+
+## Why Is Linear Regression Useful?
+
+::: {style="font-size: 90%;"}
+
+-   Understand relationships: Quantify how the expected outcome changes as a predictor changes.
+
+    -   Example: How much does the expected hippocampal volume change with a one-year increase in age?
+
+-   Adjust for other variables: Estimate the effect of one predictor while accounting for other relevant variables.
+
+    -   This is especially important in observational studies, where many factors may influence the outcome.
+
+-   Make predictions: Predict the expected outcome for a new individual.
+
+    -Example: What is the predicted hippocampal volume for a 46-year-old healthy woman?
+
+:::
+
+# Linear Regression
+
+## The Response Variable
+
+-   In a linear model, the **response variable** is the variable that we are trying to predict or explain.
+
+-   A **response variable** is also known as a **dependent variable**.
+
+-   It is the outcome or the variable that is being studied and modeled as a function of one or more **explanatory** (**independent**) variables.
+
+-   We often use $y$ to represent the response variable.
+
+
+# Simple Linear Regression (SLM)
+
+
+## Simple Linear Regression
+
+-   It is the regression model with only one $x$ (explanatory variable).
+
+-   It can be used to assess the **linear relationship** between two variables. Example, age and hippocampal volume in healthy older (45+) subjects
+
+```{r}
+#| fig-align: center
+ggplot(alzheimer_healthy_old, aes(x=age, y=hippo)) +
+  geom_point() + 
+  labs(x = "age", y="hippo", title="hippo volume vs age in healthy older subjects (45+)")
+
+```
+
+## The Model
+
+::: {style="font-size: 75%;"}
+-   The linear model is represented as:
+
+$$y=\beta_0 + \beta_1 x + \epsilon$$
+
+-   $y$: Response variable (dependent variable)
+
+-   $x$: Explanatory variable (independent variable)
+
+-   $\beta_0$: Intercept (constant term)
+
+-   $\beta_1$: Slope (rate of change)
+
+-   $\epsilon$: Error term (residuals)
+
+-   It is also common to add subject indices: $y_i=\beta_0 + \beta_1 x_i + \epsilon_i, i=1, \cdots, n$
+:::
+
+## Model Assumptions
+
+-   $y_i=\beta_0 + \beta_1 x_i + \epsilon_i, i=1, \cdots, n$
+-   The $n$ observations are independent
+-   Reasonably large $n$ or normality assumption for $\epsilon_i$
+-   Homogeneous variance: $\epsilon_i \sim N(0, \sigma^2)$. Note that this assumption implies that $Var(y_i)=\sigma^2$.
+-   This is assumption is also known as homoscedasticity.
+
+## Least Squares Estimate
+-   The most common method to estimate $\beta_0$ and $\beta_1$ is the **least squares estimate**.
+
+-   The least squares estimate minimizes the sum of squared residuals, which is the difference between the observed values and the predicted values.
+
+-   Among all possible lines we can pass through the data, the regression lines has the smallest Residual Sum of Squares. 
+
+
+## Least Squares Estimate
+
+```{r}
+#| fig-align: center
+#| echo: FALSE
+# Fit the linear model
+fit <- lm(hippo ~ age, data = alzheimer_healthy_old)
+a <- coef(fit)[1]  # intercept
+b <- coef(fit)[2]  # slope
+
+# Data center (mean of x and y)
+xbar <- mean(alzheimer_healthy_old$age)
+ybar <- mean(alzheimer_healthy_old$hippo)
+
+# Define x range
+age_seq <- seq(min(alzheimer_healthy_old$age), max(alzheimer_healthy_old$age), length.out = 100)
+
+# Fitted line (red)
+fitted_line <- data.frame(
+  age = age_seq,
+  hippo = a + b * age_seq,
+  label = "Fitted line"
+)
+
+# Line (i): intercept = 0.8a, slope = b
+line_i <- data.frame(
+  age = age_seq,
+  hippo = 0.5 * a - 0.5 - b * age_seq,
+  label = "line 1"
+)
+
+# Line (ii): passes through (x̄, ȳ) with slope = 1.4 * b → solve for intercept
+slope_ii <- 1.4 * b
+intercept_ii <- ybar - slope_ii * xbar
+line_ii <- data.frame(
+  age = age_seq,
+  hippo = intercept_ii + 0.2 + slope_ii * age_seq,
+  label = "line 2"
+)
+
+# Line (iii): passes through (x̄, ȳ) with slope = 0.7 * b
+slope_iii <- 0.7 * b
+intercept_iii <- ybar - slope_iii * xbar
+line_iii <- data.frame(
+  age = age_seq,
+  hippo = intercept_iii +0.1 + slope_iii * age_seq,
+  label = "line 3"
+)
+
+# Combine all lines
+all_lines <- bind_rows(line_i, line_ii, line_iii, fitted_line)
+
+# Plot
+ggplot(alzheimer_healthy_old, aes(x = age, y = hippo)) +
+  geom_point(alpha = 0.5) +
+  geom_line(data = all_lines, aes(x = age, y = hippo, group = label,
+                                  color = label), linewidth = 1) +
+  scale_color_manual(values = c(
+    "Fitted line" = "red",
+    "line 1" = "blue",
+    "line 2" = "blue",
+    "line 3" = "blue"
+  )) +
+  labs(
+#    title = "Fitted Line vs Alternative Lines",
+#    subtitle = "Least Squares Line (red) and Other Reasonable Candidates",
+    x = "Age",
+    y = "Total Hippocampal Volume",
+    color = "Line",
+    linetype = "Line"
+  ) +
+  theme_minimal()
+
+```
+
+
+## What does LSE Do?
+
+![](img/LSE.png)
+
+
+::: {style="font-size: 80%; color: gray"}
+## Least Squares Estimate: Formulars
+
+-   Least Squares Estimate: looking for $\hat\beta_0$ and $\hat\beta_1$ that minimizes $\sum_{i=1}^n (y_i - \beta_0 -\beta_1 x_i)^2$.
+
+-   Other notations: $$b_0=\hat \beta_0, b_1=\hat\beta_1$$
+
+-   The process of finding $(b_0, b_1)$ involves solving two linear equations jointly.
+
+    -   $b_0=\hat\beta_0=\bar{y}-b_1\bar{x}$
+    -   $b_1=\hat\beta_1=\dfrac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-
+        \bar{y})}{\sum_{i=1}^{n}(x_i-\bar{x})^2}$
+:::
+
+# Interpretation of Simple Linear Regression
+
+## Ex 1: hippo ~ age
+
+```{r}
+#define an lm object
+obj.age.hippo=lm(hippo~age, data=alzheimer_healthy_old)
+summary(obj.age.hippo) 
+```
+
+## Ex 1: The Fitted Line
+
+-   The fitted line is $hippo = 8.42 - 0.029 \times age$
+
+```{r}
+#| fig-align: center
+ggplot(alzheimer_healthy_old, aes(x=age, y=hippo)) +
+  geom_point() + 
+  labs(x = "age", y="hippo", title="hippo vs age")+
+   geom_smooth(method='lm', se=FALSE)
+```
+
+## Ex 1: Interpret the Intercept
+
+::: {style="font-size: 90%;"}
+
+-   Interpretation of $b_0=8.42$
+    -   mathematically, it is the estimated hippocampal value for a person at age=0.
+    -   statistically, this interpretation involves **extrapolation**, which should be avoided. Rational:
+        -   The linear trend we observed is for healthy subjects who are 45 or older.
+        -   It is dangerous to assume that the same linear trend holds at around age 0.
+:::
+
+
+## Ex 1: The Slope
+
+- How to interpret $b_1= - 0.029$?
+
+- What if we increase age by 1 year? 
+
+- Recall that the fitted line is $hippo = 8.42 - 0.029 \times age$
+  - $hippo_0 = 8.42 - 0.029 \times x$
+  - $hippo_1 = 8.42 - 0.029 \times (x+1)$
+- Therefore, $hippo_1 - hippo_0 = -0.029$, which means that the estimated hippocampal volume decreases by 0.029 cc for each additional year of age.
+- When reporting an estimated slope, it is also important to report **uncertainty**, such as standard error, confidence interval, and  p-value. See next five slides.
+
+
+
+
+## Residuals
+
+::: {style="font-size: 100%; color: gray"}
+-   $e_i = y_i - \hat y_i$ where $\hat y_i = \hat\beta_0 + \hat \beta_1 x_i$
+-   Residual sum of squares (RSS): $RSS=\sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i -\hat y_i)^2$
+-   An unbiased estimate of $\sigma^2$ is $s^2$: $$s^2= \frac{RSS}{n-2}$$
+:::
+
+## Standard Error and Confidence Interval
+
+::: {style="font-size: 100%; color: gray"}
+-   The standard error of $\hat\beta_1$ is $$se(\hat \beta_1)=\frac{\sqrt{s^2}}{\sqrt{\sum (x_i - \bar{x})^2}}$$
+:::
+
+-   A $100(1-\alpha)\%$ confidence interval for $\beta_1$ is $$\hat\beta_1 \pm t_{1-\alpha / 2, n - 2} se(\hat\beta_1)$$
+
+## Ex 1: SE and p-value
+
+-   The estimated slope ($b_1$) is -0.029, its standard error is 0.001818, and the p-value is $<2e-16$; the linear relationship is significant at level 0.05.
+
+```{r}
+summary(obj.age.hippo)$coefficients
+```
+
+## Ex 1: Confidence Interval
+
+-   The estimated slope ($b_1$) is -0.029.
+-   A 95% confidence interval is (-0.033, -0.026).
+
+```{r}
+confint(obj.age.hippo)
+```
+
+
+## Estimation vs Prediction
+
+::: {style="font-size: 80%"}
+
+-   Why are the answers to the following two questions different? 
+
+-   **Question 1**: What is the estimated mean hippocampal volume for 46-year-old women?
+
+```{r}
+predict(obj.age.hippo, newdata = data.frame(age=46), interval = 'confidence')
+```
+
+-   **Question 2**: What is the predicted hippocampal volume for a 46-year-old woman?
+
+```{r}
+predict(obj.age.hippo, newdata = data.frame(age=46), interval = 'predict')
+```
+
+:::
+
+
+## Ex 2: A Binary X
+
+-   Now, consider the relationship between hippocampal volume and gender (the ``female`` variable in the data)
+
+```{r}
+#| fig-align: center
+
+ggplot(alzheimer_healthy_old, aes(x=female, y=hippo)) +
+  geom_point() + 
+  labs(x = "female", y="hippo", title="hippo vs female")+
+   geom_smooth(method='lm', se=FALSE)
+```
+
+## Ex2: Boxplots by gender are better
+
+```{r}
+#| fig-align: center
+
+ggplot(alzheimer_healthy_old, aes(x=female, y=hippo, fill=female)) +
+  geom_boxplot() + 
+  labs(x = "female", y="hippo", title="hippo vs female")
+```
+
+## Ex2: Intercept and Slope
+
+```{r, warning=FALSE}
+#| echo: FALSE
+#| fig-align: center
+# Fit model
+fit <- lm(hippo ~ female, data = alzheimer_healthy_old)
+b0 <- coef(fit)[1]
+b1 <- coef(fit)[2]
+
+# Means for plotting
+means_df <- data.frame(
+  female = c(0, 1),
+  hippo = c(b0, b0 + b1)
+)
+
+# Create plot
+ggplot(alzheimer_healthy_old, aes(x = as.numeric(as.character(female)), y = hippo)) +
+  geom_jitter(width = 0.05, alpha = 0.4, color = "gray50") +
+  
+  # Regression line and means
+  geom_line(data = means_df, aes(x = female, y = hippo), color = "black", linewidth = 1) +
+  geom_point(data = means_df, aes(x = female, y = hippo), color = "black", size = 4) +
+  
+  # Label and dotted line for b0
+  annotate("text", x = -0.05, y = b0, label = "b0", vjust = -1.2, fontface = "bold") +
+  geom_segment(aes(x = -0.2, xend = 1.2, y = b0, yend = b0), linetype = "dotted") +
+  
+  # Bracket and label for b1
+  annotate("text", x = 1.05, y = b0 + b1 / 2, label = "b1", fontface = "bold") +
+  geom_segment(aes(x = 1, xend = 1, y = b0, yend = b0 + b1),
+               arrow = arrow(length = unit(0.15, "cm"), ends = "both"),
+               linewidth = 0.5, color = "black") +
+  
+  scale_x_continuous(breaks = c(0, 1), labels = c("Male", "Female"), limits = c(-0.2, 1.2)) +
+  coord_cartesian(ylim = c(min(alzheimer_healthy_old$hippo) , max(alzheimer_healthy_old$hippo) )) +
+  
+  labs(
+    x = "Gender",
+    y = "Total Hippocampal Volume",
+#    title = "Visualizing Intercept (b0) and Slope (b1) in Binary Linear Model"
+  ) +
+  theme_bw(base_size = 14)
+
+```
+
+
+## Ex2: Summarize Results and CI
+
+```{r}
+# Fit model
+fit <- lm(hippo ~ female, data = alzheimer_healthy_old)
+
+# Coefficient estimates
+summary(fit)$coefficients
+
+# 95% confidence intervals
+confint(fit)
+```
+
+## Ex2: Results and Interpretation
+
+::: {style="font-size: 90%"}
+-   The slope $b_1=-0.4887882$ is the estimated difference between women and men in hippocampal volume
+
+- In summary, 
+  - estimated mean hippocampal volume for men: 6.748
+  - estimated mean hippocampal volume for women: 6.748-0.489=6.259
+
+
+- **Intercept**: $b_0=6.74$ is the estimated hippocampal volume for men (female=0) and its SE is 0.033.
+
+- **Slope** (female coefficient): Women have an estimated mean hippocampal volume that is 0.482 units lower than men (SE = 0.040; P < 0.001).
+
+:::
+
+
+##
+
+- In a simple linear regression, when $x$ is a binary variable, the estimated slope is the mean difference between the two groups.
+
+-   Let's verify this using two-sample t-test
+
+```{r}
+t.test(hippo~female, data=alzheimer_healthy_old, var.equal =T)
+```
+
+## Categorical Variables in Linear Regression
+
+-   Categorical variables can be included in linear regression models as factors.
+-   Consider the dignosis variable in the alzheimer data, which has three levels: 0 (healthy), 1 (MCI), and 2 (AD).
+-   What happens if we use it as a numeric variable (this might not be appropriate in many situations)
+-   What happens if we use it as a categorical variable (this is the most appropriate way in this case).
+
+## Ex3: When mistakenly treating diagonosis as a numerical variable
+
+-   When using the numerical coding, the model assumes a linear relationship between diagnosis and hippocampal volume:
+    -   It assumes that mean difference between MCI and healthy is the same as the mean difference between AD and MCI.
+    -   This might not be the most appropriate way.
+
+```{r}
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
+#  mutate(diagnosis = as.factor(diagnosis), female = as.factor(female), hippo=lhippo+rhippo)
+  mutate(hippo=lhippo+rhippo)
+
+#Note that factor here was not treated as a categorical variable, it is treated a numerical variable
+summary(lm(hippo ~ diagnosis, data=alzheimer_data))
+```
+
+## Ex3: When mistakenly treating diagonosis as a numerical variable
+
+```{r}
+#| fig-align: center
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% mutate(female = as.factor(female), hippo = lhippo + rhippo)
+
+# Fit model treating diagnosis as factor
+fit <- lm(hippo ~ diagnosis, data = alzheimer_data)
+coefs <- coef(fit)
+
+# Model-based means for each group
+model_means <- data.frame(
+  diagnosis = c("Healthy", "MCI", "AD"),
+  hippo = c(coefs[1], coefs[1] + coefs[2], coefs[1] + 2*coefs[2]),
+  label = c("b0", "b0 + b1", "b0 + 2*b1")
+)
+
+alzheimer_data <- mutate(alzheimer_data, diagnosis = factor(diagnosis, levels=c("0","1","2"), labels = c("Healthy", "MCI", "AD")))
+# Plot
+ggplot(alzheimer_data, aes(x = diagnosis, y = hippo)) +
+  geom_boxplot(fill = "#dceeff", outlier.shape = NA) +
+  
+  # Add model-predicted means and connect them
+  geom_point(data = model_means, aes(y = hippo), color = "red", size = 3) +
+  geom_line(data = model_means, aes( y = hippo, group = 1), color = "black", linewidth = 1) +
+  
+  # Label model means
+  geom_text(data = model_means, aes(x=1:3+0.2,y = hippo + 0.5, label = label), color = "red", size = 4) +
+  
+  labs(
+    x = "Diagnosis",
+    y = "Total Hippocampal Volume",
+    title = "Linear Model Estimates with Diagnosis as Numerical"
+  ) +
+  theme_minimal()
+
+```
+
+## Use diagnosis as a Categorical Variables in Linear Regression
+
+-   Instead, we can treat diagnosis as a categorical variable (factor).
+
+-   R automatically does dummy coding to create two binary variables: one for MCI and one for AD, with healthy as the reference group.
+
+## 
+In this example
+
+-  The estimated intercept is the estimated mean for the reference group (healthy, ``diagnosis``=1).
+
+- The two slopes are represent the estimated difference between each diagnosis group and the reference group (healthy).
+
+- Based on the following R output, the estimated mean for healthy is ( ), for MCI is ( ), and for AD is ( ).
+
+```{r}
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
+  mutate(diagnosis = as.factor(diagnosis), female = as.factor(female), hippo=lhippo+rhippo)
+
+summary(lm(hippo ~ diagnosis, data=alzheimer_data))
+```
+
+
+## Ex3: Recode ``diagnosis``
+
+-   We can also recode the values of diagnosis to make it more readable.
+
+```{r}
+alzheimer_data <- alzheimer_data %>% 
+  mutate(diagnosis = recode(diagnosis, `0` = "Healthy", `1` = "MCI", `2` = "AD"), hippo=lhippo+rhippo)
+summary(lm(hippo ~ diagnosis, data=alzheimer_data))
+```
+
+
+## Change Reference Group
+
+-   If we want to use the AD group as the reference group, we can use the `relevel` function to change the reference level of the factor variable.
+
+```{r}
+alzheimer_data <- alzheimer_data %>% 
+  mutate(diagnosis = relevel(diagnosis, ref = "AD"), hippo=lhippo+rhippo)
+summary(lm(hippo ~ diagnosis, data=alzheimer_data))
+```
+
+
+## Ex3: Coefficients and Group Means
+
+```{r}
+#| fig-align: center
+#| echo: FALSE
+# Load and prepare data
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% mutate(
+    diagnosis = factor(diagnosis, levels=c("0","1","2"), labels = c("Healthy", "MCI", "AD")), female = as.factor(female), hippo = lhippo + rhippo)
+
+# Fit model treating diagnosis as factor
+fit <- lm(hippo ~ diagnosis, data = alzheimer_data)
+coefs <- coef(fit)
+
+# Model-based means for each group
+model_means <- data.frame(
+  diagnosis = c("Healthy", "MCI", "AD"),
+  hippo = c(coefs[1], coefs[1] + coefs[2], coefs[1] + coefs[3]),
+  label = c("b0", "b0+b1", "b0 + b2")
+)
+
+# Plot
+ggplot(alzheimer_data, aes(x = diagnosis, y = hippo)) +
+  geom_boxplot(fill = "#dceeff", outlier.shape = NA) +
+  
+  # Add model-predicted means and connect them
+  geom_point(data = model_means, aes(y = hippo), color = "red", size = 3) +
+  geom_line(data = model_means, aes( y = hippo, group = 1), color = "black", linewidth = 1) +
+  
+  # Label model means
+  geom_text(data = model_means, aes(x=1:3+0.2,y = hippo + 0.5, label = label), color = "red", size = 4) +
+  
+  labs(
+    x = "Diagnosis",
+    y = "Total Hippocampal Volume",
+    title = "Linear Model Estimates with Diagnosis as Factor"
+  ) +
+  theme_minimal()
+
+```
+
+
+## Linear Regression and ANOVA
+
+::: {style="font-size: 90%;"}
+
+-   For a binary X (Ex2), linear regression can perform a two-sample t-test (equal variance). 
+
+-   In a categorical X (Ex3), a Linear regression provides information about the means. 
+
+  - If we would like to test whether the categorical variable diagnosis is associated with hippo, we can use either linear regression or analysis of variance (ANOVA).
+
+  - ANOVA is to examine whether the means of different groups are equal. In this case, we want to test whether the mean hippocampal volume is the same for healthy, MCI, and AD groups.
+
+:::
+
+
+## Conduct ANOVA Using Linear Regression
+
+-   Two ways to preform ANOVA using linear regression:
+    -   Using the `lm` function to fit the model and then using 
+
+```{r}
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% mutate(
+    diagnosis = factor(diagnosis, levels=c("0","1","2"), labels = c("Healthy", "MCI", "AD")), female = as.factor(female), hippo = lhippo + rhippo)
+
+summary(lm(hippo~diagnosis, data=alzheimer_data))
+anova(lm(hippo~diagnosis, data=alzheimer_data))
+```
+
+## Conduct ANOVA Using Linear Regression
+
+-   Two ways to preform ANOVA using linear regression:
+    -   Using the `aov` function
+
+```{r}
+alzheimer_data <- read.csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv", head=T) %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% mutate(
+    diagnosis = factor(diagnosis, levels=c("0","1","2"), labels = c("Healthy", "MCI", "AD")), female = as.factor(female), hippo = lhippo + rhippo)
+summary(aov(hippo~diagnosis, data=alzheimer_data))
+```
+
+
+# Multiple Linear Regression
+
+## Ex4: Motivating Example
+
+-   In Ex 2 we found that healthy men and womean have different hippocampal volume. 
+
+-   Men and women are also different in height.
+
+-   Does height explain the difference in hippocampal volume between men and women?
+
+- We can answer this question using multiple linear regression.
+
+
+## Can the difference be explained by height?
+
+```{r}
+#| fig-align: center
+ggplot(alzheimer_healthy_old, aes(x=height, y=hippo, color=female))+geom_point()
+```
+
+## The adjusted difference
+
+```{r}
+summary(lm(hippo ~ height + female, data=alzheimer_healthy_old))$coefficients
+```
+
+-   The **adjusted** difference between men and women
+
+    -   has a much smaller difference
+    -   is less significant
+
+## Interpret the Coefficients in a multiple regression
+
+::: {style="font-size: 90%;"}
+
+-   In this multiple regression, the fitted model is $$y=1.805 + 0.071 *height - 0.087 *female$$
+
+- How to interpret the coefficients?
+
+- The model we fit gives two **parallel** fitted lines, i.e., men and women have the same slope but different intercepts.
+
+    -   men: y=1.805 + 0.071 \*height
+    -   women: y=(1.805- 0.087) + 0.071 \*height
+
+:::
+
+
+## Interpret the Coefficient of `female`
+
+-   The slope -0.087 is the estimated difference between women and men with the same height.
+
+```{r}
+#| fig-align: center
+
+# Fit additive model
+fit <- lm(hippo ~ height + female, data = alzheimer_healthy_old)
+
+# Create prediction grid
+newdat <- expand.grid(
+  height = seq(min(alzheimer_healthy_old$height),
+               max(alzheimer_healthy_old$height),
+               length.out = 100),
+  female = levels(alzheimer_healthy_old$female)
+)
+
+newdat$pred <- predict(fit, newdata = newdat)
+
+# Plot
+ggplot(alzheimer_healthy_old,
+       aes(x = height, y = hippo, color = female)) +
+  geom_point(alpha = 0.6) +
+  geom_line(data = newdat,
+            aes(y = pred),
+            linewidth = 1.2) +
+  labs(
+    x = "Height (cm)",
+    y = "Hippocampal Volume",
+    color = "Gender",
+    title = "hippo ~ height + female"
+  ) +
+  theme_minimal()
+```
+
+
+## Summarize a Linear Model
+
+```{r}
+lm(hippo ~ height + female, data = alzheimer_healthy_old)%>%summary()%>%coefficients
+```
+
+```{}
+               Estimate  Std. Error   t value     Pr(>|t|)
+(Intercept)  1.80472670 0.469111040  3.847121 1.246078e-04
+height       0.07133566 0.006771182 10.535185 4.498807e-25
+female1     -0.08743904 0.054060094 -1.617442 1.059967e-01
+```
+
+- After adjusting for height, women have an estimated hippocampal volume that is 0.087 units lower than men (SE = 0.054; 95% CI: −0.193 to 0.019; P = 0.106), although this difference is not statistically significant.
+
+
+## Interpret the Coefficients
+
+::: {style="font-size: 90%;"}
+
+- **Interpretation**: Similarly, the slope 0.071 is the estimated increase in hippocampal volume for each in increase in height, holding gender constant. 
+
+- Recall that the fitted model is 
+
+$$y=1.805 + 0.071 *height - 0.087 *female$$
+
+- If we do not change `female` but increase `height` by 1 unit, the estimated increase in hippocampal volume is 0.071 cc.
+
+- After adjusting for sex, each additional in of height is associated with an estimated increase of 0.071 units in hippocampal volume (SE = 0.0068; 95% CI: 0.058 to 0.085; P < 0.001).
+
+:::
+
+
+## When not Forcing Equal Slopes
+
+- The two lines are nearly parallel, which is consistent with the model we fit.
+
+```{r}
+#| fig-align: center
+
+ggplot(alzheimer_healthy_old, aes(x = height, y = hippo, color = female)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "Height (cm)",
+    y = "Hippocampal Volume",
+    color = "Gender",
+    title = "Fitted Lines from hippo ~ height + female"
+  ) +
+  theme_minimal()
+```
+
+
+## Model Diagnostics and Outliers
+
+-   The typical assumptions of linear regression models are
+
+    -   Linearity
+    -   Independent observations
+    -   Constant variance and normality of the error term (residuals)
+
+-   The first two assumptions are usually justified by our domain knowledge, our study design, and simple visualization of data.
+
+-   To investigate the validity of the third assumptions we can use diagnostic plots by visualizing the residuals
+
+-   **Outliers** are points that do not follow the general pattern of the majority of the data. Visualization methods are often used.
+
+
+
+# Advanced Topics
+
+## Advanced Topics
+
+::: {style="font-size: 100%; color: gray"}
+
+-   Topic 1: Interactions
+-   Topic 2: Transform X and Y
+
+:::
+
+## Topic 1: Interactions 
+
+## Introduction to Interactions 
+
+::: {style="font-size: 100%; color: gray"}
+
+-   In Ex 4 we fit a multiple linear regression
+
+```{r}
+summary(lm(hippo ~ height + female, data=alzheimer_healthy_old))$coefficients
+```
+
+-   There are two fitted lines
+    -   men: y=1.805 + 0.071 \*height
+    -   women: y=(1.805- 0.087) + 0.071 \*height
+
+:::
+
+
+## Interactions: Introduction
+
+::: {style="font-size: 100%; color: gray"}
+
+-   The two fitted lines in Ex4 are parallel to each other.
+
+-   This is because `hippo ~ height + female` implies an additive effect between gender and height. In other words, the effect of height does not depend on gender.
+
+- When suspecting that the effect of one explanatory variable on the response may depend on another explanatory variable, we can include an **interaction** term in the model.
+
+:::
+
+## Ex 5: The Joint Effects of Age and Gender on Hippocampal Volume
+
+::: {style="font-size: 100%; color: gray"}
+
+- In this example, we will examine how age and gender jointly affect hippocampal volume. 
+
+- In particular, we will assess whether the effect of age on hippocampal volume may depend on gender.
+
+:::
+
+## Ex 5: Two Separate Lines
+
+::: {style="font-size: 100%; color: gray"}
+
+- If we fit two separate lines, do they seem to have the same slope?
+
+```{r}
+#| fig-align: center
+ggplot(alzheimer_healthy_old, aes(x=age, y=hippo, color=female))+
+  geom_point()+
+  geom_smooth(method=lm, se=F)
+```
+
+:::
+
+
+## Ex 5: A Model with Interactions
+
+::: {style="font-size: 100%; color: gray"}
+
+-   Let y be hippocampal volume
+-   Example: $$y=\beta_0 + \beta_{age} age + \beta_f f + \beta_{age\times f} age\times f + \epsilon$$ where $f$ means female.
+- In R, the syntax is one of the two equivalent ways:
+  - `hippo ~ age + female + age:female`
+  - `hippo ~ age * female`
+
+```{r}
+summary(lm(hippo~ age*female, data=alzheimer_healthy_old))$coefficients
+```
+
+:::
+
+
+## The Fitted Lines
+
+::: {style="font-size: 100%; color: gray"}
+
+-   What are the two fitted lines?
+
+-   Female: $\hat \beta_0 + \hat \beta_{age} age + \hat \beta_f \times 1 +  \hat\beta_{age\times f} (age\times 1)$, which can be rewritten to:
+
+$$(\hat \beta_0  + \hat \beta_f) + (\hat \beta_{age}  +  \hat\beta_{age\times f}) age.$$
+
+-   Male, similarly, the fitted line is $$\hat \beta_0 + \hat \beta_{age} age $$
+
+:::
+
+
+## The Interaction Coefficient
+
+::: {style="font-size: 100%; color: gray"}
+
+-   The two groups are parallele if and only fi $\hat\beta_{age\times f} = 0$.
+
+-   In other words, $\hat\beta_{age\times f}$ is the estimated difference in the slope of age for females vs for males.
+
+-   Back to the problem, do men and women shrink brain in the same speed?
+
+:::
+
+## Interpret Interactions
+
+::: {style="font-size: 100%; color: gray"}
+
+```{r}
+summary(lm(hippo~ age*female, data=alzheimer_healthy_old))$coefficients
+```
+
+-   The difference in brain shrinking speed between men and women is 0.0077cc per year with SE=0.004. The difference is is statistically significant at significance level 0.05.
+
+:::
+
+
+## Interpret Interactions
+
+::: {style="font-size: 100%; color: gray"}
+-   The estimated brain shrinking speed for men is 0.035cc per year.
+
+-   The estimated brain shrinking speed for women is $|-0.035+0.0077|\approx 0.0273$cc per year.
+
+:::
+
+
+## Advanced Topic 2: Transform $X$ and $Y$
+
+## Transform $X$
+
+::: {style="font-size: 100%; color: gray"}
+-   Weight is a little bit skewed. Regress hippocampus volume on log(weight). How to interpret the results?
+
+```{r}
+#| fig-align: center
+#plot(log(alzheimer_healthy_old$weight), alzheimer_healthy_old$hippo, xlab="weight", ylab="log(weight)")
+summary(lm(hippo~log(weight), data=alzheimer_healthy_old))$coefficients
+```
+
+:::
+
+## Transform $X$
+
+::: {style="font-size: 100%; color: gray"}
+
+Model: $y=\beta_0 + \beta_1 log(x) + \epsilon$
+
+-   The estimated change in $y$ when $log(x)$ increases by 1 is $b_1=1.013243$  
+
+- Increase $log(x)$ by 1 means:  
+  - $log(x)+1=log(x)+log(e)=log(ex)$, which means $x$ (weight) increases **to** $ex$. 
+
+  - Equivalently, $x$ increases **by** 
+  $$\frac{ex-x}{x}=e-1 \approx 1.72 = 172\%.$$
+
+:::
+
+
+## Transform $X$
+
+::: {style="font-size: 100%; color: gray"}
+
+-   Often, we are interested in the estimated change in $y$ for for a $p\%$ increase in $x$. 
+
+- A  $p\%$ increase in x changes $log(x)$ by
+$log((1+p/100)x)=log(x)+log(1+p/100)$.
+
+- Therefore, the estimated change in $y$ is  is 
+
+$$b_1*log(1+p/100).$$
+
+:::
+
+
+## Transform $Y$
+
+::: {style="font-size: 100%; color: gray"}
+
+- Model: $log(y)=\beta_0 + \beta_1 x + \epsilon$
+
+- Now the response is on the log scale.
+
+- A one-unit increase in x increases the expected value of $log(y)$ by $b_1$, i.e., from $log(y_0)$ to $log(y_1)=log(y_0)+b_1$.
+
+- Back to the original scale, 
+$$y_1=e^{log(y_1)}=e^{log(y_0)+b_1}=e^{b_1}*y_0$$
+
+:::
+
+
+##
+
+::: {style="font-size: 100%; color: gray"}
+
+```{r}
+#plot(alzheimer_healthy_old$height, log(alzheimer_healthy_old$weight), xlab="height", ylab="log(weight)")
+summary(lm(log(weight)~height, data=alzheimer_healthy_old))$coefficients
+```
+:::
+
+
+::: {style="font-size: 90%; color: gray"}
+
+-   In this example, $b_1=0.02935588$. 
+
+- When increase $x$ (age) by 1 unit, the expected value of $log(y)$ (log(weight)) increases by 0.02935588.
+
+- Back to the original scale,
+$y_1=e^{log(y_1)}=e^{log(y_0)+b_1}=e^{b_1}*y_0=e^{0.02935588}*y_0\approx 1.0298*y_0$.
+
+- Or, equivalently, the expected value of $y$ (weight) increases by $2.98\%$ for each additional year of age.
+
+:::

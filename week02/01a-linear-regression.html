@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="01a-linear-regression_files/libs/clipboard/clipboard.min.js"></script>
+<script src="01a-linear-regression_files/libs/quarto-html/tabby.min.js"></script>
+<script src="01a-linear-regression_files/libs/quarto-html/popper.min.js"></script>
+<script src="01a-linear-regression_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="01a-linear-regression_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="01a-linear-regression_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="01a-linear-regression_files/libs/quarto-html/quarto-syntax-highlighting-a185852c63625fd9ffbdc57047c9a77e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.6.42">
+
+  <title>a-linear-regression</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="01a-linear-regression_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="01a-linear-regression_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="01a-linear-regression_files/libs/revealjs/dist/theme/quarto-37488a3070012fd431fac83a07067cfd.css">
+  <link href="01a-linear-regression_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="01a-linear-regression_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="01a-linear-regression_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="01a-linear-regression_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="01a-linear-regression_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="01a-linear-regression_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section class="slide level2">
+
+<div style="display: flex; align-items: center; justify-content: space-between;">
+<div style="flex: 0 0 40%;">
+<p><img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;"></p>
+</div>
+<div style="flex: 0 0 55%; text-align: left;">
+<h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">
+<p>Linear Regression</p>
+</h1>
+<p style="color: #153e6c; font-size: 1.8em;">
+</p><p>Zhaoxia Yu</p>
+<p></p>
+</div>
+</div>
+</section>
+<section id="load-packages-read-data" class="slide level2">
+<h2>Load packages, read data</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href=""></a></span>
+<span id="cb1-4"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv"</span>, <span class="at">head=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-5"><a href=""></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">diagnosis =</span> <span class="fu">as.factor</span>(diagnosis), </span>
+<span id="cb1-7"><a href=""></a>         <span class="at">female =</span> <span class="fu">as.factor</span>(female),</span>
+<span id="cb1-8"><a href=""></a>         <span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo)</span>
+<span id="cb1-9"><a href=""></a></span>
+<span id="cb1-10"><a href=""></a></span>
+<span id="cb1-11"><a href=""></a>alzheimer_healthy <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv"</span>, <span class="at">head=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-12"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo, </span>
+<span id="cb1-13"><a href=""></a>         <span class="at">diagnosis =</span> <span class="fu">as.factor</span>(diagnosis), </span>
+<span id="cb1-14"><a href=""></a>         <span class="at">female =</span> <span class="fu">as.factor</span>(female)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(diagnosis<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb1-15"><a href=""></a></span>
+<span id="cb1-16"><a href=""></a></span>
+<span id="cb1-17"><a href=""></a><span class="co">#define the subset of older (&gt;45) healthy subjects</span></span>
+<span id="cb1-18"><a href=""></a>alzheimer_healthy_old <span class="ot">&lt;-</span> alzheimer_healthy <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age<span class="sc">&gt;</span><span class="dv">45</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>Introduction
+<ul>
+<li>Correlation and Linear Regression</li>
+</ul></li>
+<li>Linear Regression
+<ul>
+<li>The Response Variable</li>
+<li>One explanatory variable
+<ul>
+<li>Ex1. A numerical X: hippo ~ age</li>
+<li>Ex2. A Binary X: hippo ~ female</li>
+<li>Ex3. A categorical Variables X: hippo ~ diagnosis</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="outline-1" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>Multiple Linear Regression
+<ul>
+<li>Motivating Example</li>
+<li>Can the difference be explained by height?</li>
+</ul></li>
+<li>Outliers and model Diagnostics</li>
+</ul>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li>Advanced Topics
+<ul>
+<li>Interactions</li>
+<li>Transform <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
+
+</section>
+<section id="review-example-6-of-day-5" class="slide level2">
+<h2>Review: Example 6 of Day 5</h2>
+<ul>
+<li><p><strong>Question</strong>: Is hippocampal volume correlated with age in healthy adults?</p></li>
+<li><p>We mentioned a correlation test, but we did not discuss the details the relationship between hippocampal volume and age.</p></li>
+<li><p>Is linear appropriate for the whole age range? What about the age range of 45+?</p></li>
+<li><p>How can be better understand the relationship between hippocampal volume and age? Correlation doesn’t provide an answer to this question. We need linear regression.</p></li>
+</ul>
+</section>
+<section id="example-left-vs-right-hippocampal-volume" class="slide level2">
+<h2>Example: Left vs Right Hippocampal Volume</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co">#plot(alzheimer_healthy$age, alzheimer_healthy$hippo, xlab="age", ylab="hippo")</span></span>
+<span id="cb2-2"><a href=""></a></span>
+<span id="cb2-3"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>hippo)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb2-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"age"</span>, <span class="at">y=</span><span class="st">"hippo volume"</span>, <span class="at">title=</span><span class="st">"hippo volume vs age"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>The relationship is roughly (negatively) linear except for age &lt;45.</li>
+</ul>
+</section>
+<section id="linear-relationship" class="slide level2">
+<h2>Linear Relationship</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy, <span class="fu">aes</span>(<span class="at">x=</span>lhippo, <span class="at">y=</span>rhippo)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"left hippo"</span>, <span class="at">y=</span><span class="st">"right hippo"</span>, <span class="at">title=</span><span class="st">"hippo volume"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="strong-vs-weak-linear-relationship" class="slide level2">
+<h2>Strong vs Weak Linear Relationship</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb4-2"><a href=""></a><span class="fu">plot</span>(alzheimer_healthy<span class="sc">$</span>lhippo, alzheimer_healthy<span class="sc">$</span>rhippo,</span>
+<span id="cb4-3"><a href=""></a>     <span class="at">xlab =</span> <span class="st">"left hippo"</span>, <span class="at">ylab=</span><span class="st">"right hippo"</span>, <span class="at">main=</span><span class="st">"hippo volume"</span>)</span>
+<span id="cb4-4"><a href=""></a><span class="fu">plot</span>(alzheimer_healthy<span class="sc">$</span>weight, alzheimer_healthy<span class="sc">$</span>hippo,</span>
+<span id="cb4-5"><a href=""></a>     <span class="at">xlab =</span> <span class="st">"weight"</span>, <span class="at">ylab=</span><span class="st">"hippo"</span>, <span class="at">main=</span><span class="st">"hippo vs weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="correlation-vs-linear-regression" class="slide level2">
+<h2>Correlation vs Linear Regression</h2>
+<ul>
+<li>Correlation is a measure of the strength of <strong>linear</strong> relationship between two continuous variables.</li>
+</ul>
+<p>Correlation between left and right hippo volume</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">cor</span>(alzheimer_healthy<span class="sc">$</span>lhippo, alzheimer_healthy<span class="sc">$</span>rhippo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8626165</code></pre>
+</div>
+</div>
+<p>Correlation between weight and hippo volume</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">cor</span>(alzheimer_healthy<span class="sc">$</span>weight, alzheimer_healthy<span class="sc">$</span>hippo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.270462</code></pre>
+</div>
+</div>
+</section>
+<section id="why-is-linear-regression-useful" class="slide level2">
+<h2>Why Is Linear Regression Useful?</h2>
+<div style="font-size: 90%;">
+<ul>
+<li><p>Understand relationships: Quantify how the expected outcome changes as a predictor changes.</p>
+<ul>
+<li>Example: How much does the expected hippocampal volume change with a one-year increase in age?</li>
+</ul></li>
+<li><p>Adjust for other variables: Estimate the effect of one predictor while accounting for other relevant variables.</p>
+<ul>
+<li>This is especially important in observational studies, where many factors may influence the outcome.</li>
+</ul></li>
+<li><p>Make predictions: Predict the expected outcome for a new individual.</p>
+<p>-Example: What is the predicted hippocampal volume for a 46-year-old healthy woman?</p></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="linear-regression" class="title-slide slide level1 center">
+<h1>Linear Regression</h1>
+
+</section>
+<section id="the-response-variable" class="slide level2">
+<h2>The Response Variable</h2>
+<ul>
+<li><p>In a linear model, the <strong>response variable</strong> is the variable that we are trying to predict or explain.</p></li>
+<li><p>A <strong>response variable</strong> is also known as a <strong>dependent variable</strong>.</p></li>
+<li><p>It is the outcome or the variable that is being studied and modeled as a function of one or more <strong>explanatory</strong> (<strong>independent</strong>) variables.</p></li>
+<li><p>We often use <span class="math inline">\(y\)</span> to represent the response variable.</p></li>
+</ul>
+</section></section>
+<section>
+<section id="simple-linear-regression-slm" class="title-slide slide level1 center">
+<h1>Simple Linear Regression (SLM)</h1>
+
+</section>
+<section id="simple-linear-regression" class="slide level2">
+<h2>Simple Linear Regression</h2>
+<ul>
+<li><p>It is the regression model with only one <span class="math inline">\(x\)</span> (explanatory variable).</p></li>
+<li><p>It can be used to assess the <strong>linear relationship</strong> between two variables. Example, age and hippocampal volume in healthy older (45+) subjects</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>hippo)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb9-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"age"</span>, <span class="at">y=</span><span class="st">"hippo"</span>, <span class="at">title=</span><span class="st">"hippo volume vs age in healthy older subjects (45+)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="the-model" class="slide level2">
+<h2>The Model</h2>
+<div style="font-size: 75%;">
+<ul>
+<li>The linear model is represented as:</li>
+</ul>
+<p><span class="math display">\[y=\beta_0 + \beta_1 x + \epsilon\]</span></p>
+<ul>
+<li><p><span class="math inline">\(y\)</span>: Response variable (dependent variable)</p></li>
+<li><p><span class="math inline">\(x\)</span>: Explanatory variable (independent variable)</p></li>
+<li><p><span class="math inline">\(\beta_0\)</span>: Intercept (constant term)</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span>: Slope (rate of change)</p></li>
+<li><p><span class="math inline">\(\epsilon\)</span>: Error term (residuals)</p></li>
+<li><p>It is also common to add subject indices: <span class="math inline">\(y_i=\beta_0 + \beta_1 x_i + \epsilon_i, i=1, \cdots, n\)</span></p></li>
+</ul>
+</div>
+</section>
+<section id="model-assumptions" class="slide level2">
+<h2>Model Assumptions</h2>
+<ul>
+<li><span class="math inline">\(y_i=\beta_0 + \beta_1 x_i + \epsilon_i, i=1, \cdots, n\)</span></li>
+<li>The <span class="math inline">\(n\)</span> observations are independent</li>
+<li>Reasonably large <span class="math inline">\(n\)</span> or normality assumption for <span class="math inline">\(\epsilon_i\)</span></li>
+<li>Homogeneous variance: <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span>. Note that this assumption implies that <span class="math inline">\(Var(y_i)=\sigma^2\)</span>.</li>
+<li>This is assumption is also known as homoscedasticity.</li>
+</ul>
+</section>
+<section id="least-squares-estimate" class="slide level2">
+<h2>Least Squares Estimate</h2>
+<ul>
+<li><p>The most common method to estimate <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> is the <strong>least squares estimate</strong>.</p></li>
+<li><p>The least squares estimate minimizes the sum of squared residuals, which is the difference between the observed values and the predicted values.</p></li>
+<li><p>Among all possible lines we can pass through the data, the regression lines has the smallest Residual Sum of Squares.</p></li>
+</ul>
+</section>
+<section id="least-squares-estimate-1" class="slide level2">
+<h2>Least Squares Estimate</h2>
+
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="what-does-lse-do" class="slide level2">
+<h2>What does LSE Do?</h2>
+
+<img data-src="img/LSE.png" class="r-stretch"></section>
+<section id="least-squares-estimate-formulars" class="slide level2" style="font-size: 80%; color: gray">
+<h2>Least Squares Estimate: Formulars</h2>
+<ul>
+<li><p>Least Squares Estimate: looking for <span class="math inline">\(\hat\beta_0\)</span> and <span class="math inline">\(\hat\beta_1\)</span> that minimizes <span class="math inline">\(\sum_{i=1}^n (y_i - \beta_0 -\beta_1 x_i)^2\)</span>.</p></li>
+<li><p>Other notations: <span class="math display">\[b_0=\hat \beta_0, b_1=\hat\beta_1\]</span></p></li>
+<li><p>The process of finding <span class="math inline">\((b_0, b_1)\)</span> involves solving two linear equations jointly.</p>
+<ul>
+<li><span class="math inline">\(b_0=\hat\beta_0=\bar{y}-b_1\bar{x}\)</span></li>
+<li><span class="math inline">\(b_1=\hat\beta_1=\dfrac{\sum_{i=1}^{n}(x_i-\bar{x})(y_i-
+\bar{y})}{\sum_{i=1}^{n}(x_i-\bar{x})^2}\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="interpretation-of-simple-linear-regression" class="title-slide slide level1 center">
+<h1>Interpretation of Simple Linear Regression</h1>
+
+</section>
+<section id="ex-1-hippo-age" class="slide level2">
+<h2>Ex 1: hippo ~ age</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co">#define an lm object</span></span>
+<span id="cb10-2"><a href=""></a>obj.age.hippo<span class="ot">=</span><span class="fu">lm</span>(hippo<span class="sc">~</span>age, <span class="at">data=</span>alzheimer_healthy_old)</span>
+<span id="cb10-3"><a href=""></a><span class="fu">summary</span>(obj.age.hippo) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = hippo ~ age, data = alzheimer_healthy_old)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.6858 -0.4791 -0.0159  0.4793  2.7005 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  8.420392   0.126407   66.61   &lt;2e-16 ***
+age         -0.029090   0.001818  -16.00   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.7131 on 1477 degrees of freedom
+Multiple R-squared:  0.1478,    Adjusted R-squared:  0.1472 
+F-statistic: 256.2 on 1 and 1477 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="ex-1-the-fitted-line" class="slide level2">
+<h2>Ex 1: The Fitted Line</h2>
+<ul>
+<li>The fitted line is <span class="math inline">\(hippo = 8.42 - 0.029 \times age\)</span></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>hippo)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb12-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"age"</span>, <span class="at">y=</span><span class="st">"hippo"</span>, <span class="at">title=</span><span class="st">"hippo vs age"</span>)<span class="sc">+</span></span>
+<span id="cb12-4"><a href=""></a>   <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="ex-1-interpret-the-intercept" class="slide level2">
+<h2>Ex 1: Interpret the Intercept</h2>
+<div style="font-size: 90%;">
+<ul>
+<li>Interpretation of <span class="math inline">\(b_0=8.42\)</span>
+<ul>
+<li>mathematically, it is the estimated hippocampal value for a person at age=0.</li>
+<li>statistically, this interpretation involves <strong>extrapolation</strong>, which should be avoided. Rational:
+<ul>
+<li>The linear trend we observed is for healthy subjects who are 45 or older.</li>
+<li>It is dangerous to assume that the same linear trend holds at around age 0.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="ex-1-the-slope" class="slide level2">
+<h2>Ex 1: The Slope</h2>
+<ul>
+<li><p>How to interpret <span class="math inline">\(b_1= - 0.029\)</span>?</p></li>
+<li><p>What if we increase age by 1 year?</p></li>
+<li><p>Recall that the fitted line is <span class="math inline">\(hippo = 8.42 - 0.029 \times age\)</span></p>
+<ul>
+<li><span class="math inline">\(hippo_0 = 8.42 - 0.029 \times x\)</span></li>
+<li><span class="math inline">\(hippo_1 = 8.42 - 0.029 \times (x+1)\)</span></li>
+</ul></li>
+<li><p>Therefore, <span class="math inline">\(hippo_1 - hippo_0 = -0.029\)</span>, which means that the estimated hippocampal volume decreases by 0.029 cc for each additional year of age.</p></li>
+<li><p>When reporting an estimated slope, it is also important to report <strong>uncertainty</strong>, such as standard error, confidence interval, and p-value. See next five slides.</p></li>
+</ul>
+</section>
+<section id="residuals" class="slide level2">
+<h2>Residuals</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><span class="math inline">\(e_i = y_i - \hat y_i\)</span> where <span class="math inline">\(\hat y_i = \hat\beta_0 + \hat \beta_1 x_i\)</span></li>
+<li>Residual sum of squares (RSS): <span class="math inline">\(RSS=\sum_{i=1}^n e_i^2 = \sum_{i=1}^n (y_i -\hat y_i)^2\)</span></li>
+<li>An unbiased estimate of <span class="math inline">\(\sigma^2\)</span> is <span class="math inline">\(s^2\)</span>: <span class="math display">\[s^2= \frac{RSS}{n-2}\]</span></li>
+</ul>
+</div>
+</section>
+<section id="standard-error-and-confidence-interval" class="slide level2">
+<h2>Standard Error and Confidence Interval</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li>The standard error of <span class="math inline">\(\hat\beta_1\)</span> is <span class="math display">\[se(\hat \beta_1)=\frac{\sqrt{s^2}}{\sqrt{\sum (x_i - \bar{x})^2}}\]</span></li>
+</ul>
+</div>
+<ul>
+<li>A <span class="math inline">\(100(1-\alpha)\%\)</span> confidence interval for <span class="math inline">\(\beta_1\)</span> is <span class="math display">\[\hat\beta_1 \pm t_{1-\alpha / 2, n - 2} se(\hat\beta_1)\]</span></li>
+</ul>
+</section>
+<section id="ex-1-se-and-p-value" class="slide level2">
+<h2>Ex 1: SE and p-value</h2>
+<ul>
+<li>The estimated slope (<span class="math inline">\(b_1\)</span>) is -0.029, its standard error is 0.001818, and the p-value is <span class="math inline">\(&lt;2e-16\)</span>; the linear relationship is significant at level 0.05.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">summary</span>(obj.age.hippo)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate  Std. Error   t value     Pr(&gt;|t|)
+(Intercept)  8.42039161 0.126407343  66.61315 0.000000e+00
+age         -0.02908978 0.001817536 -16.00506 2.725429e-53</code></pre>
+</div>
+</div>
+</section>
+<section id="ex-1-confidence-interval" class="slide level2">
+<h2>Ex 1: Confidence Interval</h2>
+<ul>
+<li>The estimated slope (<span class="math inline">\(b_1\)</span>) is -0.029.</li>
+<li>A 95% confidence interval is (-0.033, -0.026).</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">confint</span>(obj.age.hippo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %      97.5 %
+(Intercept)  8.17243458  8.66834865
+age         -0.03265501 -0.02552456</code></pre>
+</div>
+</div>
+</section>
+<section id="estimation-vs-prediction" class="slide level2">
+<h2>Estimation vs Prediction</h2>
+<div style="font-size: 80%">
+<ul>
+<li><p>Why are the answers to the following two questions different?</p></li>
+<li><p><strong>Question 1</strong>: What is the estimated mean hippocampal volume for 46-year-old women?</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">predict</span>(obj.age.hippo, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">46</span>), <span class="at">interval =</span> <span class="st">'confidence'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit     lwr      upr
+1 7.082262 6.99322 7.171303</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Question 2</strong>: What is the predicted hippocampal volume for a 46-year-old woman?</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">predict</span>(obj.age.hippo, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">age=</span><span class="dv">46</span>), <span class="at">interval =</span> <span class="st">'predict'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 7.082262 5.680708 8.483815</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-2-a-binary-x" class="slide level2">
+<h2>Ex 2: A Binary X</h2>
+<ul>
+<li>Now, consider the relationship between hippocampal volume and gender (the <code>female</code> variable in the data)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old, <span class="fu">aes</span>(<span class="at">x=</span>female, <span class="at">y=</span>hippo)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb21-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"female"</span>, <span class="at">y=</span><span class="st">"hippo"</span>, <span class="at">title=</span><span class="st">"hippo vs female"</span>)<span class="sc">+</span></span>
+<span id="cb21-4"><a href=""></a>   <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">'lm'</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="ex2-boxplots-by-gender-are-better" class="slide level2">
+<h2>Ex2: Boxplots by gender are better</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old, <span class="fu">aes</span>(<span class="at">x=</span>female, <span class="at">y=</span>hippo, <span class="at">fill=</span>female)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href=""></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb22-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"female"</span>, <span class="at">y=</span><span class="st">"hippo"</span>, <span class="at">title=</span><span class="st">"hippo vs female"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="ex2-intercept-and-slope" class="slide level2">
+<h2>Ex2: Intercept and Slope</h2>
+
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="ex2-summarize-results-and-ci" class="slide level2">
+<h2>Ex2: Summarize Results and CI</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="co"># Fit model</span></span>
+<span id="cb23-2"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(hippo <span class="sc">~</span> female, <span class="at">data =</span> alzheimer_healthy_old)</span>
+<span id="cb23-3"><a href=""></a></span>
+<span id="cb23-4"><a href=""></a><span class="co"># Coefficient estimates</span></span>
+<span id="cb23-5"><a href=""></a><span class="fu">summary</span>(fit)<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept)  6.7356917 0.03272826 205.80660 0.000000e+00
+female1     -0.4821982 0.04039219 -11.93791 1.990249e-31</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="co"># 95% confidence intervals</span></span>
+<span id="cb25-2"><a href=""></a><span class="fu">confint</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %     97.5 %
+(Intercept)  6.6714929  6.7998905
+female1     -0.5614304 -0.4029661</code></pre>
+</div>
+</div>
+</section>
+<section id="ex2-results-and-interpretation" class="slide level2">
+<h2>Ex2: Results and Interpretation</h2>
+<div style="font-size: 90%">
+<ul>
+<li><p>The slope <span class="math inline">\(b_1=-0.4887882\)</span> is the estimated difference between women and men in hippocampal volume</p></li>
+<li><p>In summary,</p>
+<ul>
+<li>estimated mean hippocampal volume for men: 6.748</li>
+<li>estimated mean hippocampal volume for women: 6.748-0.489=6.259</li>
+</ul></li>
+<li><p><strong>Intercept</strong>: <span class="math inline">\(b_0=6.74\)</span> is the estimated hippocampal volume for men (female=0) and its SE is 0.033.</p></li>
+<li><p><strong>Slope</strong> (female coefficient): Women have an estimated mean hippocampal volume that is 0.482 units lower than men (SE = 0.040; P &lt; 0.001).</p></li>
+</ul>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>In a simple linear regression, when <span class="math inline">\(x\)</span> is a binary variable, the estimated slope is the mean difference between the two groups.</p></li>
+<li><p>Let’s verify this using two-sample t-test</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">t.test</span>(hippo<span class="sc">~</span>female, <span class="at">data=</span>alzheimer_healthy_old, <span class="at">var.equal =</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  hippo by female
+t = 11.938, df = 1477, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ 0.4029661 0.5614304
+sample estimates:
+mean in group 0 mean in group 1 
+       6.735692        6.253494 </code></pre>
+</div>
+</div>
+</section>
+<section id="categorical-variables-in-linear-regression" class="slide level2">
+<h2>Categorical Variables in Linear Regression</h2>
+<ul>
+<li>Categorical variables can be included in linear regression models as factors.</li>
+<li>Consider the dignosis variable in the alzheimer data, which has three levels: 0 (healthy), 1 (MCI), and 2 (AD).</li>
+<li>What happens if we use it as a numeric variable (this might not be appropriate in many situations)</li>
+<li>What happens if we use it as a categorical variable (this is the most appropriate way in this case).</li>
+</ul>
+</section>
+<section id="ex3-when-mistakenly-treating-diagonosis-as-a-numerical-variable" class="slide level2">
+<h2>Ex3: When mistakenly treating diagonosis as a numerical variable</h2>
+<ul>
+<li>When using the numerical coding, the model assumes a linear relationship between diagnosis and hippocampal volume:
+<ul>
+<li>It assumes that mean difference between MCI and healthy is the same as the mean difference between AD and MCI.</li>
+<li>This might not be the most appropriate way.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv"</span>, <span class="at">head=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href=""></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href=""></a><span class="co">#  mutate(diagnosis = as.factor(diagnosis), female = as.factor(female), hippo=lhippo+rhippo)</span></span>
+<span id="cb29-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo)</span>
+<span id="cb29-5"><a href=""></a></span>
+<span id="cb29-6"><a href=""></a><span class="co">#Note that factor here was not treated as a categorical variable, it is treated a numerical variable</span></span>
+<span id="cb29-7"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo <span class="sc">~</span> diagnosis, <span class="at">data=</span>alzheimer_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = hippo ~ diagnosis, data = alzheimer_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5296 -0.5940 -0.0046  0.5760  3.4734 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.41399    0.02154   297.7   &lt;2e-16 ***
+diagnosis   -0.46342    0.02106   -22.0   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8761 on 2698 degrees of freedom
+Multiple R-squared:  0.1522,    Adjusted R-squared:  0.1518 
+F-statistic: 484.2 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="ex3-when-mistakenly-treating-diagonosis-as-a-numerical-variable-1" class="slide level2">
+<h2>Ex3: When mistakenly treating diagonosis as a numerical variable</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv"</span>, <span class="at">head=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href=""></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">female =</span> <span class="fu">as.factor</span>(female), <span class="at">hippo =</span> lhippo <span class="sc">+</span> rhippo)</span>
+<span id="cb31-3"><a href=""></a></span>
+<span id="cb31-4"><a href=""></a><span class="co"># Fit model treating diagnosis as factor</span></span>
+<span id="cb31-5"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(hippo <span class="sc">~</span> diagnosis, <span class="at">data =</span> alzheimer_data)</span>
+<span id="cb31-6"><a href=""></a>coefs <span class="ot">&lt;-</span> <span class="fu">coef</span>(fit)</span>
+<span id="cb31-7"><a href=""></a></span>
+<span id="cb31-8"><a href=""></a><span class="co"># Model-based means for each group</span></span>
+<span id="cb31-9"><a href=""></a>model_means <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb31-10"><a href=""></a>  <span class="at">diagnosis =</span> <span class="fu">c</span>(<span class="st">"Healthy"</span>, <span class="st">"MCI"</span>, <span class="st">"AD"</span>),</span>
+<span id="cb31-11"><a href=""></a>  <span class="at">hippo =</span> <span class="fu">c</span>(coefs[<span class="dv">1</span>], coefs[<span class="dv">1</span>] <span class="sc">+</span> coefs[<span class="dv">2</span>], coefs[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>coefs[<span class="dv">2</span>]),</span>
+<span id="cb31-12"><a href=""></a>  <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"b0"</span>, <span class="st">"b0 + b1"</span>, <span class="st">"b0 + 2*b1"</span>)</span>
+<span id="cb31-13"><a href=""></a>)</span>
+<span id="cb31-14"><a href=""></a></span>
+<span id="cb31-15"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">mutate</span>(alzheimer_data, <span class="at">diagnosis =</span> <span class="fu">factor</span>(diagnosis, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"1"</span>,<span class="st">"2"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Healthy"</span>, <span class="st">"MCI"</span>, <span class="st">"AD"</span>)))</span>
+<span id="cb31-16"><a href=""></a><span class="co"># Plot</span></span>
+<span id="cb31-17"><a href=""></a><span class="fu">ggplot</span>(alzheimer_data, <span class="fu">aes</span>(<span class="at">x =</span> diagnosis, <span class="at">y =</span> hippo)) <span class="sc">+</span></span>
+<span id="cb31-18"><a href=""></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#dceeff"</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb31-19"><a href=""></a>  </span>
+<span id="cb31-20"><a href=""></a>  <span class="co"># Add model-predicted means and connect them</span></span>
+<span id="cb31-21"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> model_means, <span class="fu">aes</span>(<span class="at">y =</span> hippo), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb31-22"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> model_means, <span class="fu">aes</span>( <span class="at">y =</span> hippo, <span class="at">group =</span> <span class="dv">1</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb31-23"><a href=""></a>  </span>
+<span id="cb31-24"><a href=""></a>  <span class="co"># Label model means</span></span>
+<span id="cb31-25"><a href=""></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> model_means, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span><span class="fl">+0.2</span>,<span class="at">y =</span> hippo <span class="sc">+</span> <span class="fl">0.5</span>, <span class="at">label =</span> label), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb31-26"><a href=""></a>  </span>
+<span id="cb31-27"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb31-28"><a href=""></a>    <span class="at">x =</span> <span class="st">"Diagnosis"</span>,</span>
+<span id="cb31-29"><a href=""></a>    <span class="at">y =</span> <span class="st">"Total Hippocampal Volume"</span>,</span>
+<span id="cb31-30"><a href=""></a>    <span class="at">title =</span> <span class="st">"Linear Model Estimates with Diagnosis as Numerical"</span></span>
+<span id="cb31-31"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb31-32"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="use-diagnosis-as-a-categorical-variables-in-linear-regression" class="slide level2">
+<h2>Use diagnosis as a Categorical Variables in Linear Regression</h2>
+<ul>
+<li><p>Instead, we can treat diagnosis as a categorical variable (factor).</p></li>
+<li><p>R automatically does dummy coding to create two binary variables: one for MCI and one for AD, with healthy as the reference group.</p></li>
+</ul>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<p>In this example</p>
+<ul>
+<li><p>The estimated intercept is the estimated mean for the reference group (healthy, <code>diagnosis</code>=1).</p></li>
+<li><p>The two slopes are represent the estimated difference between each diagnosis group and the reference group (healthy).</p></li>
+<li><p>Based on the following R output, the estimated mean for healthy is ( ), for MCI is ( ), and for AD is ( ).</p></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv"</span>, <span class="at">head=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href=""></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">diagnosis =</span> <span class="fu">as.factor</span>(diagnosis), <span class="at">female =</span> <span class="fu">as.factor</span>(female), <span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo)</span>
+<span id="cb32-4"><a href=""></a></span>
+<span id="cb32-5"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo <span class="sc">~</span> diagnosis, <span class="at">data=</span>alzheimer_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = hippo ~ diagnosis, data = alzheimer_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5797 -0.5862 -0.0074  0.5770  3.4233 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  6.43207    0.02234  287.97   &lt;2e-16 ***
+diagnosis1  -0.57198    0.04180  -13.68   &lt;2e-16 ***
+diagnosis2  -0.89476    0.04339  -20.62   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8748 on 2697 degrees of freedom
+Multiple R-squared:  0.155, Adjusted R-squared:  0.1544 
+F-statistic: 247.3 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="ex3-recode-diagnosis" class="slide level2">
+<h2>Ex3: Recode <code>diagnosis</code></h2>
+<ul>
+<li>We can also recode the values of diagnosis to make it more readable.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> alzheimer_data <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">diagnosis =</span> <span class="fu">recode</span>(diagnosis, <span class="st">`</span><span class="at">0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"Healthy"</span>, <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"MCI"</span>, <span class="st">`</span><span class="at">2</span><span class="st">`</span> <span class="ot">=</span> <span class="st">"AD"</span>), <span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo)</span>
+<span id="cb34-3"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo <span class="sc">~</span> diagnosis, <span class="at">data=</span>alzheimer_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = hippo ~ diagnosis, data = alzheimer_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5797 -0.5862 -0.0074  0.5770  3.4233 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   6.43207    0.02234  287.97   &lt;2e-16 ***
+diagnosisMCI -0.57198    0.04180  -13.68   &lt;2e-16 ***
+diagnosisAD  -0.89476    0.04339  -20.62   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8748 on 2697 degrees of freedom
+Multiple R-squared:  0.155, Adjusted R-squared:  0.1544 
+F-statistic: 247.3 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="change-reference-group" class="slide level2">
+<h2>Change Reference Group</h2>
+<ul>
+<li>If we want to use the AD group as the reference group, we can use the <code>relevel</code> function to change the reference level of the factor variable.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> alzheimer_data <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">diagnosis =</span> <span class="fu">relevel</span>(diagnosis, <span class="at">ref =</span> <span class="st">"AD"</span>), <span class="at">hippo=</span>lhippo<span class="sc">+</span>rhippo)</span>
+<span id="cb36-3"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo <span class="sc">~</span> diagnosis, <span class="at">data=</span>alzheimer_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = hippo ~ diagnosis, data = alzheimer_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5797 -0.5862 -0.0074  0.5770  3.4233 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       5.53731    0.03720 148.849  &lt; 2e-16 ***
+diagnosisHealthy  0.89476    0.04339  20.621  &lt; 2e-16 ***
+diagnosisMCI      0.32278    0.05131   6.291 3.66e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8748 on 2697 degrees of freedom
+Multiple R-squared:  0.155, Adjusted R-squared:  0.1544 
+F-statistic: 247.3 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="ex3-coefficients-and-group-means" class="slide level2">
+<h2>Ex3: Coefficients and Group Means</h2>
+
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="linear-regression-and-anova" class="slide level2">
+<h2>Linear Regression and ANOVA</h2>
+<div style="font-size: 90%;">
+<ul>
+<li><p>For a binary X (Ex2), linear regression can perform a two-sample t-test (equal variance).</p></li>
+<li><p>In a categorical X (Ex3), a Linear regression provides information about the means.</p></li>
+<li><p>If we would like to test whether the categorical variable diagnosis is associated with hippo, we can use either linear regression or analysis of variance (ANOVA).</p></li>
+<li><p>ANOVA is to examine whether the means of different groups are equal. In this case, we want to test whether the mean hippocampal volume is the same for healthy, MCI, and AD groups.</p></li>
+</ul>
+</div>
+</section>
+<section id="conduct-anova-using-linear-regression" class="slide level2">
+<h2>Conduct ANOVA Using Linear Regression</h2>
+<ul>
+<li>Two ways to preform ANOVA using linear regression:
+<ul>
+<li>Using the <code>lm</code> function to fit the model and then using</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv"</span>, <span class="at">head=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href=""></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb38-3"><a href=""></a>    <span class="at">diagnosis =</span> <span class="fu">factor</span>(diagnosis, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"1"</span>,<span class="st">"2"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Healthy"</span>, <span class="st">"MCI"</span>, <span class="st">"AD"</span>)), <span class="at">female =</span> <span class="fu">as.factor</span>(female), <span class="at">hippo =</span> lhippo <span class="sc">+</span> rhippo)</span>
+<span id="cb38-4"><a href=""></a></span>
+<span id="cb38-5"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo<span class="sc">~</span>diagnosis, <span class="at">data=</span>alzheimer_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = hippo ~ diagnosis, data = alzheimer_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.5797 -0.5862 -0.0074  0.5770  3.4233 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   6.43207    0.02234  287.97   &lt;2e-16 ***
+diagnosisMCI -0.57198    0.04180  -13.68   &lt;2e-16 ***
+diagnosisAD  -0.89476    0.04339  -20.62   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.8748 on 2697 degrees of freedom
+Multiple R-squared:  0.155, Adjusted R-squared:  0.1544 
+F-statistic: 247.3 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">anova</span>(<span class="fu">lm</span>(hippo<span class="sc">~</span>diagnosis, <span class="at">data=</span>alzheimer_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: hippo
+            Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+diagnosis    2  378.56 189.281  247.33 &lt; 2.2e-16 ***
+Residuals 2697 2064.01   0.765                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="conduct-anova-using-linear-regression-1" class="slide level2">
+<h2>Conduct ANOVA Using Linear Regression</h2>
+<ul>
+<li>Two ways to preform ANOVA using linear regression:
+<ul>
+<li>Using the <code>aov</code> function</li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>alzheimer_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/COSMOS-DataScience/slides/refs/heads/main/data/alzheimer_data.csv"</span>, <span class="at">head=</span>T) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href=""></a>  <span class="fu">select</span>(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb42-3"><a href=""></a>    <span class="at">diagnosis =</span> <span class="fu">factor</span>(diagnosis, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"1"</span>,<span class="st">"2"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Healthy"</span>, <span class="st">"MCI"</span>, <span class="st">"AD"</span>)), <span class="at">female =</span> <span class="fu">as.factor</span>(female), <span class="at">hippo =</span> lhippo <span class="sc">+</span> rhippo)</span>
+<span id="cb42-4"><a href=""></a><span class="fu">summary</span>(<span class="fu">aov</span>(hippo<span class="sc">~</span>diagnosis, <span class="at">data=</span>alzheimer_data))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+diagnosis      2  378.6  189.28   247.3 &lt;2e-16 ***
+Residuals   2697 2064.0    0.77                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="multiple-linear-regression" class="title-slide slide level1 center">
+<h1>Multiple Linear Regression</h1>
+
+</section>
+<section id="ex4-motivating-example" class="slide level2">
+<h2>Ex4: Motivating Example</h2>
+<ul>
+<li><p>In Ex 2 we found that healthy men and womean have different hippocampal volume.</p></li>
+<li><p>Men and women are also different in height.</p></li>
+<li><p>Does height explain the difference in hippocampal volume between men and women?</p></li>
+<li><p>We can answer this question using multiple linear regression.</p></li>
+</ul>
+</section>
+<section id="can-the-difference-be-explained-by-height" class="slide level2">
+<h2>Can the difference be explained by height?</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old, <span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">y=</span>hippo, <span class="at">color=</span>female))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="the-adjusted-difference" class="slide level2">
+<h2>The adjusted difference</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo <span class="sc">~</span> height <span class="sc">+</span> female, <span class="at">data=</span>alzheimer_healthy_old))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate  Std. Error   t value     Pr(&gt;|t|)
+(Intercept)  1.80472670 0.469111040  3.847121 1.246078e-04
+height       0.07133566 0.006771182 10.535185 4.498807e-25
+female1     -0.08743904 0.054060094 -1.617442 1.059967e-01</code></pre>
+</div>
+</div>
+<ul>
+<li><p>The <strong>adjusted</strong> difference between men and women</p>
+<ul>
+<li>has a much smaller difference</li>
+<li>is less significant</li>
+</ul></li>
+</ul>
+</section>
+<section id="interpret-the-coefficients-in-a-multiple-regression" class="slide level2">
+<h2>Interpret the Coefficients in a multiple regression</h2>
+<div style="font-size: 90%;">
+<ul>
+<li><p>In this multiple regression, the fitted model is <span class="math display">\[y=1.805 + 0.071 *height - 0.087 *female\]</span></p></li>
+<li><p>How to interpret the coefficients?</p></li>
+<li><p>The model we fit gives two <strong>parallel</strong> fitted lines, i.e., men and women have the same slope but different intercepts.</p>
+<ul>
+<li>men: y=1.805 + 0.071 *height</li>
+<li>women: y=(1.805- 0.087) + 0.071 *height</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="interpret-the-coefficient-of-female" class="slide level2">
+<h2>Interpret the Coefficient of <code>female</code></h2>
+<ul>
+<li>The slope -0.087 is the estimated difference between women and men with the same height.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="co"># Fit additive model</span></span>
+<span id="cb47-2"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(hippo <span class="sc">~</span> height <span class="sc">+</span> female, <span class="at">data =</span> alzheimer_healthy_old)</span>
+<span id="cb47-3"><a href=""></a></span>
+<span id="cb47-4"><a href=""></a><span class="co"># Create prediction grid</span></span>
+<span id="cb47-5"><a href=""></a>newdat <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb47-6"><a href=""></a>  <span class="at">height =</span> <span class="fu">seq</span>(<span class="fu">min</span>(alzheimer_healthy_old<span class="sc">$</span>height),</span>
+<span id="cb47-7"><a href=""></a>               <span class="fu">max</span>(alzheimer_healthy_old<span class="sc">$</span>height),</span>
+<span id="cb47-8"><a href=""></a>               <span class="at">length.out =</span> <span class="dv">100</span>),</span>
+<span id="cb47-9"><a href=""></a>  <span class="at">female =</span> <span class="fu">levels</span>(alzheimer_healthy_old<span class="sc">$</span>female)</span>
+<span id="cb47-10"><a href=""></a>)</span>
+<span id="cb47-11"><a href=""></a></span>
+<span id="cb47-12"><a href=""></a>newdat<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> newdat)</span>
+<span id="cb47-13"><a href=""></a></span>
+<span id="cb47-14"><a href=""></a><span class="co"># Plot</span></span>
+<span id="cb47-15"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old,</span>
+<span id="cb47-16"><a href=""></a>       <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> hippo, <span class="at">color =</span> female)) <span class="sc">+</span></span>
+<span id="cb47-17"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb47-18"><a href=""></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> newdat,</span>
+<span id="cb47-19"><a href=""></a>            <span class="fu">aes</span>(<span class="at">y =</span> pred),</span>
+<span id="cb47-20"><a href=""></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb47-21"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb47-22"><a href=""></a>    <span class="at">x =</span> <span class="st">"Height (cm)"</span>,</span>
+<span id="cb47-23"><a href=""></a>    <span class="at">y =</span> <span class="st">"Hippocampal Volume"</span>,</span>
+<span id="cb47-24"><a href=""></a>    <span class="at">color =</span> <span class="st">"Gender"</span>,</span>
+<span id="cb47-25"><a href=""></a>    <span class="at">title =</span> <span class="st">"hippo ~ height + female"</span></span>
+<span id="cb47-26"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb47-27"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="summarize-a-linear-model" class="slide level2">
+<h2>Summarize a Linear Model</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">lm</span>(hippo <span class="sc">~</span> height <span class="sc">+</span> female, <span class="at">data =</span> alzheimer_healthy_old)<span class="sc">%&gt;%</span><span class="fu">summary</span>()<span class="sc">%&gt;%</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate  Std. Error   t value     Pr(&gt;|t|)
+(Intercept)  1.80472670 0.469111040  3.847121 1.246078e-04
+height       0.07133566 0.006771182 10.535185 4.498807e-25
+female1     -0.08743904 0.054060094 -1.617442 1.059967e-01</code></pre>
+</div>
+</div>
+<pre><code>               Estimate  Std. Error   t value     Pr(&gt;|t|)
+(Intercept)  1.80472670 0.469111040  3.847121 1.246078e-04
+height       0.07133566 0.006771182 10.535185 4.498807e-25
+female1     -0.08743904 0.054060094 -1.617442 1.059967e-01</code></pre>
+<ul>
+<li>After adjusting for height, women have an estimated hippocampal volume that is 0.087 units lower than men (SE = 0.054; 95% CI: −0.193 to 0.019; P = 0.106), although this difference is not statistically significant.</li>
+</ul>
+</section>
+<section id="interpret-the-coefficients" class="slide level2">
+<h2>Interpret the Coefficients</h2>
+<div style="font-size: 90%;">
+<ul>
+<li><p><strong>Interpretation</strong>: Similarly, the slope 0.071 is the estimated increase in hippocampal volume for each in increase in height, holding gender constant.</p></li>
+<li><p>Recall that the fitted model is</p></li>
+</ul>
+<p><span class="math display">\[y=1.805 + 0.071 *height - 0.087 *female\]</span></p>
+<ul>
+<li><p>If we do not change <code>female</code> but increase <code>height</code> by 1 unit, the estimated increase in hippocampal volume is 0.071 cc.</p></li>
+<li><p>After adjusting for sex, each additional in of height is associated with an estimated increase of 0.071 units in hippocampal volume (SE = 0.0068; 95% CI: 0.058 to 0.085; P &lt; 0.001).</p></li>
+</ul>
+</div>
+</section>
+<section id="when-not-forcing-equal-slopes" class="slide level2">
+<h2>When not Forcing Equal Slopes</h2>
+<ul>
+<li>The two lines are nearly parallel, which is consistent with the model we fit.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old, <span class="fu">aes</span>(<span class="at">x =</span> height, <span class="at">y =</span> hippo, <span class="at">color =</span> female)) <span class="sc">+</span></span>
+<span id="cb51-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb51-3"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb51-4"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb51-5"><a href=""></a>    <span class="at">x =</span> <span class="st">"Height (cm)"</span>,</span>
+<span id="cb51-6"><a href=""></a>    <span class="at">y =</span> <span class="st">"Hippocampal Volume"</span>,</span>
+<span id="cb51-7"><a href=""></a>    <span class="at">color =</span> <span class="st">"Gender"</span>,</span>
+<span id="cb51-8"><a href=""></a>    <span class="at">title =</span> <span class="st">"Fitted Lines from hippo ~ height + female"</span></span>
+<span id="cb51-9"><a href=""></a>  ) <span class="sc">+</span></span>
+<span id="cb51-10"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="model-diagnostics-and-outliers" class="slide level2">
+<h2>Model Diagnostics and Outliers</h2>
+<ul>
+<li><p>The typical assumptions of linear regression models are</p>
+<ul>
+<li>Linearity</li>
+<li>Independent observations</li>
+<li>Constant variance and normality of the error term (residuals)</li>
+</ul></li>
+<li><p>The first two assumptions are usually justified by our domain knowledge, our study design, and simple visualization of data.</p></li>
+<li><p>To investigate the validity of the third assumptions we can use diagnostic plots by visualizing the residuals</p></li>
+<li><p><strong>Outliers</strong> are points that do not follow the general pattern of the majority of the data. Visualization methods are often used.</p></li>
+</ul>
+</section></section>
+<section>
+<section id="advanced-topics" class="title-slide slide level1 center">
+<h1>Advanced Topics</h1>
+
+</section>
+<section id="advanced-topics-1" class="slide level2">
+<h2>Advanced Topics</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li>Topic 1: Interactions</li>
+<li>Topic 2: Transform X and Y</li>
+</ul>
+</div>
+</section>
+<section id="topic-1-interactions" class="slide level2">
+<h2>Topic 1: Interactions</h2>
+</section>
+<section id="introduction-to-interactions" class="slide level2">
+<h2>Introduction to Interactions</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li>In Ex 4 we fit a multiple linear regression</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo <span class="sc">~</span> height <span class="sc">+</span> female, <span class="at">data=</span>alzheimer_healthy_old))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Estimate  Std. Error   t value     Pr(&gt;|t|)
+(Intercept)  1.80472670 0.469111040  3.847121 1.246078e-04
+height       0.07133566 0.006771182 10.535185 4.498807e-25
+female1     -0.08743904 0.054060094 -1.617442 1.059967e-01</code></pre>
+</div>
+</div>
+<ul>
+<li>There are two fitted lines
+<ul>
+<li>men: y=1.805 + 0.071 *height</li>
+<li>women: y=(1.805- 0.087) + 0.071 *height</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="interactions-introduction" class="slide level2">
+<h2>Interactions: Introduction</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><p>The two fitted lines in Ex4 are parallel to each other.</p></li>
+<li><p>This is because <code>hippo ~ height + female</code> implies an additive effect between gender and height. In other words, the effect of height does not depend on gender.</p></li>
+<li><p>When suspecting that the effect of one explanatory variable on the response may depend on another explanatory variable, we can include an <strong>interaction</strong> term in the model.</p></li>
+</ul>
+</div>
+</section>
+<section id="ex-5-the-joint-effects-of-age-and-gender-on-hippocampal-volume" class="slide level2">
+<h2>Ex 5: The Joint Effects of Age and Gender on Hippocampal Volume</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><p>In this example, we will examine how age and gender jointly affect hippocampal volume.</p></li>
+<li><p>In particular, we will assess whether the effect of age on hippocampal volume may depend on gender.</p></li>
+</ul>
+</div>
+</section>
+<section id="ex-5-two-separate-lines" class="slide level2">
+<h2>Ex 5: Two Separate Lines</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li>If we fit two separate lines, do they seem to have the same slope?</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="fu">ggplot</span>(alzheimer_healthy_old, <span class="fu">aes</span>(<span class="at">x=</span>age, <span class="at">y=</span>hippo, <span class="at">color=</span>female))<span class="sc">+</span></span>
+<span id="cb54-2"><a href=""></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb54-3"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span>lm, <span class="at">se=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="01a-linear-regression_files/figure-revealjs/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-5-a-model-with-interactions" class="slide level2">
+<h2>Ex 5: A Model with Interactions</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li>Let y be hippocampal volume</li>
+<li>Example: <span class="math display">\[y=\beta_0 + \beta_{age} age + \beta_f f + \beta_{age\times f} age\times f + \epsilon\]</span> where <span class="math inline">\(f\)</span> means female.</li>
+<li>In R, the syntax is one of the two equivalent ways:
+<ul>
+<li><code>hippo ~ age + female + age:female</code></li>
+<li><code>hippo ~ age * female</code></li>
+</ul></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo<span class="sc">~</span> age<span class="sc">*</span>female, <span class="at">data=</span>alzheimer_healthy_old))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate  Std. Error    t value      Pr(&gt;|t|)
+(Intercept)  9.182369560 0.210806589  43.558266 3.789072e-267
+age         -0.035269930 0.003008468 -11.723553  2.059224e-30
+female1     -1.041026159 0.255296507  -4.077714  4.790840e-05
+age:female1  0.007708627 0.003656786   2.108034  3.519639e-02</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="the-fitted-lines" class="slide level2">
+<h2>The Fitted Lines</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><p>What are the two fitted lines?</p></li>
+<li><p>Female: <span class="math inline">\(\hat \beta_0 + \hat \beta_{age} age + \hat \beta_f \times 1 +  \hat\beta_{age\times f} (age\times 1)\)</span>, which can be rewritten to:</p></li>
+</ul>
+<p><span class="math display">\[(\hat \beta_0  + \hat \beta_f) + (\hat \beta_{age}  +  \hat\beta_{age\times f}) age.\]</span></p>
+<ul>
+<li>Male, similarly, the fitted line is <span class="math display">\[\hat \beta_0 + \hat \beta_{age} age \]</span></li>
+</ul>
+</div>
+</section>
+<section id="the-interaction-coefficient" class="slide level2">
+<h2>The Interaction Coefficient</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><p>The two groups are parallele if and only fi <span class="math inline">\(\hat\beta_{age\times f} = 0\)</span>.</p></li>
+<li><p>In other words, <span class="math inline">\(\hat\beta_{age\times f}\)</span> is the estimated difference in the slope of age for females vs for males.</p></li>
+<li><p>Back to the problem, do men and women shrink brain in the same speed?</p></li>
+</ul>
+</div>
+</section>
+<section id="interpret-interactions" class="slide level2">
+<h2>Interpret Interactions</h2>
+<div style="font-size: 100%; color: gray">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo<span class="sc">~</span> age<span class="sc">*</span>female, <span class="at">data=</span>alzheimer_healthy_old))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                Estimate  Std. Error    t value      Pr(&gt;|t|)
+(Intercept)  9.182369560 0.210806589  43.558266 3.789072e-267
+age         -0.035269930 0.003008468 -11.723553  2.059224e-30
+female1     -1.041026159 0.255296507  -4.077714  4.790840e-05
+age:female1  0.007708627 0.003656786   2.108034  3.519639e-02</code></pre>
+</div>
+</div>
+<ul>
+<li>The difference in brain shrinking speed between men and women is 0.0077cc per year with SE=0.004. The difference is is statistically significant at significance level 0.05.</li>
+</ul>
+</div>
+</section>
+<section id="interpret-interactions-1" class="slide level2">
+<h2>Interpret Interactions</h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><p>The estimated brain shrinking speed for men is 0.035cc per year.</p></li>
+<li><p>The estimated brain shrinking speed for women is <span class="math inline">\(|-0.035+0.0077|\approx 0.0273\)</span>cc per year.</p></li>
+</ul>
+</div>
+</section>
+<section id="advanced-topic-2-transform-x-and-y" class="slide level2">
+<h2>Advanced Topic 2: Transform <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></h2>
+</section>
+<section id="transform-x" class="slide level2">
+<h2>Transform <span class="math inline">\(X\)</span></h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li>Weight is a little bit skewed. Regress hippocampus volume on log(weight). How to interpret the results?</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="co">#plot(log(alzheimer_healthy_old$weight), alzheimer_healthy_old$hippo, xlab="weight", ylab="log(weight)")</span></span>
+<span id="cb59-2"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(hippo<span class="sc">~</span><span class="fu">log</span>(weight), <span class="at">data=</span>alzheimer_healthy_old))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error  t value     Pr(&gt;|t|)
+(Intercept) 1.214054 0.46579899  2.60639 9.242282e-03
+log(weight) 1.019022 0.09111367 11.18407 6.237857e-28</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="transform-x-1" class="slide level2">
+<h2>Transform <span class="math inline">\(X\)</span></h2>
+<div style="font-size: 100%; color: gray">
+<p>Model: <span class="math inline">\(y=\beta_0 + \beta_1 log(x) + \epsilon\)</span></p>
+<ul>
+<li><p>The estimated change in <span class="math inline">\(y\)</span> when <span class="math inline">\(log(x)\)</span> increases by 1 is <span class="math inline">\(b_1=1.013243\)</span></p></li>
+<li><p>Increase <span class="math inline">\(log(x)\)</span> by 1 means:</p>
+<ul>
+<li><p><span class="math inline">\(log(x)+1=log(x)+log(e)=log(ex)\)</span>, which means <span class="math inline">\(x\)</span> (weight) increases <strong>to</strong> <span class="math inline">\(ex\)</span>.</p></li>
+<li><p>Equivalently, <span class="math inline">\(x\)</span> increases <strong>by</strong> <span class="math display">\[\frac{ex-x}{x}=e-1 \approx 1.72 = 172\%.\]</span></p></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="transform-x-2" class="slide level2">
+<h2>Transform <span class="math inline">\(X\)</span></h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><p>Often, we are interested in the estimated change in <span class="math inline">\(y\)</span> for for a <span class="math inline">\(p\%\)</span> increase in <span class="math inline">\(x\)</span>.</p></li>
+<li><p>A <span class="math inline">\(p\%\)</span> increase in x changes <span class="math inline">\(log(x)\)</span> by <span class="math inline">\(log((1+p/100)x)=log(x)+log(1+p/100)\)</span>.</p></li>
+<li><p>Therefore, the estimated change in <span class="math inline">\(y\)</span> is is</p></li>
+</ul>
+<p><span class="math display">\[b_1*log(1+p/100).\]</span></p>
+</div>
+</section>
+<section id="transform-y" class="slide level2">
+<h2>Transform <span class="math inline">\(Y\)</span></h2>
+<div style="font-size: 100%; color: gray">
+<ul>
+<li><p>Model: <span class="math inline">\(log(y)=\beta_0 + \beta_1 x + \epsilon\)</span></p></li>
+<li><p>Now the response is on the log scale.</p></li>
+<li><p>A one-unit increase in x increases the expected value of <span class="math inline">\(log(y)\)</span> by <span class="math inline">\(b_1\)</span>, i.e., from <span class="math inline">\(log(y_0)\)</span> to <span class="math inline">\(log(y_1)=log(y_0)+b_1\)</span>.</p></li>
+<li><p>Back to the original scale, <span class="math display">\[y_1=e^{log(y_1)}=e^{log(y_0)+b_1}=e^{b_1}*y_0\]</span></p></li>
+</ul>
+</div>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div style="font-size: 100%; color: gray">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="co">#plot(alzheimer_healthy_old$height, log(alzheimer_healthy_old$weight), xlab="height", ylab="log(weight)")</span></span>
+<span id="cb61-2"><a href=""></a><span class="fu">summary</span>(<span class="fu">lm</span>(<span class="fu">log</span>(weight)<span class="sc">~</span>height, <span class="at">data=</span>alzheimer_healthy_old))<span class="sc">$</span>coefficients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate  Std. Error  t value      Pr(&gt;|t|)
+(Intercept) 3.1652744 0.080729831 39.20824 4.708633e-231
+height      0.0296628 0.001230638 24.10360 1.591322e-108</code></pre>
+</div>
+</div>
+</div>
+<div style="font-size: 90%; color: gray">
+<ul>
+<li><p>In this example, <span class="math inline">\(b_1=0.02935588\)</span>.</p></li>
+<li><p>When increase <span class="math inline">\(x\)</span> (age) by 1 unit, the expected value of <span class="math inline">\(log(y)\)</span> (log(weight)) increases by 0.02935588.</p></li>
+<li><p>Back to the original scale, <span class="math inline">\(y_1=e^{log(y_1)}=e^{log(y_0)+b_1}=e^{b_1}*y_0=e^{0.02935588}*y_0\approx 1.0298*y_0\)</span>.</p></li>
+<li><p>Or, equivalently, the expected value of <span class="math inline">\(y\)</span> (weight) increases by <span class="math inline">\(2.98\%\)</span> for each additional year of age.</p></li>
+</ul>
+</div>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p><img src="img/cosmos-uci-dshs.png" style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;"></p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="01a-linear-regression_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="01a-linear-regression_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'fade',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
