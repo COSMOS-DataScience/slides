@@ -1,0 +1,224 @@
+---
+title: "Logistic Regression in R"
+format:   
+  html:
+    toc: true
+    toc-location: right
+    toc-depth: 2
+    number-sections: true
+    embed-resources: true
+editor: visual
+---
+ 
+```{r}
+#| echo: false
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+## Logistics Regression Model
+
+* Remember from the lecture that we are fitting a regression model with a binary outcome. 
+
+* As such, the model is as follows:
+
+$$\begin{eqnarray*}
+\log \Big(\frac{\hat{p}}{1 - \hat{p}} \Big) & = & a + b_{1}x_1 + \ldots + b_{q}x_{q}
+\end{eqnarray*}$$
+
+
+* The left hand side of this model is the logarithm of the odds of success.
+
+* Thereby, the probability of success of $\pi$ can be written as follows:
+
+$$\begin{eqnarray*}
+\hat{p} & = & \frac{\exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}{1 + \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}
+\end{eqnarray*}$$
+
+* The above means once we estimate the coefficients of the model, we can estimate the probability of success of the outcome of interest.
+
+
+## Import data
+
+* Let's revisit Alzheimer's data set, and consider the task of building a logistic regression model with diagnosis as its response variable and variables age, education, hippocampus volume, and female as its predictors.
+
+
+```{r message=FALSE}
+#| code-fold: TRUE
+#| output-fold: TRUE
+
+library(tidyverse) 
+
+alzheimer_data <- read_csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/main/data/alzheimer_data.csv")
+
+```
+## Data pre-processing 
+
+### Clean up the columns
+
+* Running a logistic regression model in R is pretty straightforward. Before we do that, let's use `select()` function to select the interested variable (diagnosis, age, education, lhippo, rhippo, and female).
+
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+alzheimer_data <- alzheimer_data %>% 
+  select(diagnosis, age, educ, female, lhippo,rhippo)
+
+glimpse(alzheimer_data)
+```
+
+
+### Data wrangling
+
+* Let's begin by transforming the response to a new feature with two categories: no symptoms (0) versus mild or strong symptoms (1). 
+
+* It is noticeable that female is a binary variable. As such, we should make sure R recognizes that feature as a factor variable.
+
+* Create a new variable `hippo` as the sum of left hippocampus (lhippo) and right hippocampus (rhippo)
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+
+alzheimer_data <- alzheimer_data %>% 
+  mutate(diag = ifelse(diagnosis %in% c(1, 2), "1", "0"),
+         diag = as.factor(diag),
+         female = as.factor(female),
+         hippo = lhippo + rhippo)
+```
+
+### Data visualization
+
+```{r}
+alzheimer_data %>% 
+  ggplot(aes(x = hippo, y = diag, color = diag))+
+  geom_point()+
+  theme_classic()
+```
+
+
+
+## Model fitting
+
+We will use `glm()` function to fit logistics regression.
+
+```{r warning=FALSE}
+#| code-fold: TRUE
+#| output-fold: TRUE
+
+logistic_model <- glm(
+  diag ~ educ + age + female + hippo, 
+  family = "binomial", 
+  data = alzheimer_data)
+
+summary(logistic_model)
+```
+ 
+
+## Model interpretation:
+
+```{r echo=F}
+betas = logistic_model$coefficients %>% round(digits = 2)
+```
+
+If we plug in the estimated values from the model above, we have
+
+$$\begin{eqnarray*}
+\log \Big(\frac{\hat{p}}{1- \hat{p}} \Big) & = & `r betas[1]` + `r betas[2]`\,x_{\text{educ}} + `r betas[3]`\,x_{\text{age}} + `r betas[4]`\,x_{\text{naccicv}} + `r betas[5]`\,x_{\text{female}}
+\end{eqnarray*}$$
+
+Let's say we want to estimate the probability of having symptoms for Alzheimer's disease for a person with specific characteristics. 
+
+* What is the probability of having symptoms for Alzheimer's disease for a 40 years old women, with 10 education year, and 6 cc of hippocampus volume?
+
+```{r}
+newx_df <- data.frame(
+  age    = 40,
+  female = factor(0, levels = levels(alzheimer_data$female)),
+  educ   = 10,
+  hippo  = 6
+) 
+pred_prob = predict(logistic_model, newdata = newx_df, type = "response") %>%
+  round(digits = 2)
+```
+
+$$\begin{eqnarray*}
+\hat{P}(\text{diag = 1}) & = & \frac{\exp(`r betas[1]` + `r betas[2]`\,\times 10 + `r betas[3]`\,\times 40 + `r betas[5]` \times 1)}{1 + \exp(`r betas[1]` + `r betas[2]`\,\times 10 + `r betas[3]`\,\times 40 + `r betas[5]` \times 1)}
+\end{eqnarray*} = `r pred_prob`$$
+
+## Format the output to a publication-ready table
+
+```{r warning=FALSE}
+#| code-fold: TRUE
+#| output-fold: TRUE
+library(gtsummary) # for tbl_regression() function
+
+logistic_model %>%
+  tbl_regression(
+    estimate_fun = function(x){style_number(x, digits = 3)}, 
+    exponentiate = TRUE)
+```
+ 
+
+ 
+## Model Evaluation:
+
+To split the data into training and validation sets using the rsample package in R, you can use the initial_split() function. Here's an example of how you can split the data:
+
+```{r message=FALSE, warning=FALSE}
+#| code-fold: TRUE
+#| output-fold: TRUE
+library(rsample)
+
+set.seed(0)
+data_split <- initial_split(alzheimer_data, prop = 0.7) 
+
+train_data <- training(data_split)
+test_data <- testing(data_split)
+```
+
+#### Fit the model with train data
+
+As we saw, next step after splitting the data into train and test would be training the model using training data:
+
+```{r warning=FALSE}
+#| code-fold: TRUE
+#| output-fold: TRUE
+logistic_model2 <- glm(diag ~ educ + age + hippo + female, family=binomial, data=train_data)
+summary(logistic_model2)
+```
+
+
+```{r warning=FALSE}
+#| code-fold: TRUE
+#| output-fold: TRUE
+logistic_model2 %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3), exponentiate = TRUE)
+```
+
+
+#### Validate on test data
+Followed, by testing it via the validation set. This means to calculate the probability of success for each subject in the test set:
+
+
+```{r warning=FALSE}
+#| code-fold: TRUE
+#| output-fold: TRUE
+pred_prob <- logistic_model2 %>% 
+  predict(test_data,type="response")
+```
+
+
+* We are now ready to calculate the accuracy of our trained model. To accomplish this, we translate all probabilities of success above to 0.5 to a 1 and otherwise to a 0, followed by tracking the number of correct predictions (1's correctly predicted as 1's and 0's correctly predicted as 0's).
+
+```{r}
+#| code-fold: TRUE
+#| output-fold: TRUE
+
+predicted.classes <- ifelse(pred_prob > 0.5, "1", "0")
+acc = mean(predicted.classes == test_data$diag) %>% 
+  round(2)
+
+print(paste("This model yields a", acc, "accuracy rate!"))
+```
+
