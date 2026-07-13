@@ -1,0 +1,426 @@
+---
+title: "Linear Regression in R"
+author: "<br>Data Science in Biomedical Sciences<br><br>UCI COSMOS 2026<br>Noah Benjamin<br>(adapted material from Zhaoxia Yu and Mine Dogucu)"
+footer: ""
+format:
+  revealjs:
+    chalkboard: true
+    smaller: true
+    slide-number: c/t
+    code-line-numbers: false
+    linestretch: 1.5
+    html-math-method:
+      method: mathjax
+      url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+---
+
+
+```{r echo = FALSE, warning=FALSE, message=FALSE}
+library(fabricerin)
+library(ggplot2)
+library(gridExtra)
+library(dplyr)
+library(gtsummary)
+```
+
+
+```{r echo = FALSE, message = FALSE}
+library(tidyverse)
+
+arthritis <- read_csv("https://raw.githubusercontent.com/cosmos-uci-dshs/data/main/RheumArth_Tx_AgeComparisons.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(sex = case_when(sex == 0 ~ "female",
+                   sex == 1 ~ "male")) %>% 
+  mutate(sex = as.factor(sex)) %>% 
+  mutate(age_gp = case_when(age_gp == 1 ~ "control",
+                   age_gp == 2 ~ "elderly")) %>% 
+  mutate(age_gp = as.factor(age_gp)) %>% 
+  mutate(cdai_yn = case_when(cdai_yn == 1 ~ "no",
+                             cdai_yn == 2 ~ "yes")) %>%
+  mutate(cdai_yn = as.factor(cdai_yn))
+```
+
+```{r echo = FALSE, message = FALSE}
+alzheimer_data <- read_csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/main/data/alzheimer_data.csv")
+```
+
+## Linear Regression in R
+
+- Now that we have learned about regression models, we'll build a multiple regression model for predicting the left hippocampus volume of the brain, labeled as `lhippo`, through two predictors, namely `age` and `educ`.
+
+. . .
+
+- Remember that in the general, a multiple linear regression model with $p$ explanatory variables can
+be presented as:
+
+$$\begin{equation*}
+\hat{y}  =  a + b_{1}x_{1} + b_{2}x_{2} + \cdots + b_{p}x_{p}.
+\end{equation*}$$
+
+. . . 
+
+- The left hand side of this model is the response variable, a numerical continuous variable.
+
+ 
+
+## Why would we investigate this relationship?
+
+. . . 
+
+- Recall the left hippocampus volume `lhippo` is likely to shrink as Alzheimer's severs. 
+
+. . . 
+
+- Also, while the progress of the disease is a function of age, it is possible that education could have a reverse effect on the progress of the disease.
+
+. . . 
+
+- To fit linear models all we need to do is to apply the `lm()` command in R. 
+
+. . . 
+
+- First, though, we will begin by plotting the response versus each predictor, separately.
+
+
+## Plotting response vs. predictor
+ 
+(left) `lhippo` vs. `age` , `lhippo` vs. `educ` (right)
+ 
+```{r echo=FALSE, warning=FALSE, fig.align='center',fig.width=14}
+library(ggplot2)
+library(gridExtra)
+
+p1 <- ggplot(data = alzheimer_data) +
+  geom_point(aes(x = age, y = lhippo), color = "red", width = 30) +
+  labs(x = "Age", y = "Left Hippocampus Volume") +
+  theme_minimal() +
+  theme(plot.margin = margin(l = 0.5, r = 0.5))  # Adjust the left and right margins
+
+p2 <- ggplot(data = alzheimer_data) +
+  geom_point(aes(x = educ, y = lhippo), color = "red") +
+  labs(x = "Education", y = "Left Hippocampus Volume") +
+  theme_minimal() +
+  theme(plot.margin = margin(l = 0.5, r = 0.5))  # Adjust the left and right margins
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+ 
+
+# Now let's do some linear regression!
+
+## `lhippo` vs. `age`
+
+Here is the regression of `lhippo` versus `age`:
+
+```{r warning=FALSE, out.height=0.1}
+lm_model <- lm(lhippo ~ age, data = alzheimer_data)
+
+summary(lm_model)
+```
+ 
+## `lhippo` vs. `age`
+ 
+We can nicely output the `lm()` to a table:
+ 
+```{r warning=FALSE}
+lm(lhippo ~ age, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
+```
+ 
+
+## Let's take a look at the fitted line
+
+. . . 
+
+```{r warning=FALSE, fig.align='center', message=FALSE, fig.height=5.5}
+
+ggplot(data = alzheimer_data, aes(x = age, y = lhippo)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "blue", se=FALSE) +
+  labs(x = "Age", y = "Left Hippocampus Volume")
+```
+
+ 
+
+## `lhippo` vs. education
+
+```{r warning=FALSE}
+lm_model <- lm(lhippo ~ educ, data = alzheimer_data)
+summary(lm_model)
+```
+
+. . . 
+
+Again, as a table:
+
+. . . 
+
+```{r}
+lm(lhippo ~ educ, data = alzheimer_data) %>%
+  tbl_regression()
+```
+
+ 
+## Some ways we can customize our table digits
+ 
+```{r warning=FALSE}
+lm(lhippo ~ educ, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
+ 
+lm(lhippo ~ educ, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) round(x, digits = 3))
+```
+ 
+
+## Plotting the fitted line
+
+Let's see the fitted line:
+
+. . . 
+
+```{r warning=FALSE, message=FALSE, fig.align='center', fig.height=5}
+ggplot(data = alzheimer_data, aes(x = educ, y = lhippo)) +
+  geom_point(color = "red") +
+  geom_smooth(method = "lm", color = "blue", se=FALSE) +
+  labs(x = "Education", y = "Left Hippocampus Volume")
+```
+ 
+
+## Regressing on both variables
+
+Here is the regression of lhippo versus age and education:
+
+```{r warning=FALSE, out.height=0.1, fig.height=0.1, fig.width=6, fig.align='center'}
+lm_model <- lm(lhippo ~ age + educ, data = alzheimer_data)
+summary(lm_model)
+```
+ 
+## Regressing on both variables
+
+```{r warning=FALSE}
+lm(lhippo ~ age + educ, data = alzheimer_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
+
+```
+
+
+
+
+
+ 
+
+# Cross-Validation
+
+## Cross-Validation
+
+- Let's try to evaluate the performance of our model by calculating its accuracy or mean squared error (MSE), depending on whether we are dealing with a linear regression or logistic regression model.
+
+. . . 
+
+- Cross-validation is a commonly used technique to achieve this evaluation. It is an old approach, devised by statisticians Fred Mosteller and John Tukey in 1968.
+
+. . . 
+
+- The process involves splitting the data into training and validation (or test) sets. We then fit or train the model using the training portion of the dataset. The accuracy or MSE is then calculated by comparing the predictions made by the model on the validation set to the actual values.
+
+ 
+
+## Metrics
+
+
+- For linear regression models, we typically use the mean squared error (MSE) to measure the quality of predictions. The lower the MSE, the better the model's performance. The MSE represents the average squared difference between the predicted values and the true values.
+
+. . . 
+
+- For classification problems (e.g., logistic regression), we use accuracy as a metric to assess the model's performance. Accuracy represents the proportion of correctly classified instances out of the total instances in the validation set. The higher the accuracy, the better the model's performance.
+ 
+
+## Splitting the data
+
+To split the data into training and validation sets using the rsample package in R, you can use the initial_split() function. Here's an example of how you can split the data:
+
+. . . 
+
+```{r message=FALSE, warning=FALSE}
+library(rsample)
+
+set.seed(0)
+data_split <- initial_split(alzheimer_data, prop = 0.7) 
+
+train_data <- training(data_split)
+test_data <- testing(data_split)
+```
+
+ 
+# Linear Regression Model Evaluation
+
+## "Training"
+
+After splitting the data into train and test, we train ("fit", in our case) the model using training data:
+
+. . . 
+
+```{r warning=FALSE}
+lm_model <- lm(lhippo ~ age + educ, data = train_data)
+summary(lm_model)
+```
+ 
+
+## "Training"
+
+After splitting the data into train and test, we train ("fit", in our case) the model using training data:
+
+
+```{r warning=FALSE}
+lm(lhippo ~ age + educ, data = train_data) %>%
+  tbl_regression(estimate_fun = function(x) style_number(x, digits = 3))
+```
+ 
+ 
+## Evaluating our model on test data
+ 
+Now, let's use the trained model to make predictions on the validation data:
+
+. . . 
+
+```{r warning=FALSE}
+predictions <- predict(lm_model, newdata = test_data)
+```
+
+. . . 
+
+- To evaluate the performance of our model, we can calculate the Mean Squared Error (MSE) between the predicted values and the actual values:
+
+. . . 
+
+```{r warning=FALSE}
+mean((test_data$lhippo - predictions)^2)
+```
+
+## Question:
+
+- What happen to MSE when we change the ratio we split the data?
+
+- What does MSE actually represent here? Do we know what MSE is good/bad?
+
+- Did we account for all of the relevant variables?
+
+
+## Additional `lm()` example
+
+Let's load in some new data
+
+```{r}
+saltBP <- read.table("../data/saltBP.txt", header = T, sep ='')
+```
+
+## Additional `lm()` example
+
+Plot salt against BP
+
+```{r}
+ggplot(data = saltBP) +
+  geom_point(aes(x = salt,  y = BP)) +
+  labs(title = "Salt vs. Blood-pressure")
+```
+
+## Additional `lm()` example
+
+Let's look at the fit line
+
+```{r}
+ggplot(data = saltBP) +
+  geom_point(aes(x = salt,  y = BP)) +
+  geom_smooth(aes(x = salt, y = BP), method = "lm") +
+  labs(title = "Salt vs. Blood-pressure")
+```
+
+## Additional `lm()` example
+
+Investigate the relationship between salt and blood pressure
+
+```{r}
+salt_model <- lm(BP ~ salt, data=saltBP)
+salt_model
+summary(salt_model)
+```
+
+## Additional `lm()` example
+
+We can also use the `glm()` function. You'll use it more tomorrow!
+
+```{r}
+glm(BP ~ salt, data=saltBP)
+```
+
+## Residual
+
+```{r}
+confint(salt_model)
+```
+
+
+## Multiple Linear Regression example
+
+```{r}
+library(MASS)
+data("birthwt")
+bwt_mod <- glm(bwt ~ age + factor(smoke), data=birthwt)
+summary(bwt_mod)
+```
+
+## 95% confidence intervals for coefficients
+
+```{r}
+confint(bwt_mod)
+```
+
+
+## Interpretation
+
+. . . 
+
+$\hat{y}_{weight} = b_0 + b_1 \times age + b_2 \times smoker$
+
+. . . 
+
+$\hat{y}_{weight} = 2791.2 + 11.3 \times age - 278.4 \times smoker$
+
+. . . 
+
+- The intercept in multiple linear regression model is the expected (average) value of the response variable when all the explanatory variables in the model are set to zero simultaneously.
+
+. . . 
+
+- In the above example, the intercept is $a = 2791$, which is obtained by setting age and smoking to zero.
+
+. . . 
+
+- We might be tempted to interpret this as the average birthweight of babies for nonsmoking mothers (smoke=0) with age equal to zero. In this case, however, this is **not** a reasonable interpretation since mother's age cannot be zero.
+
+
+## Interpretation
+
+$\hat{y}_{weight} = b_0 + b_1 \times age + b_2 \times smoker$
+
+$\hat{y}_{weight} = 2791.2 + 11.3 \times age - 278.4 \times smoker$
+
+- We interpret $b_j$ as our estimate of the expected (average) change in the response variable associated with a unit increase in the corresponding explanatory variable $x_j$ while all other explanatory variables in the model remain fixed.
+
+. . . 
+
+- For the above example, the point estimate of the regression coefficient for age is $b_1 = 11$, and the estimate of the regression coefficient for smoke is $b_2 = −278$.
+
+
+## Interpretation
+
+$\hat{y}_{weight} = b_0 + b_1 \times age + b_2 \times smoker$
+
+$\hat{y}_{weight} = 2791.2 + 11.3 \times age - 278.4 \times smoker$
+
+- We expect that the birthweight of babies increase by 11 grams as the mother's age increases by one year among mothers with the same smoking status.
+
+. . . 
+
+- The expected birthweight changes by $−278$ (decreases by 278) grams associated with one unit increase in the value of the variable smoke (i.e., going from non-smoking mothers to smoking mothers) among mothers with the same age.
