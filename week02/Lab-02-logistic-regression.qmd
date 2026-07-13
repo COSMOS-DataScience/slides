@@ -89,11 +89,35 @@ alzheimer_data <- alzheimer_data %>%
 
 ### Data visualization
 
+* What is the relationship between diagnosis v.s. hippocampus?
+
+* What is the relationship between diagnosis v.s. education years?
+
 ```{r}
+#| code-fold: TRUE  
+
 alzheimer_data %>% 
   ggplot(aes(x = hippo, y = diag, color = diag))+
-  geom_point()+
-  theme_classic()
+  geom_boxplot()+
+  theme_classic() +
+  labs(x = 'Hippocampus volume (cc)', y = 'Diagnosis group')+
+  theme(aspect.ratio = 0.5)
+
+alzheimer_data %>% 
+  mutate(female = fct_recode(female, Male="0",Female="1")) %>% 
+  ggplot(aes(x = female, fill = diag))+
+  geom_bar(position = 'fill') +
+  theme_classic() +
+  labs(x = 'Female', y = 'Diagnosis group')+
+  theme(aspect.ratio = 0.5)
+
+
+alzheimer_data %>% 
+  ggplot(aes(x = educ, y = diag, color = diag))+
+  geom_boxplot()+
+  theme_classic() +
+  labs(x = 'Education in years', y = 'Diagnosis group')+
+  theme(aspect.ratio = 0.5)
 ```
 
 
