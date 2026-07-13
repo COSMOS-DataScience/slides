@@ -29,7 +29,7 @@ library(tidyverse)
 ```
 
 ```{r echo = FALSE, message = FALSE}
-alzheimer_data <- read_csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/main/data/alzheimer_data.csv")
+alzheimer_data <- read_csv("../../week01/data/alzheimer_data.csv")
 ```
 
 ## Linear Regression in R
@@ -412,3 +412,33 @@ $\hat{y}_{weight} = 2791.2 + 11.3 \times age - 278.4 \times smoker$
 . . . 
 
 - The expected birthweight changes by $−278$ (decreases by 278) grams associated with one unit increase in the value of the variable smoke (i.e., going from non-smoking mothers to smoking mothers) among mothers with the same age.
+
+
+
+## Let's talk a little about assumptions
+
+- **For the model to work** we assume that these assumptions are met
+
+. . . 
+
+$y_i = \beta_0 + \beta_1x_i + \epsilon_i, \hspace{1cm} i = 1, ..., n$
+
+. . . 
+
+- The $n$ observations are independent
+
+. . . 
+
+- Reasonably large $n$ or normality assumption for $\epsilon_i$.
+
+. . . 
+
+- Homogeneous variance: $\epsilon_i \sim N(0, \sigma^2)$. 
+
+. . . 
+
+- Note that this assumption implies that $Var(y_i) = \sigma^2$.
+
+. . . 
+
+- This is assumption is also known as homoscedasticity.
