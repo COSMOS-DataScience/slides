@@ -1,0 +1,859 @@
+---
+format:
+  revealjs:
+    title-slide: false   
+    theme: [default]
+#    smaller: true
+    chalkboard: true
+    scrollable: true
+    self-contained: false
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slideNumber: true
+    transition: "fade"
+    progress: true
+    controls: false
+    ratio: 3:2
+    echo: true
+    code-fold: true
+    footer: |
+      <img src="img/cosmos-uci-dshs.png"
+           style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;">
+---
+
+::::: {style="display: flex; align-items: center; justify-content: space-between;"}
+::: {style="flex: 0 0 40%;"}
+<img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;"/>
+:::
+
+::: {style="flex: 0 0 55%; text-align: left;"}
+<h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">
+
+Logistic Regression
+
+</h1>
+
+<p style="color: #153e6c; font-size: 1.8em;">
+
+Zhaoxia Yu
+
+</p>
+:::
+:::::
+
+
+## Load packages, read data
+
+```{r}
+library(fabricerin)
+library(tidyverse)
+library(ggplot2)
+```
+
+
+## When The Response Variable is Binary
+```{r warning=FALSE, message = FALSE, eval=TRUE}
+#| fig-align: center
+#read, select variables
+#remove impaired, and define new variables
+alzheimer_data <- read.csv('../data/alzheimer_data.csv') %>% 
+  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>%
+  filter(diagnosis!=1) %>%
+  mutate(alzh=(diagnosis>0)*1, female = as.factor(female), hippo=lhippo+rhippo) 
+
+table(alzheimer_data$alzh)
+ggplot(data=alzheimer_data, aes(x=alzh)) +
+  geom_bar()
+```
+
+- This lecture focuses on how to model a binary response variable using one or multiple explanatory variables.
+
+
+## Outline
+
+- Introduction
+  - Motivating example: alzh ~ hippo
+- Ex1: One numerical predictor
+- Ex2: One binary predictor
+- Ex3: Multiple predictors
+- Additional examples
+  - Ex4: one numerical predictor
+  - Ex5: mulitple predictors
+
+
+## Motivating Example: alzh \~ hippo
+
+- Here we are going to model a binary response variable `alzh` (Alzheimer's disease status, 0 or 1). 
+
+- The explanatory variable is `hippo` (hippocampal volume, a numerical variable).
+
+- We are going to look at two models (Model 1 vs Model 2)
+
+
+## Model 1:
+
+```{r}
+#| fig-align: center
+ggplot(data=alzheimer_data, aes(x=hippo, y=alzh)) +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_point() +
+  geom_smooth(method='lm', se=FALSE) +
+  labs(title="alzh vs hippo")
+```
+
+
+
+## Model 2: 
+```{r}
+#| fig-align: center
+ggplot(alzheimer_data, aes(x = hippo, y = alzh)) +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_point(alpha = 0.3) +
+  stat_smooth(
+    method = "glm",
+    method.args = list(family = binomial),
+    se = FALSE
+  ) +
+  labs(
+#    title = "Logistic Regression Fit",
+    title = "alzh vs hippo",
+       x = "Hippocampal Volume",
+#       y = "Probability of Alzheimer's")
+       y = "alzh")
+```
+
+
+## Discussion: Model 1 vs Model 2
+
+-
+
+- 
+
+- 
+
+...
+
+
+## Discussion: Model 1 vs Model 2
+
+- Model 1 is a linear regression model. 
+  - Now let us do predictions using linear regression: `alzh.lm`
+
+
+## Prediction using Model 1
+
+```{r}
+#| fig-align: center
+
+alzh.lm=lm(alzh ~ hippo, data=alzheimer_data)
+#add lm.pred variable
+alzheimer_data$lm.pred=predict(alzh.lm)
+#add red flags
+alzheimer_data$lm.pred.red = alzheimer_data$lm.pred
+alzheimer_data$lm.pred.red[alzheimer_data$lm.pred<1 &
+                             alzheimer_data$lm.pred>0]=NA
+ggplot(alzheimer_data) +
+  geom_point(aes(x=alzh, y=lm.pred)) +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_point(aes(x=alzh, y=lm.pred.red), col="red") +
+  geom_hline(yintercept = c(0,1), col='red') +
+  labs(x="true alzh", y="predicted by lm")
+```
+
+
+
+## Prediction Using Model 2
+
+```{r}
+#| fig-align: center
+
+alzh.logistic = glm(alzh ~ hippo,
+               data = alzheimer_data,
+               family = binomial)
+
+# add predicted probabilities
+alzheimer_data$glm.pred = predict(alzh.logistic,
+                                  type = "response")
+
+ggplot(alzheimer_data) +
+  geom_point(aes(x = alzh, y = glm.pred)) +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_hline(yintercept = c(0, 1), col = "red") +
+  labs(x = "true alzh",
+       y = "predicted by logistic regression")
+
+```
+
+
+
+## Model 1 vs Model 2: `alzh vs hippo` Fitted Curves
+
+```{r}
+#| fig-align: center
+
+library(gridExtra)
+
+# Linear regression
+p1 = ggplot(alzheimer_data, aes(x = hippo, y = alzh)) +
+  geom_point(alpha = 0.3) +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Model 1: alzh vs hippo")
+
+# Logistic regression
+p2 = ggplot(alzheimer_data, aes(x = hippo, y = alzh)) +
+  geom_point(alpha = 0.3) +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_smooth(
+    method = "glm",
+    method.args = list(family = binomial),
+    se = FALSE
+  ) +
+  labs(title = "Model 2: alzh vs hippo")
+
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+## Model 1 vs Model 2: Predicted vs True
+
+```{r}
+#| fig-align: center
+
+p1 = ggplot(alzheimer_data) +
+  geom_point(aes(x = alzh, y = lm.pred)) +
+  geom_point(aes(x = alzh, y = lm.pred.red), color = "red") +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_hline(yintercept = c(0, 1), color = "red") +
+  labs(
+    title = "Model 1: Pred vs True",
+    x = "True Alzheimer's Status",
+    y = "Predicted"
+  )
+
+
+p2 = ggplot(alzheimer_data) +
+  geom_point(aes(x = alzh, y = glm.pred)) +
+  coord_cartesian(ylim = c(-0.5, 1.5)) +
+  geom_hline(yintercept = c(0, 1), color = "red") +
+  labs(
+    title = "Model 2: Pred vs True",
+    x = "True Alzheimer's Status",
+    y = "Predicted"
+  )
+
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+## Discussion: Model 1 vs Model 2
+
+
+## Discussion: Model 1 vs Model 2
+
+- Model 1 is a linear regression model.
+
+- Model 2 is a logistic regression model.
+
+- Have you been convinced that the logistic regression model is more appropriate for modeling a binary response variable?
+
+
+
+##  Why Isn't Linear Regression Appropriate for Binary Response Variables?
+
+-   Recall that the response variable is binary (0 = Healthy, 1 = Alzheimer's). 
+
+-   Predicted values can be impossible for a linear regression may be less than 0 or greater than 1, but probabilities must lie between 0 and 1.
+
+
+##
+
+- The variability is not constant. Why?
+  - $Y$ is binary, and 
+  $$Y|x \sim Bernoulli (p(x)),$$
+  
+  where $p(x)=Pr[Y=1|x]\in [0,1]$. 
+  - $Var(Y|x)=p(x) (1-p(x))$, which is a function of $x$. This violates a key assumption of linear regression.
+
+- The relationship is usually not linear. The probability of disease often changes gradually, producing an S-shaped curve rather than a straight line.
+
+
+## A Nice Solution: Logistic Regression
+
+- Because $Y$ is binary (0 or 1), it makes sense to model the **probability** that $Y=1$.
+
+- Recall that for a binary response,
+
+$$E(Y \mid x) = Pr(Y=1 \mid x) \in [0, 1].$$
+
+
+- One solution is to use the **logit** transformation to **map the probability to the entire real line**, and then use a linear function to quantify how the logit scale changes with $x$.
+
+
+## The Logit Transformation
+
+-   $log \left( \frac{p}{1-p}\right)$ is called the **logit** function, i.e.,
+
+$$logit(p)=log \left( \frac{p}{1-p}\right) \in [0,1].$$
+
+
+```{r}
+#| fig-align: center
+p=seq(0.01, 0.99, 0.01)
+logit.p=log(p/(1-p))
+plot(p, logit.p, type="l", xlab=expression(pi), main="the logit function")
+```
+
+
+## The Logistic Regression Model
+
+- Let $p(x)=Pr(Y=1|x)$. The logit function 
+is defined as
+
+$$logit(p(x)) = log\frac{p(x)}{1-p(x)}$$
+
+- Logistic regression models the **logit** as a linear function of the predictor(s): 
+
+$$ logit(p(x)) = \beta_0 + \beta_1 x $$
+
+
+
+
+## The Logistic Regression Model
+
+- Rearranging $logit(p(x))=\beta_0 + \beta_1 x$, we can express $p(x)$ as a function of $x$:
+
+$$
+P(Y=1 \mid x)=
+p(x)=
+\frac{e^{\beta_0+\beta_1x}}
+     {1+e^{\beta_0+\beta_1x}}.
+$$
+
+- The fitted values are always between **0 and 1**.
+- The fitted curve is **S-shaped**.
+- The probability increases or decreases smoothly as $x$ changes.
+
+
+
+## Useful Terminologies: Odds, log-odds (logit)
+
+- The **odds** of $Y=1$ are defined as
+
+$$
+odds(Y=1|x)\frac{P(Y=1 \mid x)}
+     {1-P(Y=1 \mid x)}= \frac{p(x)}{1-p(x)}.
+$$
+
+  - logit = log-odds:
+  
+  $$logit(p(x)) = log\frac{p(x)}{1-p(x)} = log[odds(Y=1|x)].$$
+
+
+
+## Useful Terminologies: Odds Ratio
+
+- The **odds ratio** compares the odds for two different values of a predictor.
+
+- For a one-unit increase in $x$, the odds ratio is
+
+$$
+\frac{odds(Y=1\mid x+1)}
+     {odds(Y=1\mid x)}.
+$$
+
+
+##
+
+- In a logistic regression model,
+
+$$
+logit(p(x))
+=
+\beta_0+\beta_1x,
+$$
+
+the odds ratio simplifies to
+
+$$
+\frac{odds(Y=1\mid x+1)}
+     {odds(Y=1\mid x)}
+=
+e^{\beta_1}.
+$$
+
+##
+
+- Interpretation:
+  - If $e^{\beta_1}>1$, the odds increase as $x$ increases.
+  - If $e^{\beta_1}<1$, the odds decrease as $x$ increases.
+  - If $e^{\beta_1}=1$, the odds do not change.
+  
+  
+## Logistic Regression: Summary
+
+
+- Logistic regression models the **logit** of probability as a linear function of the predictor(s).
+  - Probability is between 0 and 1.
+  - The logit can take any real value.
+  - logit=(log-odds).
+  - This allows us to use a linear model on the log-odds scale.
+
+
+
+# Ex 1: Logistic Regression with One Numerical Predictor
+
+
+## Ex 1: A Numerical Predictor
+
+-   In this example, we want to investigate the relationship between
+    having a low birthweight baby, $Y$, and mother's age at the time of
+    pregnancy, $X$.
+
+
+- In R, the `glm()` function can be used to fit a logistic regression model.
+
+- ``family='binomial'`` specifies that we are fitting a logistic regression model.
+
+- Note, `glm` stands for generalized linear models, which include linear regression and logistic regression as special situations.
+
+
+## Ex1: Summary and confidence intervals:
+
+- The fitted model is
+
+$$
+\operatorname{logit}(p(x))
+=
+0.385
+-0.051x.
+$$
+
+```{r}
+library(MASS)
+data(birthwt)
+
+fit <- glm(low ~ age, family = 'binomial', data = birthwt)
+fit %>% summary() %>% coefficients()
+
+# CI:
+confint.default(fit)
+```
+
+
+## Ex1: Interpret the  Output
+
+  - The estimated coefficient is -0.051 (SE=0.03).
+  - This suggests that, as the mother's age increases, the **log-odds** of low birthweight tend to decrease. In other words, older mothers appear to have a lower risk of low birthweight.
+ - Note that the confidence interval includes 0 and the p-value 0.105.  So the data do not provide strong evidence that the mother's age is associated with low birthweight.
+
+::: {.callout-note}
+We have Interpretd the coefficient on the **log-odds** scale. Next, we'll transform the coefficient to the **odds ratio**, which is much easier to understand.
+:::
+
+
+
+## Ex1: Interpret the Coefficient Using Odds Ratios
+
+- The coefficient describes a change in **log-odds**.
+
+- It is common to take the exponential to convert the coefficient back to the **odds** scale.
+
+- Exponentiating the coefficient gives the **odds ratio**:
+
+$$
+e^{-0.051}=0.95.
+$$
+
+
+## Ex1: Interpret the Coefficient Using Odds Ratios
+
+- Similarly, the 95% confidence interval for the odds ratio can be calculated by exponentiating the confidence interval for the coefficient:
+
+$$\left(e^{-0.113},\ e^{0.011}\right) = (0.89,\ 1.01).$$
+
+
+##
+
+- Interpretation:
+  - For each additional **1 year** of the mother's age, the **odds** of low birthweight are multiplied by **0.95**.
+  - Equivalently, the odds decrease by about **5%** for each additional year of age.
+
+- Because the confidence interval includes 1, there is no strong evidence that mother's age is associated with low birthweight.
+
+
+## Ex1: How Does Exponentiating the Coefficient Help?
+
+::: {style="font-size: 100%; color: gray"}
+-   Consider mothers whose age is 20 years old at
+    the time of pregnancy, $$\begin{align*}
+    \log \Big(\frac{\hat{p}_{20}}{1- \hat{p}_{20}} \Big) & = & 0.38 - 0.05 \times 20\\ 
+    \frac{\hat{p}_{20}}{1- \hat{p}_{20}} & = &  \exp(0.38 - 0.05 \times 20)\\
+    & = &  \exp(0.38) \exp(- 0.05 \times 20)
+    \end{align*}$$
+
+:::
+
+
+##
+
+::: {style="font-size: 100%; color: gray"}
+
+-   For mothers who are one year older (i.e., one unit increase in age),
+    we have $$\begin{align*}
+    \log \Big(\frac{\hat{p}_{21}}{1- \hat{p}_{21}} \Big) & = & 0.38 - 0.05 \times 21\\ 
+    \frac{\hat{p}_{21}}{1- \hat{p}_{21}} & = &  \exp(0.38 - 0.05 \times 21)\\
+    & = &  \exp(0.38) \exp(- 0.05 \times 21)
+    \end{align*}$$
+
+:::
+
+
+##
+
+::: {style="font-size: 100%; color: gray"}
+
+-   The odds ratio for comparing 21 year old mothers to 20 year old
+    mothers is $$\begin{align*}
+    \frac{\frac{\hat{p}_{21}}{1- \hat{p}_{21}}}{\frac{\hat{p}_{20}}{1- \hat{p}_{20}}} & = &  \frac{ \exp(0.38) \exp(- 0.05 \times 21))}{ \exp(0.38) \exp(- 0.05 \times 20)}\\
+    & = & \exp(- 0.05 \times 21 + 0.05 \times 20)\\
+    & = & \exp(- 0.05)
+    \end{align*}$$
+
+-   Therefore, $\exp(b_1)$ is the estimated odds ratio comparing 21 year
+    old mothers to 20 year old mothers.
+
+:::
+
+
+
+# Ex 2
+
+## Ex2: One Binary Predictor
+
+-   In this example, we model the relationship between binary variables:
+
+-   The binary response variable `low`: low = 1 for low birthweight babies, and 0 otherwise.
+
+-   The binary predictor `smoke`: smoke=1 for smoking during pregnancy, and 0 otherwise.
+
+
+## Summarize Birthweight data
+
+```{r}
+#| fig-align: center
+
+# Convert to factors with descriptive labels
+birthwt$low <- factor(birthwt$low,
+                      levels = c(0, 1),
+                      labels = c("Normal", "Low"))
+
+birthwt$smoke <- factor(birthwt$smoke,
+                        levels = c(0, 1),
+                        labels = c("No", "Yes"))
+
+# Cross-tabulation
+table(birthwt$low, birthwt$smoke)
+
+# Grouped bar plot
+ggplot(birthwt, aes(x = smoke, fill = low)) +
+  geom_bar(position = "dodge") +
+  labs(
+    x = "Mother Smoked During Pregnancy",
+    y = "Number of Babies",
+    fill = "Birthweight",
+    title = "Birthweight by Maternal Smoking"
+  ) +
+  theme_minimal(base_size = 16)
+
+```
+
+
+
+## The Association between Two Binary Variables
+
+- `chisq.test` can be used for testing whether they are associated.
+
+- A logistic regression provides more information
+
+
+##  Ex2: Logistic Regression Results
+
+```{r, message=FALSE}
+
+fit <- glm(low ~ smoke, family = 'binomial', data = birthwt)
+fit %>% summary() %>% coefficients()
+```
+
+
+```{r, message=FALSE}
+confint(fit)
+```
+
+
+## From Log-Odds to Odds
+
+::: {style="font-size: 90%"}
+
+- The fitted logistic regression model is
+
+$$
+\log\left(\frac{\hat p}{1-\hat p}\right)
+=
+-1.09 + 0.70x.
+$$
+
+- Exponentiating both sides gives
+
+$$
+\frac{\hat p}{1-\hat p}
+=
+\exp(-1.09+0.70x).
+$$
+
+- The odds change **multiplicatively** as $x$ changes.
+
+:::
+
+
+
+## Why Exponentiate the Coefficient?
+
+- Compare a smoker and a non-smoker:
+
+$$
+\begin{aligned}
+\text{Odds}(x)
+&=
+\exp(\beta_0+\beta_1x),\\
+\text{Odds}(x+1)
+&=
+\exp(\beta_0+\beta_1(x+1)).
+\end{aligned}
+$$
+
+- Their ratio is
+
+$$
+\begin{aligned}
+\frac{\text{Odds}(x+1)}
+     {\text{Odds}(x)}
+=
+\frac{\exp(\beta_0+\beta_1(x+1))}
+     {\exp(\beta_0+\beta_1x)}=
+\exp(\beta_1).
+\end{aligned}
+$$
+
+
+##
+
+- Therefore,
+
+$$
+\boxed{\text{Odds Ratio}=e^{\beta_1}.}
+$$
+
+
+## Birthweight Example
+
+- The estimated regression coefficient is $b_1=0.70.$
+
+- Therefore, the estimated odds ratio is
+
+$$
+e^{0.70}=2.01.
+$$
+
+
+##
+
+- Interpretation:
+  - Smoking mothers have approximately **2 times the odds** of having a low birthweight baby compared with non-smoking mothers.
+
+- A 95% confidence interval for the odds ratio is
+
+```{r}
+exp(confint(fit)[2, ])
+```
+
+
+
+## Ex3: Logistic Regression with Multiple Variables
+
+-   Including multiple explanatory variables (predictors) in a logistic
+    regression model is easy.
+
+-   Similar to linear regression models, we specify the model formula by
+    entering the response variable on the left side of the "\~" symbol
+    and the explanatory variables (separated by "+" sings) on the right
+    side.
+
+## Logistic Regression with Multiple Variables
+
+```{r}
+fit <- glm(low ~ age + smoke, family = 'binomial', 
+           data = birthwt)
+fit
+```
+
+## Logistic Regression with Multiple Variables
+
+```{r}
+summary(fit)
+```
+
+
+## Logistic Regression with Multiple Variables
+
+```{r, warning=FALSE, message=FALSE}
+confint(fit)
+```
+
+
+# Additional Example: Ex 4
+
+## Ex 4: Logistic Regression with One Numerical Predictor
+ alzh vs hippo
+
+```{r}
+alzh.logistic=glm(alzh ~ hippo, family="binomial", data=alzheimer_data)
+summary(alzh.logistic) %>% coefficients()
+```
+
+
+-   $b_0=6.093409, b_1=-1.184699$.
+
+-   How should we interpret these values?
+
+
+## Interpret Results
+
+::: {style="font-size: 85%"}
+-   Consider $x_i=x_0$, the log-odds of AD is
+
+$$logit(\hat p_0) = b_0 + b_1 x_0$$
+
+-   If we increase the explanatory by one unit, the log-odds becomes
+
+$$logit(\hat p_1) = b_0 + b_1 (x_0+1)$$
+
+-   Therefore, $logit(\hat p_1)-logit(\hat p_0)=b_1=-1.184699$.
+:::
+
+## Interpret Results
+
+-   We have obtained the change in log-odds associated with one-unit increase in $x$.
+
+-   How can we convert it to changes in odds, which is more well understandable?
+
+-   By the definition of `logit`, we have
+
+::: {style="font-size: 85%"}
+$$logit(\hat p_1) - logit(\hat p_0)=log\frac{\hat p_1}{1-\hat p_1} -log \frac{\hat p_0}{1-\hat p_0}=log \frac{\frac{\hat p_1}{1-\hat p_1}}{\frac{\hat p_0}{1-\hat p_0}}=-1.184699$$
+:::
+
+## Interpret Results
+
+-   Taking the exponent on both sides of the equation,
+
+$$\frac{\frac{\hat p_1}{1-\hat p_1}}{\frac{\hat p_0}{1-\hat p_0}}=exp(-1.184699)=0.3058$$
+
+-   The new odds is 30.58% of the odds.
+-   In other words, if the hippocampal value increases by 1cc, the odds of AD decreased by 1-30.58%=69.42%.
+
+
+## Confidence intervals
+
+- The `confint` function in R can be used to find confidence intervals for log-odds. 
+```{r}
+confint.default(alzh.logistic)[2,]
+```
+- We need to convert the results to odds
+```{r}
+exp(confint.default(alzh.logistic)[2,])
+```
+
+
+## Confidence intervals
+
+```{r}
+1-exp(confint.default(alzh.logistic))[2,]
+```
+
+- Recall that the estimated decrease of odds in AD associated with one-unit increase of hippocampal volume is 69.42%. 
+
+- A 95% confidence interval is [64.98%, 73.29%]. 
+
+
+
+# Additional Example: Ex 5
+
+## Ex 5: Logistic Regression with Multiple Variables
+
+- Similar to linear regression, we can include multiple explanatory variables in logistic regression. 
+
+- Connect $p(x)$  to a linear function of the predictors:      $$log\frac{\hat p}{1-\hat p} = b_0 + b_1 \times x_{1} + … + b_p \times x_{p}$$
+
+
+## Example
+
+```{r}
+alzh.glm.multi = glm(alzh ~ age + female + educ, family=binomial, data=alzheimer_data)
+summary(alzh.glm.multi)$coefficients
+```
+
+## Interpretation
+
+::: {style="font-size: 80%"}
+-   Consider the age variable. The estimated coefficient is 0.04015417.
+    What information does it provide?
+-   The estimated log-odds AD is     $$logit(\hat p_0) = b_0 + b_{age} age + b_2 female + b_3 educ$$
+-   Let $\hat p_1$ denote estimated log-odds after one year
+    $$logit(\hat p_1) = b_0 + b_{age} (age+1) + b_2 female + b_3 educ$$
+:::
+
+
+## Interpretation
+
+-   The estimated change in log-odds
+    $$logit(\hat p_1) - logit(\hat p_0)=log\frac{\hat p_1}{1-\hat p_1} -log \frac{\hat p_0}{1-\hat p_0}=0.040154178$$
+-   Take exponential of both sides, we have
+    $$\frac{\frac{\hat p_1}{1-\hat p_1}}{\frac{\hat p_0}{1-\hat p_0}} = exp(0.04015417)=104.1\%$$
+- The new odds is 104.1% of the old odds, i.e., the odds of AD increase 104.1% -1 = 4.1% with one year increase in age. 
+
+
+## Interpretate Coefficients
+
+-   The odds of AD in one year later is
+    $exp(0.04015417)=$\textcolor{red}{1.040971 times} of the current odds.
+
+-   When holding gender and education fixed, the estimated increase in odds of AD in a year is
+    $e^{0.04015417}-1=4.097\%$
+
+- A 95% confidence interval is [3.08%, 5.12%].
+```{r}
+confint.default(alzh.glm.multi)[2,]
+exp(confint.default(alzh.glm.multi)[2,])-1
+```
+
+## Interpretate Coefficients
+
+-   What if we are interested in the increase in odds of AD in ten years (everything else is fixed)?
+-   The estimated increase in odds of AD in 10 years is
+    $$e^{10*0.04015417}-1=49.4\%$$
+-   A $95\%$ C.I. for 10-year increase in odds: [35.5%, 64.8%]. 
+
+\tiny
+
+```{r}
+10*confint.default(alzh.glm.multi)[2,]
+exp(10*confint.default(alzh.glm.multi)[2,])-1
+```
+
+
