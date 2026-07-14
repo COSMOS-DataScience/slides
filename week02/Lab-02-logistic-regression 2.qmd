@@ -26,10 +26,9 @@ $$\begin{eqnarray*}
 \end{eqnarray*}$$
 
 
-* The left hand side of this model is the logarithm of the odds of success. It is a monotonously increasing function, which means when $b_1$ is positive, if $x_1$ increases, the odds of success increases. Try plot this in Desmos!
+* The left hand side of this model is the logarithm of the odds of success.
 
-
-* Thereby, the probability of success of $\hat{p}$ can be written as follows:
+* Thereby, the probability of success of $\pi$ can be written as follows:
 
 $$\begin{eqnarray*}
 \hat{p} & = & \frac{\exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}{1 + \exp(a + b_{1}x_1 + \ldots + b_{q}x_{q})}
@@ -73,9 +72,9 @@ glimpse(alzheimer_data)
 
 * Let's begin by transforming the response to a new feature with two categories: no symptoms (0) versus mild or strong symptoms (1). 
 
-* It is noticeable that female is a numeric variable. As such, we should make sure R recognizes that feature as a factor variable.
+* It is noticeable that female is a binary variable. As such, we should make sure R recognizes that feature as a factor variable.
 
-* Create a new variable `hippo` as the sum of left hippocampus volume (lhippo) and right hippocampus volume (rhippo).
+* Create a new variable `hippo` as the sum of left hippocampus (lhippo) and right hippocampus (rhippo)
 
 ```{r}
 #| code-fold: TRUE
@@ -90,11 +89,7 @@ alzheimer_data <- alzheimer_data %>%
 
 ### Data visualization
 
-Let's explore these relationships using visualizations.
-
 * What is the relationship between diagnosis v.s. hippocampus?
-
-* What is the relationship between diagnosis v.s. gender?
 
 * What is the relationship between diagnosis v.s. education years?
 
@@ -153,7 +148,7 @@ betas = logistic_model$coefficients %>% round(digits = 2)
 If we plug in the estimated values from the model above, we have
 
 $$\begin{eqnarray*}
-\log \Big(\frac{\hat{p}}{1- \hat{p}} \Big) & = & `r betas[1]`  `r betas[2]`\,x_{\text{educ}} +  `r betas[3]`\,x_{\text{age}}  `r betas[4]`\,x_{\text{female}}  `r betas[5]`\,x_{\text{hippo}}
+\log \Big(\frac{\hat{p}}{1- \hat{p}} \Big) & = & `r betas[1]` + `r betas[2]`\,x_{\text{educ}} + `r betas[3]`\,x_{\text{age}} + `r betas[4]`\,x_{\text{naccicv}} + `r betas[5]`\,x_{\text{female}}
 \end{eqnarray*}$$
 
 Let's say we want to estimate the probability of having symptoms for Alzheimer's disease for a person with specific characteristics. 
@@ -172,7 +167,7 @@ pred_prob = predict(logistic_model, newdata = newx_df, type = "response") %>%
 ```
 
 $$\begin{eqnarray*}
-\hat{P}(\text{diag = 1}) & = & \frac{\exp(`r betas[1]` + `r betas[2]`\,\times 10 + `r betas[3]`\,\times 40 + `r betas[4]` \times 1 `r betas[5]` \times 6)}{1 + \exp(`r betas[1]` + `r betas[2]`\,\times 10 + `r betas[3]`\,\times 40 + `r betas[4]` \times 1 `r betas[5]` \times 6)}
+\hat{P}(\text{diag = 1}) & = & \frac{\exp(`r betas[1]` + `r betas[2]`\,\times 10 + `r betas[3]`\,\times 40 + `r betas[5]` \times 1)}{1 + \exp(`r betas[1]` + `r betas[2]`\,\times 10 + `r betas[3]`\,\times 40 + `r betas[5]` \times 1)}
 \end{eqnarray*} = `r pred_prob`$$
 
 ## Format the output to a publication-ready table
@@ -192,7 +187,7 @@ logistic_model %>%
  
 ## Model Evaluation:
 
-To split the data into training and validation sets using the rsample package in R, you can use the `initial_split()` function. Here's an example of how you can split the data:
+To split the data into training and validation sets using the rsample package in R, you can use the initial_split() function. Here's an example of how you can split the data:
 
 ```{r message=FALSE, warning=FALSE}
 #| code-fold: TRUE
@@ -249,52 +244,5 @@ acc = mean(predicted.classes == test_data$diag) %>%
   round(2)
 
 print(paste("This model yields a", acc, "accuracy rate!"))
-```
-
-## Let's practice
-
-Try to build a logistics model to predict AD (diagnosis = 2) or not AD (diagnosis = 1 or 0). In other words, transforming the response to a new feature with two categories: no or mild symptoms(0) versus strong symptoms (1). 
-
-Note: give the data/model a new name! 
-
-
-Question: What is your accuracy on validation set? Is it higher than chance?
-
-
-```{r} 
-alzheimer_data <- read_csv("https://raw.githubusercontent.com/COSMOS-DataScience/slides/main/data/alzheimer_data.csv")
-AD_data <- alzheimer_data %>% 
-  mutate(diag = ifelse(diagnosis %in% c(2), "1", "0"),
-         diag = as.factor(diag),
-         female = as.factor(female),
-         hippo = lhippo + rhippo)
- 
-# data splitting
-set.seed(0)
-data_split <- initial_split(AD_data, prop = 0.7) 
-
-train_data <- training(data_split)
-test_data <- testing(data_split)
-
-# model fit
-logistic_AD <- glm(diag ~ educ + age + hippo + female, family=binomial, data=train_data)
-summary(logistic_AD)
-
-# prediction
-pred_prob <- logistic_AD %>% 
-  predict(test_data,type="response")
-
-predicted.classes <- ifelse(pred_prob > 0.5, "1", "0")
-acc = mean(predicted.classes == test_data$diag) %>% 
-  round(2)
-
-print(paste("This model yields a", acc, "accuracy rate!"))
-
-# chance level?
-chance1 = mean(test_data$diag == sample(test_data$diag, size = nrow(test_data), replace = TRUE)) %>% 
-  round(2)
-chance2 = max(table(test_data$diag))/nrow(test_data) %>% 
-  round(2)
-
 ```
 
