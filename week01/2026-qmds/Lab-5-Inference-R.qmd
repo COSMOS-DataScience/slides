@@ -1,10 +1,11 @@
 ---
 title: "Lab 5 Inference in R"
-author: "<br>Data Science in Biomedical Sciences<br><br>UCI COSMOS 2026<br>Noah Benjamin<br>(adapted material from and Mine Dogucu)"
+author: "<br>Data Science in Biomedical Sciences<br><br>UCI COSMOS 2026<br>Noah Benjamin<br>(adapted material from and Mine Dogucu and Zhaoxia Yu)"
 footer: ""
 format:
   revealjs:
-    chalkboard: true
+    embed-resources: true
+    chalkboard: false
     smaller: true
     slide-number: c/t
     code-line-numbers: false
@@ -13,12 +14,6 @@ format:
       method: mathjax
       url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ---
-
-```{r echo = FALSE, message = FALSE}
-library(tidyverse)
-library(ggplot2)
-options(scipen = 999)
-```
 
 ```{r}
 #| include: false
@@ -33,8 +28,636 @@ knitr::opts_chunk$set(
 ggplot2::theme_set(ggplot2::theme_light(base_size = 20))
 ```
 
+```{r echo = FALSE, message = FALSE}
+library(fabricerin)
+library(openintro)
+library(tidyverse)
+library(DiagrammeR)
+library(DiagrammeRsvg)
+library(rsvg)
+library(magrittr)
+library(MASS)
+```
 
-## Schedule for today
+## Objective
+
+- We want to explore and examine possible relationships between two variables. 
+
+. . . 
+
+- We first focus on the case where we are investigating a relationship between one binary categorical variable (e.g., gender) and one numerical variable (e.g., body temperature).  
+
+. . . 
+
+- Then, we examine the relationship between two numerical variables (e.g., years of education and income). 
+
+. . . 
+
+- Finally, we discuss the relationship between two categorical variables (e.g., treatment and survival status).
+
+
+
+## Relationship Between a Numerical Variable and a Binary Variable
+
+- In these situations, the binary variable typically represents two different groups or two different experimental conditions. 
+
+. . . 
+
+- We treat the binary variable (factor) as the explanatory variable in our analysis. 
+
+. . .
+
+- Thus, the numerical variable is regarded as the response (target) variable (e.g., body temperature).
+
+
+## Relationship Between a Numerical Variable and a Binary Variable
+
+```{r, echo=FALSE,out.width='45%',out.height='30%',fig.align='center', eval = T}
+knitr::include_graphics('../img/cabbages1.png')
+```
+Dot plots of vitamin C content (numerical) by cultivar (categorical) for the `cabbages` data set from the `MASS` package.
+
+
+
+## Relationship Between a Numerical Variable and a Binary Variable
+
+A more common way of visualizing the relationship between a numerical
+variable and a categorical variable is to create boxplots like we did yesterday.
+
+
+```{r, echo=FALSE,out.width='35%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/boxVitCbyCult.png')
+```
+
+
+## Relationship Between a Numerical Variable and a Binary Variable
+
+- In general, we say that two variables are related if the distribution
+of one of them changes as the other one varies.
+
+. . . 
+
+- We can measure changes in the distribution of the numerical variable by obtaining its summary statistics for different levels of the categorical variable.
+
+. . . 
+
+- it is common to use the __difference of means__ when examining the relationship between a numerical variable and a categorical variable. 
+
+. . . 
+
+- In the above example, the difference of means of vitamin C content is $64.4 - 51.5 = 12.9$ between the two cultivars. Is this difference __significant__? (this is what we test)
+
+
+
+## Two sample t-test
+
+- In general, we can denote the population means of two groups as $\mu_{1}$ and
+$\mu_{2}$. 
+
+. . . 
+
+- The null hypothesis indicates that the population means are equal,
+$H_{0}: \mu_{1} = \mu_{2}$. 
+
+. . . 
+
+- In contrast, the alternative hypothesis is one the following:
+$$\begin{array}[t]{l@{\quad}p{6.7cm}}
+H_{A}: \mu_{1} > \mu_{2} \\
+H_{A}: \mu_{1} < \mu_{2}   \\
+H_{A}: \mu_{1} \ne \mu_{2}  \\
+\end{array}$$
+
+
+
+## Two sample t-test
+
+- We can also express these hypotheses in terms of the
+*difference* in the means: 
+
+. . . 
+
+$$\begin{array}[t]{l@{\quad}p{6.7cm}}
+H_{A}: \mu_{1}  - \mu_{2} > 0 \\
+H_{A}: \mu_{1} - \mu_{2} < 0  \\
+H_{A}: \mu_{1} - \mu_{2} \ne 0  \\
+\end{array}$$
+
+. . . 
+
+- Then the corresponding null hypothesis is that there is no difference
+in the population means, $$H_{0}: \mu_{1} - \mu_{2} = 0$$
+
+
+
+
+## Two sample t-test
+
+
+- Previously, we used the sample mean $\bar{X}$ to perform statistical
+inference regarding the population mean $\mu$. 
+
+. . .
+
+- To evaluate our hypothesis regarding the difference between two means, $\mu_{1} - \mu_{2}$, it is reasonable to examine the difference between the sample means, $\bar{X}_{1} - \bar{X}_{2}$, as our test statistic. 
+
+. . . 
+
+- For this, we can simply use the `t.test()` function in R.
+
+
+## Two sample t-test
+
+Cabbages example:
+
+```{r}
+library(MASS)
+data(cabbages)
+
+t.test(VitC ~ Cult, data=cabbages)
+```
+
+
+
+## Paired t-test
+
+- While we hope that the two samples taken from the population are
+comparable except for the characteristic that defines the grouping,
+this is not guaranteed in general. 
+
+. . . 
+
+- To mitigate the influence of other important factors (e.g., age) that are not the focus
+of our study, we sometimes **pair** (match) each individual in one group with an
+individual in the other group so that the paired individuals are very
+similar to each other except for the variable that defines the
+grouping. 
+
+. . . 
+
+- For example, we might recruit twins and assign one of them to the treatment group and the other one to the placebo group.
+
+. . . 
+
+- Sometimes, the subjects in the two groups are the same individuals under two different conditions. 
+
+
+
+## Paired t-test
+
+- When the individuals in the two groups are paired, we use the **paired**
+$t$-test to take the pairing of the observations between the two
+groups into account.
+
+. . . 
+
+- Using the difference, $D$, between the paired observations, the
+hypothesis testing problem reduces to a single sample $t$-test problem.
+
+. . . 
+
+- In practice, we can use the function `t.test()` with the option `paired=TRUE`.
+
+
+
+## Paired t-test
+
+- As an example, we use the study of the effect of tobacco smoke on platelet function by Levine (1973). 
+
+. . . 
+
+- In his study, for a group of eleven people, platelet aggregation was measured before and after smoking a cigarette. 
+
+. . . 
+
+- Therefore, observations in the `Before` sample and `After` sample are from the same subjects. 
+
+. . . 
+
+- For each subject, an observation in the `Before` sample is paired with an observation in the `After` sample. 
+
+
+
+
+## Paired t-test
+
+Platelet example:
+
+```{r}
+Platelet<- read.table("../data/Platelet.txt", header=T, sep="")
+glimpse(Platelet)
+```
+
+
+
+## Paired t-test
+
+Let's run a paired t-test
+
+```{r}
+t.test(Platelet$Before, Platelet$After, paired = TRUE)
+```
+
+
+
+## Paired t-test
+
+See what happens if we fail to account for the pairing of observations!
+```{r}
+t.test(Platelet$Before, Platelet$After)
+```
+
+
+
+## Two numerical variables
+
+- A simple way to visualize the relationship between two numerical
+variables is with a __scatterplot__. 
+
+. . . 
+
+- As our first example, we use the `bodyFat` data: http://lib.stat.cmu.edu/datasets/bodyfat. 
+
+. . . 
+
+- Suppose that we are interested in examining the relationship between
+percent body fat (`siri`) and abdomen circumference (`abdomen`) among men.
+
+
+
+
+## Scatterplot
+
+The plot suggests that the increase in percent body fat tends to coincide with the increase in abdomen circumference.
+```{r, echo=FALSE,out.width='40%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/scatterPercAb.png')
+```
+
+
+
+## Scatterplot
+
+Next, we examine the relationship between the annual
+mortality rate due to malignant melanoma for US states and the latitude
+of their centers. 
+```{r, echo=FALSE,out.width='40%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/latMelanoma.png')
+```
+
+
+
+
+## Scatterplot
+
+```{r, echo=FALSE,out.width='40%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/scatterPercAb.png')
+```
+
+- Using scatterplots, we could detect possible relationships between two
+numerical variables. 
+
+
+
+## Scatterplot
+
+```{r, echo=FALSE,out.width='40%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/scatterPercAb.png')
+```
+
+- In both examples, we can see that changes in one variable
+coincides with substantial __systematic__ changes (increase or
+decrease) in the other variable. 
+
+
+
+## Scatterplot
+
+```{r, echo=FALSE,out.width='40%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/scatterPercAb.png')
+```
+
+- Since the overall relationship can be presented by a straight line, we say
+that the two variables have __linear relationship__. 
+
+
+## Scatterplot
+
+```{r, echo=FALSE,out.width='40%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/scatterPercAb.png')
+```
+
+- We say that percent body fat and abdomen circumference have __positive linear relationship__. 
+
+
+## Scatterplot
+
+```{r, echo=FALSE,out.width='40%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/latMelanoma.png')
+```
+
+- In contrast, we say that annual mortality rate due to malignant melanoma and latitude have __negative linear relationship__. 
+
+
+
+
+## Correlation
+
+- To quantify the strength and direction of _linear_ relationship between two numerical variables, we can use __Pearson's correlation coefficient__, $r$, as a summary statistic. 
+
+. . .
+
+- The value of $r$ is always between $-1$ and $+1$ and the relationship is strong when $r$ approaches $-1$ or $+1$.
+
+. . . 
+
+- The sign of $r$ shows the direction (negative or positive) of the linear relationship. 
+
+. . . 
+
+- For observed pairs of values, $(x_{1}, y_{1}), (x_{1},y_{1}), \ldots, (x_{n}, y_{n})$, 
+
+$$\begin{eqnarray*}
+r_{xy} = \frac{\sum_{i=1}^{n}(x_{i}-\bar{x})(y_{i}- \bar{y})}{(n-1)s_{x}s_{y}}
+\end{eqnarray*}$$
+
+
+
+## Correlation
+
+Let's look at the correlation between height and weight.
+
+```{r, echo=FALSE,out.width='60%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/corr1.png')
+```
+
+
+
+## Correlation
+
+We can do some fancy math to calculate $r$.
+
+```{r, echo=FALSE,out.width='70%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/corr2.png')
+```
+
+
+## Correlation
+
+- We can examine whether the correlation is statistically significant or not using the `cor.test()` function in R.
+
+
+
+## Correlation
+
+- The following code tests whether the correlation coefficient between `siri` and `abdomon` is greater than zero. 
+
+
+```{r}
+data(bodyfat, package="mfp")
+bodyfat$abdomen = bodyfat$abdomen *.39
+cor.test(bodyfat$siri, bodyfat$abdomen, alternative = "greater")
+```
+
+
+## Correlation
+
+Later, we will discuss more advanced models for examining such relationships using linear regression models.
+
+
+
+## Two categorical variables
+
+- We now discuss techniques for exploring
+relationships between categorical variables. 
+
+. . . 
+
+- As an example, we consider the five-year study to investigate whether regular aspirin intake reduces
+the risk of cardiovascular disease. 
+
+. . . 
+
+- We usually use __contingency tables__ to summarize such data.
+
+```{r, echo=FALSE,out.width='70%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/aspirin.png')
+```
+
+
+
+
+## Two categorical variables
+
+- Each cell shows the frequency of one possible combination of disease status (heart attack or no heart attack) and experiment group (placebo or aspirin). 
+
+. . . 
+
+- Using these frequencies, we can
+calculate the __sample proportion__ of people who suffered from heart attack in each experiment group separately. 
+
+. . . 
+
+- There were 11034 people in the placebo group, of which 189 had heart attack. The
+proportion of people suffered from a heart attack in the placebo group
+is therefore $p_1 = {189}/{11034} = 0.0171$. 
+
+. . . 
+
+- The proportion of people suffered from heart attack in the aspirin
+group is $p_2 = {104}/{11037} = 0.0094$.
+
+
+
+
+
+## Two categorical variables
+
+- Here, we refer to these proportions as the __risk__ of heart attack for the two groups.
+
+. . . 
+
+- Substantial difference between the sample proportion of heart attack between the two experiment groups could lead us to believe that the treatment and disease status are related.
+
+. . . 
+
+- A common summary statistic for comparing sample proportions is
+the __relative proportion__: $p_{2}/p_{1}$. 
+
+
+
+
+## Two categorical variables
+
+- Since the sample proportions in this case are related to the risk of  heart attack, we
+refer to the relative proportion as the __relative risk__. 
+
+. . . 
+
+- Here, the relative risk of suffering from heart attack is $${p_2}/{p_1} = {0.0094} / {0.0171}= 0.55$$
+
+. . . 
+
+- This means that the risk of a heart attack in the aspirin group is 0.55 times of the risk in the placebo group.
+
+
+
+## Two categorical variables
+
+- It is more common to compare the __sample odds__,
+$$\begin{equation*}
+o=\frac{p}{1-p},
+\end{equation*}$$
+
+. . .
+
+- This is slightly different from the proportions we are used to
+
+. . .
+
+- The odds of a heart attack in the placebo group, $o_1$, and in the aspirin group, $o_2$, are
+$$\begin{eqnarray*}
+o _1 &=& \frac{0.0171}{(1-0.0171)} = 0.0174, \\
+o _2 &=& \frac{0.0094}{(1-0.0094)} = 0.0095.
+\end{eqnarray*}$$
+
+
+
+
+## Two categorical variables
+
+- We usually compare the sample odds using the __sample odds ratio__
+
+$$\begin{eqnarray*}
+\mathit{OR}_{21} = \frac{o_2}{o _1} = \frac{0.0095}{0.0174}= 0.54.
+\end{eqnarray*}$$
+
+. . . 
+
+- Later, we will discuss more advanced models for making statistical inference about odds ratio using logistic regression models.
+
+. . . 
+
+- Here, we use a simpler approach for assessing the significance of the relationship between two binary (and in general, two categorical) variables presented as a contingency table.  
+
+
+
+
+## Pearson's $\chi^{2}$ Test of Independence
+
+- As discussed above, we can use contingency tables to find the observed frequencies for different combinations of categories of the two variables. 
+
+. . . 
+
+- We denote the **observed** frequency in row $i$ and column $j$ as $O_{ij}$.
+
+. . . 
+
+- Using the independence rule, we can find the **expected** frequencies under the null hypothesis, which indicates that the two variables are independent. 
+
+. . . 
+
+- Recall that for two independent random variables, the joint
+probability is equal to the product of their individual probabilities.
+
+
+
+
+## Pearson's $\chi^{2}$ Test of Independence
+
+- Pearson's $\chi^{2}$ test uses a test statistic, which we
+denote as $Q$, to measure the discrepancy between the observed data and
+what we expect to observe under the null hypothesis (i.e., assuming the null hypothesis is true).
+
+. . . 
+
+- Note that the null hypothesis in this case states that the two variables are independent. 
+
+
+
+
+
+## Pearson's $\chi^{2}$ Test of Independence
+
+- We denote the expected frequency in row $i$ and column $j$ as $E_{ij}$.
+
+. . . 
+
+- Pearson's $\chi^{2}$ test summarizes the differences between the expected
+frequencies (under the null hypothesis) and the observed frequencies
+over all cells of the contingency table,
+
+$$\begin{equation*}
+Q =  \sum_{i} \sum_{j} \frac{(O_{ij} - E_{ij})^{2}}{E_{ij}}.
+\end{equation*}$$
+
+
+
+## Pearson's $\chi^{2}$ Test of Independence
+
+- In practice, you don't need to worry about the fancy equations
+
+. . . 
+
+- We can use the `chisq.test()` in R.
+
+```{r, echo=FALSE,out.width='70%',out.height='20%',fig.align='center', eval = T}
+knitr::include_graphics('../img/aspirin.png')
+```
+
+```{r}
+asp <- matrix(c(189, 10845, 104, 10933), nrow=2, ncol=2, byrow = TRUE)
+asp
+chisq.test(asp)
+```
+
+
+
+## Smoking and low birthweight babies
+
+As another example, we will examine the association between smoking during pregnancy and having low birth weight babies using the `birthwt` from the `MASS` package. 
+
+
+
+## Smoking and low birthweight babies
+
+Let's code a little bit
+
+```{r, message=FALSE}
+library(MASS)
+data("birthwt") 
+birthwt <- birthwt %>% 
+  as_tibble() %>% 
+  mutate(across(c(low, race, smoke, ht), as.factor))
+head(birthwt)
+```
+
+
+
+
+## Smoking and low birthweight babies
+
+Running `chisq.test()`
+
+```{r}
+tab <- table(birthwt$smoke, birthwt$low)
+res <- chisq.test(tab)
+tab
+res
+```
+
+
+
+## Smoking and low birthweight babies
+
+We can check the expected counts under the null hypothesis, and also see the observed accounts from the data.
+
+```{r}
+res$observed
+res$expected
+```
+
+
+## Schedule for more coding examples
 
 - Confidence interval for the population mean
 - One-sample t-test
@@ -44,17 +667,9 @@ ggplot2::theme_set(ggplot2::theme_light(base_size = 20))
 - $\chi^2$ test
 
 
-## Load the Packages and Data
-
-```{r, message=F, warning=F}
-library(tidyverse)
-df <- read.csv("../../data/alzheimer_data.csv") 
-# you probably have this and can name it whatever you like! 
-# df stands for data.frame and its short, usually you want descriptive variable names
-```
-
-
 ## Simulated Data
+
+Let's try this on some simulated data like we have before.
 
 ```{r}
 set.seed(0) # We set a seed which makes the randomization work the same
@@ -65,6 +680,8 @@ summary(norm_random) # let's see some summary statistics about our generated dat
 
 
 ## Quick Confidence Interval Review
+
+Now, get a quick confidence interval 
 
 ```{r}
 # t-test that the mean of the data = 0
@@ -102,7 +719,7 @@ t_test_result$conf.int
 
 ## Hypothesis Testing
 
-We mentioned hypothesis testing earlier, let's try and perform a hypothesis test in R.
+We mentioned hypothesis testing earlier, now let's try and perform a hypothesis test in R.
 
 ```{r}
 summary(norm_random)
@@ -122,6 +739,8 @@ t.test(x = norm_random, mu = 10,
        alternative = "greater")$p.value
 ```
 
+. . .
+
 $H_0:\mu=9$ vs. $H_A:\mu>9$
 
 ```{r}
@@ -130,12 +749,23 @@ t.test(x = norm_random, mu = 9,
 ```
 
 
+## Back to the Alzheimer Data
+
+Let's load the packages and data
+
+```{r, message=F, warning=F, eval = T}
+library(tidyverse)
+alzheimer_data <- read.csv("../../data/alzheimer_data.csv") 
+# you probably have this and can name it whatever you like! 
+```
+
+
 ## Practice 1: Confidence Interval
 
 Try to get a 90 percent confidence interval for the population mean of age among AD subjects.
 
 ```{r}
-summary(df$age)
+summary(alzheimer_data$age)
 ```
 
 
@@ -145,7 +775,7 @@ summary(df$age)
 Try to get a 90 percent confidence interval for the population mean of age among AD subjects.
 
 ```{r}
-t_test_age <- t.test(df$age, conf.level = 0.9)
+t_test_age <- t.test(alzheimer_data$age, conf.level = 0.9)
 t_test_age$conf.int
 ```
 
@@ -157,7 +787,7 @@ Test whether the population mean of age is 70 or greater than 70 and get the p-v
 $H_0:\mu=70$ vs. $H_A:\mu>70$
 
 ```{r}
-summary(df$age)
+summary(alzheimer_data$age)
 ```
 
 
@@ -168,14 +798,14 @@ Test whether the population mean of age is 70 or greater than 70 and get the p-v
 $H_0:\mu=70$ vs. $H_A:\mu>70$
 
 ```{r}
-t_test_age <- t.test(df$age, mu = 70, alternative = "greater")
+t_test_age <- t.test(alzheimer_data$age, mu = 70, alternative = "greater")
 round(t_test_age$p.value, 4)
 ```
 
 
 ## Confidence Interval for Population Proportion
 
-Simulated data
+Let's simulate some more data. This time, we flip a rigged coin 100 times.
 
 ```{r}
 set.seed(0)
@@ -189,6 +819,8 @@ success_counts
 
 ## Confidence Interval for Population Proportion
 
+Now, let's confidence interval for the chance of landing a heads.
+
 ```{r}
 prop_test_result <-
   prop.test(x = success_counts, 
@@ -198,6 +830,8 @@ prop_test_result$conf.int
 
 
 ## Hypothesis Testing for Population Proportion
+
+And we can formulate a hypothesis test for this proportion.
 
 $H_0:p=0.3$ vs. $H_A:p\neq0.3$
 
@@ -212,12 +846,14 @@ prop_test_result$p.value
 
 ## Real Data Practice (brain volume: naccicv)
 
+Now, lets try this on the alzheimer data
+
 ```{r}
 success_counts_naccicv <- 
-  df %>%
-  filter(naccicv > 1300 & naccicv < 1600) %>%
+  alzheimer_data %>%
+  filter(naccicv > 1300 & naccicv < 1600) %>%  # we want brain volume between 1300 and 1600ml, as a indicator of a healthy human brain size
   nrow()
-bern_size_naccicv <- nrow(df)
+bern_size_naccicv <- nrow(alzheimer_data)
 success_counts_naccicv
 bern_size_naccicv
 ```
@@ -225,7 +861,7 @@ bern_size_naccicv
 
 # Practice 
 
-- Test whether the population proportion is 2/3.
+- Test whether the population proportion of people with normal brain volume is 2/3.
 
 - Get a 95 percent confidence interval for the population proportion.
 
@@ -246,8 +882,9 @@ prop_test_result_naccicv$p.value
 
 Is blood pressure associated with gender?
 
-```{r, echo = F, fig.height = 6, fig.width = 6, fig.align = "center"}
-ggplot(data = df, 
+```{r, echo = F, fig.height = 6, fig.width = 6, fig.align = "center", eval = T}
+library(ggplot2)
+ggplot(data = alzheimer_data, 
        aes(x = factor(female), y = bpsys)) + 
   geom_boxplot() + 
   labs(x = "female")
@@ -261,7 +898,7 @@ We can examine whether the average blood pressure is different between male and 
 $H_0:\mu_M=\mu_F$ vs. $H_A:\mu_M \neq \mu_F$ 
 
 ```{r}
-t.test(bpsys ~ female, data = df)$p.value
+t.test(bpsys ~ female, data = alzheimer_data)$p.value
 ```
 
 
@@ -269,9 +906,8 @@ t.test(bpsys ~ female, data = df)$p.value
 
 Question: Are age and blood pressure correlated?
 
-
-```{r, echo = F, fig.height = 6, fig.width = 6, fig.align = "center"}
-ggplot(data = df, 
+```{r, echo = F, fig.height = 6, fig.width = 6, fig.align = "center", eval = T}
+ggplot(data = alzheimer_data, 
        aes(x = age, y = bpsys)) + 
   geom_point()
 ```
@@ -283,14 +919,14 @@ $H_0:$ They are NOT correlated. vs. $H_A:$ They are correlated.
 
 ```{r}
 # here, we are testing for a r = 0
-cor.test(df$age, df$bpsys)$p.value
+cor.test(alzheimer_data$age, alzheimer_data$bpsys)$p.value
 ```
 
 $H_0:$ They are NOT correlated. vs. $H_A:$ They are positively correlated.
 
 ```{r}
 # here, we do the same but we only test for a positive association using a one-sided test
-cor.test(df$age, df$bpsys, alternative = "greater")$p.value
+cor.test(alzheimer_data$age, alzheimer_data$bpsys, alternative = "greater")$p.value
 ```
 
 
@@ -298,8 +934,8 @@ cor.test(df$age, df$bpsys, alternative = "greater")$p.value
 
 Question: Are gender and disease status associated with each other?
 
-```{r}
-contingency_table <- table(df$female, df$diagnosis)
+```{r, eval = T}
+contingency_table <- table(alzheimer_data$female, alzheimer_data$diagnosis)
 contingency_table
 ```
 
@@ -324,21 +960,20 @@ chisq.test(contingency_table)
 - ?t.test, ?prop.test, ?cor.test and ?chisq.test for more information
 
 
-
 # More hypothesis testing
 
 Let's do a little data transformation first
 
-```{r}
-alzheimer_data <- read.csv('../../data/alzheimer_data.csv') %>% 
-  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
+```{r, eval = T}
+alzheimer_data <- read.csv('../data/alzheimer_data.csv') %>% 
+  dplyr::select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
   mutate(diagnosis = as.factor(diagnosis), 
          female = as.factor(female),
          hippo=lhippo + rhippo)
 
 
-alzheimer_healthy <- read.csv('../../data/alzheimer_data.csv') %>% 
-  select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
+alzheimer_healthy <- read.csv('../data/alzheimer_data.csv') %>% 
+  dplyr::select(id, diagnosis, age, educ, female, height, weight, lhippo, rhippo) %>% 
   mutate(diagnosis = as.factor(diagnosis),
          female = as.factor(female), 
          hippo=lhippo+rhippo) %>% 
@@ -360,7 +995,7 @@ Ex. Do healthy men and women have the same mean left hippocampal volume?
 
 ## Example: Visualization -- boxplot
 
-```{r, fig.align='center'}
+```{r, fig.align='center', eval = T}
 #| code-fold: true
 #| echo: true
 
@@ -378,7 +1013,7 @@ ggplot(data= alzheimer_healthy,
 
 ## Example: Visualization -- violin
 
-```{r, fig.align='center'}
+```{r, fig.align='center', eval = T}
 #| code-fold: true
 #| echo: true
 ggplot(data= alzheimer_healthy,
@@ -395,7 +1030,7 @@ ggplot(data= alzheimer_healthy,
 
 ## Example: Visualization -- histogram
 
-```{r, fig.align='center'}
+```{r, fig.align='center', eval = T}
 #| code-fold: true
 #| echo: true
 ggplot(data= alzheimer_healthy,
@@ -413,6 +1048,7 @@ ggplot(data= alzheimer_healthy,
 ```{r, fig.align='center'}
 #| code-fold: true
 #| echo: true
+#| eval: true
 
 t.test(alzheimer_healthy$lhippo[alzheimer_healthy$female==0], alzheimer_healthy$lhippo[alzheimer_healthy$female==1])
 ```
@@ -444,10 +1080,11 @@ $$H_0: \mu_L = \mu_R \mbox{ vs } \mu_L \not= \mu_R$$
 - Here we are looking at two features (left vs right hippocampus) of the same subjects. The correct test is a **paired t-test**, which is equivalent to perform a one-sample t-test using the differences
 
 
-## Example 4
+## Example 2
 ```{r}
 #| code-fold: true
 #| echo: true
+#| eval: true
 t.test(alzheimer_data$rhippo, alzheimer_data$lhippo, paired = T)
 ```
 
@@ -455,7 +1092,7 @@ t.test(alzheimer_data$rhippo, alzheimer_data$lhippo, paired = T)
 ```{r}
 #| echo: false
 #equivalently, 
-t.test(alzheimer_data$rhippo- alzheimer_data$lhippo)
+t.test(alzheimer_data$rhippo - alzheimer_data$lhippo)
 ```
 
 
@@ -472,6 +1109,7 @@ t.test(alzheimer_data$rhippo- alzheimer_data$lhippo)
 ```{r}
 #| code-fold: true
 #| echo: true
+#| eval: true
 table(alzheimer_data$hippo>7,
       alzheimer_data$female)
 
@@ -495,6 +1133,7 @@ $$H_0: \rho=0 \mbox{ vs } H_1: \rho\not=0$$
 ```{r}
 #| code-fold: true
 #| echo: true
+#| eval: true
 #| fig-align: center
 
 #plot(alzheimer_healthy$age, alzheimer_healthy$hippo)
@@ -516,6 +1155,7 @@ Discussion: is there a linear trend? are there regions of concerns?
 ```{r}
 #| code-fold: true
 #| echo: true
+#| eval: true
 cor.test(alzheimer_healthy$age, alzheimer_healthy$hippo)
 
 #alternatively, we can use linear regression
@@ -541,6 +1181,7 @@ $$H_0: \mu_0=\mu_1=\mu_2 \mbox{ vs } H_1: \mbox{ at least two means are differen
 ```{r, fig.align='center'}
 #| code-fold: true
 #| echo: true
+#| eval: true
 
 ggplot(data= alzheimer_data,
        mapping= aes(x= diagnosis, 
@@ -558,6 +1199,7 @@ ggplot(data= alzheimer_data,
 ```{r}
 #| code-fold: true
 #| echo: true
+#| eval: true
 summary(aov(alzheimer_data$lhippo ~ alzheimer_data$diagnosis))
 
 #equivalently
@@ -585,6 +1227,7 @@ summary(aov(lhippo ~ diagnosis, data=alzheimer_data))
 - Ex 7. Does left hippocampal volume differ across diagnostic groups?
 (one-way ANOVA or linear regression)
 :::
+
 
 <!--
 ## Advanced: NONPARAMETRIC TESTS

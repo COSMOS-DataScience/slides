@@ -28,6 +28,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="Lab-6-linear-regression_files/libs/revealjs/dist/theme/quarto-903e338301934432638a3a3cb5b478aa.css">
   <link href="Lab-6-linear-regression_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -186,7 +252,7 @@
 <h2>Plotting response vs.&nbsp;predictor</h2>
 <p>(left) <code>lhippo</code> vs.&nbsp;<code>age</code> , <code>lhippo</code> vs.&nbsp;<code>educ</code> (right)</p>
 
-<img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1344"></section>
+<img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1344"></section>
 <section>
 <section id="now-lets-do-some-linear-regression" class="title-slide slide level1 center">
 <h1>Now let’s do some linear regression!</h1>
@@ -195,7 +261,10 @@
 <section id="lhippo-vs.-age" class="slide level2">
 <h2><code>lhippo</code> vs.&nbsp;<code>age</code></h2>
 <p>Here is the regression of <code>lhippo</code> versus <code>age</code>:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(lhippo <span class="sc">~</span> age, <span class="at">data =</span> alzheimer_data)</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -221,25 +290,27 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="lhippo-vs.-age-1" class="slide level2">
 <h2><code>lhippo</code> vs.&nbsp;<code>age</code></h2>
 <p>We can nicely output the <code>lm()</code> to a table:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lhippo <span class="sc">~</span> age, <span class="at">data =</span> alzheimer_data) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">estimate_fun =</span> <span class="cf">function</span>(x) <span class="fu">style_number</span>(x, <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="qcgxubrvkh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qcgxubrvkh table {
+<div id="zctodbbggx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zctodbbggx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qcgxubrvkh thead, #qcgxubrvkh tbody, #qcgxubrvkh tfoot, #qcgxubrvkh tr, #qcgxubrvkh td, #qcgxubrvkh th {
+#zctodbbggx thead, #zctodbbggx tbody, #zctodbbggx tfoot, #zctodbbggx tr, #zctodbbggx td, #zctodbbggx th {
   border-style: none;
 }
 
-#qcgxubrvkh p {
+#zctodbbggx p {
   margin: 0;
   padding: 0;
 }
 
-#qcgxubrvkh .gt_table {
+#zctodbbggx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -265,12 +336,12 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_caption {
+#zctodbbggx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qcgxubrvkh .gt_title {
+#zctodbbggx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -282,7 +353,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-width: 0;
 }
 
-#qcgxubrvkh .gt_subtitle {
+#zctodbbggx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -294,7 +365,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-width: 0;
 }
 
-#qcgxubrvkh .gt_heading {
+#zctodbbggx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -306,13 +377,13 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_bottom_border {
+#zctodbbggx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_col_headings {
+#zctodbbggx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -327,7 +398,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_col_heading {
+#zctodbbggx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -347,7 +418,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#qcgxubrvkh .gt_column_spanner_outer {
+#zctodbbggx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -359,15 +430,15 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 4px;
 }
 
-#qcgxubrvkh .gt_column_spanner_outer:first-child {
+#zctodbbggx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qcgxubrvkh .gt_column_spanner_outer:last-child {
+#zctodbbggx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qcgxubrvkh .gt_column_spanner {
+#zctodbbggx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -379,11 +450,11 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   width: 100%;
 }
 
-#qcgxubrvkh .gt_spanner_row {
+#zctodbbggx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qcgxubrvkh .gt_group_heading {
+#zctodbbggx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -409,7 +480,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   text-align: left;
 }
 
-#qcgxubrvkh .gt_empty_group_heading {
+#zctodbbggx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -424,15 +495,15 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: middle;
 }
 
-#qcgxubrvkh .gt_from_md > :first-child {
+#zctodbbggx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qcgxubrvkh .gt_from_md > :last-child {
+#zctodbbggx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qcgxubrvkh .gt_row {
+#zctodbbggx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -451,7 +522,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#qcgxubrvkh .gt_stub {
+#zctodbbggx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -464,7 +535,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#qcgxubrvkh .gt_stub_row_group {
+#zctodbbggx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -478,15 +549,15 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: top;
 }
 
-#qcgxubrvkh .gt_row_group_first td {
+#zctodbbggx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qcgxubrvkh .gt_row_group_first th {
+#zctodbbggx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qcgxubrvkh .gt_summary_row {
+#zctodbbggx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -496,16 +567,16 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#qcgxubrvkh .gt_first_summary_row {
+#zctodbbggx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_first_summary_row.thick {
+#zctodbbggx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qcgxubrvkh .gt_last_summary_row {
+#zctodbbggx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -515,7 +586,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_grand_summary_row {
+#zctodbbggx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -525,7 +596,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#qcgxubrvkh .gt_first_grand_summary_row {
+#zctodbbggx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -535,7 +606,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_last_grand_summary_row_top {
+#zctodbbggx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -545,11 +616,11 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_striped {
+#zctodbbggx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qcgxubrvkh .gt_table_body {
+#zctodbbggx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -558,7 +629,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_footnotes {
+#zctodbbggx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -572,7 +643,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_footnote {
+#zctodbbggx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -581,7 +652,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#qcgxubrvkh .gt_sourcenotes {
+#zctodbbggx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -595,7 +666,7 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#qcgxubrvkh .gt_sourcenote {
+#zctodbbggx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -603,72 +674,72 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#qcgxubrvkh .gt_left {
+#zctodbbggx .gt_left {
   text-align: left;
 }
 
-#qcgxubrvkh .gt_center {
+#zctodbbggx .gt_center {
   text-align: center;
 }
 
-#qcgxubrvkh .gt_right {
+#zctodbbggx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qcgxubrvkh .gt_font_normal {
+#zctodbbggx .gt_font_normal {
   font-weight: normal;
 }
 
-#qcgxubrvkh .gt_font_bold {
+#zctodbbggx .gt_font_bold {
   font-weight: bold;
 }
 
-#qcgxubrvkh .gt_font_italic {
+#zctodbbggx .gt_font_italic {
   font-style: italic;
 }
 
-#qcgxubrvkh .gt_super {
+#zctodbbggx .gt_super {
   font-size: 65%;
 }
 
-#qcgxubrvkh .gt_footnote_marks {
+#zctodbbggx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qcgxubrvkh .gt_asterisk {
+#zctodbbggx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qcgxubrvkh .gt_indent_1 {
+#zctodbbggx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qcgxubrvkh .gt_indent_2 {
+#zctodbbggx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qcgxubrvkh .gt_indent_3 {
+#zctodbbggx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qcgxubrvkh .gt_indent_4 {
+#zctodbbggx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qcgxubrvkh .gt_indent_5 {
+#zctodbbggx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qcgxubrvkh .katex-display {
+#zctodbbggx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qcgxubrvkh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zctodbbggx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -705,10 +776,14 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Let’s take a look at the fitted line</h2>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> alzheimer_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> lhippo)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Age"</span>, <span class="at">y =</span> <span class="st">"Left Hippocampus Volume"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -717,7 +792,9 @@ F-statistic: 378.9 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="lhippo-vs.-education" class="slide level2">
 <h2><code>lhippo</code> vs.&nbsp;education</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(lhippo <span class="sc">~</span> educ, <span class="at">data =</span> alzheimer_data)</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -743,25 +820,27 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Again, as a table:</p>
 </div>
 <div class="fragment">
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lhippo <span class="sc">~</span> educ, <span class="at">data =</span> alzheimer_data) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="zeeyceqaxa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zeeyceqaxa table {
+<div id="zmjclwjvzg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zmjclwjvzg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zeeyceqaxa thead, #zeeyceqaxa tbody, #zeeyceqaxa tfoot, #zeeyceqaxa tr, #zeeyceqaxa td, #zeeyceqaxa th {
+#zmjclwjvzg thead, #zmjclwjvzg tbody, #zmjclwjvzg tfoot, #zmjclwjvzg tr, #zmjclwjvzg td, #zmjclwjvzg th {
   border-style: none;
 }
 
-#zeeyceqaxa p {
+#zmjclwjvzg p {
   margin: 0;
   padding: 0;
 }
 
-#zeeyceqaxa .gt_table {
+#zmjclwjvzg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -787,12 +866,12 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_caption {
+#zmjclwjvzg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zeeyceqaxa .gt_title {
+#zmjclwjvzg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -804,7 +883,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-width: 0;
 }
 
-#zeeyceqaxa .gt_subtitle {
+#zmjclwjvzg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -816,7 +895,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-width: 0;
 }
 
-#zeeyceqaxa .gt_heading {
+#zmjclwjvzg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -828,13 +907,13 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_bottom_border {
+#zmjclwjvzg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_col_headings {
+#zmjclwjvzg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -849,7 +928,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_col_heading {
+#zmjclwjvzg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -869,7 +948,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#zeeyceqaxa .gt_column_spanner_outer {
+#zmjclwjvzg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -881,15 +960,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 4px;
 }
 
-#zeeyceqaxa .gt_column_spanner_outer:first-child {
+#zmjclwjvzg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zeeyceqaxa .gt_column_spanner_outer:last-child {
+#zmjclwjvzg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zeeyceqaxa .gt_column_spanner {
+#zmjclwjvzg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -901,11 +980,11 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   width: 100%;
 }
 
-#zeeyceqaxa .gt_spanner_row {
+#zmjclwjvzg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zeeyceqaxa .gt_group_heading {
+#zmjclwjvzg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -931,7 +1010,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   text-align: left;
 }
 
-#zeeyceqaxa .gt_empty_group_heading {
+#zmjclwjvzg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -946,15 +1025,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: middle;
 }
 
-#zeeyceqaxa .gt_from_md > :first-child {
+#zmjclwjvzg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zeeyceqaxa .gt_from_md > :last-child {
+#zmjclwjvzg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zeeyceqaxa .gt_row {
+#zmjclwjvzg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -973,7 +1052,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#zeeyceqaxa .gt_stub {
+#zmjclwjvzg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -986,7 +1065,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#zeeyceqaxa .gt_stub_row_group {
+#zmjclwjvzg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1000,15 +1079,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: top;
 }
 
-#zeeyceqaxa .gt_row_group_first td {
+#zmjclwjvzg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zeeyceqaxa .gt_row_group_first th {
+#zmjclwjvzg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zeeyceqaxa .gt_summary_row {
+#zmjclwjvzg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1018,16 +1097,16 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#zeeyceqaxa .gt_first_summary_row {
+#zmjclwjvzg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_first_summary_row.thick {
+#zmjclwjvzg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zeeyceqaxa .gt_last_summary_row {
+#zmjclwjvzg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1037,7 +1116,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_grand_summary_row {
+#zmjclwjvzg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1047,7 +1126,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#zeeyceqaxa .gt_first_grand_summary_row {
+#zmjclwjvzg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1057,7 +1136,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_last_grand_summary_row_top {
+#zmjclwjvzg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1067,11 +1146,11 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_striped {
+#zmjclwjvzg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zeeyceqaxa .gt_table_body {
+#zmjclwjvzg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1080,7 +1159,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_footnotes {
+#zmjclwjvzg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1094,7 +1173,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_footnote {
+#zmjclwjvzg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1103,7 +1182,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#zeeyceqaxa .gt_sourcenotes {
+#zmjclwjvzg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1117,7 +1196,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zeeyceqaxa .gt_sourcenote {
+#zmjclwjvzg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1125,72 +1204,72 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#zeeyceqaxa .gt_left {
+#zmjclwjvzg .gt_left {
   text-align: left;
 }
 
-#zeeyceqaxa .gt_center {
+#zmjclwjvzg .gt_center {
   text-align: center;
 }
 
-#zeeyceqaxa .gt_right {
+#zmjclwjvzg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zeeyceqaxa .gt_font_normal {
+#zmjclwjvzg .gt_font_normal {
   font-weight: normal;
 }
 
-#zeeyceqaxa .gt_font_bold {
+#zmjclwjvzg .gt_font_bold {
   font-weight: bold;
 }
 
-#zeeyceqaxa .gt_font_italic {
+#zmjclwjvzg .gt_font_italic {
   font-style: italic;
 }
 
-#zeeyceqaxa .gt_super {
+#zmjclwjvzg .gt_super {
   font-size: 65%;
 }
 
-#zeeyceqaxa .gt_footnote_marks {
+#zmjclwjvzg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zeeyceqaxa .gt_asterisk {
+#zmjclwjvzg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zeeyceqaxa .gt_indent_1 {
+#zmjclwjvzg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zeeyceqaxa .gt_indent_2 {
+#zmjclwjvzg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zeeyceqaxa .gt_indent_3 {
+#zmjclwjvzg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zeeyceqaxa .gt_indent_4 {
+#zmjclwjvzg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zeeyceqaxa .gt_indent_5 {
+#zmjclwjvzg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zeeyceqaxa .katex-display {
+#zmjclwjvzg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zeeyceqaxa div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#zmjclwjvzg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1226,25 +1305,27 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="some-ways-we-can-customize-our-table-digits" class="slide level2">
 <h2>Some ways we can customize our table digits</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lhippo <span class="sc">~</span> educ, <span class="at">data =</span> alzheimer_data) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">estimate_fun =</span> <span class="cf">function</span>(x) <span class="fu">style_number</span>(x, <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="pfbwrjpxbq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pfbwrjpxbq table {
+<div id="oypcbmdnyn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oypcbmdnyn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pfbwrjpxbq thead, #pfbwrjpxbq tbody, #pfbwrjpxbq tfoot, #pfbwrjpxbq tr, #pfbwrjpxbq td, #pfbwrjpxbq th {
+#oypcbmdnyn thead, #oypcbmdnyn tbody, #oypcbmdnyn tfoot, #oypcbmdnyn tr, #oypcbmdnyn td, #oypcbmdnyn th {
   border-style: none;
 }
 
-#pfbwrjpxbq p {
+#oypcbmdnyn p {
   margin: 0;
   padding: 0;
 }
 
-#pfbwrjpxbq .gt_table {
+#oypcbmdnyn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1270,12 +1351,12 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_caption {
+#oypcbmdnyn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pfbwrjpxbq .gt_title {
+#oypcbmdnyn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1287,7 +1368,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-width: 0;
 }
 
-#pfbwrjpxbq .gt_subtitle {
+#oypcbmdnyn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1299,7 +1380,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-width: 0;
 }
 
-#pfbwrjpxbq .gt_heading {
+#oypcbmdnyn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1311,13 +1392,13 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_bottom_border {
+#oypcbmdnyn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_col_headings {
+#oypcbmdnyn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1332,7 +1413,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_col_heading {
+#oypcbmdnyn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1352,7 +1433,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#pfbwrjpxbq .gt_column_spanner_outer {
+#oypcbmdnyn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1364,15 +1445,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 4px;
 }
 
-#pfbwrjpxbq .gt_column_spanner_outer:first-child {
+#oypcbmdnyn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pfbwrjpxbq .gt_column_spanner_outer:last-child {
+#oypcbmdnyn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pfbwrjpxbq .gt_column_spanner {
+#oypcbmdnyn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1384,11 +1465,11 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   width: 100%;
 }
 
-#pfbwrjpxbq .gt_spanner_row {
+#oypcbmdnyn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pfbwrjpxbq .gt_group_heading {
+#oypcbmdnyn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1414,7 +1495,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   text-align: left;
 }
 
-#pfbwrjpxbq .gt_empty_group_heading {
+#oypcbmdnyn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1429,15 +1510,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: middle;
 }
 
-#pfbwrjpxbq .gt_from_md > :first-child {
+#oypcbmdnyn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pfbwrjpxbq .gt_from_md > :last-child {
+#oypcbmdnyn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pfbwrjpxbq .gt_row {
+#oypcbmdnyn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1456,7 +1537,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#pfbwrjpxbq .gt_stub {
+#oypcbmdnyn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1469,7 +1550,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#pfbwrjpxbq .gt_stub_row_group {
+#oypcbmdnyn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1483,15 +1564,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: top;
 }
 
-#pfbwrjpxbq .gt_row_group_first td {
+#oypcbmdnyn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pfbwrjpxbq .gt_row_group_first th {
+#oypcbmdnyn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pfbwrjpxbq .gt_summary_row {
+#oypcbmdnyn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1501,16 +1582,16 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#pfbwrjpxbq .gt_first_summary_row {
+#oypcbmdnyn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_first_summary_row.thick {
+#oypcbmdnyn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pfbwrjpxbq .gt_last_summary_row {
+#oypcbmdnyn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1520,7 +1601,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_grand_summary_row {
+#oypcbmdnyn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1530,7 +1611,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#pfbwrjpxbq .gt_first_grand_summary_row {
+#oypcbmdnyn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1540,7 +1621,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_last_grand_summary_row_top {
+#oypcbmdnyn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1550,11 +1631,11 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_striped {
+#oypcbmdnyn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pfbwrjpxbq .gt_table_body {
+#oypcbmdnyn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1563,7 +1644,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_footnotes {
+#oypcbmdnyn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1577,7 +1658,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_footnote {
+#oypcbmdnyn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1586,7 +1667,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#pfbwrjpxbq .gt_sourcenotes {
+#oypcbmdnyn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1600,7 +1681,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#pfbwrjpxbq .gt_sourcenote {
+#oypcbmdnyn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1608,72 +1689,72 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#pfbwrjpxbq .gt_left {
+#oypcbmdnyn .gt_left {
   text-align: left;
 }
 
-#pfbwrjpxbq .gt_center {
+#oypcbmdnyn .gt_center {
   text-align: center;
 }
 
-#pfbwrjpxbq .gt_right {
+#oypcbmdnyn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pfbwrjpxbq .gt_font_normal {
+#oypcbmdnyn .gt_font_normal {
   font-weight: normal;
 }
 
-#pfbwrjpxbq .gt_font_bold {
+#oypcbmdnyn .gt_font_bold {
   font-weight: bold;
 }
 
-#pfbwrjpxbq .gt_font_italic {
+#oypcbmdnyn .gt_font_italic {
   font-style: italic;
 }
 
-#pfbwrjpxbq .gt_super {
+#oypcbmdnyn .gt_super {
   font-size: 65%;
 }
 
-#pfbwrjpxbq .gt_footnote_marks {
+#oypcbmdnyn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pfbwrjpxbq .gt_asterisk {
+#oypcbmdnyn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pfbwrjpxbq .gt_indent_1 {
+#oypcbmdnyn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pfbwrjpxbq .gt_indent_2 {
+#oypcbmdnyn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pfbwrjpxbq .gt_indent_3 {
+#oypcbmdnyn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pfbwrjpxbq .gt_indent_4 {
+#oypcbmdnyn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pfbwrjpxbq .gt_indent_5 {
+#oypcbmdnyn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pfbwrjpxbq .katex-display {
+#oypcbmdnyn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pfbwrjpxbq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#oypcbmdnyn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1704,24 +1785,26 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 
 </div>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lhippo <span class="sc">~</span> educ, <span class="at">data =</span> alzheimer_data) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">estimate_fun =</span> <span class="cf">function</span>(x) <span class="fu">round</span>(x, <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="xgglvndpkn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xgglvndpkn table {
+<div id="ghznkwvmyd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ghznkwvmyd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xgglvndpkn thead, #xgglvndpkn tbody, #xgglvndpkn tfoot, #xgglvndpkn tr, #xgglvndpkn td, #xgglvndpkn th {
+#ghznkwvmyd thead, #ghznkwvmyd tbody, #ghznkwvmyd tfoot, #ghznkwvmyd tr, #ghznkwvmyd td, #ghznkwvmyd th {
   border-style: none;
 }
 
-#xgglvndpkn p {
+#ghznkwvmyd p {
   margin: 0;
   padding: 0;
 }
 
-#xgglvndpkn .gt_table {
+#ghznkwvmyd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1747,12 +1830,12 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_caption {
+#ghznkwvmyd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xgglvndpkn .gt_title {
+#ghznkwvmyd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1764,7 +1847,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-width: 0;
 }
 
-#xgglvndpkn .gt_subtitle {
+#ghznkwvmyd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1776,7 +1859,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-width: 0;
 }
 
-#xgglvndpkn .gt_heading {
+#ghznkwvmyd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1788,13 +1871,13 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_bottom_border {
+#ghznkwvmyd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_col_headings {
+#ghznkwvmyd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1809,7 +1892,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_col_heading {
+#ghznkwvmyd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1829,7 +1912,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#xgglvndpkn .gt_column_spanner_outer {
+#ghznkwvmyd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1841,15 +1924,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 4px;
 }
 
-#xgglvndpkn .gt_column_spanner_outer:first-child {
+#ghznkwvmyd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xgglvndpkn .gt_column_spanner_outer:last-child {
+#ghznkwvmyd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xgglvndpkn .gt_column_spanner {
+#ghznkwvmyd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1861,11 +1944,11 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   width: 100%;
 }
 
-#xgglvndpkn .gt_spanner_row {
+#ghznkwvmyd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xgglvndpkn .gt_group_heading {
+#ghznkwvmyd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1891,7 +1974,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   text-align: left;
 }
 
-#xgglvndpkn .gt_empty_group_heading {
+#ghznkwvmyd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1906,15 +1989,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: middle;
 }
 
-#xgglvndpkn .gt_from_md > :first-child {
+#ghznkwvmyd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xgglvndpkn .gt_from_md > :last-child {
+#ghznkwvmyd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xgglvndpkn .gt_row {
+#ghznkwvmyd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1933,7 +2016,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#xgglvndpkn .gt_stub {
+#ghznkwvmyd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1946,7 +2029,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#xgglvndpkn .gt_stub_row_group {
+#ghznkwvmyd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1960,15 +2043,15 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: top;
 }
 
-#xgglvndpkn .gt_row_group_first td {
+#ghznkwvmyd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xgglvndpkn .gt_row_group_first th {
+#ghznkwvmyd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xgglvndpkn .gt_summary_row {
+#ghznkwvmyd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1978,16 +2061,16 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#xgglvndpkn .gt_first_summary_row {
+#ghznkwvmyd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_first_summary_row.thick {
+#ghznkwvmyd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xgglvndpkn .gt_last_summary_row {
+#ghznkwvmyd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1997,7 +2080,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_grand_summary_row {
+#ghznkwvmyd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2007,7 +2090,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#xgglvndpkn .gt_first_grand_summary_row {
+#ghznkwvmyd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2017,7 +2100,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_last_grand_summary_row_top {
+#ghznkwvmyd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2027,11 +2110,11 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_striped {
+#ghznkwvmyd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xgglvndpkn .gt_table_body {
+#ghznkwvmyd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2040,7 +2123,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_footnotes {
+#ghznkwvmyd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2054,7 +2137,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_footnote {
+#ghznkwvmyd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2063,7 +2146,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#xgglvndpkn .gt_sourcenotes {
+#ghznkwvmyd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2077,7 +2160,7 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#xgglvndpkn .gt_sourcenote {
+#ghznkwvmyd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2085,72 +2168,72 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#xgglvndpkn .gt_left {
+#ghznkwvmyd .gt_left {
   text-align: left;
 }
 
-#xgglvndpkn .gt_center {
+#ghznkwvmyd .gt_center {
   text-align: center;
 }
 
-#xgglvndpkn .gt_right {
+#ghznkwvmyd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xgglvndpkn .gt_font_normal {
+#ghznkwvmyd .gt_font_normal {
   font-weight: normal;
 }
 
-#xgglvndpkn .gt_font_bold {
+#ghznkwvmyd .gt_font_bold {
   font-weight: bold;
 }
 
-#xgglvndpkn .gt_font_italic {
+#ghznkwvmyd .gt_font_italic {
   font-style: italic;
 }
 
-#xgglvndpkn .gt_super {
+#ghznkwvmyd .gt_super {
   font-size: 65%;
 }
 
-#xgglvndpkn .gt_footnote_marks {
+#ghznkwvmyd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xgglvndpkn .gt_asterisk {
+#ghznkwvmyd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xgglvndpkn .gt_indent_1 {
+#ghznkwvmyd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xgglvndpkn .gt_indent_2 {
+#ghznkwvmyd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xgglvndpkn .gt_indent_3 {
+#ghznkwvmyd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xgglvndpkn .gt_indent_4 {
+#ghznkwvmyd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xgglvndpkn .gt_indent_5 {
+#ghznkwvmyd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xgglvndpkn .katex-display {
+#ghznkwvmyd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xgglvndpkn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ghznkwvmyd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2188,10 +2271,14 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Let’s see the fitted line:</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> alzheimer_data, <span class="fu">aes</span>(<span class="at">x =</span> educ, <span class="at">y =</span> lhippo)) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Education"</span>, <span class="at">y =</span> <span class="st">"Left Hippocampus Volume"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2202,6 +2289,8 @@ F-statistic:  78.8 on 1 and 2698 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Regressing on both variables</h2>
 <p>Here is the regression of lhippo versus age and education:</p>
 <div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(lhippo <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> alzheimer_data)</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2227,25 +2316,27 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
 </section>
 <section id="regressing-on-both-variables-1" class="slide level2">
 <h2>Regressing on both variables</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lhippo <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> alzheimer_data) <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">estimate_fun =</span> <span class="cf">function</span>(x) <span class="fu">style_number</span>(x, <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="iovjccvrzm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#iovjccvrzm table {
+<div id="mppfsajjzp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mppfsajjzp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iovjccvrzm thead, #iovjccvrzm tbody, #iovjccvrzm tfoot, #iovjccvrzm tr, #iovjccvrzm td, #iovjccvrzm th {
+#mppfsajjzp thead, #mppfsajjzp tbody, #mppfsajjzp tfoot, #mppfsajjzp tr, #mppfsajjzp td, #mppfsajjzp th {
   border-style: none;
 }
 
-#iovjccvrzm p {
+#mppfsajjzp p {
   margin: 0;
   padding: 0;
 }
 
-#iovjccvrzm .gt_table {
+#mppfsajjzp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2271,12 +2362,12 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_caption {
+#mppfsajjzp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iovjccvrzm .gt_title {
+#mppfsajjzp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2288,7 +2379,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-width: 0;
 }
 
-#iovjccvrzm .gt_subtitle {
+#mppfsajjzp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2300,7 +2391,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-width: 0;
 }
 
-#iovjccvrzm .gt_heading {
+#mppfsajjzp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2312,13 +2403,13 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_bottom_border {
+#mppfsajjzp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_col_headings {
+#mppfsajjzp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2333,7 +2424,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_col_heading {
+#mppfsajjzp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2353,7 +2444,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#iovjccvrzm .gt_column_spanner_outer {
+#mppfsajjzp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2365,15 +2456,15 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 4px;
 }
 
-#iovjccvrzm .gt_column_spanner_outer:first-child {
+#mppfsajjzp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iovjccvrzm .gt_column_spanner_outer:last-child {
+#mppfsajjzp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iovjccvrzm .gt_column_spanner {
+#mppfsajjzp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2385,11 +2476,11 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   width: 100%;
 }
 
-#iovjccvrzm .gt_spanner_row {
+#mppfsajjzp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iovjccvrzm .gt_group_heading {
+#mppfsajjzp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2415,7 +2506,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   text-align: left;
 }
 
-#iovjccvrzm .gt_empty_group_heading {
+#mppfsajjzp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2430,15 +2521,15 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: middle;
 }
 
-#iovjccvrzm .gt_from_md > :first-child {
+#mppfsajjzp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iovjccvrzm .gt_from_md > :last-child {
+#mppfsajjzp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iovjccvrzm .gt_row {
+#mppfsajjzp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2457,7 +2548,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   overflow-x: hidden;
 }
 
-#iovjccvrzm .gt_stub {
+#mppfsajjzp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2470,7 +2561,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#iovjccvrzm .gt_stub_row_group {
+#mppfsajjzp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2484,15 +2575,15 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   vertical-align: top;
 }
 
-#iovjccvrzm .gt_row_group_first td {
+#mppfsajjzp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iovjccvrzm .gt_row_group_first th {
+#mppfsajjzp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iovjccvrzm .gt_summary_row {
+#mppfsajjzp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2502,16 +2593,16 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#iovjccvrzm .gt_first_summary_row {
+#mppfsajjzp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_first_summary_row.thick {
+#mppfsajjzp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iovjccvrzm .gt_last_summary_row {
+#mppfsajjzp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2521,7 +2612,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_grand_summary_row {
+#mppfsajjzp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2531,7 +2622,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#iovjccvrzm .gt_first_grand_summary_row {
+#mppfsajjzp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2541,7 +2632,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_last_grand_summary_row_top {
+#mppfsajjzp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2551,11 +2642,11 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_striped {
+#mppfsajjzp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#iovjccvrzm .gt_table_body {
+#mppfsajjzp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2564,7 +2655,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_footnotes {
+#mppfsajjzp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2578,7 +2669,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_footnote {
+#mppfsajjzp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2587,7 +2678,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#iovjccvrzm .gt_sourcenotes {
+#mppfsajjzp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2601,7 +2692,7 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#iovjccvrzm .gt_sourcenote {
+#mppfsajjzp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2609,72 +2700,72 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
   padding-right: 5px;
 }
 
-#iovjccvrzm .gt_left {
+#mppfsajjzp .gt_left {
   text-align: left;
 }
 
-#iovjccvrzm .gt_center {
+#mppfsajjzp .gt_center {
   text-align: center;
 }
 
-#iovjccvrzm .gt_right {
+#mppfsajjzp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iovjccvrzm .gt_font_normal {
+#mppfsajjzp .gt_font_normal {
   font-weight: normal;
 }
 
-#iovjccvrzm .gt_font_bold {
+#mppfsajjzp .gt_font_bold {
   font-weight: bold;
 }
 
-#iovjccvrzm .gt_font_italic {
+#mppfsajjzp .gt_font_italic {
   font-style: italic;
 }
 
-#iovjccvrzm .gt_super {
+#mppfsajjzp .gt_super {
   font-size: 65%;
 }
 
-#iovjccvrzm .gt_footnote_marks {
+#mppfsajjzp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iovjccvrzm .gt_asterisk {
+#mppfsajjzp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iovjccvrzm .gt_indent_1 {
+#mppfsajjzp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iovjccvrzm .gt_indent_2 {
+#mppfsajjzp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iovjccvrzm .gt_indent_3 {
+#mppfsajjzp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iovjccvrzm .gt_indent_4 {
+#mppfsajjzp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iovjccvrzm .gt_indent_5 {
+#mppfsajjzp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#iovjccvrzm .katex-display {
+#mppfsajjzp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#iovjccvrzm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mppfsajjzp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2748,6 +2839,17 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="splitting-the-data" class="slide level2">
 <h2>Splitting the data</h2>
 <p>To split the data into training and validation sets using the rsample package in R, you can use the initial_split() function. Here’s an example of how you can split the data:</p>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(alzheimer_data, <span class="at">prop =</span> <span class="fl">0.7</span>) </span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="linear-regression-model-evaluation" class="title-slide slide level1 center">
@@ -2758,7 +2860,9 @@ F-statistic: 218.4 on 2 and 2697 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>“Training”</h2>
 <p>After splitting the data into train and test, we train (“fit”, in our case) the model using training data:</p>
 <div class="fragment">
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>lm_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(lhippo <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> train_data)</span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -2786,7 +2890,9 @@ F-statistic: 144.5 on 2 and 1886 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="training-1" class="slide level2">
 <h2>“Training”</h2>
 <p>After splitting the data into train and test, we train (“fit”, in our case) the model using training data:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lhippo <span class="sc">~</span> age <span class="sc">+</span> educ, <span class="at">data =</span> train_data) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_regression</span>(<span class="at">estimate_fun =</span> <span class="cf">function</span>(x) <span class="fu">style_number</span>(x, <span class="at">digits =</span> <span class="dv">3</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="eorwfgyymp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#eorwfgyymp table {
@@ -3276,12 +3382,18 @@ F-statistic: 144.5 on 2 and 1886 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Evaluating our model on test data</h2>
 <p>Now, let’s use the trained model to make predictions on the validation data:</p>
 <div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_model, <span class="at">newdata =</span> test_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="fragment">
 <ul>
 <li>To evaluate the performance of our model, we can calculate the Mean Squared Error (MSE) between the predicted values and the actual values:</li>
 </ul>
 </div>
 <div class="fragment">
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>((test_data<span class="sc">$</span>lhippo <span class="sc">-</span> predictions)<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2133323</code></pre>
 </div>
@@ -3299,21 +3411,37 @@ F-statistic: 144.5 on 2 and 1886 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section id="additional-lm-example" class="slide level2">
 <h2>Additional <code>lm()</code> example</h2>
 <p>Let’s load in some new data</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="" aria-hidden="true" tabindex="-1"></a>saltBP <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../data/saltBP.txt"</span>, <span class="at">header =</span> T, <span class="at">sep =</span><span class="st">''</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
 <section id="additional-lm-example-1" class="slide level2">
 <h2>Additional <code>lm()</code> example</h2>
 <p>Plot salt against BP</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> saltBP) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> salt,  <span class="at">y =</span> BP)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Salt vs. Blood-pressure"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
-<img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
+</div>
+<img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="additional-lm-example-2" class="slide level2">
 <h2>Additional <code>lm()</code> example</h2>
 <p>Let’s look at the fit line</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> saltBP) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> salt,  <span class="at">y =</span> BP)) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x =</span> salt, <span class="at">y =</span> BP), <span class="at">method =</span> <span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Salt vs. Blood-pressure"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
-<img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
+</div>
+<img data-src="Lab-6-linear-regression_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="additional-lm-example-3" class="slide level2">
 <h2>Additional <code>lm()</code> example</h2>
 <p>Investigate the relationship between salt and blood pressure</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>salt_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(BP <span class="sc">~</span> salt, <span class="at">data=</span>saltBP)</span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>salt_model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -3323,6 +3451,7 @@ Coefficients:
 (Intercept)         salt  
     128.616        1.197  </code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(salt_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -3348,7 +3477,8 @@ F-statistic: 54.59 on 1 and 23 DF,  p-value: 1.631e-07</code></pre>
 <section id="additional-lm-example-4" class="slide level2">
 <h2>Additional <code>lm()</code> example</h2>
 <p>We can also use the <code>glm()</code> function. You’ll use it more tomorrow!</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">glm</span>(BP <span class="sc">~</span> salt, <span class="at">data=</span>saltBP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:  glm(formula = BP ~ salt, data = saltBP)
@@ -3365,7 +3495,8 @@ Residual Deviance: 173.4    AIC: 125.4</code></pre>
 </section>
 <section id="residual" class="slide level2">
 <h2>Residual</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(salt_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  2.5 %     97.5 %
 (Intercept) 126.3369606 130.895834
@@ -3375,7 +3506,11 @@ salt          0.8617951   1.531993</code></pre>
 </section>
 <section id="multiple-linear-regression-example" class="slide level2">
 <h2>Multiple Linear Regression example</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"birthwt"</span>)</span>
+<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a>bwt_mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(bwt <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">factor</span>(smoke), <span class="at">data=</span>birthwt)</span>
+<span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bwt_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -3401,7 +3536,8 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </section>
 <section id="confidence-intervals-for-coefficients" class="slide level2">
 <h2>95% confidence intervals for coefficients</h2>
-<div class="cell">
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(bwt_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     2.5 %     97.5 %
 (Intercept)    2318.971775 3263.47685
@@ -3474,7 +3610,9 @@ factor(smoke)1 -488.046399  -68.66586</code></pre>
 </ul>
 </div>
 <div class="fragment">
-<p>-Reasonably large <span class="math inline">\(n\)</span> or normality assumption for <span class="math inline">\(\epsilon_i\)</span>.</p>
+<ul>
+<li>Reasonably large <span class="math inline">\(n\)</span> or normality assumption for <span class="math inline">\(\epsilon_i\)</span>.</li>
+</ul>
 </div>
 <div class="fragment">
 <ul>

@@ -14,6 +14,18 @@ format:
       url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 ---
 
+```{r}
+#| include: false
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center",
+  fig.height = 9
+)
+ggplot2::theme_set(ggplot2::theme_light(base_size = 20))
+```
 
 ```{r echo = FALSE, warning=FALSE, message=FALSE}
 library(fabricerin)
