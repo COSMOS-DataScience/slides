@@ -1,0 +1,478 @@
+---
+format:
+  revealjs:
+    title-slide: false   
+    theme: [default]
+#    smaller: true
+    chalkboard: true
+    scrollable: true
+    self-contained: false
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slideNumber: true
+    transition: "fade"
+    progress: true
+    controls: false
+    ratio: 3:2
+    echo: true
+    code-fold: true
+    footer: |
+      <img src="img/cosmos-uci-dshs.png"
+           style="position:fixed; top:0px; right:20px; height:30px; z-index:1000;">
+---
+
+::::: {style="display: flex; align-items: center; justify-content: space-between;"}
+::: {style="flex: 0 0 40%;"}
+<img src="img/cosmos-uci-dshs.png" alt="COSMOS logo" style="width: 90%; max-width: 300px;"/>
+:::
+
+::: {style="flex: 0 0 55%; text-align: left;"}
+<h1 style="color: #153e6c; font-size: 2.8em; margin-bottom: 0.5em;">
+
+Advanced Topic - Survival Analysis
+
+</h1>
+
+<p style="color: #153e6c; font-size: 1.8em;">
+
+Zhaoxia Yu
+
+</p>
+:::
+:::::
+
+
+## Load packages, read data
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(survival) #for survival analysis
+```
+
+
+# Motivating Example and Kaplan–Meier Curves
+
+## A Motivating Example
+
+Researchers are comparing two new cancer treatments.
+
+- The outcome of interest is survival time, measured in **months after treatment begins**.
+
+- At the end of the study, they record what happened to each patient.
+
+- Some patients died during the study, while others were still alive when the study ended.
+
+- **Question:** Which treatment appears to help patients survive longer?
+
+
+
+## Survival Data from the Study
+
+| A: Time | A: Outcome                   | B: Time | B: Outcome |
+|---------:|:--------------------------------|---------:|:-----------|
+| 5        | Died                         | 4        | Died       |
+| 6        | Died                         | 5        | Died       |
+| 8        | Died                         | 6        | Died       |
+| 20      | alive when study ended | 7        | Died       |
+| 20      | alive when study ended | 8        | Died       |
+| 20      | alive when study ended | 9        | Died       |
+
+
+## Question: How to Compare the Two Treatments?
+
+
+## Life Table for Treatment B
+
+All patients eventually died, so we know each patient's survival time exactly.
+
+| Time (months) | Patients Alive | Survival Probability |
+|--------------:|---------------:|---------------------:|
+| 0             | 6              | 1.00                 |
+| 4             | 5              | 5/6 = 0.833          |
+| 5             | 4              | 4/6 = 0.667          |
+| 6             | 3              | 3/6 = 0.500          |
+| 7             | 2              | 2/6 = 0.333          |
+| 8             | 1              | 1/6 = 0.167          |
+| 9             | 0              | 0.000                |
+
+
+## Life Table for Treatment B
+
+- The **life table** summarizes how many patients are still alive over time.
+
+- The **survival probability** is simply
+
+  $$\frac{\text{Patients Alive}}{\text{Total Patients}}.$$
+
+- We can visualize these probabilities using a **Kaplan–Meier (KM) curve**.
+
+
+
+## Kaplan–Meier Curve for Treatment B
+
+```{r}
+#| fig-align: center
+
+time <- c(4,5,6,7,8,9)
+status <- rep(1, 6)
+
+fit <- survfit(Surv(time, status) ~ 1)
+
+plot(
+  fit,
+  xlab = "Time (months)",
+  ylab = "Survival probability",
+  lwd = 2,
+  mark.time = FALSE,
+  conf.int = FALSE,
+  ylim = c(0, 1)
+)
+grid()
+```
+
+- The KM curve visualizes **survival probability** over time.
+  - Every death causes a vertical drop.
+  - Between deaths, the survival probability stays the same.
+
+
+## How to Build a Life Table for Treatment A?
+
+| Time (months) | Patients Alive | Survival Probability |
+|--------------:|---------------:|---------------------:|
+| 0             | 6              | 1.000                |
+| 5             | 5              | 5/6 = 0.833          |
+| 6             | 4              | 4/6 = 0.667          |
+| 8             | 3              | 3/6 = 0.500          |
+| 20+           | ?              | ?                    |
+
+
+## How to Build a Life Table for Treatment A?
+
+- The first three rows are easy because we know exactly when three patients died.
+
+- But what happens after 20 months?
+
+- We know the remaining three patients were still alive when the study ended, but we do **not** know their actual survival times.
+
+- **Question:** How should we continue the life table?
+
+
+## Kaplan-Meier Curve for Treatment A
+
+::: columns
+
+:::: {.column width="45%"}
+
+| Time | Patients Alive | Survival |
+|-----:|---------------:|---------:|
+|0|6|1.000|
+|5|5|0.833|
+|6|4|0.667|
+|8|3|0.500|
+|20+|?|?|
+
+::::
+
+:::: {.column width="55%"}
+
+```{r}
+library(survival)
+
+time   <- c(5, 6, 8, 20,20,20)
+status <- c(1,1,1,0,0,0)
+
+fit <- survfit(Surv(time,status)~1)
+
+plot(
+  fit,
+  xlab="Time (months)",
+  ylab="Survival probability",
+  lwd=2,
+  mark.time=TRUE,
+  conf.int=FALSE,
+  ylim=c(0,1)
+)
+grid()
+```
+
+::::
+
+:::
+
+
+::: {style="font-size: 85%"}
+
+- The curve stays flat after month 6 because 
+
+- The small marks on the curve indicate patients who were still alive when the study ended.
+
+:::
+
+## Right-Censored Data
+
+| Patient | Last observed time | What do we know? |
+|---------|-------------------:|------------------|
+| A | 5 | Died at month 5 |
+| B | 8 | Died at month 8 |
+| C | 20 | Still alive when the study ended |
+
+For Patient C,
+
+- we know the survival time is **at least 20 months**,
+- but we do **not** know the exact survival time.
+
+This is called a **right-censored observation**.
+
+
+## Survival Data
+
+::: columns
+
+:::: {.column width="45%"}
+
+```{r}
+library(tibble)
+
+survival_data <- tibble(
+  treatment = c(rep("A", 6), rep("B", 6)),
+  time = c(5, 6, 8, 20, 20, 20,
+           4, 5, 6, 7, 8, 9),
+  status = c(1, 1, 1, 0, 0, 0,
+             1, 1, 1, 1, 1, 1)
+)
+
+survival_data
+```
+
+
+::::
+
+:::: {.column width="55%"}
+
+- **treatment:** Treatment A or B
+- **time:** Survival time (months)
+- **status:**
+  - **1** = Patient died during the study
+  - **0** = Patient was still alive when the study ended
+::::
+
+:::
+  
+  
+## Kaplan–Meier Curves
+
+```{r}
+#| fig-align: center
+
+library(survival)
+
+fit <- survfit(Surv(time, status) ~ treatment,
+               data = survival_data)
+
+plot(
+  fit,
+  col = c("blue", "red"),
+  lwd = 2,
+  xlab = "Time (months)",
+  ylab = "Survival probability"
+)
+
+legend(
+  "topright",
+  legend = c("Treatment A", "Treatment B"),
+  col = c("blue", "red"),
+  lwd = 2
+)
+```
+
+- The two curves summarize the survival experience of the two treatments.
+- Higher curves indicate better survival.
+
+
+## Comparing the Two Treatments
+
+The output in the next slide includes
+
+- the number of patients **at risk** before each event,
+- the number of **events** (deaths),
+- the estimated **survival probability**, and
+- the standard error of the estimate.
+
+These are the same quantities we used to construct the life table.
+
+
+##
+
+
+```{r}
+summary(fit)
+```
+
+
+
+## Are the Two Survival Curves Different?
+
+
+The **log-rank test** compares the two Kaplan–Meier curves.
+
+- Null hypothesis: The two treatments have the same survival experience.
+- A chi-square test statistic is computed to test the null hypothesis. The test statistic compares:
+  - the **observed** number of deaths in each treatment group, and
+  - the **expected** number of deaths in each treatment group if the null hypothesis were true.
+
+
+##
+
+```{r}
+survdiff(
+  Surv(time, status) ~ treatment,
+  data = survival_data
+)
+```
+
+  
+
+## Limitations of Kaplan–Meier Curves
+
+Kaplan–Meier curves are useful for comparing survival between groups.
+
+
+- We often need to adjust for other important factors, such as
+  - age,
+  - sex,
+  - disease stage, or
+  - blood pressure.
+
+
+# Cox Proportional Hazards (PH) Regression
+
+## Example
+
+Suppose patients receiving **Treatment A** are much younger than those receiving **Treatment B**.
+
+- Is better survival due to the **treatment**?
+- Or simply because **younger patients tend to live longer**?
+
+We need a regression model that can account for multiple variables at the same time.
+
+
+## A Natural Extension: Cox Proportional Hazards Regression
+
+Just as
+
+- linear regression models a continuous outcome, and
+- logistic regression models a binary outcome,
+
+**Cox proportional hazards regression** models time until an event occurs.
+
+
+##
+
+Advantages:
+
+- Includes multiple predictors in one model.
+- Adjusts for confounding variables.
+- Properly handles patients who are still alive when the study ends.
+- Estimates the effect of each predictor on survival.
+
+
+## Example: Cox Proportional Hazards Regression
+
+The **lung** dataset contains survival information for patients with advanced lung cancer.
+
+
+- `time`: Survival time (days)
+- `status`: Whether the patient died during the study
+- `age`: Age (years)
+- `sex`: 1 = Male, 2 = Female
+
+
+##
+
+```{r}
+fit <- coxph(
+  Surv(time, status == 2) ~ age + sex,
+  data = lung
+)
+
+summary(fit)
+```
+
+
+## Interpreting the Results
+
+```{r}
+round(exp(coef(fit)), 2)
+```
+
+| Predictor | Hazard Ratio | Interpretation |
+|------------|----------:|--------------------|
+| Age | 1.02 | Each additional year of age **increases** the risk of death by about 2%. |
+| Female (vs. Male) | about 0.60 | Females have about **40% lower** risk of death than males. |
+
+
+
+## Summary
+
+- Linear regression estimates changes in the mean.
+
+- Logistic regression estimates odds ratios.
+
+- Cox regression estimates hazard ratios.
+
+
+# Advanced
+
+## Survival Analysis in Modern Data Science
+
+In many biomedical studies, researchers collect thousands of variables. For example,
+
+- gene expression levels,
+- genetic variants,
+- proteins,
+- medical images, and
+- clinical measurements.
+
+## A Challenge - Overfitting
+
+When there are **many variables**, fitting a complex model may **overfit** the data.
+
+- The model fits the training data very well,
+- but performs poorly on new patients.
+
+This challenge is **not unique to survival analysis**.
+
+
+## 
+
+Overfitting occurs in
+
+- linear regression,
+- logistic regression,
+- Cox regression,
+- and many machine learning methods.
+
+
+
+## Modern Survival Analysis
+
+Researchers use more advanced methods to improve prediction and identify important variables.
+
+| Method | Purpose |
+|--------|---------|
+| **LASSO Cox regression** | Select important variables and reduce overfitting |
+| **Elastic Net Cox regression** | Select groups of correlated variables |
+| **Random Survival Forests** | Capture complex, nonlinear relationships |
+| **Deep Learning** | Analyze large and complex biomedical data |
+
+
+##
+
+Popular R packages include
+
+- **survival** — Kaplan–Meier and Cox regression
+- **glmnet** — LASSO and Elastic Net Cox regression
+- **randomForestSRC** — Random Survival Forests
+
