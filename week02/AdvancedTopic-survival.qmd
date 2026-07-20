@@ -378,7 +378,7 @@ Recall that
 **Cox proportional hazards regression** models time until an event occurs.
 
 
-##
+## Cox PH Regression
 
 Advantages:
 
@@ -433,10 +433,6 @@ round(exp(coef(fit)), 2)
 - Cox regression estimates hazard ratios.
 
 
-
-```{r}
-knitr::knit_exit()
-```
 
 # Advanced
 
