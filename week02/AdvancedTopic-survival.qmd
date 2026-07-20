@@ -52,6 +52,16 @@ library(survival) #for survival analysis
 ```
 
 
+## Introduction 
+
+- **linear regression**: when the response variable is a numerical variable.
+
+- **logistic regression**: when the response variable is a binary variable.
+
+- **survival analysis**: when the response variable is a **time-to-event** variable.
+
+
+
 # Motivating Example and Kaplan–Meier Curves
 
 ## A Motivating Example
@@ -360,7 +370,7 @@ We need a regression model that can account for multiple variables at the same t
 
 ## A Natural Extension: Cox Proportional Hazards Regression
 
-Just as
+Recall that
 
 - linear regression models a continuous outcome, and
 - logistic regression models a binary outcome,
@@ -422,6 +432,11 @@ round(exp(coef(fit)), 2)
 
 - Cox regression estimates hazard ratios.
 
+
+
+```{r}
+knitr::knit_exit()
+```
 
 # Advanced
 

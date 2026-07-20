@@ -220,6 +220,14 @@
 </details>
 </div>
 </section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<ul>
+<li><p><strong>linear regression</strong>: when the response variable is a numerical variable.</p></li>
+<li><p><strong>logistic regression</strong>: when the response variable is a binary variable.</p></li>
+<li><p><strong>survival analysis</strong>: when the response variable is a <strong>time-to-event</strong> variable.</p></li>
+</ul>
+</section>
 <section>
 <section id="motivating-example-and-kaplanmeier-curves" class="title-slide slide level1 center">
 <h1>Motivating Example and Kaplan–Meier Curves</h1>
@@ -722,7 +730,7 @@ treatment=B 6        6     3.64      1.52       2.9
 </section>
 <section id="a-natural-extension-cox-proportional-hazards-regression" class="slide level2">
 <h2>A Natural Extension: Cox Proportional Hazards Regression</h2>
-<p>Just as</p>
+<p>Recall that</p>
 <ul>
 <li>linear regression models a continuous outcome, and</li>
 <li>logistic regression models a binary outcome,</li>
@@ -830,84 +838,12 @@ Score (logrank) test = 13.72  on 2 df,   p=0.001</code></pre>
 <li><p>Logistic regression estimates odds ratios.</p></li>
 <li><p>Cox regression estimates hazard ratios.</p></li>
 </ul>
-</section></section>
-<section>
-<section id="advanced" class="title-slide slide level1 center">
-<h1>Advanced</h1>
-
-</section>
-<section id="survival-analysis-in-modern-data-science" class="slide level2">
-<h2>Survival Analysis in Modern Data Science</h2>
-<p>In many biomedical studies, researchers collect thousands of variables. For example,</p>
-<ul>
-<li>gene expression levels,</li>
-<li>genetic variants,</li>
-<li>proteins,</li>
-<li>medical images, and</li>
-<li>clinical measurements.</li>
-</ul>
-</section>
-<section id="a-challenge---overfitting" class="slide level2">
-<h2>A Challenge - Overfitting</h2>
-<p>When there are <strong>many variables</strong>, fitting a complex model may <strong>overfit</strong> the data.</p>
-<ul>
-<li>The model fits the training data very well,</li>
-<li>but performs poorly on new patients.</li>
-</ul>
-<p>This challenge is <strong>not unique to survival analysis</strong>.</p>
-</section>
-<section id="section-4" class="slide level2">
-<h2></h2>
-<p>Overfitting occurs in</p>
-<ul>
-<li>linear regression,</li>
-<li>logistic regression,</li>
-<li>Cox regression,</li>
-<li>and many machine learning methods.</li>
-</ul>
-</section>
-<section id="modern-survival-analysis" class="slide level2">
-<h2>Modern Survival Analysis</h2>
-<p>Researchers use more advanced methods to improve prediction and identify important variables.</p>
-<table class="caption-top">
-<colgroup>
-<col style="width: 47%">
-<col style="width: 52%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>LASSO Cox regression</strong></td>
-<td>Select important variables and reduce overfitting</td>
-</tr>
-<tr class="even">
-<td><strong>Elastic Net Cox regression</strong></td>
-<td>Select groups of correlated variables</td>
-</tr>
-<tr class="odd">
-<td><strong>Random Survival Forests</strong></td>
-<td>Capture complex, nonlinear relationships</td>
-</tr>
-<tr class="even">
-<td><strong>Deep Learning</strong></td>
-<td>Analyze large and complex biomedical data</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="section-5" class="slide level2">
-<h2></h2>
-<p>Popular R packages include</p>
-<ul>
-<li><strong>survival</strong> — Kaplan–Meier and Cox regression</li>
-<li><strong>glmnet</strong> — LASSO and Elastic Net Cox regression</li>
-<li><strong>randomForestSRC</strong> — Random Survival Forests</li>
-</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>knitr<span class="sc">::</span><span class="fu">knit_exit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 </section></section>
     </div>
