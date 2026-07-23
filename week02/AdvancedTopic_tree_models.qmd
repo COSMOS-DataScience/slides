@@ -1,0 +1,720 @@
+---
+title: "Tree Models"
+subtitle: "COSMOS"
+author: "Babak Shahbaba"
+execute:
+  echo: true
+  warning: false
+  message: false
+format:
+  revealjs:
+    title-slide: true
+    theme: default
+    chalkboard: false
+    scrollable: true
+    self-contained: true
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slide-number: true
+    transition: fade
+    progress: true
+    controls: false
+    ratio: 3:2
+    code-fold: true
+    footer: "Tree Models • COSMOS"
+---
+
+```{r}
+#| echo: false
+#| error: false
+
+library(tidyverse)
+library(rpart)
+library(rpart.plot)
+library(caret)
+library(randomForest)
+library(pROC)
+
+theme_set(theme_minimal(base_size = 18))
+
+alzheimer_path <- if (file.exists("alzheimer_data.csv")) {
+  "alzheimer_data.csv"
+} else {
+  "data/alzheimer_data.csv"
+}
+
+set.seed(123)
+```
+
+## Learning objectives
+
+This lecture examines whether an accurate prediction can be represented as a sequence of simple binary decisions.
+
+By the end, you should be able to:
+
+- read a decision tree as a piecewise prediction rule;
+- explain conceptually how CART chooses a split;
+- recognize overfitting and simplify a tree;
+- evaluate predictive models; and
+- explain how bagging and random forests work.
+
+---
+
+## Decision trees as sequential rules
+
+Consider a hypothetical classifier:
+
+```{mermaid}
+flowchart TD
+  A{"Memory score < 4?"}
+  B{"Age ≥ 75?"}
+  C["Predict class 0"]
+  D["Predict class 2"]
+  E["Predict class 1"]
+  A -- Yes --> B
+  A -- No --> C
+  B -- Yes --> D
+  B -- No --> E
+```
+
+Each path from the **root** to a **leaf** is an `if–then` rule.
+
+---
+
+## Trees divide the data into regions
+
+A binary tree repeatedly divides the predictor space using rules such as `age < 75` or `memory score >= 4`.
+
+- Regression: the prediction is usually the mean response in a leaf.
+- Classification: each leaf estimates class proportions
+  and usually predicts the most common class.
+
+Trees are therefore flexible **piecewise-constant models**.
+
+---
+
+## Interpreting a classification leaf
+
+Suppose a leaf contains 40 training observations:
+
+| Class | Count | Estimated probability |
+|---|---:|---:|
+| 0 | 6 | $6/40=0.15$ |
+| 1 | 10 | $10/40=0.25$ |
+| 2 | 24 | $24/40=0.60$ |
+
+The default prediction is class 2, but the useful output is often the full vector
+
+$$
+(\hat p_0,\hat p_1,\hat p_2)=(0.15,0.25,0.60).
+$$
+
+**Discussion:** The largest estimated probability need not be the appropriate decision threshold when different errors have different consequences.
+
+---
+
+## CART: Classification and Regression Trees
+
+CART builds a tree in two broad stages:
+
+1. **Grow:** greedily choose binary splits that make child nodes purer.
+2. **Prune:** remove weak branches to trade a little training fit for better generalization.
+
+“Greedy” means CART chooses the best split **right now**. It does not search over every possible future tree.
+
+::: {.callout-note}
+Greedy search makes tree fitting computationally practical, but it does not guarantee the globally best tree.
+:::
+
+---
+
+## Choosing a split for regression
+
+For regression, each leaf predicts the average outcome of the training observations in that leaf.
+
+CART considers many possible variables and cutpoints. It prefers a split that creates child groups whose outcomes vary less than the outcomes in the parent group.
+
+In other words, a useful split makes the observations within each child node more similar in their response values.
+
+---
+
+## Choosing a split for classification
+
+For classification, CART seeks child nodes that contain cleaner mixtures of classes.
+
+- A **pure** node contains observations from only one class.
+- A highly **impure** node contains a balanced mixture of classes.
+- Gini impurity and entropy are two common measures of this mixture.
+
+---
+
+## Choosing a split for classification
+
+If $p_c$ is the proportion of observations in class $c$ within a node, then
+
+$$
+\text{Gini}=1-\sum_{c=1}^{C}p_c^2,
+\qquad
+\text{Entropy}=-\sum_{c=1}^{C}p_c\log(p_c).
+$$
+
+Both measures approach zero as node purity increases. Therefore, CART chooses the split that produces the greatest improvement in purity.
+
+---
+
+## Visualizing Gini impurity
+
+For two classes, impurity is lowest when nearly every observation belongs to the same class and highest for a 50–50 mixture.
+
+```{r}
+#| echo: false
+#| fig-height: 5
+
+tibble(p = seq(0, 1, length.out = 201)) %>%
+  mutate(gini = 2*p*(1-p)) %>%
+  ggplot(aes(p, gini)) +
+  geom_line(linewidth = 1.4, color = "#2C7FB8") +
+  geom_vline(xintercept = 0.5, linetype = 2) +
+  labs(title = "Gini impurity is largest at a 50–50 mixture",
+       x = "Class-1 proportion", y = "Gini impurity")
+```
+
+CART rewards splits that move child nodes toward the ends of this curve.
+
+---
+
+## Worked example: comparing a split
+
+Suppose a parent node has 60 observations: 30 in class A and 30 in class B.
+
+A candidate split creates:
+
+- left: 25 A and 5 B;
+- right: 5 A and 25 B.
+
+Both child nodes are much purer than the original 30–30 mixture, so this is a promising split. CART compares it with many other candidate variables and cutpoints.
+
+---
+
+## Overfitting in large trees
+
+If we keep splitting, leaves become increasingly specialized.
+
+- **Training error** usually decreases.
+- **Test error** may eventually increase.
+- Small changes in the data can produce a different tree.
+
+This is the bias–variance tradeoff:
+
+- shallow tree: more bias, less variance;
+- deep tree: less bias, more variance.
+
+---
+
+## Pruning the tree
+
+Pruning removes branches that add complexity without a reliable improvement in prediction.
+
+In `rpart`, the complexity parameter `cp` controls how much improvement is required to keep a branch. Larger values produce smaller trees. 
+
+Cross-validation helps us choose a reasonable value.
+
+---
+
+## Real data: cognitive diagnosis
+
+We use a dataset with three diagnosis categories and several cognitive and demographic measurements.
+
+```{r}
+alzheimer_raw <- read_csv(alzheimer_path, show_col_types = FALSE)
+
+alzheimer <- alzheimer_raw %>%
+  select(diagnosis, age, educ, female, memunits,
+         trailb, bills, animals, naccmmse) %>%
+  mutate(
+    diagnosis = factor(diagnosis),
+    female = factor(female)
+  ) %>%
+  drop_na()
+
+dim(alzheimer)
+count(alzheimer, diagnosis) %>% mutate(proportion = n/sum(n))
+```
+
+The unequal class proportions mean accuracy alone may be misleading.
+
+---
+
+## Training and test sets
+
+We reserve 20% of the data for a final test.
+
+```{r}
+set.seed(123)
+train_id <- createDataPartition(
+  alzheimer$diagnosis, p = 0.80, list = FALSE
+)
+
+train_data <- alzheimer[train_id, ]
+test_data  <- alzheimer[-train_id, ]
+
+prop.table(table(train_data$diagnosis))
+prop.table(table(test_data$diagnosis))
+```
+
+`createDataPartition()` stratifies the split so class proportions remain similar.
+
+::: {.callout-warning}
+Do not inspect the test set while choosing predictors, depth, `cp`, or other tuning settings. That leaks information from the final exam into studying.
+:::
+
+---
+
+## Growing the initial tree
+
+```{r}
+large_tree <- rpart(
+  diagnosis ~ ., data = train_data, method = "class",
+  control = rpart.control(cp = 0, minsplit = 10, xval = 10)
+)
+
+large_tree$cptable %>%
+  as.data.frame() %>%
+  as_tibble(rownames = "subtree") %>%
+  slice_head(n = 15)
+```
+
+The table records tree size, training error, cross-validated error (`xerror`), and its uncertainty (`xstd`). Focus on how validation error changes as the tree becomes more complex.
+
+---
+
+## Minimum-error tree
+
+Choose the `cp` with minimum cross-validated error:
+
+```{r}
+best_row <- which.min(large_tree$cptable[, "xerror"])
+best_cp <- large_tree$cptable[best_row, "CP"]
+best_cp
+
+```
+
+The tree with the smallest cross-validated error is a natural choice. However, the estimated errors vary because cross-validation uses different subsets of the data.
+
+---
+
+## The one-standard-error rule
+
+The **one-standard-error rule** allows a small amount of uncertainty when comparing trees:
+
+1. Find the tree with the smallest cross-validated error.
+2. Add one standard error to that minimum to create a threshold.
+3. Among all trees below the threshold, choose the **smallest tree**.
+
+```{r}
+cv_table <- large_tree$cptable
+threshold <- cv_table[best_row, "xerror"] + cv_table[best_row, "xstd"]
+
+# Rows are ordered from the smallest to the largest tree.
+one_se_row <- min(which(cv_table[, "xerror"] <= threshold))
+one_se_cp <- cv_table[one_se_row, "CP"]
+
+pruned_tree <- prune(large_tree, cp = one_se_cp)
+one_se_cp
+```
+
+The selected tree may have slightly higher estimated error, but its performance is statistically difficult to distinguish from the minimum-error tree. We therefore prefer the simpler model.
+
+---
+
+## Cross-validated error and tree complexity
+
+```{r}
+#| echo: false
+#| fig-height: 5.4
+
+plotcp(large_tree,
+       main = "Cross-validated error versus tree complexity")
+```
+
+---
+
+## Cross-validated error and tree complexity
+
+The vertical axis is relative cross-validated error. The dashed horizontal line marks the one-standard-error threshold; the rule selects the smallest tree whose error falls below it.
+
+**Discussion:** A slightly less accurate but substantially smaller tree may offer greater stability and interpretability.
+
+---
+
+## The pruned tree
+
+```{r}
+#| echo: false
+#| fig-height: 6.2
+
+rpart.plot(
+  pruned_tree, type = 3, extra = 104,
+  fallen.leaves = TRUE,
+  box.palette = "RdYlGn", shadow.col = "gray",
+  main = "Cross-validated classification tree"
+)
+```
+
+Each leaf reports the predicted class, class probabilities, and percentage of training observations reaching that leaf.
+
+---
+
+## Class-probability predictions
+
+```{r}
+tree_prob <- predict(pruned_tree, newdata = test_data, type = "prob")
+tree_class <- predict(pruned_tree, newdata = test_data, type = "class")
+
+head(tree_prob)
+```
+
+The probability vector tells us much more than the final class.
+
+- $(0.98,0.01,0.01)$: confident prediction
+- $(0.35,0.34,0.31)$: uncertain prediction
+
+Uncertainty matters, especially when errors have unequal consequences.
+
+---
+
+## Confusion matrix
+
+Rows and columns answer different questions.
+
+```{r}
+tree_cm <- confusionMatrix(tree_class, test_data$diagnosis)
+tree_cm$table
+```
+
+```{r}
+#| echo: false
+#| fig-height: 4.8
+
+as.data.frame(tree_cm$table) %>%
+  ggplot(aes(Reference, Prediction, fill = Freq)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = Freq), size = 6) +
+  scale_fill_viridis_c() +
+  labs(title = "Pruned tree: test-set confusion matrix",
+       x = "Actual class", y = "Predicted class")
+```
+
+---
+
+## Performance beyond overall accuracy
+
+```{r}
+tree_cm$overall[c("Accuracy", "Kappa")]
+tree_cm$byClass[, c("Sensitivity", "Specificity", "Balanced Accuracy")]
+```
+
+- **Sensitivity for class $c$:** among actual class-$c$ cases, how many did we detect?
+- **Specificity:** among cases not in class $c$, how many did we reject?
+- **Balanced accuracy:** average of sensitivity and specificity.
+- **Kappa:** agreement beyond what chance agreement from class frequencies would suggest.
+
+Metrics must match the scientific costs of errors.
+
+---
+
+## ROC curves and decision thresholds
+
+A classifier predicts probabilities before those probabilities are converted into classes. Changing the decision threshold changes the balance between sensitivity and specificity.
+
+An **ROC curve** plots, across many possible thresholds:
+
+- **true-positive rate:** sensitivity;
+- **false-positive rate:** $1-\text{specificity}$.
+
+---
+
+## ROC curves and decision thresholds
+
+A curve closer to the upper-left corner represents better discrimination. The diagonal line represents performance similar to random guessing.
+
+The **area under the curve (AUC)** summarizes discrimination:
+
+- AUC $=0.5$: little ability to distinguish the two groups;
+- AUC $=1$: perfect separation.
+
+---
+
+## ROC curves for the pruned tree
+
+Because diagnosis has three classes, we construct a **one-versus-rest** curve for each class: one diagnosis category is treated as positive and the other two are combined as negative.
+
+```{r}
+#| echo: false
+#| fig-height: 5.4
+
+tree_roc <- set_names(levels(test_data$diagnosis)) %>%
+  map(function(class_label) {
+    roc(
+      response = factor(test_data$diagnosis == class_label,
+                        levels = c(FALSE, TRUE)),
+      predictor = tree_prob[, class_label],
+      quiet = TRUE
+    )
+  })
+
+tree_auc <- map_dbl(tree_roc, ~ as.numeric(auc(.x)))
+roc_labels <- paste0("Class ", names(tree_auc),
+                     " (AUC = ", round(tree_auc, 2), ")")
+names(tree_roc) <- roc_labels
+
+ggroc(tree_roc, legacy.axes = TRUE, linewidth = 1.2) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2,
+              color = "grey55") +
+  coord_equal() +
+  labs(title = "One-versus-rest ROC curves for the pruned tree",
+       x = "False-positive rate (1 − specificity)",
+       y = "True-positive rate (sensitivity)",
+       color = NULL)
+```
+
+---
+
+## ROC curves for the pruned tree
+
+ROC curves evaluate ranking across thresholds. 
+
+They do not determine which threshold is most appropriate. 
+
+That choice depends on the relative consequences of false negatives and false positives.
+
+---
+
+## Advantages of tree models
+
+- Human-readable decision rules.
+- Naturally model nonlinearities and interactions.
+- No need to standardize numeric variables.
+- Work with numeric and categorical predictors.
+- Automatic variable selection.
+
+But interpretability decreases quickly as the tree grows.
+
+---
+
+## Limitations of a single tree
+
+- High variance: small data changes can alter early splits.
+- Greedy search can miss a better future sequence of splits.
+- Axis-aligned, piecewise-constant predictions can be crude.
+- Standard trees do not extrapolate smoothly in regression.
+- Split selection can favor predictors with many possible cutpoints.
+- Predicted probabilities in small leaves can be unstable.
+
+These weaknesses motivate ensemble models.
+
+---
+
+## Bootstrap aggregation: bagging
+
+For $b=1,\ldots,B$:
+
+1. draw a bootstrap sample of size $n$ with replacement;
+2. fit a deep tree $\hat f_b$;
+3. aggregate predictions.
+
+Regression:
+
+$$
+\hat f_{\text{bag}}(x)=\frac{1}{B}\sum_{b=1}^{B}\hat f_b(x).
+$$
+
+Classification uses majority vote or averages class probabilities.
+
+Bagging is powerful when individual models have low bias but high variance.
+
+---
+
+## Why averaging helps
+
+Different bootstrap samples produce somewhat different trees. Their individual errors will not occur in exactly the same places, so averaging their predictions reduces the influence of any one unstable tree.
+
+**Key idea:** More trees help, but making trees less correlated can help even more.
+
+---
+
+## Random forests and tree decorrelation
+
+A random forest adds one modification to bagging:
+
+> At each split, consider only a random subset of predictors.
+
+This prevents one dominant predictor from appearing at the top of nearly every tree.
+
+- Bootstrap sampling randomizes observations.
+- Feature subsampling randomizes candidate predictors.
+- Averaging stabilizes the resulting predictions.
+
+The tuning parameter `mtry` controls how many predictors are considered per split.
+
+---
+
+## Out-of-bag evaluation
+
+A bootstrap sample leaves out roughly one third of the distinct training observations.
+
+These excluded observations are **out of bag (OOB)** for that tree.
+
+For each training observation, aggregate predictions only from trees where it was OOB. This provides an internal estimate of generalization error without a separate validation set.
+
+The untouched test set is still valuable for final evaluation.
+
+---
+
+## Fit a random forest
+
+```{r}
+set.seed(123)
+rf_fit <- randomForest(
+  diagnosis ~ ., data = train_data,
+  ntree = 500, mtry = 2,
+  importance = TRUE
+)
+
+rf_fit
+```
+
+The printed confusion matrix is based on OOB predictions for the training observations—not the final test set.
+
+
+---
+
+## Test-set model comparison
+
+```{r}
+rf_class <- predict(rf_fit, newdata = test_data, type = "response")
+rf_cm <- confusionMatrix(rf_class, test_data$diagnosis)
+
+tibble(
+  model = c("Pruned tree", "Random forest"),
+  accuracy = c(unname(tree_cm$overall["Accuracy"]),
+               unname(rf_cm$overall["Accuracy"])),
+  kappa = c(unname(tree_cm$overall["Kappa"]),
+            unname(rf_cm$overall["Kappa"]))
+)
+```
+
+Use class-specific metrics too: an average improvement may hide a worse result for a clinically important class.
+
+---
+
+## Random-forest confusion matrix
+
+```{r}
+#| echo: false
+#| fig-height: 5.2
+
+as.data.frame(rf_cm$table) %>%
+  ggplot(aes(Reference, Prediction, fill = Freq)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = Freq), size = 6) +
+  scale_fill_viridis_c() +
+  labs(title = "Random forest: test-set confusion matrix",
+       x = "Actual class", y = "Predicted class")
+```
+
+**Compare:** Which errors did the forest reduce? Which remain difficult?
+
+---
+
+## Interpretation and limitations of variable importance
+
+Permutation importance asks:
+
+> How much does prediction degrade when one predictor is shuffled?
+
+```{r}
+#| echo: true
+
+rf_importance <- importance(rf_fit, type = 1, scale = TRUE) %>%
+  as.data.frame() %>%
+  rownames_to_column("variable") %>%
+  as_tibble() %>%
+  rename(importance = MeanDecreaseAccuracy) %>%
+  mutate(
+    variable = recode(
+      variable,
+      age = "Age",
+      educ = "Years of education",
+      female = "Sex",
+      memunits = "Memory units",
+      trailb = "Trail Making Test B",
+      bills = "Ability to manage bills",
+      animals = "Animal naming score",
+      naccmmse = "MMSE score"
+    ),
+    variable = fct_reorder(variable, importance)
+  )
+```
+
+---
+
+## Interpretation and limitations of variable importance
+
+```{r}
+#| echo: true
+ggplot(rf_importance, aes(importance, variable)) +
+  geom_col(fill = "#2C7FB8", width = 0.7) +
+  geom_text(aes(label = round(importance, 1)),
+            hjust = -0.15, size = 4) +
+  expand_limits(x = max(rf_importance$importance) * 1.12) +
+  labs(
+    title = "Random-forest permutation importance",
+    subtitle = "Larger values indicate a greater loss of accuracy after shuffling",
+    x = "Mean decrease in prediction accuracy",
+    y = NULL
+  )
+```
+
+---
+
+## Interpretation and limitations of variable importance
+
+Variables near the top of the chart contribute most strongly to the forest's predictive performance. A value near zero indicates that shuffling the variable has little effect on accuracy.
+
+Important caveats:
+
+- importance is not causality;
+- correlated predictors can share or mask importance;
+- rankings can vary across resamples;
+- importance does not show the direction of an effect.
+
+---
+
+## Interpretability vs. predictive stability
+
+| | Single pruned tree | Random forest |
+|---|---|---|
+| Prediction | one path of rules | aggregate of many trees |
+| Interpretability | high when small | lower |
+| Variance | often high | reduced by averaging |
+| Nonlinearity/interactions | automatic | automatic and richer |
+| Tuning | depth, leaf size, `cp` | `mtry`, leaf size, number of trees |
+| Error estimate | CV or validation | OOB plus final test |
+
+The best model depends on whether the goal emphasizes explanation, prediction, or both.
+
+---
+
+## Summary
+
+- A tree is a piecewise model built from recursive binary questions.
+- CART greedily chooses splits that reduce squared error or class impurity.
+- Large trees fit training data well but can have high variance.
+- Cross-validation and cost-complexity pruning control tree size.
+- Bagging reduces variance by averaging trees fitted to bootstrap samples.
+- Random forests further reduce correlation through random feature selection.
+- Honest evaluation requires untouched test data and metrics matched to the consequences of errors.
+
+> A tree explains one decision path; a forest makes that decision more stable.
