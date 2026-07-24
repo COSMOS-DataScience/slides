@@ -1,0 +1,654 @@
+---
+title: "Controlling Model Complexity"
+subtitle: "Dimensionality Reduction and Regularization"
+author: "Babak Shahbaba"
+execute:
+  echo: true
+  warning: false
+  message: false
+format:
+  revealjs:
+    title-slide: true
+    theme: default
+    chalkboard: true
+    scrollable: true
+    self-contained: false
+    highlight-style: pygments
+    code-line-numbers: true
+    code-overflow: wrap
+    slide-number: true
+    transition: fade
+    progress: true
+    controls: false
+    ratio: 3:2
+    code-fold: true
+    footer: "Controlling Complexity • COSMOS"
+---
+
+```{r}
+#| echo: false
+#| error: false
+
+library(tidyverse)
+library(ggrepel)
+library(glmnet)
+library(pROC)
+
+theme_set(theme_minimal(base_size = 18))
+
+set.seed(2026)
+```
+
+## Learning objectives
+
+This lecture studies how model complexity affects prediction and interpretation.
+
+By the end, you should be able to:
+
+- explain why a model can fit training data well but predict poorly;
+- describe principal component analysis as a change of coordinates;
+- explain how ridge and lasso control coefficient size;
+- use cross-validation to select the strength of regularization; and
+- compare binary classifiers using ROC curves and AUC.
+
+---
+
+## The central statistical problem
+
+Suppose a model has many predictors or highly flexible functions.
+
+- It can represent complicated relationships.
+- It can also fit random noise as though it were signal.
+
+The goal is not to minimize training error at any cost. The goal is to minimize error on **new observations**.
+
+::: {.callout-important}
+Complexity control deliberately restricts a model so that it generalizes more reliably.
+:::
+
+---
+
+## Training error and test error
+
+```{r}
+#| echo: false
+#| fig-height: 5.4
+
+complexity_curve <- tibble(
+  complexity = seq(0, 10, length.out = 300),
+  training = 1.8*exp(-0.28*complexity) + 0.15,
+  test = 0.55 + 0.055*(complexity - 5.2)^2
+) %>%
+  pivot_longer(-complexity, names_to = "error_type", values_to = "error")
+
+ggplot(complexity_curve, aes(complexity, error, color = error_type)) +
+  geom_line(linewidth = 1.4) +
+  geom_vline(xintercept = 5.2, linetype = 2) +
+  scale_color_manual(values = c(training = "#2C7FB8", test = "#D95F0E")) +
+  labs(title = "Model complexity and predictive error",
+       x = "Model complexity", y = "Error", color = NULL)
+```
+
+Training error typically falls with complexity. Test error often follows a U-shaped curve.
+
+---
+
+## Underfitting and overfitting
+
+::: {.columns}
+::: {.column width="48%"}
+### Underfitting
+
+- Model is too restricted.
+- Important structure is missed.
+- Training and test errors are both high.
+- Associated with high bias.
+:::
+
+::: {.column width="48%"}
+### Overfitting
+
+- Model is excessively adaptive.
+- Noise is treated as reproducible structure.
+- Training error is low; test error is high.
+- Associated with high variance.
+:::
+:::
+
+The best predictive model usually lies between these extremes.
+
+---
+
+## Two strategies for complexity control
+
+```{mermaid}
+flowchart LR
+  A["Many correlated predictors"] --> B["Principal components"]
+  A --> C["Penalized regression"]
+  B --> D["Use a small number of components"]
+  C --> E["Shrink coefficients toward zero"]
+```
+
+---
+
+## Principal component analysis
+
+PCA creates new variables called **principal components**. Each component is a weighted combination of the original variables.
+
+- PC1 follows the direction with the greatest variation.
+- PC2 captures the greatest remaining variation while being perpendicular to PC1.
+- Later components continue this process.
+
+- **Loadings** describe how the original variables contribute to a component.
+- **Scores** describe where each observation lies along that component.
+
+---
+
+## PCA as a rotation of coordinates
+
+```{r}
+#| echo: false
+#| fig-height: 5.6
+
+set.seed(18)
+u <- rnorm(180, sd = 2.3)
+v <- rnorm(180, sd = 0.45)
+theta <- pi/5
+rotated <- tibble(
+  x1 = u*cos(theta) - v*sin(theta),
+  x2 = u*sin(theta) + v*cos(theta)
+)
+pca_demo <- prcomp(rotated, center = TRUE, scale. = FALSE)
+center <- colMeans(rotated)
+dirs <- as.data.frame(pca_demo$rotation)
+
+ggplot(rotated, aes(x1, x2)) +
+  geom_point(alpha = 0.55) + coord_equal() +
+  geom_segment(aes(x = center[1], y = center[2],
+                   xend = center[1] + 3*dirs[1,1],
+                   yend = center[2] + 3*dirs[2,1]),
+               arrow = arrow(length = unit(0.15, "in")),
+               linewidth = 1.3, color = "#2C7FB8") +
+  geom_segment(aes(x = center[1], y = center[2],
+                   xend = center[1] + 2*dirs[1,2],
+                   yend = center[2] + 2*dirs[2,2]),
+               arrow = arrow(length = unit(0.15, "in")),
+               linewidth = 1.3, color = "#D95F0E") +
+  labs(title = "Principal components define orthogonal directions",
+       subtitle = "PC1 follows greatest variation; PC2 follows the remaining variation")
+```
+
+---
+
+## Why standardization matters in PCA
+
+Without standardization, PCA favors variables with large numerical variance.
+
+- Temperature measured in degrees and population measured in millions have incomparable scales.
+- Changing a variable from meters to millimeters can change unstandardized PCA.
+
+Standardized PCA uses
+
+$$
+z_{ij}=\frac{x_{ij}-\bar x_j}{s_j},
+$$
+
+
+---
+
+## Example: socioeconomic characteristics of states
+
+R's `state.x77` dataset contains eight measurements for the 50 U.S. states.
+
+```{r}
+states <- as_tibble(state.x77, rownames = "state")
+glimpse(states)
+```
+
+```{r}
+state_x <- states %>% select(-state)
+state_pca <- prcomp(state_x, center = TRUE, scale. = TRUE)
+
+summary(state_pca)$importance[, 1:5]
+```
+
+The component signs are arbitrary: reversing every sign in one loading vector gives the same axis.
+
+---
+
+## Scree plot
+
+```{r}
+#| echo: false
+#| fig-height: 5.4
+
+state_var <- state_pca$sdev^2
+scree <- tibble(
+  component = seq_along(state_var),
+  proportion = state_var/sum(state_var),
+  cumulative = cumsum(proportion)
+)
+
+ggplot(scree, aes(component, proportion)) +
+  geom_col(fill = "#2C7FB8") +
+  geom_line(aes(y = cumulative), color = "#D95F0E", linewidth = 1.2) +
+  geom_point(aes(y = cumulative), color = "#D95F0E", size = 2.5) +
+  scale_x_continuous(breaks = 1:nrow(scree)) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Variance explained by the principal components",
+       x = "Principal component", y = "Proportion / cumulative proportion")
+```
+
+A scree plot supports judgment; it does not supply a universally correct cutoff.
+
+
+---
+
+## PCA biplot
+
+```{r}
+#| echo: false
+#| fig-height: 6
+
+scores <- as_tibble(state_pca$x[, 1:2]) %>%
+  mutate(state = states$state)
+
+loading_scale <- 3.2
+loading_plot <- as_tibble(state_pca$rotation[, 1:2], rownames = "variable") %>%
+  mutate(across(c(PC1, PC2), ~ .x*loading_scale))
+
+ggplot(scores, aes(PC1, PC2)) +
+  geom_hline(yintercept = 0, color = "grey80") +
+  geom_vline(xintercept = 0, color = "grey80") +
+  geom_point(color = "#2C7FB8") +
+  geom_text_repel(aes(label = state), size = 3, max.overlaps = 25) +
+  geom_segment(data = loading_plot,
+               aes(x = 0, y = 0, xend = PC1, yend = PC2),
+               inherit.aes = FALSE, color = "#D95F0E",
+               arrow = arrow(length = unit(0.12, "in"))) +
+  geom_text_repel(data = loading_plot,
+                  aes(PC1, PC2, label = variable),
+                  inherit.aes = FALSE, color = "#D95F0E", size = 3.5) +
+  labs(title = "PCA biplot for state characteristics")
+```
+
+---
+
+## Principal component regression
+
+Principal component regression (PCR) uses a selected number of component scores as predictors instead of using all the original variables directly.
+
+The number $q$ controls complexity:
+
+- small $q$: stronger dimension reduction;
+- using all components: no dimensionality reduction.
+
+Choose $q$ by cross-validation when prediction is the goal.
+
+::: {.callout-note}
+PCA preserves variation in the predictors, not necessarily the variation most useful for predicting the outcome. Cross-validation is therefore preferable to choosing $q$ from the scree plot alone.
+:::
+
+---
+
+## Regularization retains the original predictors
+
+Ordinary least squares chooses coefficients that fit the training outcomes as closely as possible. When predictors are numerous or highly correlated, those coefficients can become large and unstable.
+
+Regularization still rewards good fit, but it also discourages large coefficients. This restriction can improve prediction on new data.
+
+The tuning parameter $\lambda$ controls the strength of regularization:
+
+- $\lambda=0$: ordinary least squares;
+- larger $\lambda$: stronger shrinkage and a simpler model.
+
+We choose $\lambda$ using cross-validation rather than training error.
+
+---
+
+## Ridge regression
+
+Ridge regression minimizes
+
+$$
+\operatorname{RSS}(\beta)+\lambda\sum_{j=1}^{p}\beta_j^2.
+$$
+
+The squared-coefficient penalty shrinks every coefficient smoothly toward zero. 
+
+Predictors are usually standardized first so the penalty treats variables measured in different units fairly.
+
+---
+
+## Ridge coefficient paths
+
+```{r}
+#| echo: false
+#| fig-height: 5.8
+
+set.seed(12)
+n <- 100
+p <- 7
+latent <- rnorm(n)
+X_sim <- sapply(1:p, function(j) 0.75*latent + rnorm(n, sd = 0.7))
+colnames(X_sim) <- paste0("x", 1:p)
+beta_true <- c(3, 2, 0, 0, -1.5, 0, 0.7)
+y_sim <- as.vector(X_sim %*% beta_true + rnorm(n, sd = 2))
+
+Xz <- scale(X_sim)
+yz <- as.vector(scale(y_sim, center = TRUE, scale = FALSE))
+lambdas <- 10^seq(-3, 3, length.out = 120)
+
+ridge_coef <- map_dfr(lambdas, function(lambda) {
+  b <- solve(crossprod(Xz) + lambda*diag(p), crossprod(Xz, yz))
+  tibble(lambda = lambda, variable = colnames(Xz), coefficient = as.vector(b))
+})
+
+ggplot(ridge_coef, aes(lambda, coefficient, color = variable)) +
+  geom_line(linewidth = 1) +
+  scale_x_log10() +
+  geom_hline(yintercept = 0, color = "grey65") +
+  labs(title = "Ridge coefficient paths",
+       x = expression(lambda), y = "Standardized coefficient")
+```
+
+Coefficients shrink smoothly toward zero but are not exactly zero.
+
+---
+
+## Lasso regression
+
+The lasso minimizes
+
+$$
+\operatorname{RSS}(\beta)+\lambda\sum_{j=1}^{p}|\beta_j|.
+$$
+
+Unlike ridge, lasso can set some coefficient estimates exactly to zero.
+
+This combines:
+
+- **shrinkage:** reducing coefficient magnitudes;
+- **selection:** excluding predictors from the fitted equation.
+
+As $\lambda$ increases, smaller coefficients may reach zero and leave the model. This can create a simpler equation.
+
+---
+
+## Lasso coefficient paths
+
+```{r}
+#| echo: false
+#| fig-height: 5.8
+
+# Use the same simulated data as in the ridge path
+lasso_path <- glmnet(
+  Xz, yz, alpha = 1,
+  standardize = FALSE, intercept = FALSE
+)
+
+lasso_coef <- as.data.frame(t(as.matrix(lasso_path$beta))) %>%
+  mutate(lambda = lasso_path$lambda) %>%
+  pivot_longer(-lambda, names_to = "variable",
+               values_to = "coefficient")
+
+ggplot(lasso_coef, aes(lambda, coefficient, color = variable)) +
+  geom_line(linewidth = 1) +
+  scale_x_log10() +
+  geom_hline(yintercept = 0, color = "grey65") +
+  labs(title = "Lasso coefficient paths",
+       x = expression(lambda), y = "Standardized coefficient")
+```
+
+As $\lambda$ increases, lasso coefficients reach exactly zero at different points. This produces a sequence of increasingly sparse models.
+
+
+---
+
+## Selecting the regularization parameter
+
+The value of $\lambda$ is a tuning parameter, not something estimated by minimizing training RSS.
+
+- $\lambda=0$: least squares, least shrinkage.
+- moderate $\lambda$: some bias, reduced variance.
+- very large $\lambda$: coefficients approach zero, severe underfitting.
+
+Use $K$-fold cross-validation:
+
+1. divide training data into $K$ folds;
+2. fit on $K-1$ folds across a grid of $\lambda$ values;
+3. predict the held-out fold;
+4. average validation error across folds;
+5. select $\lambda$, then refit using all training data.
+
+---
+
+## Cross-validation is part of model fitting
+
+```{mermaid}
+flowchart LR
+  A["Training data"] --> B["Cross-validation folds"]
+  B --> C["Select λ or q"]
+  C --> D["Refit on all training data"]
+  D --> E["Evaluate once on test data"]
+```
+
+::: {.callout-warning}
+If the test set is repeatedly used to choose $q$, $\lambda$, transformations, or predictors, it becomes part of the training process and no longer provides an honest final evaluation.
+:::
+
+---
+
+## Binary classification example
+
+We simulate a binary outcome with a deliberately challenging predictor set:
+
+- 400 observations;
+- 20 useful but highly correlated measurements;
+- 40 unrelated noise variables;
+- overlapping classes, so perfect prediction is impossible.
+
+```{r}
+set.seed(2)
+n <- 400
+z1 <- rnorm(n)
+z2 <- rnorm(n)
+
+# Ten noisy measurements of each underlying signal
+signal_1 <- sapply(1:10, function(j) z1 + rnorm(n, sd = 0.7))
+signal_2 <- sapply(1:10, function(j) z2 + rnorm(n, sd = 0.7))
+noise <- matrix(rnorm(n * 40), nrow = n)
+
+x <- cbind(signal_1, signal_2, noise)
+colnames(x) <- paste0("x", 1:60)
+
+probability <- plogis(0.7*z1 - 0.7*z2)
+y <- factor(rbinom(n, 1, probability), levels = c(0, 1))
+
+train_id <- sample(seq_len(n), 200)
+x_train_raw <- x[train_id, ]
+x_test_raw <- x[-train_id, ]
+y_train <- y[train_id]
+y_test <- y[-train_id]
+```
+
+The same 200 training and 200 test observations are used for all three models.
+
+---
+
+## Three logistic classification models
+
+We compare:
+
+1. **Logistic regression:** estimates 60 predictor coefficients from only 200 training observations.
+2. **PCA–logistic regression:** summarizes the correlated predictors using two principal components, then fits logistic regression.
+3. **Lasso logistic regression:** considers all 60 predictors but shrinks less useful coefficients toward zero.
+
+---
+
+## Prepare predictors and principal components
+
+Standardization and PCA are learned from the **training set only** and then applied to the test set.
+
+```{r}
+train_mean <- colMeans(x_train_raw)
+train_sd   <- apply(x_train_raw, 2, sd)
+x_train <- scale(x_train_raw, center = train_mean, scale = train_sd)
+x_test  <- scale(x_test_raw,  center = train_mean, scale = train_sd)
+
+pca_fit <- prcomp(x_train, center = FALSE, scale. = FALSE)
+variance_explained <- pca_fit$sdev^2 / sum(pca_fit$sdev^2)
+cumsum(variance_explained)[1:5]
+```
+
+
+---
+
+## Fit the three models in R
+
+```{r}
+# Ordinary logistic regression
+logit_data <- data.frame(y = y_train, x_train)
+logit_fit <- glm(y ~ ., data = logit_data, family = binomial)
+
+# Logistic regression using the first two principal components
+pc_train <- as.data.frame(pca_fit$x[, 1:2, drop = FALSE])
+pc_test <- as.data.frame(
+  predict(pca_fit, newdata = x_test)[, 1:2, drop = FALSE]
+)
+pc_train$y <- y_train
+pca_logit_fit <- glm(y ~ ., data = pc_train, family = binomial)
+
+# Lasso logistic regression; lambda is chosen by cross-validation
+set.seed(2)
+lasso_fit <- cv.glmnet(
+  x_train, y_train,
+  family = "binomial", alpha = 1,
+  type.measure = "auc", nfolds = 10
+)
+```
+
+---
+
+## Test-set predicted probabilities
+
+```{r}
+prob_logit <- predict(
+  logit_fit,
+  newdata = data.frame(x_test), type = "response"
+)
+
+prob_pca <- predict(
+  pca_logit_fit,
+  newdata = pc_test, type = "response"
+)
+
+prob_lasso <- as.numeric(
+  predict(lasso_fit, newx = x_test,
+          s = "lambda.min", type = "response")
+)
+
+selected_lasso <- coef(lasso_fit, s = "lambda.min")
+
+```
+
+
+---
+
+## Confusion matrix
+
+After choosing a probability threshold, each prediction is classified as positive or negative. Comparing predictions with the true outcomes gives a **confusion matrix**.
+
+| | **Actually positive** | **Actually negative** |
+|---|---:|---:|
+| **Predicted positive** | True positive (TP) | False positive (FP) |
+| **Predicted negative** | False negative (FN) | True negative (TN) |
+
+- **Sensitivity** asks: among the actual positive cases, what proportion did we detect?
+
+$$
+\text{Sensitivity}=\frac{TP}{TP+FN}
+$$
+
+- **Specificity** asks: among the actual negative cases, what proportion did we correctly reject?
+
+$$
+\text{Specificity}=\frac{TN}{TN+FP}
+$$
+
+Changing the probability threshold changes the entries of the confusion matrix and therefore changes sensitivity and specificity.
+
+---
+
+## ROC curves compare discrimination
+
+A classifier first produces a score or probability. We then choose a threshold above which an observation is classified as positive.
+
+Changing the threshold changes two quantities:
+
+- **Sensitivity (true-positive rate):** the proportion of positive cases correctly identified.
+- **False-positive rate:** the proportion of negative cases incorrectly classified as positive; this equals $1-\text{specificity}$.
+
+An **ROC curve** plots sensitivity against the false-positive rate across all possible thresholds.
+
+- Curves closer to the upper-left corner indicate better discrimination.
+- The diagonal line represents performance similar to random guessing.
+- **AUC** summarizes the curve: $0.5$ indicates little discrimination and $1$ indicates perfect discrimination.
+
+---
+
+## ROC comparison of the three models
+
+```{r}
+#| echo: false
+#| fig-height: 5.5
+
+roc_models <- list(
+  "Logistic regression" = roc(y_test, prob_logit, quiet = TRUE),
+  "PCA + logistic regression" = roc(y_test, prob_pca, quiet = TRUE),
+  "Lasso logistic regression" = roc(y_test, prob_lasso, quiet = TRUE)
+)
+
+auc_values <- map_dbl(roc_models, ~ as.numeric(auc(.x)))
+names(roc_models) <- paste0(
+  names(roc_models), " (AUC = ", round(auc_values, 3), ")"
+)
+
+ggroc(roc_models, legacy.axes = TRUE, linewidth = 1.2) +
+  geom_abline(intercept = 0, slope = 1, linetype = 2,
+              color = "grey55") +
+  coord_equal() +
+  labs(
+    title = "Test-set ROC curves",
+    x = "False-positive rate (1 − specificity)",
+    y = "True-positive rate (sensitivity)",
+    color = NULL
+  )
+```
+
+---
+
+## Interpreting ROC curves and AUC
+
+- Curves closer to the upper-left corner show better discrimination.
+- The diagonal line represents performance similar to random guessing.
+- **AUC** summarizes the curve: $0.5$ indicates little discrimination and $1$ indicates perfect discrimination.
+- ROC curves compare models across thresholds; they do not identify the best clinical threshold automatically.
+
+
+---
+
+## Interpreting ROC curves and AUC
+
+```{r}
+tibble(
+  model = c("Logistic regression",
+            "PCA + logistic regression",
+            "Lasso logistic regression"),
+  test_auc = round(auc_values, 3)
+) %>%
+  arrange(desc(test_auc))
+```
+
+Small AUC differences on one test split should not be overinterpreted. Repeated resampling provides a more stable comparison.
+
